@@ -10,7 +10,7 @@ import cn.s3bit.th902.GameMain;
 /**
  * @author Obsidianss
  * <p>
- * The launcher of the game and the wrapper of LwjglApplication.
+ * The launcher of the game and the wrapper of LwjglApplication
  * </p>
  */
 public class Launcher {
