@@ -26,7 +26,7 @@ public class Launcher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.fullscreen = false;
 		config.width = 960;
-		config.width = 720;
+		config.height = 720;
 		config.resizable = false;
 		config.title = GameMain.GAME_TITLE;
 		config.addIcon("resources/icon32.png", FileType.Internal);
