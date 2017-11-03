@@ -12,7 +12,7 @@ public class GameMain extends Game {
 	public static final String GAME_TITLE = "TH902";
 	@Override
 	public void create() {
-		
+	
 	}
 
 }
