@@ -6,11 +6,10 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
 import cn.s3bit.th902.GameMain;
-//9Test9Test9Test9Test9Test9Test9Test9Test
 /**
  * @author Obsidianss
  * <p>
- * The launcher of the game and the wrapper of LwjglApplication
+ * The launcher of the game and the wrapper of LwjglApplication.
  * </p>
  */
 public class Launcher {
