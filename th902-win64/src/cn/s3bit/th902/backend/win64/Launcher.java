@@ -6,7 +6,7 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
 import cn.s3bit.th902.GameMain;
-
+//9Test
 /**
  * @author Obsidianss
  * <p>
