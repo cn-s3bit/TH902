@@ -34,9 +34,7 @@ public class MainMenuScreen extends ScreenAdapter {
 			break;
 		}
 		backgroundEntity.AddComponent(new Transform(new Vector2(480, 360)));
-		for (byte i = 1; i <= 5; i++)
-			if (i == select)
-				backgroundEntity.AddComponent(new ImageRenderer(ResourceManager.textures.get("Background" + i), 0));
+		backgroundEntity.AddComponent(new ImageRenderer(ResourceManager.textures.get("Background" + select), 0));
 		button1Entity.AddComponent(new ImageRenderer(ResourceManager.textures.get("Button1"), 1));
 	}
 
