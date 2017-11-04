@@ -36,7 +36,7 @@ public class MainMenuScreen extends ScreenAdapter {
 		}
 		backgroundEntity.AddComponent(new Transform(new Vector2(480, 360)));
 		backgroundEntity.AddComponent(new ImageRenderer(ResourceManager.textures.get("Background" + select), 0));
-		button1Entity.AddComponent(new ImageRenderer(ResourceManager.textures.get("Button1"), 1));
+		button1Entity.AddComponent(new ImageRenderer(ResourceManager.textures.get("StoryMode"), 1));
 		KeyboardSelectable last = new KeyboardSelectable(() -> {
 			Entity.postUpdate.add(() -> { GameMain.instance.setScreen(new FightScreen()); });
 		});
