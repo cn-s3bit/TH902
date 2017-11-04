@@ -14,7 +14,7 @@ public class MainMenuScreen extends ScreenAdapter {
 		//TODO Add UI Entities Here
 		Entity exampleEntity = Entity.Create();
 		exampleEntity.AddComponent(new Transform(new Vector2(128, 128), new Vector2(4, 4)));
-		exampleEntity.AddComponent(new ImageRenderer(ResourceManager.textures.get("icon32")));
+		exampleEntity.AddComponent(new ImageRenderer(ResourceManager.textures.get("icon32"), 0));
 	}
 	
 	@Override
