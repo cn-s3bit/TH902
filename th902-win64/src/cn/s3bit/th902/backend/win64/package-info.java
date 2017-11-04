@@ -1,7 +1,5 @@
 /**
- * Modify Logs:
- * 2017.11.3 Obsidianss: Create Win64 Project
- * 2017.11.3 Obsidianss: Fixed Incorrect Screen Size
+ * 
  */
 /**
  * @author Obsidianss

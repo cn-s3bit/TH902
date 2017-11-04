@@ -1,9 +1,8 @@
 /**
- * Modify Logs:
- * 2017.11.3 Obsidianss: Create Main Project
+ * 
  */
 /**
- * @author Obsidianss
+ * @author Obsidianss, ALINGCAT
  * <p>
  * Main package of the game.
  * </p>

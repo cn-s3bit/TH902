@@ -1,6 +1,5 @@
 /**
- * Modify Logs:
- * 2017.11.4 Obsidianss: Create Package
+ *
  */
 /**
  * @author Obsidianss
