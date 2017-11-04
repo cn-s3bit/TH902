@@ -35,6 +35,13 @@ public class LinkedNode<T> {
 		next = node;
 		return node;
 	}
+	public LinkedNode<T> insertAfter(LinkedNode<T> node) {
+		node.next = next;
+		node.previous = this;
+		if (next != null) next.previous = node;
+		next = node;
+		return node;
+	}
 	/**
 	 * @param val Data to insert
 	 * @return The inserted node.
@@ -42,6 +49,13 @@ public class LinkedNode<T> {
 	public LinkedNode<T> insertBefore(T val) {
 		LinkedNode<T> node = new LinkedNode<>();
 		node.data = val;
+		node.previous = previous;
+		node.next = this;
+		if (previous != null) previous.next = node;
+		previous = node;
+		return node;
+	}
+	public LinkedNode<T> insertBefore(LinkedNode<T> node) {
 		node.previous = previous;
 		node.next = this;
 		if (previous != null) previous.next = node;

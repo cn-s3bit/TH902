@@ -13,6 +13,7 @@ public class KeyboardSelectable extends Component{
 	protected final Runnable onPressAction;
 	public LinkedNode<KeyboardSelectable> linkedNode;
 	public boolean isSelected = false;
+	public boolean oldIsSelected = false;
 	protected ImageRenderer renderer;
 	private int mEffectTimer = 0;
 	public KeyboardSelectable() {
@@ -29,19 +30,10 @@ public class KeyboardSelectable extends Component{
 
 	@Override
 	public void Update() {
-		LinkedNode<KeyboardSelectable> node = linkedNode;
-		while (node.previous != null) {
-			if (node.data.isSelected) {
-				break;
-			}
-			node = linkedNode.previous;
-		}
-		if (node.previous == null) {
-			node.data.isSelected = true;
-		}
-		if (!isSelected) {
+		if (!oldIsSelected) {
 			renderer.image.setColor(0.18f, 0.18f, 0.18f, 1);
 			mEffectTimer = 0;
+			oldIsSelected = isSelected;
 			return;
 		}
 		float colorFactor = MathUtils.cosDeg(mEffectTimer * 5) * 0.2f + 0.8f;
@@ -50,14 +42,15 @@ public class KeyboardSelectable extends Component{
 		if (Gdx.input.isKeyJustPressed(KeySettings.positiveKey) && onPressAction != null) {
 			onPressAction.run();
 		}
-		if (Gdx.input.isKeyJustPressed(KeySettings.up) && linkedNode.previous != null) {
+		else if (Gdx.input.isKeyJustPressed(KeySettings.up) && linkedNode.previous != null) {
 			isSelected = false;
 			linkedNode.previous.data.isSelected = true;
 		}
-		if (Gdx.input.isKeyJustPressed(KeySettings.down) && linkedNode.next != null) {
+		else if (Gdx.input.isKeyJustPressed(KeySettings.down) && linkedNode.next != null) {
 			isSelected = false;
 			linkedNode.next.data.isSelected = true;
 		}
+		oldIsSelected = isSelected;
 	}
 	
 	@Override

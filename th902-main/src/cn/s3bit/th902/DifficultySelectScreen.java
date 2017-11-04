@@ -6,8 +6,10 @@ import com.badlogic.gdx.math.Vector2;
 import cn.s3bit.th902.gamecontents.Entity;
 import cn.s3bit.th902.gamecontents.components.ImageRenderer;
 import cn.s3bit.th902.gamecontents.components.Transform;
+import cn.s3bit.th902.gamecontents.components.ui.KeyboardSelectable;
 
 public class DifficultySelectScreen extends ScreenAdapter {
+	public static int difficulty = -1;
 	@Override
 	public void show() {
 		super.show();
@@ -27,10 +29,27 @@ public class DifficultySelectScreen extends ScreenAdapter {
 		
 		difficultySelectScreenEntity.AddComponent(new ImageRenderer(ResourceManager.textures.get("DifficultySelect"), 0));
 		selectDifficultyEntity.AddComponent(new ImageRenderer(ResourceManager.textures.get("SelectDifficulty"), 1));
+		
+		final Runnable nextScreen = () -> { GameMain.instance.setScreen(new CharacterSelectScreen()); };
+		KeyboardSelectable[] actions = {
+				new KeyboardSelectable(() -> { difficulty = 1; Entity.postUpdate.add(nextScreen); }),
+				new KeyboardSelectable(() -> { difficulty = 2; Entity.postUpdate.add(nextScreen); }),
+				new KeyboardSelectable(() -> { difficulty = 3; Entity.postUpdate.add(nextScreen); }),
+				new KeyboardSelectable(() -> { difficulty = 4; Entity.postUpdate.add(nextScreen); })
+		};
+		for (int i=0; i<3; i++) {
+			actions[i].linkedNode.insertAfter(actions[i + 1].linkedNode);
+		}
+		actions[0].isSelected = true;
+		
 		easyEntity.AddComponent(new ImageRenderer(ResourceManager.textures.get("Easy"), 2));
+		easyEntity.AddComponent(actions[0]);
 		normalEntity.AddComponent(new ImageRenderer(ResourceManager.textures.get("Normal"), 2));
+		normalEntity.AddComponent(actions[1]);
 		hardEntity.AddComponent(new ImageRenderer(ResourceManager.textures.get("Hard"), 2));
+		hardEntity.AddComponent(actions[2]);
 		lunaticEntity.AddComponent(new ImageRenderer(ResourceManager.textures.get("Lunatic"), 2));
+		lunaticEntity.AddComponent(actions[3]);
 	}
 	
 	@Override
