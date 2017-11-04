@@ -25,6 +25,7 @@ public final class ResourceManager {
 			"Normal",
 			"Hard",
 			"Lunatic",
+			"CharacterSelect",
 			"SelectCharacter",
 			"FightScreen"
 		});

@@ -11,9 +11,15 @@ public class CharacterSelectScreen extends ScreenAdapter {
 	@Override
 	public void show() {
 		super.show();
-		Entity CharacterSelectScreenEntity = Entity.Create();
-		CharacterSelectScreenEntity.AddComponent(new Transform(new Vector2(480, 360)));
-		CharacterSelectScreenEntity.AddComponent(new ImageRenderer(ResourceManager.textures.get("CharacterSelect"), 0));
+		Entity characterSelectScreenEntity = Entity.Create();
+		Entity selectCharacter = Entity.Create();
+		
+		characterSelectScreenEntity.AddComponent(new Transform(new Vector2(480, 360)));
+		selectCharacter.AddComponent(new Transform(new Vector2(600, 600)));
+		
+		
+		characterSelectScreenEntity.AddComponent(new ImageRenderer(ResourceManager.textures.get("CharacterSelect"), 0));
+		selectCharacter.AddComponent(new ImageRenderer(ResourceManager.textures.get("SelectCharacter"), 1));
 	}
 	
 	@Override
