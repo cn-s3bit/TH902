@@ -17,17 +17,22 @@ public final class ResourceManager {
 			toLoad.add("Background" + i);
 		}
 		Collections.addAll(toLoad, new String[] {
-			"StoryMode",
-			"Exit",
-			"DifficultySelect",
-			"SelectDifficulty",
-			"Easy",
-			"Normal",
-			"Hard",
-			"Lunatic",
+			"Bomb",
 			"CharacterSelect",
+			"DifficultySelect",
+			"Easy",
+			"Exit",	
+			"FightScreen",
+			"Hard",
+			"Heart",
+			"Lunatic",
+			"Normal",
+			"Players",	
 			"SelectCharacter",
-			"FightScreen"
+			"SelectDifficulty",	
+			"SpellCard",
+			"StoryMode",	
+
 		});
 		for (String string : toLoad) {
 			AddTexture(string, "resources/" + string + ".png", FileType.Internal);

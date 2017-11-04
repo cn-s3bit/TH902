@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 
 import java.util.HashMap;
 
-import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -12,8 +11,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Disposable;
-
-import cn.s3bit.th902.ResourceManager;
 
 public class PlayerReimu extends PlayerEntity {
 
