@@ -10,6 +10,7 @@ import cn.s3bit.th902.gamecontents.components.Component;
 
 public class Entity {
 	public static HashSet<Entity> instances = new HashSet<>();
+	public static LinkedBlockingQueue<Runnable> postUpdate = new LinkedBlockingQueue<>();
 	
 	private HashMap<Class<?>, Component> mComponents;
 	private LinkedBlockingQueue<Class<?>> toDel;
@@ -21,7 +22,7 @@ public class Entity {
 		Entity entity = new Entity();
 		entity.mComponents = new HashMap<>();
 		entity.toDel = new LinkedBlockingQueue<>();
-		instances.add(entity);
+		postUpdate.add(() -> { instances.add(entity); });
 		return entity;
 	}
 	
@@ -33,8 +34,7 @@ public class Entity {
 				toDel.add(entry.getKey());
 			}
 		}
-		while (!toDel.isEmpty())
-		{
+		while (!toDel.isEmpty()) {
 			mComponents.remove(toDel.poll());
 		}
 		if (mComponents.isEmpty()) {
@@ -70,7 +70,7 @@ public class Entity {
 		for (Component component : mComponents.values())
 			component.Kill();
 		mComponents.clear();
-		instances.remove(this);
+		postUpdate.add(() -> { instances.remove(this); });
 	}
 	
 	public static void Reset() {
@@ -84,6 +84,9 @@ public class Entity {
 		for (Iterator<Entity> iterator = instances.iterator(); iterator.hasNext();) {
 			Entity entity = iterator.next();
 			entity.Update();
+		}
+		while (!postUpdate.isEmpty()) {
+			postUpdate.poll().run();
 		}
 	}
 }

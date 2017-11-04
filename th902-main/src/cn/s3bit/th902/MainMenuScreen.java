@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import cn.s3bit.th902.gamecontents.Entity;
 import cn.s3bit.th902.gamecontents.components.ImageRenderer;
 import cn.s3bit.th902.gamecontents.components.Transform;
+import cn.s3bit.th902.gamecontents.components.ui.KeyboardSelectable;
 
 public class MainMenuScreen extends ScreenAdapter {
 	@Override
@@ -36,6 +37,10 @@ public class MainMenuScreen extends ScreenAdapter {
 		backgroundEntity.AddComponent(new Transform(new Vector2(480, 360)));
 		backgroundEntity.AddComponent(new ImageRenderer(ResourceManager.textures.get("Background" + select), 0));
 		button1Entity.AddComponent(new ImageRenderer(ResourceManager.textures.get("Button1"), 1));
+		KeyboardSelectable last = new KeyboardSelectable(() -> {
+			Entity.postUpdate.add(() -> { GameMain.instance.setScreen(new FightScreen()); });
+		});
+		button1Entity.AddComponent(last);
 	}
 
 	@Override
