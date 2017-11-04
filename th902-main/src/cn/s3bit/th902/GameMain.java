@@ -22,7 +22,8 @@ public class GameMain extends Game {
 	@Override
 	public void create() {
 		instance = this;
-		setScreen(new FightScreen());
+		ResourceManager.Load();
+		setScreen(new MainMenuScreen());
 	}
 	
 	@Override
