@@ -8,11 +8,11 @@ public class LinkedNode<T> {
 	/**
 	 * Next node.
 	 */
-	public LinkedNode<T> next;
+	public LinkedNode<T> next = null;
 	/**
 	 * Previous node.
 	 */
-	public LinkedNode<T> previous;
+	public LinkedNode<T> previous = null;
 	
 	public LinkedNode() {
 		this.data = null;
@@ -29,7 +29,9 @@ public class LinkedNode<T> {
 	public LinkedNode<T> insertAfter(T val) {
 		LinkedNode<T> node = new LinkedNode<>();
 		node.data = val;
-		next.previous = node;
+		node.next = next;
+		node.previous = this;
+		if (next != null) next.previous = node;
 		next = node;
 		return node;
 	}
@@ -40,13 +42,15 @@ public class LinkedNode<T> {
 	public LinkedNode<T> insertBefore(T val) {
 		LinkedNode<T> node = new LinkedNode<>();
 		node.data = val;
-		previous.next = node;
+		node.previous = previous;
+		node.next = this;
+		if (previous != null) previous.next = node;
 		previous = node;
 		return node;
 	}
 	
 	public void remove() {
-		previous.next = next;
-		next.previous = previous;
+		if (previous != null) previous.next = next;
+		if (next != null) next.previous = previous;
 	}
 }
