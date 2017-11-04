@@ -9,6 +9,9 @@ import cn.s3bit.th902.gamecontents.Entity;
  * Stores position, rotation and scale.
  */
 public class Transform extends Component {
+	/**
+	 * Position. Should be the center of the entity.
+	 */
 	Vector2 position;
 	/**
 	 * Rotation, in degrees.
