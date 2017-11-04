@@ -11,6 +11,12 @@ public final class TestEntityComponent {
 		public void Update() {
 			
 		}
+
+		@Override
+		public void Initialize(Entity entity) {
+			// TODO Auto-generated method stub
+			
+		}
 		
 	}
 	

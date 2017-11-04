@@ -2,6 +2,7 @@ package cn.s3bit.th902.gamecontents;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -62,6 +63,7 @@ public class Entity {
 		if (mComponents.containsKey(type))
 			throw new IllegalArgumentException();
 		mComponents.put(type, component);
+		component.Initialize(this);
 	}
 	
 	public void Destroy() {
@@ -69,5 +71,19 @@ public class Entity {
 			component.Kill();
 		mComponents.clear();
 		instances.remove(this);
+	}
+	
+	public static void Reset() {
+		Entity[] entities = (Entity[]) instances.toArray(new Entity[instances.size()]);
+		for (int i = 0; i < entities.length; i++) {
+			entities[i].Destroy();
+		}
+	}
+	
+	public static void UpdateAll() {
+		for (Iterator<Entity> iterator = instances.iterator(); iterator.hasNext();) {
+			Entity entity = iterator.next();
+			entity.Update();
+		}
 	}
 }

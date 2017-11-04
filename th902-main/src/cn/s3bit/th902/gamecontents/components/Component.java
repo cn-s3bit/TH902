@@ -1,5 +1,7 @@
 package cn.s3bit.th902.gamecontents.components;
 
+import cn.s3bit.th902.gamecontents.Entity;
+
 /**
  * @author Obsidianss
  * <p>
@@ -8,6 +10,10 @@ package cn.s3bit.th902.gamecontents.components;
  */
 public abstract class Component {
 	private boolean mIsDead = false;
+	/**
+	 * Initialize Logic.
+	 */
+	public abstract void Initialize(Entity entity);
 	/**
 	 * Update Logic.
 	 */
