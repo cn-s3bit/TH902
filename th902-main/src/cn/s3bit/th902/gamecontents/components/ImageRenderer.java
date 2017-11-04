@@ -10,33 +10,28 @@ import cn.s3bit.th902.gamecontents.Entity;
 public class ImageRenderer extends Component {
 	Transform transform = null;
 	public Image image = null;
-	public int depth;
+	private int mDepth;
 	/**
 	 * @param texture The Texture.
 	 * @param depth -1 for the front, 0 for the back.
 	 *              Otherwise it is an index from 0 to count(Images) - 1.
-     *              A larger index is in the front of the smaller.
+	 *              A larger index is in the front of the smaller.
 	 */
 	public ImageRenderer(Texture texture, int depth) {
 		image = new Image(texture);
 		image.setBounds(0, 0, texture.getWidth(), texture.getHeight());
-		GameMain.instance.activeStage.addActor(image);
-		this.depth = depth;
+		mDepth = depth;
 	}
 	
 	@Override
 	public void Initialize(Entity entity) {
 		transform = entity.GetComponent(Transform.class);
+		GameMain.instance.activeStage.addActor(image);
+		setDepth(mDepth);
 	}
 	
 	@Override
 	public void Update() {
-		if (depth == -1) {
-			image.toFront();
-		}
-		else {
-			image.setZIndex(depth);
-		}
 		image.setPosition(transform.position.x, transform.position.y, Align.center);
 		image.setRotation(transform.rotation);
 		image.setScale(transform.scale.x, transform.scale.y);
@@ -46,5 +41,20 @@ public class ImageRenderer extends Component {
 	public void Kill() {
 		image.remove();
 		super.Kill();
+	}
+	
+	/**
+	 * @param depth -1 for the front, 0 for the back.
+	 *              Otherwise it is an index from 0 to count(Images) - 1.
+	 *              A larger index is in the front of the smaller.
+	 */
+	public void setDepth(int depth) {
+		mDepth = depth;
+		if (mDepth == -1) {
+			image.toFront();
+		}
+		else {
+			image.setZIndex(mDepth);
+		}
 	}
 }
