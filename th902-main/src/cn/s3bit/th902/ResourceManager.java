@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.Texture;
 public final class ResourceManager {
 	public static HashMap<String, Texture> textures = new HashMap<>();
 	public static ArrayList<Texture> barrages = new ArrayList<>();
+	public static ArrayList<Texture> enemies = new ArrayList<>();
 	public static void Load() {
 		textures.clear();
 		ArrayList<String> toLoad = new ArrayList<>();
@@ -19,6 +20,9 @@ public final class ResourceManager {
 		}
 		for (int i = 0; i <= 233; i++) {
 			barrages.add(new Texture(Gdx.files.internal("resources/Barrages/proj" + i + ".png")));
+		}
+		for (int i = 1; i <= 1; i++) {
+			enemies.add(new Texture(Gdx.files.internal("resources/Enemies/enemy" + i + ".png")));
 		}
 		Collections.addAll(toLoad, new String[] {
 			"Bomb",
