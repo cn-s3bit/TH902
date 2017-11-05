@@ -21,7 +21,7 @@ public final class ResourceManager {
 		for (int i = 0; i <= 233; i++) {
 			barrages.add(new Texture(Gdx.files.internal("resources/Barrages/proj" + i + ".png")));
 		}
-		for (int i = 1; i <= 1; i++) {
+		for (int i = 0; i <= 0; i++) {
 			enemies.add(new Texture(Gdx.files.internal("resources/Enemies/enemy" + i + ".png")));
 		}
 		Collections.addAll(toLoad, new String[] {
