@@ -48,6 +48,11 @@ public class MainMenuScreen extends ScreenAdapter {
 			Entity.postUpdate.add(() -> { GameMain.instance.setScreen(new DifficultySelectScreen()); });
 		});
 		last.isSelected = true;
+		KeyboardSelectable exitSelectable = new KeyboardSelectable(() -> {
+			System.exit(0);
+		});
+		last.linkedNode.insertAfter(exitSelectable.linkedNode);
+		exit.AddComponent(exitSelectable);
 		button1Entity.AddComponent(last);
 	}
 
