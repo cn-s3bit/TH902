@@ -17,12 +17,29 @@ public class FightScreen extends ScreenAdapter {
 	public void show() {
 		super.show();
 		bf = new BitmapFont();
-		Entity fightScreenEntity = Entity.Create();
-		fightScreenEntity.AddComponent(new Transform(new Vector2(480, 360)));
-		fightScreenEntity.AddComponent(new ImageRenderer(ResourceManager.textures.get("FightScreen"), 0));
-		
 		Entity player = Entity.Create();
+		Entity fightScreen = Entity.Create();
+		Entity difficulty = Entity.Create();
+		Entity score = Entity.Create();
+		Entity highScore = Entity.Create();
+		Entity graze = Entity.Create();
+		Entity players = Entity.Create();
+		Entity spellCard = Entity.Create();
+		Entity bomb = Entity.Create();
+		Entity heart = Entity.Create();
+		
+		fightScreen.AddComponent(new Transform(new Vector2(480, 360)));
 		player.AddComponent(new Transform(new Vector2(240, 160), new Vector2(0.4f, 0.4f)));
+		difficulty.AddComponent(new Transform(new Vector2(240, 160)));
+		score.AddComponent(new Transform(new Vector2(480, 360)));
+		highScore.AddComponent(new Transform(new Vector2(480, 360)));
+		graze.AddComponent(new Transform(new Vector2(480, 360)));
+		players.AddComponent(new Transform(new Vector2(480, 360)));
+		spellCard.AddComponent(new Transform(new Vector2(480, 360)));
+		bomb.AddComponent(new Transform(new Vector2(480, 360)));
+		heart.AddComponent(new Transform(new Vector2(480, 360)));
+		
+		fightScreen.AddComponent(new ImageRenderer(ResourceManager.textures.get("FightScreen"), 0));
 		player.AddComponent(new PlayerReimu());
 	}
 

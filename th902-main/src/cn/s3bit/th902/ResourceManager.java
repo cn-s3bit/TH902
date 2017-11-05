@@ -36,7 +36,12 @@ public final class ResourceManager {
 			"SelectDifficulty",	
 			"SpellCard",
 			"StoryMode",	
-			"Reimu"
+			"Reimu",
+			"Graze",
+			"HighScore",
+			"Score",
+			"Point",
+			"Power"
 		});
 		for (String string : toLoad) {
 			AddTexture(string, "resources/" + string + ".png", FileType.Internal);
