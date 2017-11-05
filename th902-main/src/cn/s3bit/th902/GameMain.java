@@ -23,8 +23,8 @@ public class GameMain extends Game {
 	public void create() {
 		instance = this;
 		ResourceManager.Load();
-		//setScreen(new MainMenuScreen());
-		setScreen(new FightScreen());
+		setScreen(new MainMenuScreen());
+		//setScreen(new FightScreen());
 		//setScreen(new DifficultySelectScreen());
 		//setScreen(new CharacterSelectScreen());
 	}

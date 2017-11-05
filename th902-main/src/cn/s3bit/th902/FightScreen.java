@@ -46,7 +46,6 @@ public class FightScreen extends ScreenAdapter {
 		heart.AddComponent(new Transform(new Vector2(670, 500)));
 
 		fightScreen.AddComponent(new ImageRenderer(ResourceManager.textures.get("FightScreen"), 0));
-		_difficulty = 4;
 		if (_difficulty > 0 && _difficulty < 5)
 			difficulty.AddComponent(new ImageRenderer(ResourceManager.textures.get(mDifficulty[_difficulty - 1]), 1));
 		score.AddComponent(new ImageRenderer(ResourceManager.textures.get("Score"), 1));
