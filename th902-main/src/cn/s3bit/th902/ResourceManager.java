@@ -10,11 +10,15 @@ import com.badlogic.gdx.graphics.Texture;
 
 public final class ResourceManager {
 	public static HashMap<String, Texture> textures = new HashMap<>();
+	public static ArrayList<Texture> barrages = new ArrayList<>();
 	public static void Load() {
 		textures.clear();
 		ArrayList<String> toLoad = new ArrayList<>();
 		for (int i = 1; i <= 5; i++) {
 			toLoad.add("Background" + i);
+		}
+		for (int i = 0; i <= 233; i++) {
+			barrages.add(new Texture(Gdx.files.internal("resources/Barrages/proj" + i + ".png")));
 		}
 		Collections.addAll(toLoad, new String[] {
 			"Bomb",

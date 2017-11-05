@@ -51,7 +51,7 @@ public abstract class Player extends Component {
 			velocity.nor().scl(6f);
 		transform.position.add(velocity);
 		transform.position.x = MathUtils.clamp(transform.position.x, 20, 490);
-		transform.position.y = MathUtils.clamp(transform.position.y, 20, 695);
+		transform.position.y = MathUtils.clamp(transform.position.y, 20, 700);
 		playerAnimation.Update();
 	}
 	
