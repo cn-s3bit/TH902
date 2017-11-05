@@ -19,6 +19,7 @@ public final class ResourceManager {
 			toLoad.add("Background" + i);
 		}
 		for (int i = 0; i <= 236; i++) {
+
 			barrages.add(new Texture(Gdx.files.internal("resources/Barrages/proj" + i + ".png")));
 		}
 		for (int i = 0; i <= 0; i++) {
