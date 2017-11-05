@@ -31,6 +31,10 @@ public abstract class Player extends Component {
 	@Override
 	public void Update() {
 		JudgingSystem.playerJudge.set(transform.position);
+		JudgingSystem.CalculatePlayerCollided();
+		if (JudgingSystem.isPlayerCollided) {
+			System.out.println("Collided!");
+		}
 		velocity.setZero();
 		if (Gdx.input.isKeyPressed(KeySettings.down)) {
 			velocity.add(0, -1);
@@ -52,7 +56,7 @@ public abstract class Player extends Component {
 		transform.position.add(velocity);
 		transform.position.x = MathUtils.clamp(transform.position.x, 20, 490);
 		transform.position.y = MathUtils.clamp(transform.position.y, 20, 700);
-		playerAnimation.Update();
+		playerAnimation.Update(!slow);
 	}
 	
 	@Override
@@ -64,9 +68,11 @@ public abstract class Player extends Component {
 	
 	public static class PlayerAnimation extends TextureRegionDrawable implements Disposable {
 		TextureRegion[] regions = new TextureRegion[8];
+		TextureRegion nullRegion = null;
 		int stat = 0;
 
 		public PlayerAnimation() {
+			nullRegion = new TextureRegion(new Texture(new Pixmap(1, 1, Pixmap.Format.RGBA8888)));
 			for (int i = 0; i < regions.length; i++) {
 				Pixmap pixmap = new Pixmap(64, 64, Pixmap.Format.RGBA8888);
 				pixmap.setColor(0, 0, 1, 1);
@@ -85,9 +91,14 @@ public abstract class Player extends Component {
 			setRegion(regions[0]);
 		}
 
-		public void Update() {
-			stat++;
-			setRegion(regions[stat % regions.length]);
+		public void Update(boolean black) {
+			if (black) {
+				setRegion(nullRegion);
+			}
+			else {
+				stat++;
+				setRegion(regions[stat % regions.length]);
+			}
 		}
 
 		@Override

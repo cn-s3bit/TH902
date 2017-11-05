@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import cn.s3bit.th902.ResourceManager;
 import cn.s3bit.th902.gamecontents.Entity;
+import cn.s3bit.th902.gamecontents.JudgingSystem;
 import cn.s3bit.th902.gamecontents.components.Component;
 import cn.s3bit.th902.gamecontents.components.ImageRenderer;
 import cn.s3bit.th902.gamecontents.components.TrailRenderer;
@@ -28,6 +29,7 @@ public class ReimuBullet1 extends Component {
 	@Override
 	public void Initialize(Entity entity) {
 		transform = entity.GetComponent(Transform.class);
+		JudgingSystem.friendlyJudges.add(transform.position);
 		this.entity = entity;
 	}
 
@@ -39,4 +41,9 @@ public class ReimuBullet1 extends Component {
 		}
 	}
 
+	@Override
+	public void Kill() {
+		JudgingSystem.friendlyJudges.remove(transform.position);
+		super.Kill();
+	}
 }
