@@ -12,12 +12,12 @@ public class Transform extends Component {
 	/**
 	 * Position. Should be the center of the entity.
 	 */
-	Vector2 position;
+	public Vector2 position;
 	/**
 	 * Rotation, in degrees.
 	 */
-	float rotation;
-	Vector2 scale;
+	public float rotation;
+	public Vector2 scale;
 	/**
 	 * Constructor method.
 	 * @param pos Initial position
