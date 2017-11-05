@@ -71,4 +71,9 @@ public class BaseSprite extends Component {
 		}
 	}
 
+	@Override
+	public void Kill() {
+		JudgingSystem.enemyJudges.remove(judgeCircle);
+		super.Kill();
+	}
 }
