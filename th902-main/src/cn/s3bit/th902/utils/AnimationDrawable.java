@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class AnimationDrawable extends TextureRegionDrawable {
 	private Animation<TextureRegion> mAnimation;
-	float currentTime = 0;
+	public float currentTime = 0;
 	public void advance(float delta) {
 		currentTime += delta;
 		setRegion(mAnimation.getKeyFrame(currentTime, false));
