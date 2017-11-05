@@ -15,28 +15,35 @@ public class MainMenuScreen extends ScreenAdapter {
 		// TODO Add UI Entities Here
 		Entity backgroundEntity = Entity.Create();
 		Entity button1Entity = Entity.Create();
+		Entity exit = Entity.Create();
 		byte select = (byte) (Math.random() * 5 + 1);
 		// select = 5;
 		switch (select) {
 		case 2:
 			button1Entity.AddComponent(new Transform(new Vector2(300, 650)));
+			exit.AddComponent(new Transform(new Vector2(300, 600)));
 			break;
 		case 3:
 			button1Entity.AddComponent(new Transform(new Vector2(280, 630)));
+			exit.AddComponent(new Transform(new Vector2(280, 580)));
 			break;
 		case 4:
 			button1Entity.AddComponent(new Transform(new Vector2(900, 650)));
+			exit.AddComponent(new Transform(new Vector2(900, 600)));
 			break;
 		case 5:
 			button1Entity.AddComponent(new Transform(new Vector2(870, 600)));
+			exit.AddComponent(new Transform(new Vector2(870, 550)));
 			break;
 		default:
 			button1Entity.AddComponent(new Transform(new Vector2(620, 240)));
+			exit.AddComponent(new Transform(new Vector2(620, 190)));
 			break;
 		}
 		backgroundEntity.AddComponent(new Transform(new Vector2(480, 360)));
 		backgroundEntity.AddComponent(new ImageRenderer(ResourceManager.textures.get("Background" + select), 0));
 		button1Entity.AddComponent(new ImageRenderer(ResourceManager.textures.get("StoryMode"), 1));
+		exit.AddComponent(new ImageRenderer(ResourceManager.textures.get("Exit"), 1));
 		KeyboardSelectable last = new KeyboardSelectable(() -> {
 			Entity.postUpdate.add(() -> { GameMain.instance.setScreen(new DifficultySelectScreen()); });
 		});
