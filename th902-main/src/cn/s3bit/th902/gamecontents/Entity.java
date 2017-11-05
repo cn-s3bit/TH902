@@ -2,7 +2,6 @@ package cn.s3bit.th902.gamecontents;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -27,8 +26,11 @@ public class Entity {
 	}
 	
 	public void Update() {
-		for (Entry<Class<?>, Component> entry : mComponents.entrySet())
+		Object[] entries =  mComponents.entrySet().toArray();
+		for (Object obj : entries)
 		{
+			@SuppressWarnings("unchecked")
+			Entry<Class<?>, Component> entry = (Entry<Class<?>, Component>) obj;
 			entry.getValue().Update();
 			if (entry.getValue().isDead()) {
 				toDel.add(entry.getKey());
@@ -67,10 +69,11 @@ public class Entity {
 	}
 	
 	public void Destroy() {
-		for (Component component : mComponents.values())
+		Component[] components = (Component[]) mComponents.values().toArray(new Component[mComponents.values().size()]);
+		for (Component component : components)
 			component.Kill();
 		mComponents.clear();
-		postUpdate.add(() -> { instances.remove(this); });
+		instances.remove(this);
 	}
 	
 	public static void Reset() {
@@ -81,9 +84,9 @@ public class Entity {
 	}
 	
 	public static void UpdateAll() {
-		for (Iterator<Entity> iterator = instances.iterator(); iterator.hasNext();) {
-			Entity entity = iterator.next();
-			entity.Update();
+		Entity[] entities = (Entity[]) instances.toArray(new Entity[instances.size()]);
+		for (int i = 0; i < entities.length; i++) {
+			entities[i].Update();
 		}
 		while (!postUpdate.isEmpty()) {
 			postUpdate.poll().run();
