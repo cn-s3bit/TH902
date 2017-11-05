@@ -61,6 +61,7 @@ public class ImageGroupRenderer extends Component {
 	@Override
 	public void Update() {
 		group.setPosition(transform.position.x, transform.position.y, Align.center);
+		group.setOrigin(Align.center);
 		group.setRotation(transform.rotation);
 		group.setScale(transform.scale.x, transform.scale.y);
 	}

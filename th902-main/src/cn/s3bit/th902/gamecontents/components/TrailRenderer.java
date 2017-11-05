@@ -61,11 +61,13 @@ public class TrailRenderer extends Component {
 				continue;
 			}
 			drawers[i].setPosition((oldTrail.x + trail.x) / 2, (oldTrail.y + trail.y) / 2, Align.center);
+			drawers[i].setOrigin(Align.center);
 			drawers[i].setRotation(transform.rotation);
 			drawers[i].setScale(transform.scale.x, transform.scale.y);
 			drawers[i].setColor(1, 1, 1, alpha);
 			i++;
 			drawers[i].setPosition(trail.x, trail.y, Align.center);
+			drawers[i].setOrigin(Align.center);
 			drawers[i].setRotation(transform.rotation);
 			drawers[i].setScale(transform.scale.x, transform.scale.y);
 			drawers[i].setColor(1, 1, 1, alpha);

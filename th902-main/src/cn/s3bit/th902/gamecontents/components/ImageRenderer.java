@@ -45,6 +45,7 @@ public class ImageRenderer extends Component {
 	@Override
 	public void Update() {
 		image.setPosition(transform.position.x, transform.position.y, Align.center);
+		image.setOrigin(Align.center);
 		image.setRotation(transform.rotation);
 		image.setScale(transform.scale.x, transform.scale.y);
 	}
