@@ -22,10 +22,10 @@ public class DifficultySelectScreen extends ScreenAdapter {
 		
 		difficultySelectScreenEntity.AddComponent(new Transform(new Vector2(480, 360)));
 		selectDifficultyEntity.AddComponent(new Transform(new Vector2(600, 580)));
-		easyEntity.AddComponent(new Transform(new Vector2(680, 500)));
-		normalEntity.AddComponent(new Transform(new Vector2(660, 420)));
-		hardEntity.AddComponent(new Transform(new Vector2(680, 340)));
-		lunaticEntity.AddComponent(new Transform(new Vector2(665, 260)));
+		easyEntity.AddComponent(new Transform(new Vector2(480, 500)));
+		normalEntity.AddComponent(new Transform(new Vector2(480, 420)));
+		hardEntity.AddComponent(new Transform(new Vector2(480, 340)));
+		lunaticEntity.AddComponent(new Transform(new Vector2(480, 260)));
 		
 		difficultySelectScreenEntity.AddComponent(new ImageRenderer(ResourceManager.textures.get("DifficultySelect"), 0));
 		selectDifficultyEntity.AddComponent(new ImageRenderer(ResourceManager.textures.get("SelectDifficulty"), 1));

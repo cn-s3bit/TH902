@@ -12,6 +12,8 @@ import cn.s3bit.th902.gamecontents.components.player.PlayerReimu;
 
 public class FightScreen extends ScreenAdapter {
 	private BitmapFont bf;
+	private int _difficulty = DifficultySelectScreen.difficulty;
+	private String mDifficulty[] = {"Easy","Normal","Hard","Lunatic"};
 
 	@Override
 	public void show() {
@@ -30,7 +32,7 @@ public class FightScreen extends ScreenAdapter {
 		
 		fightScreen.AddComponent(new Transform(new Vector2(480, 360)));
 		player.AddComponent(new Transform(new Vector2(240, 160), new Vector2(0.4f, 0.4f)));
-		difficulty.AddComponent(new Transform(new Vector2(240, 160)));
+		difficulty.AddComponent(new Transform(new Vector2(730, 670))); 
 		score.AddComponent(new Transform(new Vector2(480, 360)));
 		highScore.AddComponent(new Transform(new Vector2(480, 360)));
 		graze.AddComponent(new Transform(new Vector2(480, 360)));
@@ -40,6 +42,10 @@ public class FightScreen extends ScreenAdapter {
 		heart.AddComponent(new Transform(new Vector2(480, 360)));
 		
 		fightScreen.AddComponent(new ImageRenderer(ResourceManager.textures.get("FightScreen"), 0));
+		_difficulty = 4;
+		if(_difficulty > 0 && _difficulty < 5)
+			difficulty.AddComponent(new ImageRenderer(ResourceManager.textures.get(mDifficulty[_difficulty - 1]), 1));;
+			score.AddComponent(new ImageRenderer(ResourceManager.textures.get("Score"), 0));
 		player.AddComponent(new PlayerReimu());
 	}
 
