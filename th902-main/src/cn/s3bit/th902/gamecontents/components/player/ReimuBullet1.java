@@ -13,19 +13,40 @@ import cn.s3bit.th902.gamecontents.components.Transform;
 public class ReimuBullet1 extends Component {
 	/**
 	 * An easy method to create the bullet.
+	 * 
 	 * @return The created Entity.
 	 */
-	public static Entity Create(Vector2 position) {
+
+	public static final int BulletTypeSelfFast = 0;
+	public static final int BulletTypeSelfSlow = 1;
+	public static final int BulletTypeWingFast = 2;
+	public static final int BulletTypeWingSlow = 3;
+
+	public static Entity Create(Vector2 position, int bulletType) {
 		Entity entity = Entity.Create();
 		entity.AddComponent(new Transform(position));
-		entity.AddComponent(new ImageRenderer(ResourceManager.barrages.get(65), 0));
-		entity.AddComponent(new TrailRenderer(ResourceManager.barrages.get(67), 6, 0));
+		switch (bulletType) {
+		case BulletTypeSelfFast:
+			entity.AddComponent(new ImageRenderer(ResourceManager.barrages.get(65), 0));
+			entity.AddComponent(new TrailRenderer(ResourceManager.barrages.get(67), 6, 0));
+			break;
+		case BulletTypeSelfSlow:
+
+			break;
+		case BulletTypeWingFast:
+			entity.AddComponent(new ImageRenderer(ResourceManager.barrages.get(237), 0));
+			break;
+		case BulletTypeWingSlow:
+			entity.AddComponent(new ImageRenderer(ResourceManager.barrages.get(238), 0));
+			break;
+		}
 		entity.AddComponent(new ReimuBullet1());
 		return entity;
 	}
 
 	protected Transform transform;
 	protected Entity entity;
+
 	@Override
 	public void Initialize(Entity entity) {
 		transform = entity.GetComponent(Transform.class);
