@@ -24,7 +24,6 @@ public class PlayerReimu extends Player {
 	public int existTime;
 	private ReimuWing mReimuWing1;
 	private ReimuWing mReimuWing2;
-
 	public PlayerReimu() {
 		Texture texture = ResourceManager.textures.get("Reimu");
 		TextureRegion[][] splitted = TextureRegion.split(texture, texture.getWidth() / 8, texture.getHeight() / 3);
@@ -42,8 +41,8 @@ public class PlayerReimu extends Player {
 		animationDrawable.setAnimation(animationStay);
 		existTime = 0;
 		entity.AddComponent(new ImageGroupRenderer(new Drawable[] { animationDrawable, playerAnimation }, 0, null));
-		mReimuWing1 = new ReimuWing(new Vector2(transform.position.x, transform.position.y + 30));
-		mReimuWing2 = new ReimuWing(new Vector2(transform.position.x + 30, transform.position.y));
+		mReimuWing1 = new ReimuWing(new Vector2(transform.position.x, transform.position.y + 30),4f);
+		mReimuWing2 = new ReimuWing(new Vector2(transform.position.x + 30, transform.position.y),-4f);
 	}
 
 	@Override
@@ -58,6 +57,8 @@ public class PlayerReimu extends Player {
 			mReimuWing2.set(new Vector2(transform.position.x - 60, transform.position.y), slow);
 		}
 
+		
+		
 		animationDrawable.advance(1);
 		if (velocity.x > 0 && animationDrawable.getAnimation() != animationRight) {
 			animationDrawable.setAnimation(animationRight);
@@ -75,5 +76,11 @@ public class PlayerReimu extends Player {
 				ReimuBullet1.Create(transform.position.cpy().add(0, 24), ReimuBullet1.BulletTypeWingSlow);
 			}
 		}
+		//Use bomb
+		if (Bomb) {
+			ReimuBullet1.Create(transform.position.cpy().add(MathUtils.random(-90, 90), -transform.position.y), ReimuBullet1.BulletTypeSelfFast);
+			ReimuBullet1.Create(transform.position.cpy().add(MathUtils.random(-90, 90), -transform.position.y), ReimuBullet1.BulletTypeSelfFast);
+		}
+		
 	}
 }

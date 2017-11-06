@@ -20,6 +20,8 @@ public abstract class Player extends Component {
 	public boolean slow;
 	protected Transform transform;
 	protected PlayerAnimation playerAnimation;
+	public boolean Bomb=false;
+	public int BombTime=0;
 	@Override
 	public void Initialize(Entity entity) {
 		transform = entity.GetComponent(Transform.class);
@@ -49,6 +51,17 @@ public abstract class Player extends Component {
 			velocity.add(1, 0);
 		}
 		slow = Gdx.input.isKeyPressed(KeySettings.shift);
+		
+		if (Gdx.input.isKeyPressed(KeySettings.negativeKey)) {
+			Bomb=true;
+			BombTime=300;
+		}
+		if (Bomb) {
+			BombTime--;
+			if (BombTime==0) {
+				Bomb=false;
+			}
+		}
 		if (slow)
 			velocity.nor().scl(3f);
 		else
