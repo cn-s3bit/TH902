@@ -29,10 +29,10 @@ public class PlayerReimu extends Player {
 		TextureRegion[][] splitted = TextureRegion.split(texture, texture.getWidth() / 8, texture.getHeight() / 3);
 		animationStay = new Animation<TextureRegion>(5, splitted[0]);
 		animationStay.setPlayMode(PlayMode.LOOP);
-		animationLeft = new Animation<TextureRegion>(2, splitted[1]);
-		animationLeft.setPlayMode(PlayMode.NORMAL);
-		animationRight = new Animation<TextureRegion>(2, splitted[2]);
-		animationRight.setPlayMode(PlayMode.NORMAL);
+		animationLeft = new Animation<TextureRegion>(4, splitted[1]);
+		animationLeft.setPlayMode(PlayMode.LOOP);
+		animationRight = new Animation<TextureRegion>(4, splitted[2]);
+		animationRight.setPlayMode(PlayMode.LOOP);
 	}
 
 	@Override
