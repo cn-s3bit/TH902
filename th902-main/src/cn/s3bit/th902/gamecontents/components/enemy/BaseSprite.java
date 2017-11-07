@@ -22,10 +22,13 @@ public class BaseSprite extends Component {
 	public Entity entity;
 	public static Texture texture;
 	public static TextureRegion[][] regions;
+	public int Hp = 0;
+
 	/**
 	 * @param color 0 - blue; 1 - red; 2 - green; 3 - yellow
 	 */
 	public static Entity Create(Vector2 position, int color) {
+
 		if (color < 0 || color > 3) {
 			throw new IllegalArgumentException("Color of the enemy (sprite) should be between 0 and 3!");
 		}
@@ -41,6 +44,7 @@ public class BaseSprite extends Component {
 		entity.AddComponent(component);
 		return entity;
 	}
+
 	@Override
 	public void Initialize(Entity entity) {
 		velocity = new Vector2();
@@ -49,25 +53,33 @@ public class BaseSprite extends Component {
 		judgeCircle = new Circle(transform.position, 50 * transform.scale.x);
 		JudgingSystem.enemyJudges.add(judgeCircle);
 		this.entity = entity;
+		Hp = 20;
 	}
 
 	protected boolean animateFlag = true;
+
 	@Override
 	public void Update() {
+
+		transform.position.add(new Vector2(0.5f, 0.5f));
+		judgeCircle.setPosition(transform.position);
+
 		if (animateFlag) {
 			if (animation.currentTime >= 2.84) {
 				animateFlag = false;
 			}
 			animation.advance(0.08f);
-		}
-		else {
+		} else {
 			if (animation.currentTime <= 0.16) {
 				animateFlag = true;
 			}
 			animation.advance(-0.08f);
 		}
 		if (JudgingSystem.isCollidedByFriendlyBullets(judgeCircle)) {
-			entity.Destroy();
+			Hp--;
+			if (Hp < 0) {
+				entity.Destroy();
+			}
 		}
 	}
 

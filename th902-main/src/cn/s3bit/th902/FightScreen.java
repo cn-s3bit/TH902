@@ -4,16 +4,17 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
-
 import cn.s3bit.th902.gamecontents.Entity;
 import cn.s3bit.th902.gamecontents.components.ImageRenderer;
 import cn.s3bit.th902.gamecontents.components.Transform;
+import cn.s3bit.th902.gamecontents.components.enemy.BaseSprite;
 import cn.s3bit.th902.gamecontents.components.player.PlayerReimu;
 
 public class FightScreen extends ScreenAdapter {
 	private BitmapFont bf;
 	private int _difficulty = DifficultySelectScreen.difficulty;
 	private String mDifficulty[] = { "Easy", "Normal", "Hard", "Lunatic" };
+	public static int gameTime=0;
 
 	@Override
 	public void show() {
@@ -64,8 +65,24 @@ public class FightScreen extends ScreenAdapter {
 	public void render(float delta) {
 		Entity.UpdateAll();
 		super.render(delta);
+		gameTime++;
 		GameMain.instance.activeStage.getBatch().begin();
 		bf.draw(GameMain.instance.activeStage.getBatch(), "FPS: " + Gdx.graphics.getFramesPerSecond(), 20, 35);
 		GameMain.instance.activeStage.getBatch().end();
+
+		switch (gameTime) {
+        case 30:
+        	BaseSprite.Create(new Vector2(200,400), 0);
+            break;
+        case 60:
+        	BaseSprite.Create(new Vector2(300,400), 1);
+            break;
+        case 120:
+        	BaseSprite.Create(new Vector2(150,300), 2);
+            break;
+        case 180:
+        	BaseSprite.Create(new Vector2(200,350), 3);
+        	break;
+		}
 	}
 }
