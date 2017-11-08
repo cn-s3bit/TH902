@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
 import cn.s3bit.th902.ResourceManager;
@@ -23,6 +24,7 @@ public class BaseSprite extends Component {
 	public static Texture texture;
 	public static TextureRegion[][] regions;
 	public int Hp = 0;
+	public int shootTime=0;
 
 	/**
 	 * @param color 0 - blue; 1 - red; 2 - green; 3 - yellow
@@ -61,9 +63,18 @@ public class BaseSprite extends Component {
 	@Override
 	public void Update() {
 
-		transform.position.add(new Vector2(0.5f, 0.5f));
+		transform.position.add(new Vector2(0.3f, 0.5f));
+		shootTime++;
 		judgeCircle.setPosition(transform.position);
 
+		if (transform.position.x>550||transform.position.x<-50||transform.position.y>800||transform.position.y<-50) {
+			Kill();
+		}
+		if (shootTime%10==0) {
+			BaseProjectile.Create(transform.position.cpy(), BaseProjectile.bulletType.FormArrowM, MathUtils.random(0,7));
+			BaseProjectile.Create(transform.position.cpy(),MathUtils.random(0, 24),MathUtils.random(0,7));
+		}
+		
 		if (animateFlag) {
 			if (animation.currentTime >= 2.84) {
 				animateFlag = false;

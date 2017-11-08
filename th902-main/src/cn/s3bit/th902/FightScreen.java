@@ -15,6 +15,8 @@ public class FightScreen extends ScreenAdapter {
 	private int _difficulty = DifficultySelectScreen.difficulty;
 	private String mDifficulty[] = { "Easy", "Normal", "Hard", "Lunatic" };
 	public static int gameTime=0;
+	public static int playerCount=2;
+	public static int bombCount=3;
 
 	@Override
 	public void show() {
@@ -65,24 +67,33 @@ public class FightScreen extends ScreenAdapter {
 	public void render(float delta) {
 		Entity.UpdateAll();
 		super.render(delta);
+		drawStatus();
 		gameTime++;
 		GameMain.instance.activeStage.getBatch().begin();
-		bf.draw(GameMain.instance.activeStage.getBatch(), "FPS: " + Gdx.graphics.getFramesPerSecond(), 20, 35);
+		bf.draw(GameMain.instance.activeStage.getBatch(), "FPS: " + Gdx.graphics.getFramesPerSecond()
+		+"\ndifficulty:"+DifficultySelectScreen.difficulty
+		+"\nplayer:"+playerCount
+		+"\nbomb:"+bombCount
+		, 20, 705);
 		GameMain.instance.activeStage.getBatch().end();
 
 		switch (gameTime) {
         case 30:
-        	BaseSprite.Create(new Vector2(200,400), 0);
+        	BaseSprite.Create(new Vector2(000,400), 0);
             break;
         case 60:
-        	BaseSprite.Create(new Vector2(300,400), 1);
+        	BaseSprite.Create(new Vector2(100,400), 1);
             break;
         case 120:
         	BaseSprite.Create(new Vector2(150,300), 2);
             break;
         case 180:
-        	BaseSprite.Create(new Vector2(200,350), 3);
+        	BaseSprite.Create(new Vector2(700,350), 3);
+        	gameTime=0;
         	break;
 		}
+	}
+	private void drawStatus(){
+		
 	}
 }

@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Disposable;
 
+import cn.s3bit.th902.FightScreen;
 import cn.s3bit.th902.KeySettings;
 import cn.s3bit.th902.gamecontents.Entity;
 import cn.s3bit.th902.gamecontents.JudgingSystem;
@@ -36,6 +37,7 @@ public abstract class Player extends Component {
 		JudgingSystem.CalculatePlayerCollided();
 		if (JudgingSystem.isPlayerCollided) {
 			System.out.println("Collided!");
+			FightScreen.playerCount--;
 		}
 		velocity.setZero();
 		if (Gdx.input.isKeyPressed(KeySettings.down)) {
@@ -53,8 +55,11 @@ public abstract class Player extends Component {
 		slow = Gdx.input.isKeyPressed(KeySettings.shift);
 		
 		if (Gdx.input.isKeyPressed(KeySettings.negativeKey)) {
+			if(!Bomb&&FightScreen.bombCount>0){
 			Bomb=true;
 			BombTime=300;
+			FightScreen.bombCount--;
+			}
 		}
 		if (Bomb) {
 			BombTime--;

@@ -27,8 +27,8 @@ public class ReimuBullet1 extends Component {
 		entity.AddComponent(new Transform(position));
 		switch (bulletType) {
 		case BulletTypeSelfFast:
-			entity.AddComponent(new ImageRenderer(ResourceManager.barrages.get(65), 0));
-			entity.AddComponent(new TrailRenderer(ResourceManager.barrages.get(67), 6, 0));
+			entity.AddComponent(new ImageRenderer(ResourceManager.barrages.get(239), 0));
+			entity.AddComponent(new TrailRenderer(ResourceManager.barrages.get(240), 6, 0));
 			break;
 		case BulletTypeSelfSlow:
 
