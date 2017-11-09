@@ -97,6 +97,10 @@ public class BaseSprite extends Component {
 	private void ShootLogic() {
 		if (shootTime % 5 == 0) {
 			BaseProjectile.Create(transform.position.cpy(), MathUtils.random(0, 24), MathUtils.random(0, 7));
+			if (MathUtils.random(0,5)==2) {
+				BaseProjectile.CreateSpecialBullet(transform.position.cpy(),MathUtils.random(230,235));
+			}
+			
 		}
 	}
 
