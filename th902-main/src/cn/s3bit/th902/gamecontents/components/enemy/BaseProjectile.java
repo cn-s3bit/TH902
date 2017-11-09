@@ -99,13 +99,17 @@ public class BaseProjectile extends Component {
 		transform = entity.GetComponent(Transform.class);
 		this.entity = entity;
 		dirVec=new Vector2(MathUtils.random(-3,3),MathUtils.random(-3,3));
+		if (dirVec.equals(new Vector2(0,0))) {
+			entity.Destroy();
+		}
 	}
 
 	@Override
 	public void Update() {
 		transform.position.add(dirVec);
 		transform.rotation=dirVec.angle()-90;
-		if (transform.position.y < -20) {
+		if (transform.position.x > 570 || transform.position.x < -50 || transform.position.y > 800
+				|| transform.position.y < -50) {
 			entity.Destroy();
 		}
 	}
