@@ -71,7 +71,6 @@ public class BaseSprite extends Component {
 			Kill();
 		}
 		if (shootTime%10==0) {
-			BaseProjectile.Create(transform.position.cpy(), BaseProjectile.bulletType.FormArrowM, MathUtils.random(0,7));
 			BaseProjectile.Create(transform.position.cpy(),MathUtils.random(0, 24),MathUtils.random(0,7));
 		}
 		
