@@ -15,7 +15,6 @@ public class BaseProjectile extends Component {
 	 * 
 	 * @return The created Entity.
 	 */
-	public static int bulletCount=0;
 
 	public static final int[][] bulletTypeArray = new int[][] { { 5, 6, 7, 8, 9, 10, 11, 12 }, // 0
 			{ 13, 14, 15, 16, 17, 18, 19, 20 }, // 1
@@ -79,6 +78,40 @@ public class BaseProjectile extends Component {
 		public static final int ColorYellow = 5;
 		public static final int ColorOrange = 6;
 		public static final int ColorGray = 7;
+		
+		public static final int SimpleRed=0;
+		public static final int SimpleGreen=1;
+		public static final int SimpleBlue=2;
+		public static final int BlueLaser=3;
+		public static final int RoundedRectangle=4;
+		public static final int BigRed=21;
+		public static final int BlueWithShadow=22;
+		public static final int BigLightBlue=39;
+		public static final int RedWithShadow=56;
+		public static final int GreenGlue=81;
+		public static final int PurpleWithShadow=98;
+		public static final int GreenWithShadow=134;
+		public static final int OrangeWithShadow=143;
+		public static final int Anchor=160;
+		public static final int Bat=185;
+		public static final int BigBallRed=202;
+		public static final int BigBallBlue=203;
+		public static final int BigBallPurple=204;
+		public static final int BigBallGreen=205;
+		public static final int BigBallYellow=206;
+		public static final int BlackLightBall=208;
+		public static final int MagicCircleRed=208;
+		public static final int MagicCirclePurple=209;
+		public static final int MagicCircleBlue=210;
+		public static final int MagicCircleLightBlue=211;
+		public static final int MagicCircleGreen=212;
+		public static final int MagicCircleYellow=213;
+		public static final int FlowerYellow=230;
+		public static final int FlowerRed=231;
+		public static final int FlowerOrange=232;
+		public static final int RoseRed=233;
+		public static final int RoseBlue=234;
+		public static final int RoseYellow=235;
 	}
 
 	private Vector2 dirVec;
@@ -86,19 +119,30 @@ public class BaseProjectile extends Component {
 		Entity entity = Entity.Create();
 		entity.AddComponent(new Transform(position));
 		entity.AddComponent(new ImageRenderer(ResourceManager.barrages.get(bulletTypeArray[bulletForm][bulletColor]), 0));
-		entity.AddComponent(new BaseProjectile());
-		bulletCount++;
+		entity.AddComponent(new BaseProjectile(bulletForm));
+		return entity;
+	}
+	public static Entity CreateSpecialBullet(Vector2 position, int bulletType) {
+		Entity entity = Entity.Create();
+		entity.AddComponent(new Transform(position));
+		entity.AddComponent(new ImageRenderer(ResourceManager.barrages.get(bulletType), 0));
+		entity.AddComponent(new BaseProjectile(bulletType));
 		return entity;
 	}
 
 	protected Transform transform;
 	protected Entity entity;
-
+	protected int bulletType;
+	
+	public BaseProjectile(int bullrtForm) {
+		bulletType=bullrtForm;
+	}
+	
 	@Override
 	public void Initialize(Entity entity) {
 		transform = entity.GetComponent(Transform.class);
 		this.entity = entity;
-		dirVec=new Vector2(MathUtils.random(-3,3),MathUtils.random(-3,3));
+		dirVec=new Vector2(MathUtils.random(-5,5),MathUtils.random(-5,5));
 		if (dirVec.equals(new Vector2(0,0))) {
 			entity.Destroy();
 		}
@@ -107,16 +151,20 @@ public class BaseProjectile extends Component {
 	@Override
 	public void Update() {
 		transform.position.add(dirVec);
-		transform.rotation=dirVec.angle()-90;
-		if (transform.position.x > 570 || transform.position.x < -50 || transform.position.y > 800
-				|| transform.position.y < -50) {
+		if (bulletType==9||bulletType==14||bulletType==230||bulletType==231||bulletType==232
+				||bulletType==233||bulletType==234||bulletType==235) {
+			transform.rotation+=7;
+		}else {
+			transform.rotation=dirVec.angle()-90;
+		}
+		if (transform.position.x > 570 || transform.position.x < 0 || transform.position.y > 740
+				|| transform.position.y < 0) {
 			entity.Destroy();
 		}
 	}
 
 	@Override
 	public void Kill() {
-		bulletCount--;
 		super.Kill();
 	}
 }
