@@ -68,14 +68,12 @@ public class FightScreen extends ScreenAdapter {
 	public void render(float delta) {
 		Entity.UpdateAll();
 		super.render(delta);
-		drawStatus();
 		gameTime++;
 		GameMain.instance.activeStage.getBatch().begin();
 		bf.draw(GameMain.instance.activeStage.getBatch(), "FPS: " + Gdx.graphics.getFramesPerSecond()
 		+"\ndifficulty:"+DifficultySelectScreen.difficulty
 		+"\nplayer:"+playerCount
 		+"\nbomb:"+bombCount
-		+"\nbullets:"+BaseProjectile.bulletCount
 		, 20, 705);
 		GameMain.instance.activeStage.getBatch().end();
 
@@ -94,8 +92,5 @@ public class FightScreen extends ScreenAdapter {
         	gameTime=0;
         	break;
 		}
-	}
-	private void drawStatus(){
-		
 	}
 }
