@@ -15,6 +15,7 @@ public class BaseProjectile extends Component {
 	 * 
 	 * @return The created Entity.
 	 */
+	public static int bulletCount=0;
 
 	public static final int[][] bulletTypeArray = new int[][] { { 5, 6, 7, 8, 9, 10, 11, 12 }, // 0
 			{ 13, 14, 15, 16, 17, 18, 19, 20 }, // 1
@@ -80,14 +81,13 @@ public class BaseProjectile extends Component {
 		public static final int ColorGray = 7;
 	}
 
+	private Vector2 dirVec;
 	public static Entity Create(Vector2 position, int bulletForm, int bulletColor) {
 		Entity entity = Entity.Create();
 		entity.AddComponent(new Transform(position));
-
-		entity.AddComponent(
-				new ImageRenderer(ResourceManager.barrages.get(bulletTypeArray[bulletForm][bulletColor]), 0));
-
+		entity.AddComponent(new ImageRenderer(ResourceManager.barrages.get(bulletTypeArray[bulletForm][bulletColor]), 0));
 		entity.AddComponent(new BaseProjectile());
+		bulletCount++;
 		return entity;
 	}
 
@@ -97,13 +97,14 @@ public class BaseProjectile extends Component {
 	@Override
 	public void Initialize(Entity entity) {
 		transform = entity.GetComponent(Transform.class);
-		transform.rotation = MathUtils.random(0, 360);
 		this.entity = entity;
+		dirVec=new Vector2(MathUtils.random(-3,3),MathUtils.random(-3,3));
 	}
 
 	@Override
 	public void Update() {
-		transform.position.add(0, -5);
+		transform.position.add(dirVec);
+		transform.rotation=dirVec.angle()-90;
 		if (transform.position.y < -20) {
 			entity.Destroy();
 		}
@@ -111,6 +112,7 @@ public class BaseProjectile extends Component {
 
 	@Override
 	public void Kill() {
+		bulletCount--;
 		super.Kill();
 	}
 }
