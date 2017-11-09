@@ -24,10 +24,11 @@ public class BaseSprite extends Component {
 	public static Texture texture;
 	public static TextureRegion[][] regions;
 	public int Hp = 0;
-	public int shootTime=0;
+	public int shootTime = 0;
 
 	/**
-	 * @param color 0 - blue; 1 - red; 2 - green; 3 - yellow
+	 * @param color
+	 *            0 - blue; 1 - red; 2 - green; 3 - yellow
 	 */
 	public static Entity Create(Vector2 position, int color) {
 
@@ -62,18 +63,13 @@ public class BaseSprite extends Component {
 
 	@Override
 	public void Update() {
-
-		transform.position.add(new Vector2(0.3f, 0.5f));
+		MoveLogic();
 		shootTime++;
 		judgeCircle.setPosition(transform.position);
-
-		if (transform.position.x>550||transform.position.x<-50||transform.position.y>800||transform.position.y<-50) {
+		if (transform.position.x > 580 || transform.position.x < -50 || transform.position.y > 800
+				|| transform.position.y < -50) {
 			Kill();
 		}
-		if (shootTime%10==0) {
-			BaseProjectile.Create(transform.position.cpy(),MathUtils.random(0, 24),MathUtils.random(0,7));
-		}
-		
 		if (animateFlag) {
 			if (animation.currentTime >= 2.84) {
 				animateFlag = false;
@@ -90,6 +86,17 @@ public class BaseSprite extends Component {
 			if (Hp < 0) {
 				entity.Destroy();
 			}
+		}
+		ShootLogic();
+	}
+
+	private void MoveLogic() {
+		transform.position.add(new Vector2(0.3f, 0.5f));
+	}
+
+	private void ShootLogic() {
+		if (shootTime % 5 == 0) {
+			BaseProjectile.Create(transform.position.cpy(), MathUtils.random(0, 24), MathUtils.random(0, 7));
 		}
 	}
 
