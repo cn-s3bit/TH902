@@ -37,16 +37,16 @@ public class FightScreen extends ScreenAdapter {
 
 		fightScreen.AddComponent(new Transform(new Vector2(480, 360)));
 		player.AddComponent(new Transform(new Vector2(240, 160), new Vector2(0.4f, 0.4f)));
-		difficulty.AddComponent(new Transform(new Vector2(730, 670)));
-		score.AddComponent(new Transform(new Vector2(760, 570)));
-		highScore.AddComponent(new Transform(new Vector2(585, 620)));
-		graze.AddComponent(new Transform(new Vector2(760, 300)));
-		point.AddComponent(new Transform(new Vector2(760, 250)));
-		power.AddComponent(new Transform(new Vector2(760, 350)));
-		players.AddComponent(new Transform(new Vector2(760, 500)));
-		spellCard.AddComponent(new Transform(new Vector2(565, 450)));
-		bomb.AddComponent(new Transform(new Vector2(670, 450)));
-		heart.AddComponent(new Transform(new Vector2(670, 500)));
+		difficulty.AddComponent(new Transform(new Vector2(760, 670)));
+		score.AddComponent(new Transform(new Vector2(810, 570)));
+		highScore.AddComponent(new Transform(new Vector2(635, 620)));
+		graze.AddComponent(new Transform(new Vector2(810, 300)));
+		point.AddComponent(new Transform(new Vector2(810, 250)));
+		power.AddComponent(new Transform(new Vector2(810, 350)));
+		players.AddComponent(new Transform(new Vector2(810, 500)));
+		spellCard.AddComponent(new Transform(new Vector2(615, 450)));
+		bomb.AddComponent(new Transform(new Vector2(720, 450)));
+		heart.AddComponent(new Transform(new Vector2(720, 500)));
 
 		fightScreen.AddComponent(new ImageRenderer(ResourceManager.textures.get("FightScreen"), 0));
 		if (_difficulty > 0 && _difficulty < 5)
