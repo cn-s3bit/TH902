@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.Disposable;
 import cn.s3bit.th902.FightScreen;
 import cn.s3bit.th902.KeySettings;
 import cn.s3bit.th902.gamecontents.Entity;
+import cn.s3bit.th902.gamecontents.IJudgeCallback;
 import cn.s3bit.th902.gamecontents.JudgingSystem;
 import cn.s3bit.th902.gamecontents.components.Component;
 import cn.s3bit.th902.gamecontents.components.Transform;
@@ -34,9 +35,10 @@ public abstract class Player extends Component {
 	@Override
 	public void Update() {
 		JudgingSystem.playerJudge.set(transform.position);
-		JudgingSystem.CalculatePlayerCollided();
-		if (JudgingSystem.isPlayerCollided) {
+		IJudgeCallback collision = JudgingSystem.playerCollision();
+		if (collision != null) {
 			System.out.println("Collided!");
+			collision.onCollide();
 			FightScreen.playerCount--;
 		}
 		velocity.setZero();

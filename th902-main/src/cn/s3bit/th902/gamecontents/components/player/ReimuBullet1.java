@@ -4,13 +4,14 @@ import com.badlogic.gdx.math.Vector2;
 
 import cn.s3bit.th902.ResourceManager;
 import cn.s3bit.th902.gamecontents.Entity;
+import cn.s3bit.th902.gamecontents.IJudgeCallback;
 import cn.s3bit.th902.gamecontents.JudgingSystem;
 import cn.s3bit.th902.gamecontents.components.Component;
 import cn.s3bit.th902.gamecontents.components.ImageRenderer;
 import cn.s3bit.th902.gamecontents.components.TrailRenderer;
 import cn.s3bit.th902.gamecontents.components.Transform;
 
-public class ReimuBullet1 extends Component {
+public class ReimuBullet1 extends Component implements IJudgeCallback {
 	/**
 	 * An easy method to create the bullet.
 	 * 
@@ -50,7 +51,7 @@ public class ReimuBullet1 extends Component {
 	@Override
 	public void Initialize(Entity entity) {
 		transform = entity.GetComponent(Transform.class);
-		JudgingSystem.friendlyJudges.add(transform.position);
+		JudgingSystem.registerFriendlyJudge(transform.immutablePosition, this);
 		this.entity = entity;
 	}
 
@@ -64,7 +65,12 @@ public class ReimuBullet1 extends Component {
 
 	@Override
 	public void Kill() {
-		JudgingSystem.friendlyJudges.remove(transform.position);
+		JudgingSystem.unregisterFriendlyJudge(transform.immutablePosition);
 		super.Kill();
+	}
+
+	@Override
+	public void onCollide() {
+		entity.Destroy();
 	}
 }

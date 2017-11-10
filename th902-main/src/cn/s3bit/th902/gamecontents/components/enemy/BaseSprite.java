@@ -5,20 +5,24 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Shape2D;
 import com.badlogic.gdx.math.Vector2;
 
 import cn.s3bit.th902.ResourceManager;
 import cn.s3bit.th902.gamecontents.Entity;
+import cn.s3bit.th902.gamecontents.IJudgeCallback;
 import cn.s3bit.th902.gamecontents.JudgingSystem;
 import cn.s3bit.th902.gamecontents.components.Component;
 import cn.s3bit.th902.gamecontents.components.ImageRenderer;
 import cn.s3bit.th902.gamecontents.components.Transform;
 import cn.s3bit.th902.utils.AnimationDrawable;
+import cn.s3bit.th902.utils.ImmutableWrapper;
 
 public class BaseSprite extends Component {
 	public Vector2 velocity;
 	public Transform transform;
 	public AnimationDrawable animation;
+	public ImmutableWrapper<Shape2D> judgeWrapper;
 	public Circle judgeCircle;
 	public Entity entity;
 	public static Texture texture;
@@ -54,7 +58,8 @@ public class BaseSprite extends Component {
 		transform = entity.GetComponent(Transform.class);
 		entity.AddComponent(new ImageRenderer(animation, 1));
 		judgeCircle = new Circle(transform.position, 50 * transform.scale.x);
-		JudgingSystem.enemyJudges.add(judgeCircle);
+		judgeWrapper = ImmutableWrapper.wrap((Shape2D)judgeCircle);
+		JudgingSystem.registerEnemyJudge(judgeWrapper, IJudgeCallback.NONE);
 		this.entity = entity;
 		Hp = 20;
 	}
@@ -81,8 +86,10 @@ public class BaseSprite extends Component {
 			}
 			animation.advance(-0.08f);
 		}
-		if (JudgingSystem.isCollidedByFriendlyBullets(judgeCircle)) {
+		IJudgeCallback collision = JudgingSystem.collideFriendlyBullets(judgeCircle);
+		if (collision != null) {
 			Hp--;
+			collision.onCollide();
 			if (Hp < 0) {
 				entity.Destroy();
 			}
@@ -91,14 +98,14 @@ public class BaseSprite extends Component {
 	}
 
 	private void MoveLogic() {
-		transform.position.add(new Vector2(0.3f, 0.5f));
+		transform.position.add(0.3f, 0.5f);
 	}
 
 	private void ShootLogic() {
 		if (shootTime % 5 == 0) {
 			BaseProjectile.Create(transform.position.cpy(), MathUtils.random(0, 24), MathUtils.random(0, 7));
-			if (MathUtils.random(0,5)==2) {
-				BaseProjectile.CreateSpecialBullet(transform.position.cpy(),MathUtils.random(230,235));
+			if (MathUtils.random(0, 5) == 2) {
+				BaseProjectile.CreateSpecialBullet(transform.position.cpy(), MathUtils.random(230, 235));
 			}
 			
 		}
@@ -106,7 +113,7 @@ public class BaseSprite extends Component {
 
 	@Override
 	public void Kill() {
-		JudgingSystem.enemyJudges.remove(judgeCircle);
+		JudgingSystem.unregisterEnemyJudge(judgeWrapper);
 		super.Kill();
 	}
 }

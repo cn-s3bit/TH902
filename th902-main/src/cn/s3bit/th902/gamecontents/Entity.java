@@ -18,7 +18,7 @@ public class Entity {
 	}
 	
 	public static Entity Create() {
-		Entity entity = new Entity();
+		final Entity entity = new Entity();
 		entity.mComponents = new HashMap<>();
 		entity.toDel = new LinkedBlockingQueue<>();
 		postUpdate.add(() -> { instances.add(entity); });
@@ -40,7 +40,7 @@ public class Entity {
 			mComponents.remove(toDel.poll());
 		}
 		if (mComponents.isEmpty()) {
-			instances.remove(this);
+			this.Destroy();
 		}
 	}
 	

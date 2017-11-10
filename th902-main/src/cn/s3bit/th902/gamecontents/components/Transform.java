@@ -3,6 +3,7 @@ package cn.s3bit.th902.gamecontents.components;
 import com.badlogic.gdx.math.Vector2;
 
 import cn.s3bit.th902.gamecontents.Entity;
+import cn.s3bit.th902.utils.ImmutableWrapper;
 
 /**
  * @author Obsidianss
@@ -12,12 +13,13 @@ public class Transform extends Component {
 	/**
 	 * Position. Should be the center of the entity.
 	 */
-	public Vector2 position;
+	public final Vector2 position;
 	/**
 	 * Rotation, in degrees.
 	 */
 	public float rotation;
-	public Vector2 scale;
+	public final Vector2 scale;
+	public final ImmutableWrapper<Vector2> immutablePosition, immutableScale;
 	/**
 	 * Constructor method.
 	 * @param pos Initial position
@@ -28,6 +30,8 @@ public class Transform extends Component {
 		position = pos;
 		rotation = rot;
 		scale = sca;
+		immutablePosition = ImmutableWrapper.wrap(position);
+		immutableScale = ImmutableWrapper.wrap(scale);
 	}
 	/**
 	 * Constructor method. Rotation is set to 0.
@@ -63,5 +67,4 @@ public class Transform extends Component {
 	public void Update() {
 		
 	}
-
 }
