@@ -56,6 +56,7 @@ public class ImageGroupRenderer extends Component {
 		transform = entity.GetComponent(Transform.class);
 		GameMain.instance.activeStage.addActor(group);
 		setDepth(mDepth);
+		Update();
 	}
 	
 	@Override

@@ -40,6 +40,7 @@ public class ImageRenderer extends Component {
 		transform = entity.GetComponent(Transform.class);
 		GameMain.instance.activeStage.addActor(image);
 		setDepth(mDepth);
+		Update();
 	}
 	
 	@Override
