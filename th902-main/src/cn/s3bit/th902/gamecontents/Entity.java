@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Map.Entry;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import cn.s3bit.th902.GameMain;
 import cn.s3bit.th902.gamecontents.components.Component;
 
 public class Entity {
@@ -84,6 +85,7 @@ public class Entity {
 	}
 	
 	public static void UpdateAll() {
+		GameMain.instance.activeStage.act();
 		Entity[] entities = (Entity[]) instances.toArray(new Entity[instances.size()]);
 		for (int i = 0; i < entities.length; i++) {
 			entities[i].Update();

@@ -40,9 +40,7 @@ public class ReimuWing extends Component {
 
 	@Override
 	public void Update() {
-		transform.position.set(mVector2);
-
-		mVector2.setZero();
+		transform.position.add(mVector2.sub(transform.position).scl(0.2f));
 		existTime++;
 		if (ifSlow) {
 			if (ifShoot) {
