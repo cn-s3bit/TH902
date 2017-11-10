@@ -1,22 +1,23 @@
 package cn.s3bit.th902.gamecontents.components.enemy;
 
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Shape2D;
 import com.badlogic.gdx.math.Vector2;
 
 import cn.s3bit.th902.ResourceManager;
 import cn.s3bit.th902.gamecontents.Entity;
+import cn.s3bit.th902.gamecontents.IJudgeCallback;
+import cn.s3bit.th902.gamecontents.JudgingSystem;
 import cn.s3bit.th902.gamecontents.components.Component;
 import cn.s3bit.th902.gamecontents.components.ImageRenderer;
 import cn.s3bit.th902.gamecontents.components.Transform;
+import cn.s3bit.th902.utils.ImmutableWrapper;
+import cn.s3bit.th902.utils.NullShape2D;
 
 public class BaseProjectile extends Component {
-	/**
-	 * An easy method to create the bullet.
-	 * 
-	 * @return The created Entity.
-	 */
 
-	public static final int[][] bulletTypeArray = new int[][] { { 5, 6, 7, 8, 9, 10, 11, 12 }, // 0
+	public static final int[][] bulletTypeArray = new int[][] {
+			{ 5, 6, 7, 8, 9, 10, 11, 12 }, // 0
 			{ 13, 14, 15, 16, 17, 18, 19, 20 }, // 1
 			{ 23, 24, 25, 26, 27, 28, 29, 30 }, // 2
 			{ 31, 32, 33, 34, 35, 36, 37, 38 }, // 3
@@ -43,75 +44,84 @@ public class BaseProjectile extends Component {
 			{ 222, 223, 224, 225, 226, 227, 228, 229 } // 24
 	};
 
-	public static class bulletType {
-		public static final int FormArrowM = 0;
-		public static final int FormCircleS = 1;
-		public static final int FormCircleS2 = 2;
-		public static final int FormArrowS = 3;
-		public static final int FormOvalS = 4;
-		public static final int FormBulletM = 5;
-		public static final int FormCircleVerySmall = 6;
-		public static final int FormSquareS = 7;
-		public static final int FormOvalS2 = 8;
-		public static final int FormStarS = 9;
-		public static final int FormOvalS3 = 10;
-		public static final int FormOvalS4 = 11;
-		public static final int FormButterflyS = 12;
-		public static final int FormCircleVerySmall2 = 13;
-		public static final int FormStarM = 14;
-		public static final int FormCircleM = 15;
-		public static final int FormButterflyM = 16;
-		public static final int FormKnife = 17;
-		public static final int FormOvalM = 18;
-		public static final int FormSquareVerySmall = 19;
-		public static final int FormHeart = 20;
-		public static final int FormArrowL = 21;
-		public static final int FormBulletS = 22;
-		public static final int FormThunder = 23;
-		public static final int FormCircleLightM = 24;
+	public static enum bulletType {
+		FormArrowM(0),
+		FormCircleS(1),
+		FormCircleS2(2),
+		FormArrowS(3),
+		FormOvalS(4),
+		FormBulletM(5),
+		FormCircleVerySmall(6),
+		FormSquareS(7),
+		FormOvalS2(8),
+		FormStarS(9),
+		FormOvalS3(10),
+		FormOvalS4(11),
+		FormButterflyS(12),
+		FormCircleVerySmall2(13),
+		FormStarM(14),
+		FormCircleM(15),
+		FormButterflyM(16),
+		FormKnife(17),
+		FormOvalM(18),
+		FormSquareVerySmall(19),
+		FormHeart(20),
+		FormArrowL(21),
+		FormBulletS(22),
+		FormThunder(23),
+		FormCircleLightM(24),
 
-		public static final int ColorRed = 0;
-		public static final int ColorPink = 1;
-		public static final int ColorBlue = 2;
-		public static final int ColorBlueLight = 3;
-		public static final int ColorGreen = 4;
-		public static final int ColorYellow = 5;
-		public static final int ColorOrange = 6;
-		public static final int ColorGray = 7;
+		ColorRed(0),
+		ColorPink(1),
+		ColorBlue(2),
+		ColorBlueLight(3),
+		ColorGreen(4),
+		ColorYellow(5),
+		ColorOrange(6),
+		ColorGray(7),
 		
-		public static final int SimpleRed=0;
-		public static final int SimpleGreen=1;
-		public static final int SimpleBlue=2;
-		public static final int BlueLaser=3;
-		public static final int RoundedRectangle=4;
-		public static final int BigRed=21;
-		public static final int BlueWithShadow=22;
-		public static final int BigLightBlue=39;
-		public static final int RedWithShadow=56;
-		public static final int GreenGlue=81;
-		public static final int PurpleWithShadow=98;
-		public static final int GreenWithShadow=134;
-		public static final int OrangeWithShadow=143;
-		public static final int Anchor=160;
-		public static final int Bat=185;
-		public static final int BigBallRed=202;
-		public static final int BigBallBlue=203;
-		public static final int BigBallPurple=204;
-		public static final int BigBallGreen=205;
-		public static final int BigBallYellow=206;
-		public static final int BlackLightBall=208;
-		public static final int MagicCircleRed=208;
-		public static final int MagicCirclePurple=209;
-		public static final int MagicCircleBlue=210;
-		public static final int MagicCircleLightBlue=211;
-		public static final int MagicCircleGreen=212;
-		public static final int MagicCircleYellow=213;
-		public static final int FlowerYellow=230;
-		public static final int FlowerRed=231;
-		public static final int FlowerOrange=232;
-		public static final int RoseRed=233;
-		public static final int RoseBlue=234;
-		public static final int RoseYellow=235;
+		SimpleRed(0),
+		SimpleGreen(1),
+		SimpleBlue(2),
+		BlueLaser(3),
+		RoundedRectangle(4),
+		BigRed(21),
+		BlueWithShadow(22),
+		BigLightBlue(39),
+		RedWithShadow(56),
+		GreenGlue(81),
+		PurpleWithShadow(98),
+		GreenWithShadow(134),
+		OrangeWithShadow(143),
+		Anchor(160),
+		Bat(185),
+		BigBallRed(202),
+		BigBallBlue(203),
+		BigBallPurple(204),
+		BigBallGreen(205),
+		BigBallYellow(206),
+		BlackLightBall(208),
+		MagicCircleRed(208),
+		MagicCirclePurple(209),
+		MagicCircleBlue(210),
+		MagicCircleLightBlue(211),
+		MagicCircleGreen(212),
+		MagicCircleYellow(213),
+		FlowerYellow(230),
+		FlowerRed(231),
+		FlowerOrange(232),
+		RoseRed(233),
+		RoseBlue(234),
+		RoseYellow(235);
+		
+		private final int mType;
+		private bulletType(int t) {
+			mType = t;
+		}
+		
+		public int getType() {
+			return mType;
+		}
 	}
 
 	private Vector2 dirVec;
@@ -122,6 +132,7 @@ public class BaseProjectile extends Component {
 		entity.AddComponent(new BaseProjectile(bulletForm));
 		return entity;
 	}
+	
 	public static Entity CreateSpecialBullet(Vector2 position, int bulletType) {
 		Entity entity = Entity.Create();
 		entity.AddComponent(new Transform(position));
@@ -134,18 +145,26 @@ public class BaseProjectile extends Component {
 	protected Entity entity;
 	protected int bulletType;
 	
+	public ImmutableWrapper<Shape2D> judge = null;
+	
 	public BaseProjectile(int bullrtForm) {
-		bulletType=bullrtForm;
+		this(bullrtForm, NullShape2D.instance);
+	}
+	
+	public BaseProjectile(int bullrtForm, Shape2D judgeShape) {
+		bulletType = bullrtForm;
+		judge = ImmutableWrapper.wrap(judgeShape);
 	}
 	
 	@Override
 	public void Initialize(Entity entity) {
 		transform = entity.GetComponent(Transform.class);
 		this.entity = entity;
-		dirVec=new Vector2(MathUtils.random(-5,5),MathUtils.random(-5,5));
-		if (dirVec.equals(new Vector2(0,0))) {
+		dirVec = new Vector2(MathUtils.random(-5, 5), MathUtils.random(-5, 5));
+		if (dirVec.equals(Vector2.Zero)) {
 			entity.Destroy();
 		}
+		JudgingSystem.registerEnemyJudge(judge, IJudgeCallback.NONE);
 	}
 
 	@Override
@@ -165,6 +184,7 @@ public class BaseProjectile extends Component {
 
 	@Override
 	public void Kill() {
+		JudgingSystem.unregisterEnemyJudge(judge);
 		super.Kill();
 	}
 }
