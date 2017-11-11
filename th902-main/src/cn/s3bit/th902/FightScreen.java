@@ -45,8 +45,8 @@ public class FightScreen extends ScreenAdapter {
 		power.AddComponent(new Transform(new Vector2(810, 350)));
 		players.AddComponent(new Transform(new Vector2(810, 500)));
 		spellCard.AddComponent(new Transform(new Vector2(615, 450)));
-		bomb.AddComponent(new Transform(new Vector2(720, 450)));
-		heart.AddComponent(new Transform(new Vector2(720, 500)));
+		bomb.AddComponent(new Transform(new Vector2(720.5f, 450)));
+		heart.AddComponent(new Transform(new Vector2(720.5f, 500)));
 
 		fightScreen.AddComponent(new ImageRenderer(ResourceManager.textures.get("FightScreen"), 0));
 		if (_difficulty > 0 && _difficulty < 5)
