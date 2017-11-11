@@ -61,7 +61,7 @@ public class BaseSprite extends Component {
 		judgeWrapper = ImmutableWrapper.wrap((Shape2D)judgeCircle);
 		JudgingSystem.registerEnemyJudge(judgeWrapper, IJudgeCallback.NONE);
 		this.entity = entity;
-		Hp = 20;
+		Hp = 1;
 	}
 
 	protected boolean animateFlag = true;
@@ -91,6 +91,8 @@ public class BaseSprite extends Component {
 			Hp--;
 			collision.onCollide();
 			if (Hp < 0) {
+
+				DropItem.CreateDropItem(transform.position, DropItem.TypePower);
 				entity.Destroy();
 			}
 		}

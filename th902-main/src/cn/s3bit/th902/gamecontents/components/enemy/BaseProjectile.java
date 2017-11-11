@@ -44,7 +44,7 @@ public class BaseProjectile extends Component {
 			{ 222, 223, 224, 225, 226, 227, 228, 229 } // 24
 	};
 
-	private Vector2 dirVec;
+	protected Vector2 dirVec;
 	public static Entity Create(Vector2 position, int bulletForm, int bulletColor) {
 		Entity entity = Entity.Create();
 		entity.AddComponent(new Transform(position));
@@ -63,16 +63,16 @@ public class BaseProjectile extends Component {
 
 	protected Transform transform;
 	protected Entity entity;
-	protected int bulletType;
+	private int type;
 	
 	public ImmutableWrapper<Shape2D> judge = null;
 	
-	public BaseProjectile(int bullrtForm) {
-		this(bullrtForm, NullShape2D.instance);
+	public BaseProjectile(int type) {
+		this(type, NullShape2D.instance);
 	}
 	
-	public BaseProjectile(int bullrtForm, Shape2D judgeShape) {
-		bulletType = bullrtForm;
+	public BaseProjectile(int bulletForm, Shape2D judgeShape) {
+		type = bulletForm;
 		judge = ImmutableWrapper.wrap(judgeShape);
 	}
 	
@@ -90,8 +90,8 @@ public class BaseProjectile extends Component {
 	@Override
 	public void Update() {
 		transform.position.add(dirVec);
-		if (bulletType==9||bulletType==14||bulletType==230||bulletType==231||bulletType==232
-				||bulletType==233||bulletType==234||bulletType==235) {
+		if (type==9||type==14||type==230||type==231||type==232
+				||type==233||type==234||type==235) {
 			transform.rotation+=7;
 		}else {
 			transform.rotation=dirVec.angle()-90;
