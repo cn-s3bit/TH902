@@ -4,16 +4,23 @@ import com.badlogic.gdx.math.Vector2;
 
 import cn.s3bit.th902.ResourceManager;
 import cn.s3bit.th902.gamecontents.Entity;
+import cn.s3bit.th902.gamecontents.IItemGetLogic;
+import cn.s3bit.th902.gamecontents.JudgingSystem;
 import cn.s3bit.th902.gamecontents.components.ImageRenderer;
 import cn.s3bit.th902.gamecontents.components.Transform;
 
-public class DropItem extends BaseProjectile{
-
+public class DropItem extends BaseProjectile {
+	
 	public DropItem(int type) {
 		super(type);
 	}
-	public static final int TypePower=241;
 	
+	public DropItem(int type, IItemGetLogic logic) {
+		super(type);
+		itemGetLogic = logic;
+	}
+	
+	public static final int TypePower=241;
 	
 	public static Entity CreateDropItem(Vector2 position, int dropType) {
 		if (dropType < 241 || dropType > 241) {
@@ -25,17 +32,31 @@ public class DropItem extends BaseProjectile{
 		entity.AddComponent(new DropItem(dropType));
 		return entity;
 	}
+	
+	public IItemGetLogic itemGetLogic = IItemGetLogic.NONE;
 	@Override
 	public void Initialize(Entity entity) {
 		transform = entity.GetComponent(Transform.class);
 		this.entity = entity;
-		dirVec=new Vector2(0,5);
+		dirVec = new Vector2(0, 5);
 	}
+	
+	private boolean mIsDragged = false;
 	@Override
 	public void Update() {
-		transform.position.add(dirVec.add(0,-0.1f));
+		if (mIsDragged) {
+			dirVec.set(JudgingSystem.playerJudge).sub(transform.position).nor().scl(9f);
+		}
+		transform.position.add(dirVec.add(0, -0.1f));
+		if (transform.position.dst2(JudgingSystem.playerJudge) < 6400) {
+			mIsDragged = true;
+			if (transform.position.dst2(JudgingSystem.playerJudge) < 400) {
+				if (itemGetLogic.onGet()) {
+					entity.Destroy();
+				}
+			}
+		} else if (transform.position.y < -40) {
+			entity.Destroy();
+		}
 	}
-	
-	
-
 }
