@@ -73,7 +73,6 @@ public class PlayerReimu extends Player {
 		if (Gdx.input.isKeyPressed(KeySettings.positiveKey) && existTime % 3 == 1) {
 			mIfShoot=true;
 			if (slow) {
-				ReimuBullet1.Create(transform.position.cpy().add(0, 6), ReimuBullet1.BulletTypeSelfFast);
 				ReimuBullet1.Create(transform.position.cpy().add(0, 24), ReimuBullet1.BulletTypeWingSlow);
 			}else {
 				mBulletRnd = MathUtils.random(-6, 6);

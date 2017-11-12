@@ -79,7 +79,8 @@ public class Entity {
 	
 	public static void Reset() {
 		Entity[] entities = (Entity[]) instances.toArray(new Entity[instances.size()]);
-		for (int i = 0; i < entities.length; i++) {
+		int entityLength=entities.length;
+		for (int i = 0; i < entityLength; i++) {
 			entities[i].Destroy();
 		}
 	}
@@ -87,7 +88,8 @@ public class Entity {
 	public static void UpdateAll() {
 		GameMain.instance.activeStage.act();
 		Entity[] entities = (Entity[]) instances.toArray(new Entity[instances.size()]);
-		for (int i = 0; i < entities.length; i++) {
+		int entityLength=entities.length;
+		for (int i = 0; i < entityLength; i++) {
 			entities[i].Update();
 		}
 		while (!postUpdate.isEmpty()) {

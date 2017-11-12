@@ -22,8 +22,11 @@ public abstract class Player extends Component {
 	public boolean slow;
 	protected Transform transform;
 	protected PlayerAnimation playerAnimation;
-	public boolean Bomb=false;
-	public int BombTime=0;
+	public boolean Bomb = false;
+	public int BombTime = 0;
+	public int wudishijian = 0;
+	public boolean wudi = false;
+
 	@Override
 	public void Initialize(Entity entity) {
 		transform = entity.GetComponent(Transform.class);
@@ -36,56 +39,69 @@ public abstract class Player extends Component {
 	public void Update() {
 		JudgingSystem.playerJudge.set(transform.position);
 		IJudgeCallback collision = JudgingSystem.playerCollision();
-		if (collision != null) {
-			System.out.println("Collided!");
-			collision.onCollide();
-			FightScreen.playerCount--;
+		if (wudi) {
+			wudishijian--;
+			if (wudishijian < 0) {
+				wudi = false;
+			}
+		} else {
+			if (collision != null) {
+				System.out.println("Collided!");
+				collision.onCollide();
+				FightScreen.playerCount--;
+				wudi = true;
+				wudishijian = 120;
+			}
 		}
 		velocity.setZero();
 		if (Gdx.input.isKeyPressed(KeySettings.down)) {
 			velocity.add(0, -1);
-		}
-		if (Gdx.input.isKeyPressed(KeySettings.up)) {
+		} else if (Gdx.input.isKeyPressed(KeySettings.up)) {
 			velocity.add(0, 1);
 		}
 		if (Gdx.input.isKeyPressed(KeySettings.left)) {
 			velocity.add(-1, 0);
-		}
-		if (Gdx.input.isKeyPressed(KeySettings.right)) {
+		} else if (Gdx.input.isKeyPressed(KeySettings.right)) {
 			velocity.add(1, 0);
 		}
 		slow = Gdx.input.isKeyPressed(KeySettings.shift);
-		
+
 		if (Gdx.input.isKeyPressed(KeySettings.negativeKey)) {
-			if(!Bomb&&FightScreen.bombCount>0){
-			Bomb=true;
-			BombTime=300;
-			FightScreen.bombCount--;
+			if (!Bomb && FightScreen.bombCount > 0) {
+				Bomb = true;
+				BombTime = 300;
+				wudishijian=BombTime+120;
+				wudi=true;
+				FightScreen.bombCount--;
 			}
 		}
-		if (Bomb) {
-			BombTime--;
-			if (BombTime==0) {
-				Bomb=false;
-			}
-		}
-		if (slow)
+		
+		if (slow) {
 			velocity.nor().scl(3f);
-		else
+		} else {
 			velocity.nor().scl(6f);
+		}
+		
+		if (Bomb) {
+			velocity.scl(0.5f);
+			BombTime--;
+			if (BombTime == 0) {
+				Bomb = false;
+			}
+		}
 		transform.position.add(velocity);
 		transform.position.x = MathUtils.clamp(transform.position.x, 20, 550);
 		transform.position.y = MathUtils.clamp(transform.position.y, 35, 700);
 		playerAnimation.Update(!slow);
 	}
-	
+
 	@Override
 	public void Kill() {
 		JudgingSystem.playerJudge.set(-1000, -1000);
 		playerAnimation.dispose();
 		super.Kill();
 	}
-	
+
 	public static class PlayerAnimation extends TextureRegionDrawable implements Disposable {
 		TextureRegion[] regions = new TextureRegion[8];
 		TextureRegion nullRegion = null;
@@ -114,8 +130,7 @@ public abstract class Player extends Component {
 		public void Update(boolean black) {
 			if (black) {
 				setRegion(nullRegion);
-			}
-			else {
+			} else {
 				stat++;
 				setRegion(regions[stat % regions.length]);
 			}
