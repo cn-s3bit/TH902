@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Align;
+
 import cn.s3bit.th902.gamecontents.Entity;
 import cn.s3bit.th902.gamecontents.components.ImageRenderer;
 import cn.s3bit.th902.gamecontents.components.Transform;
@@ -14,8 +16,8 @@ public class FightScreen extends ScreenAdapter {
 	private BitmapFont bf;
 	private int _difficulty = DifficultySelectScreen.difficulty;
 	private String mDifficulty[] = { "Easy", "Normal", "Hard", "Lunatic" };
-	private ImageRenderer mBombs[];
-	private ImageRenderer mHearts[];
+	private ImageRenderer mBombs[] = new ImageRenderer[8];
+	private ImageRenderer mHearts[] = new ImageRenderer[8];
 	public static int gameTime = 0;
 	public static int playerCount = 2;
 	public static int bombCount = 3;
@@ -48,7 +50,6 @@ public class FightScreen extends ScreenAdapter {
 		players.AddComponent(new Transform(new Vector2(810, 500)));
 		spellCard.AddComponent(new Transform(new Vector2(615, 450)));
 
-		fightScreen.AddComponent(new ImageRenderer(ResourceManager.textures.get("FightScreen"), 0));
 		if (_difficulty > 0 && _difficulty < 5)
 			difficulty.AddComponent(new ImageRenderer(ResourceManager.textures.get(mDifficulty[_difficulty - 1]), 1));
 		score.AddComponent(new ImageRenderer(ResourceManager.textures.get("Score"), 1));
@@ -61,7 +62,6 @@ public class FightScreen extends ScreenAdapter {
 		player.AddComponent(new PlayerReimu());
 
 		for (int i = 0; i < 8; i++) {
-
 			bombs[i] = Entity.Create();
 			hearts[i] = Entity.Create();
 			bombs[i].AddComponent(new Transform(new Vector2(720.5f + 30.0f * i, 450.5f)));
@@ -73,6 +73,7 @@ public class FightScreen extends ScreenAdapter {
 			mBombs[i].image.setColor(1, 1, 1, 0);
 			mHearts[i].image.setColor(1, 1, 1, 0);
 		}
+		fightScreen.AddComponent(new ImageRenderer(ResourceManager.textures.get("FightScreen"), 0));
 
 		for (int i = 0; i < playerCount; i++)
 			mHearts[i].image.setColor(1, 1, 1, 1);
@@ -90,6 +91,15 @@ public class FightScreen extends ScreenAdapter {
 				+ DifficultySelectScreen.difficulty + "\nplayer:" + playerCount + "\nbomb:" + bombCount, 20, 705);
 		GameMain.instance.activeStage.getBatch().end();
 
+		for (int i = 0; i < 8; i++)
+			if (i < playerCount)
+				mHearts[i].image.setColor(1, 1, 1, 1);
+			else mHearts[i].image.setColor(1, 1, 1, 0);
+		for (int i = 0; i < 8; i++)
+			if (i < bombCount)
+				mBombs[i].image.setColor(1, 1, 1, 1);
+			else
+				mBombs[i].image.setColor(1, 1, 1, 0);
 		switch (gameTime) {
 		case 30:
 			BaseSprite.Create(new Vector2(000, 400), 0);
