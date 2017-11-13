@@ -83,7 +83,7 @@ public class PlayerReimu extends Player {
 		}else {
 			mIfShoot=false;
 		}
-		if (Gdx.input.isKeyPressed(KeySettings.positiveKey) && existTime % (133-FightScreen.powerCount) == 1) {
+		if (Gdx.input.isKeyPressed(KeySettings.positiveKey) && existTime % (103-FightScreen.powerCount) == 1) {
 			mIfShoot=true;
 		}else {
 			mIfShoot=false;

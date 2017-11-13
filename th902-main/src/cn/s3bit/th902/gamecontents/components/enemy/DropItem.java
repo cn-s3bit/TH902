@@ -56,8 +56,8 @@ public class DropItem extends BaseProjectile {
 			mIsDragged = true;
 			if (transform.position.dst2(JudgingSystem.playerJudge) < 400) {
 				if (itemGetLogic.onGet()) {
-					if (FightScreen.powerCount < 128) {
-						FightScreen.powerCount += 8;
+					if (FightScreen.powerCount < 100) {
+						FightScreen.powerCount += 5;
 					}
 					entity.Destroy();
 				}

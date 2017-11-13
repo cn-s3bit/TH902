@@ -55,6 +55,7 @@ public abstract class Player extends Component {
 				System.out.println("Collided!");
 				collision.onCollide();
 				FightScreen.playerCount--;
+				FightScreen.bombCount=3;
 				Chaos = true;
 				ChaosTime = 120;
 			}
