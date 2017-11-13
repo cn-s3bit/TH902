@@ -72,11 +72,6 @@ public class FightScreen extends ScreenAdapter {
 			mHearts[i].image.setColor(1, 1, 1, 0);
 		}
 		fightScreen.AddComponent(new ImageRenderer(ResourceManager.textures.get("FightScreen"), 0));
-
-		for (int i = 0; i < playerCount; i++)
-			mHearts[i].image.setColor(1, 1, 1, 1);
-		for (int i = 0; i < bombCount; i++)
-			mBombs[i].image.setColor(1, 1, 1, 1);
 	}
 
 	@Override
@@ -92,7 +87,8 @@ public class FightScreen extends ScreenAdapter {
 		for (int i = 0; i < 8; i++)
 			if (i < playerCount)
 				mHearts[i].image.setColor(1, 1, 1, 1);
-			else mHearts[i].image.setColor(1, 1, 1, 0);
+			else
+				mHearts[i].image.setColor(1, 1, 1, 0);
 		for (int i = 0; i < 8; i++)
 			if (i < bombCount)
 				mBombs[i].image.setColor(1, 1, 1, 1);
