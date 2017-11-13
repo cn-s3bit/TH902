@@ -19,6 +19,7 @@ public class FightScreen extends ScreenAdapter {
 	public static int gameTime = 0;
 	public static int playerCount = 2;
 	public static int bombCount = 3;
+	public static int powerCount = 0;
 
 	@Override
 	public void show() {
@@ -80,8 +81,10 @@ public class FightScreen extends ScreenAdapter {
 		super.render(delta);
 		gameTime++;
 		GameMain.instance.activeStage.getBatch().begin();
-		bf.draw(GameMain.instance.activeStage.getBatch(), "FPS: " + Gdx.graphics.getFramesPerSecond() + "\ndifficulty:"
-				+ DifficultySelectScreen.difficulty + "\nplayer:" + playerCount + "\nbomb:" + bombCount, 20, 705);
+		bf.draw(GameMain.instance.activeStage.getBatch(),
+				"FPS: " + Gdx.graphics.getFramesPerSecond() + "\ndifficulty:" + DifficultySelectScreen.difficulty
+						+ "\nplayer:" + playerCount + "\nbomb:" + bombCount + "\npower:" + powerCount,
+				20, 705);
 		GameMain.instance.activeStage.getBatch().end();
 
 		for (int i = 0; i < 8; i++)
