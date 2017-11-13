@@ -1,6 +1,5 @@
 package cn.s3bit.th902.gamecontents.components.enemy;
 
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Shape2D;
 import com.badlogic.gdx.math.Vector2;
 
@@ -45,19 +44,19 @@ public class BaseProjectile extends Component {
 	};
 
 	protected Vector2 dirVec;
-	public static Entity Create(Vector2 position, int bulletForm, int bulletColor) {
+	public static Entity Create(Vector2 position, BulletType formcircles, BulletType colorred,Vector2 bulletV) {
 		Entity entity = Entity.Create();
 		entity.AddComponent(new Transform(position));
-		entity.AddComponent(new ImageRenderer(ResourceManager.barrages.get(bulletTypeArray[bulletForm][bulletColor]), 0));
-		entity.AddComponent(new BaseProjectile(bulletForm));
+		entity.AddComponent(new ImageRenderer(ResourceManager.barrages.get(bulletTypeArray[formcircles.getType()][colorred.getType()]), 0));
+		entity.AddComponent(new BaseProjectile(formcircles.getType(),bulletV));
 		return entity;
 	}
 	
-	public static Entity CreateSpecialBullet(Vector2 position, int bulletType) {
+	public static Entity CreateSpecialBullet(Vector2 position, int bulletType,Vector2 bulletV) {
 		Entity entity = Entity.Create();
 		entity.AddComponent(new Transform(position));
 		entity.AddComponent(new ImageRenderer(ResourceManager.barrages.get(bulletType), 0));
-		entity.AddComponent(new BaseProjectile(bulletType));
+		entity.AddComponent(new BaseProjectile(bulletType,bulletV));
 		return entity;
 	}
 
@@ -67,8 +66,9 @@ public class BaseProjectile extends Component {
 	
 	public ImmutableWrapper<Shape2D> judge = null;
 	
-	public BaseProjectile(int type) {
+	public BaseProjectile(int type,Vector2 bulletV) {
 		this(type, NullShape2D.instance);
+		dirVec=bulletV;
 	}
 	
 	public BaseProjectile(int bulletForm, Shape2D judgeShape) {
@@ -80,10 +80,10 @@ public class BaseProjectile extends Component {
 	public void Initialize(Entity entity) {
 		transform = entity.GetComponent(Transform.class);
 		this.entity = entity;
-		dirVec = new Vector2(MathUtils.random(-5, 5), MathUtils.random(-5, 5));
-		if (dirVec.equals(Vector2.Zero)) {
-			entity.Destroy();
-		}
+		//dirVec = new Vector2(MathUtils.random(-5, 5), MathUtils.random(-5, 5));
+		//if (dirVec.equals(Vector2.Zero)) {
+		//	entity.Destroy();
+		//}
 		JudgingSystem.registerEnemyJudge(judge, IJudgeCallback.NONE);
 	}
 
