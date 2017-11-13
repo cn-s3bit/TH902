@@ -29,6 +29,8 @@ public class BaseSprite extends Component {
 	public static TextureRegion[][] regions;
 	public int Hp = 0;
 	public int shootTime = 0;
+	public Vector2 bulletV;
+	public Vector2 specialBulletV;
 
 	/**
 	 * @param color
@@ -58,10 +60,11 @@ public class BaseSprite extends Component {
 		transform = entity.GetComponent(Transform.class);
 		entity.AddComponent(new ImageRenderer(animation, 1));
 		judgeCircle = new Circle(transform.position, 50 * transform.scale.x);
-		judgeWrapper = ImmutableWrapper.wrap((Shape2D)judgeCircle);
+		judgeWrapper = ImmutableWrapper.wrap((Shape2D) judgeCircle);
 		JudgingSystem.registerEnemyJudge(judgeWrapper, IJudgeCallback.NONE);
 		this.entity = entity;
-		Hp = 1;
+		Hp = 10;
+		bulletV = new Vector2(3, 0);
 	}
 
 	protected boolean animateFlag = true;
@@ -104,13 +107,22 @@ public class BaseSprite extends Component {
 	}
 
 	private void ShootLogic() {
-		if (shootTime % 5 == 0) {
-			BaseProjectile.Create(transform.position.cpy(), MathUtils.random(0, 24), MathUtils.random(0, 7));
-			if (MathUtils.random(0, 5) == 2) {
-				BaseProjectile.CreateSpecialBullet(transform.position.cpy(), MathUtils.random(230, 235));
-			}
-			
+		specialBulletV = new Vector2(MathUtils.random(-3, 3), MathUtils.random(-3, 3));
+		while (specialBulletV.equals(Vector2.Zero)) {
+			specialBulletV = new Vector2(MathUtils.random(-3, 3), MathUtils.random(-3, 3));
 		}
+		if (shootTime % 5 == 0) {
+			if (MathUtils.random(0, 20) == 2) {
+				BaseProjectile.CreateSpecialBullet(transform.position.cpy(), MathUtils.random(230, 235),specialBulletV);
+			}
+			for (int i = 0; i < 3; i++) {
+				bulletV.rotate(120);
+				BaseProjectile.Create(transform.position.cpy(), BulletType.FormCircleS, BulletType.ColorRed,
+						bulletV.cpy());
+			}
+			bulletV.rotate(7);
+		}
+
 	}
 
 	@Override
