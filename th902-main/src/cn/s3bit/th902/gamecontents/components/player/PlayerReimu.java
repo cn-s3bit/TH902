@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 
+import cn.s3bit.th902.FightScreen;
 import cn.s3bit.th902.KeySettings;
 import cn.s3bit.th902.ResourceManager;
 import cn.s3bit.th902.gamecontents.Entity;
@@ -71,7 +72,6 @@ public class PlayerReimu extends Player {
 		}
 		existTime++;
 		if (Gdx.input.isKeyPressed(KeySettings.positiveKey) && existTime % 3 == 1) {
-			mIfShoot=true;
 			if (slow) {
 				ReimuBullet1.Create(transform.position.cpy().add(0, 24), ReimuBullet1.BulletTypeWingSlow);
 			}else {
@@ -80,6 +80,11 @@ public class PlayerReimu extends Player {
 				ReimuBullet1.Create(transform.position.cpy().add(12, mBulletRnd), ReimuBullet1.BulletTypeSelfFast);
 				
 			}
+		}else {
+			mIfShoot=false;
+		}
+		if (Gdx.input.isKeyPressed(KeySettings.positiveKey) && existTime % (133-FightScreen.powerCount) == 1) {
+			mIfShoot=true;
 		}else {
 			mIfShoot=false;
 		}
