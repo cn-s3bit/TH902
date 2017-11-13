@@ -24,8 +24,9 @@ public abstract class Player extends Component {
 	protected PlayerAnimation playerAnimation;
 	public boolean Bomb = false;
 	public int BombTime = 0;
-	public int wudishijian = 0;
-	public boolean wudi = false;
+	public int ChaosTime = 0;
+	public boolean Chaos = false;
+	public static boolean onLine = false;
 
 	@Override
 	public void Initialize(Entity entity) {
@@ -37,20 +38,25 @@ public abstract class Player extends Component {
 
 	@Override
 	public void Update() {
+		if (transform.position.y > 500) {
+			onLine = true;
+		} else {
+			onLine = false;
+		}
 		JudgingSystem.playerJudge.set(transform.position);
 		IJudgeCallback collision = JudgingSystem.playerCollision();
-		if (wudi) {
-			wudishijian--;
-			if (wudishijian < 0) {
-				wudi = false;
+		if (Chaos) {
+			ChaosTime--;
+			if (ChaosTime < 0) {
+				Chaos = false;
 			}
 		} else {
 			if (collision != null) {
 				System.out.println("Collided!");
 				collision.onCollide();
 				FightScreen.playerCount--;
-				wudi = true;
-				wudishijian = 120;
+				Chaos = true;
+				ChaosTime = 120;
 			}
 		}
 		velocity.setZero();
@@ -70,18 +76,18 @@ public abstract class Player extends Component {
 			if (!Bomb && FightScreen.bombCount > 0) {
 				Bomb = true;
 				BombTime = 300;
-				wudishijian=BombTime+120;
-				wudi=true;
+				ChaosTime = BombTime + 120;
+				Chaos = true;
 				FightScreen.bombCount--;
 			}
 		}
-		
+
 		if (slow) {
 			velocity.nor().scl(3f);
 		} else {
 			velocity.nor().scl(6f);
 		}
-		
+
 		if (Bomb) {
 			velocity.scl(0.5f);
 			BombTime--;
