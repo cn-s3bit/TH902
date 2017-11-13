@@ -12,6 +12,8 @@ import cn.s3bit.th902.ResourceManager;
 import cn.s3bit.th902.gamecontents.Entity;
 import cn.s3bit.th902.gamecontents.IJudgeCallback;
 import cn.s3bit.th902.gamecontents.JudgingSystem;
+import cn.s3bit.th902.gamecontents.ai.BulletSnipe;
+import cn.s3bit.th902.gamecontents.ai.BulletTracking;
 import cn.s3bit.th902.gamecontents.components.Component;
 import cn.s3bit.th902.gamecontents.components.ImageRenderer;
 import cn.s3bit.th902.gamecontents.components.Transform;
@@ -111,7 +113,7 @@ public class BaseSprite extends Component {
 		while (specialBulletV.equals(Vector2.Zero)) {
 			specialBulletV = new Vector2(MathUtils.random(-3, 3), MathUtils.random(-3, 3));
 		}
-		if (shootTime % 5 == 0) {
+		if (shootTime % 30 == 0) {
 			if (MathUtils.random(0, 20) == 2) {
 				BaseProjectile.CreateSpecialBullet(transform.position.cpy(), MathUtils.random(230, 235),specialBulletV);
 			}
@@ -120,6 +122,8 @@ public class BaseSprite extends Component {
 				BaseProjectile.Create(transform.position.cpy(), BulletType.FormCircleS, BulletType.ColorRed,
 						bulletV.cpy());
 			}
+			BulletTracking.Create(transform.position.cpy(), BulletType.FormCircleS, BulletType.ColorBlue,4);
+			BulletSnipe.Create(transform.position.cpy(), BulletType.FormCircleS, BulletType.ColorGreen,-5,0.2f);
 			bulletV.rotate(7);
 		}
 

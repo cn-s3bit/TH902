@@ -22,7 +22,7 @@ public abstract class Player extends Component {
 	public boolean slow;
 	protected Transform transform;
 	protected PlayerAnimation playerAnimation;
-	public boolean Bomb = false;
+	public static boolean Bomb = false;
 	public int BombTime = 0;
 	public int ChaosTime = 0;
 	public boolean Chaos = false;
