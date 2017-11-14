@@ -5,6 +5,7 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
 import cn.s3bit.th902.gamecontents.Entity;
+import cn.s3bit.th902.gamecontents.ai.MoveBasic;
 import cn.s3bit.th902.gamecontents.ai.MoveSnipe;
 import cn.s3bit.th902.gamecontents.ai.MoveTracking;
 import cn.s3bit.th902.gamecontents.components.ImageRenderer;
@@ -22,6 +23,7 @@ public class FightScreen extends ScreenAdapter {
 	public static int playerCount = 2;
 	public static int bombCount = 3;
 	public static int powerCount = 0;
+	public static int pointCount=0;
 
 	@Override
 	public void show() {
@@ -84,7 +86,8 @@ public class FightScreen extends ScreenAdapter {
 		gameTime++;
 		GameMain.instance.activeStage.getBatch().begin();
 		bf.draw(GameMain.instance.activeStage.getBatch(), "difficulty:" + DifficultySelectScreen.difficulty
-				+ "\nplayer:" + playerCount + "\nbomb:" + bombCount + "\npower:" + powerCount, 20, 705);
+				+ "\nplayer:" + playerCount + "\nbomb:" + bombCount + "\npower:" + powerCount
+				+"\npoint:"+pointCount, 20, 705);
 		bf.draw(GameMain.instance.activeStage.getBatch(), "FPS: " + Gdx.graphics.getFramesPerSecond(), 850, 30);
 		GameMain.instance.activeStage.getBatch().end();
 
@@ -100,16 +103,16 @@ public class FightScreen extends ScreenAdapter {
 				mBombs[i].image.setColor(1, 1, 1, 0);
 		switch (gameTime) {
 		case 30:
-			BaseSprite.Create(new Vector2(000, 400), 0,new MoveSnipe(1));
+			BaseSprite.Create(new Vector2(000, 400), 0,new MoveSnipe(1,false));
 			break;
 		case 60:
-			BaseSprite.Create(new Vector2(100, 400), 1,new MoveTracking(2),new MoveSnipe(3));
+			BaseSprite.Create(new Vector2(300, 700), 1,new MoveTracking(2,false),new MoveSnipe(3,false));
 			break;
 		case 120:
-			BaseSprite.Create(new Vector2(150, 300), 2);
+			BaseSprite.Create(new Vector2(320, 700), 2,new MoveBasic(2f,-4f,false));
 			break;
 		case 180:
-			BaseSprite.Create(new Vector2(250, 350), 3);
+			BaseSprite.Create(new Vector2(250, 350), 3,new MoveBasic(0.3f,0.4f,false));
 			gameTime = 0;
 			break;
 		}
