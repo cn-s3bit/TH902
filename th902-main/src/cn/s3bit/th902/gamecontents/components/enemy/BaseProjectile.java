@@ -64,10 +64,10 @@ public class BaseProjectile extends Component {
 	        }  
 		return entity;
 	}
-
+	
 	protected Transform transform;
 	protected Entity entity;
-	private int type;
+	public int type;
 	
 	public ImmutableWrapper<Shape2D> judge = null;
 	
