@@ -15,6 +15,7 @@ public class DropItem extends BaseProjectile {
 	protected Vector2 dirVec;
 	public IItemGetLogic itemGetLogic = IItemGetLogic.NONE;
 	public static final int TypePower = 241;
+	public static final int TypePoint = 242;
 	private boolean mIsDragged = false;
 	
 	public DropItem(int type){
@@ -27,14 +28,14 @@ public class DropItem extends BaseProjectile {
 	}
 
 	public static Entity CreateDropItem(Vector2 position, int dropType) {
-		if (dropType < 241 || dropType > 241) {
+		if (dropType < 241 || dropType > 242) {
 			throw new IllegalArgumentException("Type of the item is wrong.");
 		}
 		Entity entity = Entity.Create();
 		entity.AddComponent(new Transform(position));
 		entity.AddComponent(new ImageRenderer(ResourceManager.barrages.get(dropType), 0));
-		entity.AddComponent(new DropItem(dropType));//, null));
-		//nullPointerException when use entity.AddComponent(new DropItem(dropType,null));
+		entity.AddComponent(new DropItem(dropType));
+		//nentity.AddComponent(new DropItem(dropType,null));
 		return entity;
 	}
 
@@ -55,8 +56,15 @@ public class DropItem extends BaseProjectile {
 			mIsDragged = true;
 			if (transform.position.dst2(JudgingSystem.playerJudge) < 400) {
 				if (itemGetLogic.onGet()) {
-					if (FightScreen.powerCount < 100) {
+					switch (type) {
+					case 241:
+						if (FightScreen.powerCount < 100) {
 						FightScreen.powerCount += 5;
+					}
+						break;
+					case 242:
+						FightScreen.pointCount += 5;
+						break;
 					}
 					entity.Destroy();
 				}
