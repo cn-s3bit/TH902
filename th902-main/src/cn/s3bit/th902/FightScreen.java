@@ -5,6 +5,8 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
 import cn.s3bit.th902.gamecontents.Entity;
+import cn.s3bit.th902.gamecontents.ai.MoveSnipe;
+import cn.s3bit.th902.gamecontents.ai.MoveTracking;
 import cn.s3bit.th902.gamecontents.components.ImageRenderer;
 import cn.s3bit.th902.gamecontents.components.Transform;
 import cn.s3bit.th902.gamecontents.components.enemy.BaseSprite;
@@ -98,10 +100,10 @@ public class FightScreen extends ScreenAdapter {
 				mBombs[i].image.setColor(1, 1, 1, 0);
 		switch (gameTime) {
 		case 30:
-			BaseSprite.Create(new Vector2(000, 400), 0);
+			BaseSprite.Create(new Vector2(000, 400), 0,new MoveSnipe(1));
 			break;
 		case 60:
-			BaseSprite.Create(new Vector2(100, 400), 1);
+			BaseSprite.Create(new Vector2(100, 400), 1,new MoveTracking(2),new MoveSnipe(3));
 			break;
 		case 120:
 			BaseSprite.Create(new Vector2(150, 300), 2);
