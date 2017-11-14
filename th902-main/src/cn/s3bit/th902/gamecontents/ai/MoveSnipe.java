@@ -1,41 +1,48 @@
 package cn.s3bit.th902.gamecontents.ai;
 
-import com.badlogic.gdx.math.Shape2D;
 import com.badlogic.gdx.math.Vector2;
 
 import cn.s3bit.th902.gamecontents.Entity;
 import cn.s3bit.th902.gamecontents.JudgingSystem;
-import cn.s3bit.th902.utils.ImmutableWrapper;
-import cn.s3bit.th902.utils.NullShape2D;
+import cn.s3bit.th902.gamecontents.components.Component;
+import cn.s3bit.th902.gamecontents.components.Transform;
 
-public class MoveSnipe extends BaseProj {
+public class MoveSnipe extends Component {
+	protected Transform transform;
+	protected Entity entity;
+	protected Vector2 dirVec;
+	protected float moveSpeed=0;
+	protected float moveAcceleration=0;
 	private Vector2 VecAcc;
-	public MoveSnipe(float speed,Float acceleration) {
-		this(speed);
-		bulletAcceleration=acceleration;
+	protected boolean isBullet=true;
+	public MoveSnipe(float speed,Boolean isBullet,Float acceleration) {
+		this(speed,isBullet);
+		moveAcceleration=acceleration;
 	}
 
-	public MoveSnipe(float speed) {
-		this(NullShape2D.instance);
-		this.bulletSpeed=speed;
-	}
-	public MoveSnipe(Shape2D judgeShape) {
-		judge = ImmutableWrapper.wrap(judgeShape);
+	public MoveSnipe(float speed,Boolean isBullet) {
+		this.moveSpeed=speed;
+		this.isBullet=isBullet;
 	}
 
 	@Override
 	public void Initialize(Entity entity) {
-		super.Initialize(entity);
+		transform = entity.GetComponent(Transform.class);
+		this.entity = entity;
 		dirVec = JudgingSystem.playerJudge.cpy().sub(transform.position.cpy()).nor();
-		transform.rotation = dirVec.angle() - 90;
-		VecAcc=new Vector2(bulletAcceleration,0).rotate(dirVec.angle());
-		dirVec.scl(bulletSpeed);
+		if (isBullet) {
+			transform.rotation = dirVec.angle() - 90;
+		}else {
+			transform.rotation=0;
+		}
+		VecAcc=new Vector2(moveAcceleration,0).rotate(dirVec.angle());
+		dirVec.scl(moveSpeed);
 	}
 
 	@Override
 	public void Update() {
-		super.Update();
 		//acceleration
 		dirVec.add(VecAcc);
+		transform.position.add(dirVec);
 		}
 }
