@@ -43,20 +43,25 @@ public class BaseProjectile extends Component {
 			{ 222, 223, 224, 225, 226, 227, 228, 229 } // 24
 	};
 
-	protected Vector2 dirVec;
-	public static Entity Create(Vector2 position, BulletType formcircles, BulletType colorred,Vector2 bulletV) {
+	public static Entity Create(Vector2 position, BulletType formcircles, BulletType colorred,Component... Ves){
 		Entity entity = Entity.Create();
 		entity.AddComponent(new Transform(position));
 		entity.AddComponent(new ImageRenderer(ResourceManager.barrages.get(bulletTypeArray[formcircles.getType()][colorred.getType()]), 0));
-		entity.AddComponent(new BaseProjectile(formcircles.getType(),bulletV));
+		entity.AddComponent(new BaseProjectile(formcircles.getType()));
+		for (Component tmpc : Ves) {  
+           entity.AddComponent(tmpc);
+        }  
 		return entity;
 	}
 	
-	public static Entity CreateSpecialBullet(Vector2 position, int bulletType,Vector2 bulletV) {
+	public static Entity CreateSpecialBullet(Vector2 position, int bulletType,Component... Ves){
 		Entity entity = Entity.Create();
 		entity.AddComponent(new Transform(position));
 		entity.AddComponent(new ImageRenderer(ResourceManager.barrages.get(bulletType), 0));
-		entity.AddComponent(new BaseProjectile(bulletType,bulletV));
+		entity.AddComponent(new BaseProjectile(bulletType));
+		for (Component tmpc : Ves) {  
+	           entity.AddComponent(tmpc);
+	        }  
 		return entity;
 	}
 
@@ -66,9 +71,8 @@ public class BaseProjectile extends Component {
 	
 	public ImmutableWrapper<Shape2D> judge = null;
 	
-	public BaseProjectile(int type,Vector2 bulletV) {
+	public BaseProjectile(int type){
 		this(type, NullShape2D.instance);
-		dirVec=bulletV;
 	}
 	
 	public BaseProjectile(int bulletForm, Shape2D judgeShape) {
@@ -80,21 +84,14 @@ public class BaseProjectile extends Component {
 	public void Initialize(Entity entity) {
 		transform = entity.GetComponent(Transform.class);
 		this.entity = entity;
-		//dirVec = new Vector2(MathUtils.random(-5, 5), MathUtils.random(-5, 5));
-		//if (dirVec.equals(Vector2.Zero)) {
-		//	entity.Destroy();
-		//}
 		JudgingSystem.registerEnemyJudge(judge, IJudgeCallback.NONE);
 	}
 
 	@Override
 	public void Update() {
-		transform.position.add(dirVec);
 		if (type==9||type==14||type==230||type==231||type==232
 				||type==233||type==234||type==235) {
 			transform.rotation+=7;
-		}else {
-			transform.rotation=dirVec.angle()-90;
 		}
 		if (transform.position.x > 570 || transform.position.x < 0 || transform.position.y > 740
 				|| transform.position.y < 0) {
