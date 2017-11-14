@@ -12,17 +12,19 @@ import cn.s3bit.th902.gamecontents.components.Transform;
 import cn.s3bit.th902.gamecontents.components.player.Player;
 
 public class DropItem extends BaseProjectile {
-
-	public DropItem(int type, Vector2 velo) {
-		super(type, velo);
+	protected Vector2 dirVec;
+	public IItemGetLogic itemGetLogic = IItemGetLogic.NONE;
+	public static final int TypePower = 241;
+	private boolean mIsDragged = false;
+	
+	public DropItem(int type){
+		super(type);
 	}
 
-	public DropItem(int type, IItemGetLogic logic, Vector2 velo) {
-		super(type, velo);
+	public DropItem(int type, IItemGetLogic logic){
+		super(type);
 		itemGetLogic = logic;
 	}
-
-	public static final int TypePower = 241;
 
 	public static Entity CreateDropItem(Vector2 position, int dropType) {
 		if (dropType < 241 || dropType > 241) {
@@ -31,11 +33,10 @@ public class DropItem extends BaseProjectile {
 		Entity entity = Entity.Create();
 		entity.AddComponent(new Transform(position));
 		entity.AddComponent(new ImageRenderer(ResourceManager.barrages.get(dropType), 0));
-		entity.AddComponent(new DropItem(dropType, null));
+		entity.AddComponent(new DropItem(dropType));//, null));
+		//nullPointerException when use entity.AddComponent(new DropItem(dropType,null));
 		return entity;
 	}
-
-	public IItemGetLogic itemGetLogic = IItemGetLogic.NONE;
 
 	@Override
 	public void Initialize(Entity entity) {
@@ -43,8 +44,6 @@ public class DropItem extends BaseProjectile {
 		this.entity = entity;
 		dirVec = new Vector2(0, 5);
 	}
-
-	private boolean mIsDragged = false;
 
 	@Override
 	public void Update() {

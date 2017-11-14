@@ -12,8 +12,8 @@ import cn.s3bit.th902.ResourceManager;
 import cn.s3bit.th902.gamecontents.Entity;
 import cn.s3bit.th902.gamecontents.IJudgeCallback;
 import cn.s3bit.th902.gamecontents.JudgingSystem;
-import cn.s3bit.th902.gamecontents.ai.BulletSnipe;
-import cn.s3bit.th902.gamecontents.ai.BulletTracking;
+import cn.s3bit.th902.gamecontents.ai.MoveSnipe;
+import cn.s3bit.th902.gamecontents.ai.MoveTracking;
 import cn.s3bit.th902.gamecontents.components.Component;
 import cn.s3bit.th902.gamecontents.components.ImageRenderer;
 import cn.s3bit.th902.gamecontents.components.Transform;
@@ -33,6 +33,7 @@ public class BaseSprite extends Component {
 	public int shootTime = 0;
 	public Vector2 bulletV;
 	public Vector2 specialBulletV;
+	protected boolean specialMove=false;
 
 	/**
 	 * @param color
@@ -55,6 +56,27 @@ public class BaseSprite extends Component {
 		entity.AddComponent(component);
 		return entity;
 	}
+	public static Entity Create(Vector2 position, int color,Component... Ves) {
+
+		if (color < 0 || color > 3) {
+			throw new IllegalArgumentException("Color of the enemy (sprite) should be between 0 and 3!");
+		}
+		Entity entity = Entity.Create();
+		entity.AddComponent(new Transform(position, new Vector2(0.5f, 0.5f)));
+		BaseSprite component = new BaseSprite();
+		component.specialMove=true;
+		component.animation = new AnimationDrawable();
+		if (texture != ResourceManager.enemies.get(0)) {
+			texture = ResourceManager.enemies.get(0);
+			regions = TextureRegion.split(texture, texture.getWidth() / 12, texture.getHeight() / 4);
+		}
+		component.animation.setAnimation(new Animation<TextureRegion>(1, regions[color]));
+		entity.AddComponent(component);
+		for (Component tmpc : Ves) {  
+	           entity.AddComponent(tmpc);
+	        }  
+		return entity;
+	}
 
 	@Override
 	public void Initialize(Entity entity) {
@@ -73,7 +95,9 @@ public class BaseSprite extends Component {
 
 	@Override
 	public void Update() {
-		MoveLogic();
+		if(!specialMove){
+		MoveLogic();			
+		}
 		shootTime++;
 		judgeCircle.setPosition(transform.position);
 		if (transform.position.x > 580 || transform.position.x < -50 || transform.position.y > 800
@@ -115,15 +139,14 @@ public class BaseSprite extends Component {
 		}
 		if (shootTime % 30 == 0) {
 			if (MathUtils.random(0, 20) == 2) {
-				BaseProjectile.CreateSpecialBullet(transform.position.cpy(), MathUtils.random(230, 235),specialBulletV);
+				BaseProjectile.CreateSpecialBullet(transform.position.cpy(), MathUtils.random(230, 235),new MoveSnipe(2));
 			}
 			for (int i = 0; i < 3; i++) {
 				bulletV.rotate(120);
-				BaseProjectile.Create(transform.position.cpy(), BulletType.FormCircleS, BulletType.ColorRed,
-						bulletV.cpy());
+				BaseProjectile.Create(transform.position.cpy(), BulletType.FormArrowL, BulletType.ColorRed,new MoveSnipe(2));
 			}
-			BulletTracking.Create(transform.position.cpy(), BulletType.FormCircleS, BulletType.ColorBlue,4);
-			BulletSnipe.Create(transform.position.cpy(), BulletType.FormCircleS, BulletType.ColorGreen,-5,0.2f);
+			BaseProjectile.Create(transform.position.cpy(), BulletType.FormArrowL, BulletType.ColorBlue,new MoveSnipe(2));
+			BaseProjectile.Create(transform.position.cpy(), BulletType.FormArrowL, BulletType.ColorGreen,new MoveTracking(2));
 			bulletV.rotate(7);
 		}
 
