@@ -14,7 +14,6 @@ public class BaseProj extends Component{
 	
 	protected Transform transform;
 	protected Entity entity;
-	protected int type;
 	protected Vector2 dirVec;
 	protected ImmutableWrapper<Shape2D> judge = null;
 	protected float bulletSpeed=0;
@@ -30,14 +29,6 @@ public class BaseProj extends Component{
 	@Override
 	public void Update() {
 		transform.position.add(dirVec);
-		if (type == 9 || type == 14 || type == 230 || type == 231 || type == 232 || type == 233 || type == 234
-				|| type == 235) {
-			transform.rotation += 7;
-		}
-		if (transform.position.x > 570 || transform.position.x < 0 || transform.position.y > 740
-				|| transform.position.y < 0) {
-			entity.Destroy();
-		}
 	}
 	@Override
 	public void Kill() {
