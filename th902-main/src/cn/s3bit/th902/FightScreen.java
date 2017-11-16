@@ -23,7 +23,7 @@ public class FightScreen extends ScreenAdapter {
 	public static int playerCount = 2;
 	public static int bombCount = 3;
 	public static int powerCount = 0;
-	public static int pointCount=0;
+	public static int pointCount = 0;
 
 	@Override
 	public void show() {

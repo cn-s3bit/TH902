@@ -26,6 +26,7 @@ public class ScriptingEngine {
 		}, "TH902-Script");
 		messages.add(() -> {
 			v8 = V8.createV8Runtime();
+			ScriptInterfaces.load();
 			//System.out.println(v8.executeStringScript("'Hello, World!'"));
 		});
 		scriptThread.start();
