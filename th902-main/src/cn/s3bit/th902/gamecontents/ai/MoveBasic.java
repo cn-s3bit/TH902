@@ -7,32 +7,31 @@ import cn.s3bit.th902.gamecontents.components.Component;
 import cn.s3bit.th902.gamecontents.components.Transform;
 
 public class MoveBasic extends Component{
-	
 	protected Transform transform;
-	protected Entity entity;
-	protected Vector2 dirVec;
-	protected boolean isBullet=true;
-	public MoveBasic(float x,float y,Boolean isBullet){
-		dirVec=new Vector2(x,y);
-		this.isBullet=isBullet;
+	public Vector2 velocity;
+	public Vector2 acc;
+	public MoveBasic(float x, float y) {
+		this(x, y, 0, 0);
 	}
-	public MoveBasic(Vector2 v,Boolean isBullet){
-		dirVec=v;
-		this.isBullet=isBullet;
+	public MoveBasic(Vector2 v){
+		this(v.x, v.y);
 	}
+	public MoveBasic(float x, float y, float ax, float ay) {
+		acc = new Vector2(ax, ay);
+		velocity = new Vector2(x, y);
+	}
+	public MoveBasic(Vector2 vel, Vector2 accel) {
+		this(vel.x, vel.y, accel.x, accel.y);
+	}
+	
 	@Override
 	public void Initialize(Entity entity) {
 		transform = entity.GetComponent(Transform.class);
-		this.entity = entity;
-		if (isBullet) {
-			transform.rotation = dirVec.angle() - 90;
-		}else {
-			transform.rotation=0;
-		}
 	}
 
 	@Override
 	public void Update() {
-		transform.position.add(dirVec);
+		velocity.add(acc);
+		transform.position.add(velocity);
 	}
 }

@@ -103,16 +103,16 @@ public class FightScreen extends ScreenAdapter {
 				mBombs[i].image.setColor(1, 1, 1, 0);
 		switch (gameTime) {
 		case 30:
-			BaseSprite.Create(new Vector2(000, 400), 0,new MoveSnipe(1,false));
+			BaseSprite.Create(new Vector2(000, 400), 0, new MoveSnipe(1));
 			break;
 		case 60:
-			BaseSprite.Create(new Vector2(300, 700), 1,new MoveTracking(2,false),new MoveSnipe(3,false));
+			BaseSprite.Create(new Vector2(300, 700), 1, new MoveTracking(2), new MoveSnipe(3));
 			break;
 		case 120:
-			BaseSprite.Create(new Vector2(320, 700), 2,new MoveBasic(2f,-4f,false));
+			BaseSprite.Create(new Vector2(320, 700), 2, new MoveBasic(2f, -4f));
 			break;
 		case 180:
-			BaseSprite.Create(new Vector2(250, 350), 3,new MoveBasic(0.3f,0.4f,false));
+			BaseSprite.Create(new Vector2(250, 350), 3, new MoveBasic(0.3f, 0.4f));
 			gameTime = 0;
 			break;
 		}

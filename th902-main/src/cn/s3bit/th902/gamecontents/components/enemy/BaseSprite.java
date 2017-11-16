@@ -132,26 +132,26 @@ public class BaseSprite extends Component {
 			switch (selfColor) {
 			case 0:
 				BaseProjectile.Create(transform.position.cpy(), BulletType.FormArrowL, BulletType.ColorBlue,
-						new MoveSnipe(2, true));
+						new MoveSnipe(2));
 				break;
 			case 1:
 				for (int i = 0; i < 3; i++) {
 					BaseProjectile.Create(transform.position.cpy(), BulletType.FormKnife, BulletType.ColorRed,
-							new MoveBasic(bulletV.cpy(), true));
+							new MoveBasic(bulletV.cpy()));
 					bulletV.rotate(60);
 					BaseProjectile.Create(transform.position.cpy(), BulletType.FormArrowL, BulletType.ColorOrange,
-							new MoveBasic(bulletV.cpy(), true));
+							new MoveBasic(bulletV.cpy()));
 					bulletV.rotate(60);
 				}
 				break;
 			case 2:
 				BaseProjectile.Create(transform.position.cpy(), BulletType.FormArrowL, BulletType.ColorGreen,
-						new MoveTracking(2, true));
+						new MoveTracking(2));
 				break;
 			case 3:
 				if (MathUtils.random(0, 5) == 2) {
 					BaseProjectile.CreateSpecialBullet(transform.position.cpy(), MathUtils.random(230, 235),
-							new MoveSnipe(2, true));
+							new MoveSnipe(2));
 				}
 				break;
 

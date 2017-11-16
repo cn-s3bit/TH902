@@ -9,40 +9,21 @@ import cn.s3bit.th902.gamecontents.components.Transform;
 
 public class MoveSnipe extends Component {
 	protected Transform transform;
-	protected Entity entity;
-	protected Vector2 dirVec;
-	protected float moveSpeed=0;
-	protected float moveAcceleration=0;
-	private Vector2 VecAcc;
-	protected boolean isBullet=true;
-	public MoveSnipe(float speed,Boolean isBullet,Float acceleration) {
-		this(speed,isBullet);
-		moveAcceleration=acceleration;
-	}
+	protected Vector2 velocity;
+	protected final float speed;
 
-	public MoveSnipe(float speed,Boolean isBullet) {
-		this.moveSpeed=speed;
-		this.isBullet=isBullet;
+	public MoveSnipe(float speed) {
+		this.speed = speed;
 	}
 
 	@Override
 	public void Initialize(Entity entity) {
 		transform = entity.GetComponent(Transform.class);
-		this.entity = entity;
-		dirVec = JudgingSystem.playerJudge.cpy().sub(transform.position.cpy()).nor();
-		if (isBullet) {
-			transform.rotation = dirVec.angle() - 90;
-		}else {
-			transform.rotation=0;
-		}
-		VecAcc=new Vector2(moveAcceleration,0).rotate(dirVec.angle());
-		dirVec.scl(moveSpeed);
+		velocity = JudgingSystem.playerJudge.cpy().sub(transform.position).nor().scl(speed);
 	}
 
 	@Override
 	public void Update() {
-		//acceleration
-		dirVec.add(VecAcc);
-		transform.position.add(dirVec);
-		}
+		transform.position.add(velocity);
+	}
 }

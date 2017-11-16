@@ -66,6 +66,7 @@ public class BaseProjectile extends Component {
 	}
 	
 	protected Transform transform;
+	protected Vector2 oldPos;
 	protected Entity entity;
 	public int type;
 	
@@ -85,18 +86,21 @@ public class BaseProjectile extends Component {
 		transform = entity.GetComponent(Transform.class);
 		this.entity = entity;
 		JudgingSystem.registerEnemyJudge(judge, IJudgeCallback.NONE);
+		oldPos = new Vector2();
 	}
-
+	
 	@Override
 	public void Update() {
 		if (type==9||type==14||type==230||type==231||type==232
 				||type==233||type==234||type==235) {
-			transform.rotation+=7;
+			transform.rotation += 7;
 		}
+		else transform.rotation = 90 + oldPos.sub(transform.position).angle();
 		if (transform.position.x > 570 || transform.position.x < 0 || transform.position.y > 740
 				|| transform.position.y < 0) {
 			entity.Destroy();
 		}
+		oldPos.set(transform.position);
 	}
 
 	@Override
