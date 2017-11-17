@@ -4,13 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
+
 import cn.s3bit.th902.gamecontents.Entity;
+import cn.s3bit.th902.gamecontents.SceneSystem;
 import cn.s3bit.th902.gamecontents.components.ImageRenderer;
 import cn.s3bit.th902.gamecontents.components.Transform;
-import cn.s3bit.th902.gamecontents.components.ai.MoveBasic;
-import cn.s3bit.th902.gamecontents.components.ai.MoveSnipe;
-import cn.s3bit.th902.gamecontents.components.ai.MoveTracking;
-import cn.s3bit.th902.gamecontents.components.enemy.BaseSprite;
 import cn.s3bit.th902.gamecontents.components.player.PlayerReimu;
 
 public class FightScreen extends ScreenAdapter {
@@ -24,6 +22,7 @@ public class FightScreen extends ScreenAdapter {
 	public static int bombCount = 3;
 	public static int powerCount = 0;
 	public static int pointCount = 0;
+	public SceneSystem sceneSystem;
 
 	@Override
 	public void show() {
@@ -77,11 +76,15 @@ public class FightScreen extends ScreenAdapter {
 		}
 		fightScreen.AddComponent(new ImageRenderer(ResourceManager.textures.get("FightScreen"), 0));
 		player.AddComponent(new PlayerReimu());
+		
+		sceneSystem = SceneSystem.Create(0, 0);
 	}
 
 	@Override
 	public void render(float delta) {
+		sceneSystem.PreUpdate();
 		Entity.UpdateAll();
+		sceneSystem.PostUpdate();
 		super.render(delta);
 		gameTime++;
 		GameMain.instance.activeStage.getBatch().begin();

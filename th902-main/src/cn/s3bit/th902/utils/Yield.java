@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.concurrent.Callable;
 
 public class Yield {
-	public ArrayList<Integer> times;
-	public ArrayList<Callable<?>> callables;
+	public ArrayList<Integer> times = new ArrayList<>();
+	public ArrayList<Callable<?>> callables = new ArrayList<>();
 	public int current = 0;
 	public int repeatCounter = 0;
 	

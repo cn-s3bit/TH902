@@ -1,17 +1,12 @@
 package cn.s3bit.th902.gamecontents.components.enemy;
 
-import com.badlogic.gdx.math.Shape2D;
 import com.badlogic.gdx.math.Vector2;
 
 import cn.s3bit.th902.ResourceManager;
 import cn.s3bit.th902.gamecontents.Entity;
-import cn.s3bit.th902.gamecontents.IJudgeCallback;
-import cn.s3bit.th902.gamecontents.JudgingSystem;
 import cn.s3bit.th902.gamecontents.components.Component;
 import cn.s3bit.th902.gamecontents.components.ImageRenderer;
 import cn.s3bit.th902.gamecontents.components.Transform;
-import cn.s3bit.th902.utils.ImmutableWrapper;
-import cn.s3bit.th902.utils.NullShape2D;
 
 public class BaseProjectile extends Component {
 
@@ -43,7 +38,7 @@ public class BaseProjectile extends Component {
 			{ 222, 223, 224, 225, 226, 227, 228, 229 } // 24
 	};
 
-	public static Entity Create(Vector2 position, BulletType formcircles, BulletType colorred,Component... Ves){
+	public static Entity Create(Vector2 position, BulletType formcircles, BulletType colorred, Component... Ves){
 		Entity entity = Entity.Create();
 		entity.AddComponent(new Transform(position));
 		entity.AddComponent(new ImageRenderer(ResourceManager.barrages.get(bulletTypeArray[formcircles.getType()][colorred.getType()]), 0));
@@ -54,14 +49,14 @@ public class BaseProjectile extends Component {
 		return entity;
 	}
 	
-	public static Entity CreateSpecialBullet(Vector2 position, int bulletType,Component... Ves){
+	public static Entity CreateSpecialBullet(Vector2 position, int bulletType, Component... Ves){
 		Entity entity = Entity.Create();
 		entity.AddComponent(new Transform(position));
 		entity.AddComponent(new ImageRenderer(ResourceManager.barrages.get(bulletType), 0));
 		entity.AddComponent(new BaseProjectile(bulletType));
 		for (Component tmpc : Ves) {  
-	           entity.AddComponent(tmpc);
-	        }  
+           entity.AddComponent(tmpc);
+        }
 		return entity;
 	}
 	
@@ -70,22 +65,14 @@ public class BaseProjectile extends Component {
 	protected Entity entity;
 	public int type;
 	
-	public ImmutableWrapper<Shape2D> judge = null;
-	
-	public BaseProjectile(int type){
-		this(type, NullShape2D.instance);
-	}
-	
-	public BaseProjectile(int bulletForm, Shape2D judgeShape) {
+	public BaseProjectile(int bulletForm) {
 		type = bulletForm;
-		judge = ImmutableWrapper.wrap(judgeShape);
 	}
 	
 	@Override
 	public void Initialize(Entity entity) {
 		transform = entity.GetComponent(Transform.class);
 		this.entity = entity;
-		JudgingSystem.registerEnemyJudge(judge, IJudgeCallback.NONE);
 		oldPos = new Vector2();
 	}
 	
@@ -105,7 +92,6 @@ public class BaseProjectile extends Component {
 
 	@Override
 	public void Kill() {
-		JudgingSystem.unregisterEnemyJudge(judge);
 		super.Kill();
 	}
 }
