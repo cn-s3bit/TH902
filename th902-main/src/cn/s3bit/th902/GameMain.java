@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import cn.s3bit.th902.gamecontents.Entity;
-import cn.s3bit.th902.scripting.ScriptingEngine;
 
 /**
  * @author Obsidianss
@@ -24,9 +23,6 @@ public class GameMain extends Game {
 	public void create() {
 		instance = this;
 		ResourceManager.Load();
-		ScriptingEngine.messages.size();
-		//Calling any of the class's methods can initialize
-		//Because of the static initializer
 		setScreen(new MainMenuScreen());
 		//setScreen(new FightScreen());
 		//setScreen(new DifficultySelectScreen());

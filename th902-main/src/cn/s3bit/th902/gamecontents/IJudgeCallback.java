@@ -8,4 +8,7 @@ public interface IJudgeCallback {
 		}
 	};
 	public void onCollide();
+	default public int getDamage() {
+		return 1;
+	}
 }

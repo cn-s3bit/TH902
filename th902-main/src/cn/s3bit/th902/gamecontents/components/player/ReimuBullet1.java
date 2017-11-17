@@ -22,10 +22,13 @@ public class ReimuBullet1 extends Component implements IJudgeCallback {
 	public static final int BulletTypeSelfSlow = 1;
 	public static final int BulletTypeWingFast = 2;
 	public static final int BulletTypeWingSlow = 3;
+	
+	private int mDamage = 1;
 
 	public static Entity Create(Vector2 position, int bulletType) {
 		Entity entity = Entity.Create();
 		entity.AddComponent(new Transform(position));
+		ReimuBullet1 bullet1 = new ReimuBullet1();
 		switch (bulletType) {
 		case BulletTypeSelfFast:
 			entity.AddComponent(new ImageRenderer(ResourceManager.barrages.get(239), 0));
@@ -39,9 +42,10 @@ public class ReimuBullet1 extends Component implements IJudgeCallback {
 			break;
 		case BulletTypeWingSlow:
 			entity.AddComponent(new ImageRenderer(ResourceManager.barrages.get(238), 0));
+			bullet1.mDamage = 2;
 			break;
 		}
-		entity.AddComponent(new ReimuBullet1());
+		entity.AddComponent(bullet1);
 		return entity;
 	}
 
@@ -72,5 +76,10 @@ public class ReimuBullet1 extends Component implements IJudgeCallback {
 	@Override
 	public void onCollide() {
 		entity.Destroy();
+	}
+	
+	@Override
+	public int getDamage() {
+		return mDamage;
 	}
 }

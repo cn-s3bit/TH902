@@ -98,7 +98,7 @@ public class BaseSprite extends Component {
 		}
 		IJudgeCallback collision = JudgingSystem.collideFriendlyBullets(judgeCircle);
 		if (collision != null) {
-			Hp--;
+			Hp -= collision.getDamage();
 			collision.onCollide();
 			if (Hp < 0) {
 				switch (selfColor) {

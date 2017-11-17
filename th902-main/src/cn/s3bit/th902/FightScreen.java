@@ -62,7 +62,6 @@ public class FightScreen extends ScreenAdapter {
 		power.AddComponent(new ImageRenderer(ResourceManager.textures.get("Power"), 1));
 		graze.AddComponent(new ImageRenderer(ResourceManager.textures.get("Graze"), 1));
 		point.AddComponent(new ImageRenderer(ResourceManager.textures.get("Point"), 1));
-		player.AddComponent(new PlayerReimu());
 
 		for (int i = 0; i < 8; i++) {
 			bombs[i] = Entity.Create();
@@ -77,6 +76,7 @@ public class FightScreen extends ScreenAdapter {
 			mHearts[i].image.setColor(1, 1, 1, 0);
 		}
 		fightScreen.AddComponent(new ImageRenderer(ResourceManager.textures.get("FightScreen"), 0));
+		player.AddComponent(new PlayerReimu());
 	}
 
 	@Override
