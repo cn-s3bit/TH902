@@ -1,4 +1,4 @@
-package cn.s3bit.th902.gamecontents.ai;
+package cn.s3bit.th902.gamecontents.components.ai;
 
 import cn.s3bit.th902.gamecontents.Entity;
 import cn.s3bit.th902.gamecontents.components.Component;
