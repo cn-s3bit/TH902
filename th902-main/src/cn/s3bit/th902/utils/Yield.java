@@ -56,6 +56,9 @@ public class Yield {
 	 * The object returned or null if the current one in the queue is a {@link Runnable}.
 	 */
 	public Object yield() {
+		if (current >= callables.size()) {
+			throw new IllegalStateException("Yield Finished!");
+		}
 		Object ret;
 		try {
 			ret = callables.get(current).call();
@@ -68,5 +71,12 @@ public class Yield {
 			current++;
 		}
 		return ret;
+	}
+	
+	/**
+	 * Returns true if yield has already come to an end.
+	 */
+	public boolean isFinished() {
+		return current >= callables.size();
 	}
 }
