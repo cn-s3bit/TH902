@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Shape2D;
 import com.badlogic.gdx.math.Vector2;
 
@@ -12,10 +11,8 @@ import cn.s3bit.th902.ResourceManager;
 import cn.s3bit.th902.gamecontents.Entity;
 import cn.s3bit.th902.gamecontents.IJudgeCallback;
 import cn.s3bit.th902.gamecontents.JudgingSystem;
-import cn.s3bit.th902.gamecontents.ai.MoveBasic;
-import cn.s3bit.th902.gamecontents.ai.MoveSnipe;
-import cn.s3bit.th902.gamecontents.ai.MoveTracking;
 import cn.s3bit.th902.gamecontents.components.Component;
+import cn.s3bit.th902.gamecontents.components.ExtraDrop;
 import cn.s3bit.th902.gamecontents.components.ImageRenderer;
 import cn.s3bit.th902.gamecontents.components.Transform;
 import cn.s3bit.th902.utils.AnimationDrawable;
@@ -101,64 +98,12 @@ public class BaseSprite extends Component {
 			Hp -= collision.getDamage();
 			collision.onCollide();
 			if (Hp < 0) {
-				switch (selfColor) {
-				case 0:
-					DropItem.CreateDropItem(transform.position, DropItem.TypePoint);
-					break;
-				case 1:
-					DropItem.CreateDropItem(transform.position, DropItem.TypePower);
-					break;
-				case 2:
-
-					break;
-				case 3:
-
-					break;
-
-				}
+				ExtraDrop extraDrop = entity.GetComponent(ExtraDrop.class);
+				if (extraDrop != null)
+					extraDrop.LootLogic();
 				entity.Destroy();
 			}
 		}
-		ShootLogic();
-	}
-
-	private void ShootLogic() {
-		specialBulletV = new Vector2(MathUtils.random(-3, 3), MathUtils.random(-3, 3));
-		while (specialBulletV.equals(Vector2.Zero)) {
-			specialBulletV = new Vector2(MathUtils.random(-3, 3), MathUtils.random(-3, 3));
-		}
-		if (shootTime % 60 == 0) {
-
-			switch (selfColor) {
-			case 0:
-				BaseProjectile.Create(transform.position.cpy(), BulletType.FormArrowL, BulletType.ColorBlue,
-						new MoveSnipe(2));
-				break;
-			case 1:
-				for (int i = 0; i < 3; i++) {
-					BaseProjectile.Create(transform.position.cpy(), BulletType.FormKnife, BulletType.ColorRed,
-							new MoveBasic(bulletV.cpy()));
-					bulletV.rotate(60);
-					BaseProjectile.Create(transform.position.cpy(), BulletType.FormArrowL, BulletType.ColorOrange,
-							new MoveBasic(bulletV.cpy()));
-					bulletV.rotate(60);
-				}
-				break;
-			case 2:
-				BaseProjectile.Create(transform.position.cpy(), BulletType.FormArrowL, BulletType.ColorGreen,
-						new MoveTracking(2));
-				break;
-			case 3:
-				if (MathUtils.random(0, 5) == 2) {
-					BaseProjectile.CreateSpecialBullet(transform.position.cpy(), MathUtils.random(230, 235),
-							new MoveSnipe(2));
-				}
-				break;
-
-			}
-			bulletV.rotate(7);
-		}
-
 	}
 
 	@Override
