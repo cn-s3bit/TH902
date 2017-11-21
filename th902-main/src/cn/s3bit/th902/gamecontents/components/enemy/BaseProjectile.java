@@ -2,6 +2,7 @@ package cn.s3bit.th902.gamecontents.components.enemy;
 
 import com.badlogic.gdx.math.Vector2;
 
+import cn.s3bit.th902.FightScreen;
 import cn.s3bit.th902.ResourceManager;
 import cn.s3bit.th902.gamecontents.Entity;
 import cn.s3bit.th902.gamecontents.components.Component;
@@ -83,8 +84,7 @@ public class BaseProjectile extends Component {
 			transform.rotation += 7;
 		}
 		else transform.rotation = 90 + oldPos.sub(transform.position).angle();
-		if (transform.position.x > 570 || transform.position.x < 0 || transform.position.y > 740
-				|| transform.position.y < 0) {
+		if (FightScreen.isOutOfScreen(transform.position)) {
 			entity.Destroy();
 		}
 		oldPos.set(transform.position);

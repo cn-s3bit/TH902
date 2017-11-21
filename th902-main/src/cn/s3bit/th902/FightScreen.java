@@ -22,6 +22,10 @@ public class FightScreen extends ScreenAdapter {
 	public static int bombCount = 3;
 	public static int powerCount = 0;
 	public static int pointCount = 0;
+	public static final float TOP = 750;
+	public static final float LEFT = -30;
+	public static final float RIGHT = 610;
+	public static final float BOTTOM = -30;
 	public SceneSystem sceneSystem;
 
 	@Override
@@ -42,7 +46,7 @@ public class FightScreen extends ScreenAdapter {
 		Entity hearts[] = new Entity[8];
 
 		fightScreen.AddComponent(new Transform(new Vector2(480, 360)));
-		player.AddComponent(new Transform(new Vector2(240, 160), new Vector2(0.4f, 0.4f)));
+		player.AddComponent(new Transform(new Vector2(280, 100), new Vector2(0.4f, 0.4f)));
 		difficulty.AddComponent(new Transform(new Vector2(760, 670)));
 		score.AddComponent(new Transform(new Vector2(810, 570)));
 		highScore.AddComponent(new Transform(new Vector2(635, 620)));
@@ -76,7 +80,7 @@ public class FightScreen extends ScreenAdapter {
 		}
 		fightScreen.AddComponent(new ImageRenderer(ResourceManager.textures.get("FightScreen"), 0));
 		player.AddComponent(new PlayerReimu());
-		
+
 		sceneSystem = SceneSystem.Create(0, 0);
 	}
 
@@ -89,8 +93,8 @@ public class FightScreen extends ScreenAdapter {
 		gameTime++;
 		GameMain.instance.activeStage.getBatch().begin();
 		bf.draw(GameMain.instance.activeStage.getBatch(), "difficulty:" + DifficultySelectScreen.difficulty
-				+ "\nplayer:" + playerCount + "\nbomb:" + bombCount + "\npower:" + powerCount
-				+"\npoint:"+pointCount, 20, 705);
+				+ "\nplayer:" + playerCount + "\nbomb:" + bombCount + "\npower:" + powerCount + "\npoint:" + pointCount,
+				20, 705);
 		bf.draw(GameMain.instance.activeStage.getBatch(), "FPS: " + Gdx.graphics.getFramesPerSecond(), 850, 30);
 		GameMain.instance.activeStage.getBatch().end();
 
@@ -104,5 +108,13 @@ public class FightScreen extends ScreenAdapter {
 				mBombs[i].image.setColor(1, 1, 1, 1);
 			else
 				mBombs[i].image.setColor(1, 1, 1, 0);
+	}
+
+	public static boolean isOutOfScreen(Vector2 v) {
+		if (v.x >= LEFT && v.x <= RIGHT && v.y <= TOP && v.y >= BOTTOM) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 }

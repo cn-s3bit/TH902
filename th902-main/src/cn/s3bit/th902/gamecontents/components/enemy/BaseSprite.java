@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Shape2D;
 import com.badlogic.gdx.math.Vector2;
 
+import cn.s3bit.th902.FightScreen;
 import cn.s3bit.th902.ResourceManager;
 import cn.s3bit.th902.gamecontents.Entity;
 import cn.s3bit.th902.gamecontents.IJudgeCallback;
@@ -78,8 +79,7 @@ public class BaseSprite extends Component {
 	public void Update() {
 		shootTime++;
 		judgeCircle.setPosition(transform.position);
-		if (transform.position.x > 580 || transform.position.x < -50 || transform.position.y > 800
-				|| transform.position.y < -50) {
+		if (FightScreen.isOutOfScreen(transform.position)) {
 			Kill();
 		}
 		if (animateFlag) {

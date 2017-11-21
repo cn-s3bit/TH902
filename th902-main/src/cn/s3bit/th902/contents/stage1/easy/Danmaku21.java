@@ -1,5 +1,6 @@
-package cn.s3bit.th902.contents;
+package cn.s3bit.th902.contents.stage1.easy;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
 import cn.s3bit.th902.FightScreen;
@@ -19,12 +20,13 @@ import cn.s3bit.th902.gamecontents.components.enemy.BaseSprite;
 import cn.s3bit.th902.gamecontents.components.enemy.BulletType;
 import cn.s3bit.th902.gamecontents.components.enemy.DropItem;
 
-public final class ExampleDanmakuScene extends DanmakuScene {
+public final class Danmaku21 extends DanmakuScene {
 	@Override
 	public void Initialize(Entity entity) {
-		yield.append(() -> { }, 20); //Wait For 20 Frames.
 		yield.append(() -> {
-			final Entity sprite = BaseSprite.Create(new Vector2(FightScreen.TOP/2, FightScreen.RIGHT/2), 0);
+		}, 60);
+		yield.append(() -> {
+			final Entity sprite = BaseSprite.Create(new Vector2(FightScreen.LEFT, FightScreen.TOP * 3 / 4), 1);
 			final Transform transform = sprite.GetComponent(Transform.class);
 			sprite.AddComponent(new ExtraDrop() {
 				@Override
@@ -32,14 +34,24 @@ public final class ExampleDanmakuScene extends DanmakuScene {
 					DropItem.CreateDropItem(transform.position.cpy(), DropItem.TypePower);
 				}
 			});
-			sprite.AddComponent(new MoveFunction(
-					MoveFunctionTarget.POSITION,
-					MoveFunctionType.ASSIGNMENT,
-					(time) -> { return IMoveFunction.vct2_tmp1.set(60, 60).rotate(time * 2).add(300, 400); }));
+			Vector2 vector2 = new Vector2(MathUtils.random(100, 400), MathUtils.random(100, 700));
+			sprite.AddComponent(new MoveFunction(MoveFunctionTarget.POSITION, MoveFunctionType.ASSIGNMENT, (time) -> {
+				if (time <= 80) {
+					if (time % 80 == 0) {
+						BaseProjectile.Create(transform.position.cpy(), BulletType.FormArrowL, BulletType.ColorRed,
+								new MoveSnipe(3f), new EnemyJudgeCircle(6));
+					}
+					return IMoveFunction.vct2_tmp2
+							.set(transform.position.add(vector2.cpy().sub(transform.position).scl(0.02f)));
+				} else {
+					return IMoveFunction.vct2_tmp2
+							.set(transform.position.add(new Vector2(300, 600).sub(transform.position).scl(0.02f)));
+				}
+			}));
 			sprite.AddComponent(new LambdaComponent(() -> {
-				BaseProjectile.Create(transform.position.cpy(), BulletType.FormCircleS, BulletType.ColorBlue, new MoveSnipe(3f), new EnemyJudgeCircle(6));
-			}, 30));
+				BaseProjectile.Create(transform.position.cpy(), BulletType.FormCircleLightM, BulletType.ColorRed,
+						new MoveSnipe(3f), new EnemyJudgeCircle(6));
+			}, 40, -1));
 		});
-		yield.append(() -> { }, 20);
 	}
 }

@@ -19,7 +19,7 @@ public final class Danmaku12 extends DanmakuScene {
 	@Override
 	public void Initialize(Entity entity) {
 		yield.append(() -> {
-			final Entity sprite = BaseSprite.Create(new Vector2(560, 500), 3);
+			final Entity sprite = BaseSprite.Create(new Vector2(560, 500), 1);
 			final Transform transform = sprite.GetComponent(Transform.class);
 			sprite.AddComponent(new ExtraDrop() {
 				@Override
@@ -29,7 +29,7 @@ public final class Danmaku12 extends DanmakuScene {
 			});
 			sprite.AddComponent(new MoveBasic(-1, -1f, 0, 0.005f));
 			sprite.AddComponent(new LambdaComponent(() -> {
-				BaseProjectile.Create(transform.position.cpy(), BulletType.FormCircleS, BulletType.ColorBlue, new MoveSnipe(3f), new EnemyJudgeCircle(6));
+				BaseProjectile.Create(transform.position.cpy(), BulletType.FormCircleS, BulletType.ColorRed, new MoveSnipe(3f), new EnemyJudgeCircle(6));
 			}, 60,-1));
 		});
 		yield.append(() -> { }, 20);
