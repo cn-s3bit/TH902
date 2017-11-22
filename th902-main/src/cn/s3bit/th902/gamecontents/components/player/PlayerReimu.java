@@ -73,12 +73,12 @@ public class PlayerReimu extends Player {
 		existTime++;
 		if (Gdx.input.isKeyPressed(KeySettings.positiveKey) && existTime % 3 == 1) {
 			if (slow) {
-				ReimuBullet1.Create(transform.position.cpy().add(0, 24), ReimuBullet1.BulletTypeWingSlow);
+				ReimuBullet1.Create(transform.position.cpy().add(0, 24), ReimuBullet1.BulletTypeWingSlowStraight);
+			//	ReimuBullet1.Create(transform.position.cpy().add(12, mBulletRnd), ReimuBullet1.BulletTypeWingSlowInduce);
 			}else {
 				mBulletRnd = MathUtils.random(-6, 6);
 				ReimuBullet1.Create(transform.position.cpy().add(-12, mBulletRnd), ReimuBullet1.BulletTypeSelfFast);
 				ReimuBullet1.Create(transform.position.cpy().add(12, mBulletRnd), ReimuBullet1.BulletTypeSelfFast);
-				
 			}
 		}else {
 			mIfShoot=false;

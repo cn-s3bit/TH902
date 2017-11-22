@@ -52,9 +52,10 @@ public class ReimuWing extends Component {
 			transform.rotation += mRotationFlag;
 			if (ifShoot) {
 				bulletRnd = MathUtils.random(-6, 6);
-				ReimuBullet1.Create(transform.position.cpy().add(-10, bulletRnd), ReimuBullet1.BulletTypeWingFast);
-				ReimuBullet1.Create(transform.position.cpy().add(0, bulletRnd + 6), ReimuBullet1.BulletTypeWingFast);
-				ReimuBullet1.Create(transform.position.cpy().add(10, bulletRnd), ReimuBullet1.BulletTypeWingFast);
+				ReimuBullet1.Create(transform.position.cpy().add(-10, bulletRnd), ReimuBullet1.BulletTypeWingFastStraight);
+				ReimuBullet1.Create(transform.position.cpy().add(0, bulletRnd + 6), ReimuBullet1.BulletTypeWingFastStraight);
+				ReimuBullet1.Create(transform.position.cpy().add(10, bulletRnd), ReimuBullet1.BulletTypeWingFastStraight);
+			//	ReimuBullet1.Create(transform.position.cpy().add(0, bulletRnd + 6), ReimuBullet1.BulletTypeWingFastInduce);
 			}
 		}
 
