@@ -111,10 +111,6 @@ public class FightScreen extends ScreenAdapter {
 	}
 
 	public static boolean isOutOfScreen(Vector2 v) {
-		if (v.x >= LEFT && v.x <= RIGHT && v.y <= TOP && v.y >= BOTTOM) {
-			return false;
-		} else {
-			return true;
-		}
+		return !(v.x >= LEFT && v.x <= RIGHT && v.y <= TOP && v.y >= BOTTOM);
 	}
 }
