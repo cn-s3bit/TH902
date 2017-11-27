@@ -27,6 +27,7 @@ public abstract class Player extends Component {
 	public int ChaosTime = 0;
 	public boolean Chaos = false;
 	public static boolean onLine = false;
+	private boolean mIfSlowBomb = false;
 
 	@Override
 	public void Initialize(Entity entity) {
@@ -35,6 +36,30 @@ public abstract class Player extends Component {
 		playerAnimation = new PlayerAnimation();
 		slow = false;
 	}
+
+	public void useBomb() {
+		if (mIfSlowBomb) {
+			if (FightScreen.PlayerType == FightScreen.PlayerTypeA) {
+				typeASlowBomb();
+			} else {
+				typeBSlowBomb();
+			}
+		} else {
+			if (FightScreen.PlayerType == FightScreen.PlayerTypeA) {
+				typeAFastBomb();
+			} else {
+				typeBFastBomb();
+			}
+		}
+	}
+
+	public abstract void typeAFastBomb();
+
+	public abstract void typeASlowBomb();
+
+	public abstract void typeBFastBomb();
+
+	public abstract void typeBSlowBomb();
 
 	@Override
 	public void Update() {
@@ -55,7 +80,7 @@ public abstract class Player extends Component {
 				System.out.println("Collided!");
 				collision.onCollide();
 				FightScreen.playerCount--;
-				FightScreen.bombCount=3;
+				FightScreen.bombCount = 3;
 				Chaos = true;
 				ChaosTime = 120;
 			}
@@ -75,6 +100,7 @@ public abstract class Player extends Component {
 
 		if (Gdx.input.isKeyPressed(KeySettings.negativeKey)) {
 			if (!Bomb && FightScreen.bombCount > 0) {
+				mIfSlowBomb = Gdx.input.isKeyPressed(KeySettings.shift);
 				Bomb = true;
 				BombTime = 300;
 				ChaosTime = BombTime + 120;
@@ -91,6 +117,7 @@ public abstract class Player extends Component {
 
 		if (Bomb) {
 			velocity.scl(0.5f);
+			useBomb();
 			BombTime--;
 			if (BombTime == 0) {
 				Bomb = false;
