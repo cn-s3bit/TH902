@@ -3,6 +3,7 @@ package cn.s3bit.th902.gamecontents.components.player;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
+import cn.s3bit.th902.FightScreen;
 import cn.s3bit.th902.ResourceManager;
 import cn.s3bit.th902.gamecontents.Entity;
 import cn.s3bit.th902.gamecontents.components.Component;
@@ -18,8 +19,10 @@ public class ReimuWing extends Component {
 	private float mRotationFlag;
 	protected boolean ifShoot = false;
 	protected float bulletRnd = 0;
+	private int mType;
 
-	public ReimuWing(Vector2 position, float rotation) {
+	public ReimuWing(Vector2 position, float rotation, int type) {
+		mType = type;
 		Entity entity = Entity.Create();
 		entity.AddComponent(new Transform(position));
 		entity.AddComponent(new ImageRenderer(ResourceManager.barrages.get(236), 0));
@@ -42,20 +45,37 @@ public class ReimuWing extends Component {
 	public void Update() {
 		transform.position.add(mVector2.sub(transform.position).scl(0.2f));
 		existTime++;
-		if (ifSlow) {
-			if (ifShoot) {
-				transform.rotation = transform.rotation + mRotationFlag * 3;
-			}else {
+		if (mType == FightScreen.PlayerTypeA) {
+			if (ifSlow) {
+				if (ifShoot) {
+					transform.rotation = transform.rotation + mRotationFlag * 3;
+				} else {
+					transform.rotation += mRotationFlag;
+				}
+			} else {
 				transform.rotation += mRotationFlag;
+				if (ifShoot) {
+					ReimuBullet1.Create(transform.position.cpy().add(0, 6), ReimuBullet1.BulletTypeWingFastInduce);
+				}
 			}
 		} else {
-			transform.rotation += mRotationFlag;
-			if (ifShoot) {
-				bulletRnd = MathUtils.random(-6, 6);
-				ReimuBullet1.Create(transform.position.cpy().add(-10, bulletRnd), ReimuBullet1.BulletTypeWingFastStraight);
-				ReimuBullet1.Create(transform.position.cpy().add(0, bulletRnd + 6), ReimuBullet1.BulletTypeWingFastStraight);
-				ReimuBullet1.Create(transform.position.cpy().add(10, bulletRnd), ReimuBullet1.BulletTypeWingFastStraight);
-			//	ReimuBullet1.Create(transform.position.cpy().add(0, bulletRnd + 6), ReimuBullet1.BulletTypeWingFastInduce);
+			if (ifSlow) {
+				if (ifShoot) {
+					transform.rotation = transform.rotation + mRotationFlag * 3;
+				} else {
+					transform.rotation += mRotationFlag;
+				}
+			} else {
+				transform.rotation += mRotationFlag;
+				if (ifShoot) {
+					bulletRnd = MathUtils.random(-6, 6);
+					ReimuBullet1.Create(transform.position.cpy().add(-10, bulletRnd),
+							ReimuBullet1.BulletTypeWingFastStraight);
+					ReimuBullet1.Create(transform.position.cpy().add(0, bulletRnd + 6),
+							ReimuBullet1.BulletTypeWingFastStraight);
+					ReimuBullet1.Create(transform.position.cpy().add(10, bulletRnd),
+							ReimuBullet1.BulletTypeWingFastStraight);
+				}
 			}
 		}
 

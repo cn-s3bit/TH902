@@ -25,9 +25,12 @@ public class PlayerReimu extends Player {
 	public int existTime;
 	private ReimuWing mReimuWing1;
 	private ReimuWing mReimuWing2;
-	private boolean mIfShoot=false;
-	private float mBulletRnd=0;
-	public PlayerReimu() {
+	private boolean mWingIfShoot = false;
+	private float mBulletRnd = 0;
+	private int mType;
+
+	public PlayerReimu(int type) {
+		mType = type;
 		Texture texture = ResourceManager.textures.get("Reimu");
 		TextureRegion[][] splitted = TextureRegion.split(texture, texture.getWidth() / 8, texture.getHeight() / 3);
 		animationStay = new Animation<TextureRegion>(5, splitted[0]);
@@ -44,8 +47,8 @@ public class PlayerReimu extends Player {
 		animationDrawable.setAnimation(animationStay);
 		existTime = 0;
 		entity.AddComponent(new ImageGroupRenderer(new Drawable[] { animationDrawable, playerAnimation }, 0, null));
-		mReimuWing1 = new ReimuWing(new Vector2(transform.position.x, transform.position.y + 30),4f);
-		mReimuWing2 = new ReimuWing(new Vector2(transform.position.x + 30, transform.position.y),-4f);
+		mReimuWing1 = new ReimuWing(new Vector2(transform.position.x, transform.position.y + 30), 4f, mType);
+		mReimuWing2 = new ReimuWing(new Vector2(transform.position.x + 30, transform.position.y), -4f, mType);
 	}
 
 	@Override
@@ -53,15 +56,12 @@ public class PlayerReimu extends Player {
 		super.Update();
 
 		if (slow) {
-			mReimuWing1.set(new Vector2(transform.position.x + 25, transform.position.y + 40), slow,mIfShoot);
-			mReimuWing2.set(new Vector2(transform.position.x - 25, transform.position.y + 40), slow,mIfShoot);
+			mReimuWing1.set(new Vector2(transform.position.x + 25, transform.position.y + 40), slow, mWingIfShoot);
+			mReimuWing2.set(new Vector2(transform.position.x - 25, transform.position.y + 40), slow, mWingIfShoot);
 		} else {
-			mReimuWing1.set(new Vector2(transform.position.x + 60, transform.position.y), slow,mIfShoot);
-			mReimuWing2.set(new Vector2(transform.position.x - 60, transform.position.y), slow,mIfShoot);
+			mReimuWing1.set(new Vector2(transform.position.x + 60, transform.position.y), slow, mWingIfShoot);
+			mReimuWing2.set(new Vector2(transform.position.x - 60, transform.position.y), slow, mWingIfShoot);
 		}
-
-		
-		
 		animationDrawable.advance(1);
 		if (velocity.x > 0 && animationDrawable.getAnimation() != animationRight) {
 			animationDrawable.setAnimation(animationRight);
@@ -71,28 +71,64 @@ public class PlayerReimu extends Player {
 			animationDrawable.setAnimation(animationStay);
 		}
 		existTime++;
-		if (Gdx.input.isKeyPressed(KeySettings.positiveKey) && existTime % 3 == 1) {
-			if (slow) {
-				ReimuBullet1.Create(transform.position.cpy().add(0, 24), ReimuBullet1.BulletTypeWingSlowStraight);
-			//	ReimuBullet1.Create(transform.position.cpy().add(12, mBulletRnd), ReimuBullet1.BulletTypeWingSlowInduce);
-			}else {
-				mBulletRnd = MathUtils.random(-6, 6);
-				ReimuBullet1.Create(transform.position.cpy().add(-12, mBulletRnd), ReimuBullet1.BulletTypeSelfFast);
-				ReimuBullet1.Create(transform.position.cpy().add(12, mBulletRnd), ReimuBullet1.BulletTypeSelfFast);
+		if (mType == FightScreen.PlayerTypeA) {
+			if (Gdx.input.isKeyPressed(KeySettings.positiveKey) && existTime % (103 - FightScreen.powerCount) == 1) {
+				mWingIfShoot = true;
+			} else {
+				mWingIfShoot = false;
 			}
-		}else {
-			mIfShoot=false;
+			if (Gdx.input.isKeyPressed(KeySettings.positiveKey) && existTime % 3 == 1) {
+				if (slow) {
+					mWingIfShoot = false;
+					ReimuBullet1.Create(transform.position.cpy().add(0, 24), ReimuBullet1.BulletTypeWingSlowInduce);
+				} else {
+					mBulletRnd = MathUtils.random(-6, 6);
+					ReimuBullet1.Create(transform.position.cpy().add(-12, mBulletRnd), ReimuBullet1.BulletTypeSelfFast);
+					ReimuBullet1.Create(transform.position.cpy().add(12, mBulletRnd), ReimuBullet1.BulletTypeSelfFast);
+				}
+			}
+		} else {
+			if (Gdx.input.isKeyPressed(KeySettings.positiveKey) && existTime % (103 - FightScreen.powerCount) == 1) {
+				mWingIfShoot = true;
+			} else {
+				mWingIfShoot = false;
+			}
+			if (Gdx.input.isKeyPressed(KeySettings.positiveKey) && existTime % 3 == 1) {
+				if (slow) {
+					mWingIfShoot = false;
+					ReimuBullet1.Create(transform.position.cpy().add(0, 24), ReimuBullet1.BulletTypeWingSlowStraight);
+				} else {
+					mBulletRnd = MathUtils.random(-6, 6);
+					ReimuBullet1.Create(transform.position.cpy().add(-12, mBulletRnd), ReimuBullet1.BulletTypeSelfFast);
+					ReimuBullet1.Create(transform.position.cpy().add(12, mBulletRnd), ReimuBullet1.BulletTypeSelfFast);
+				}
+			}
 		}
-		if (Gdx.input.isKeyPressed(KeySettings.positiveKey) && existTime % (103-FightScreen.powerCount) == 1) {
-			mIfShoot=true;
-		}else {
-			mIfShoot=false;
-		}
-		//Use bomb
-		if (Bomb) {
-			ReimuBullet1.Create(transform.position.cpy().add(MathUtils.random(-90, 90), -transform.position.y), ReimuBullet1.BulletTypeSelfFast);
-			ReimuBullet1.Create(transform.position.cpy().add(MathUtils.random(-90, 90), -transform.position.y), ReimuBullet1.BulletTypeSelfFast);
-		}
-		
 	}
+
+	@Override
+	public void typeAFastBomb() {
+		Bombs.Create(transform.position.cpy().sub(30, 0), Bombs.TypeReimuAFast);
+		Bombs.Create(transform.position.cpy(), Bombs.TypeReimuAFast);
+		Bombs.Create(transform.position.cpy().add(30, 0), Bombs.TypeReimuAFast);
+	}
+
+	@Override
+	public void typeASlowBomb() {
+		Bombs.Create(transform.position.cpy(), Bombs.TypeReimuASlow);
+	}
+
+	@Override
+	public void typeBFastBomb() {
+		Bombs.Create(transform.position.cpy().sub(30, 0), Bombs.TypeReimuBFast);
+		Bombs.Create(transform.position.cpy(), Bombs.TypeReimuBFast);
+		Bombs.Create(transform.position.cpy().add(30, 0), Bombs.TypeReimuBFast);
+	}
+
+	@Override
+	public void typeBSlowBomb() {
+		Bombs.Create(transform.position.cpy().add(MathUtils.random(-90, 90), -transform.position.y),
+				Bombs.TypeReimuBSlow);
+	}
+
 }

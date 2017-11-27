@@ -28,7 +28,7 @@ public class ReimuBullet1 extends Component implements IJudgeCallback {
 
 	private boolean isInduce = false;
 	private int mDamage = 2;
-	private Vector2 nearestEnemyPosition=null;
+	private Vector2 nearestEnemyPosition = null;
 
 	public static Entity Create(Vector2 position, int bulletType) {
 		Entity entity = Entity.Create();
@@ -73,7 +73,7 @@ public class ReimuBullet1 extends Component implements IJudgeCallback {
 		transform = entity.GetComponent(Transform.class);
 		JudgingSystem.registerFriendlyJudge(transform.immutablePosition, this);
 		this.entity = entity;
-		mTempTargetVelocity=new Vector2();
+		mTempTargetVelocity = new Vector2();
 	}
 
 	@Override
@@ -82,7 +82,7 @@ public class ReimuBullet1 extends Component implements IJudgeCallback {
 			nearestEnemyPosition = getNearestEnemy();
 			if (nearestEnemyPosition.equals(Vector2.Zero)) {
 				if (mTempTargetVelocity.equals(Vector2.Zero)) {
-				transform.position.add(0, 13);
+					transform.position.add(0, 13);
 				} else {
 					transform.position.add(mTempTargetVelocity);
 				}
@@ -115,11 +115,12 @@ public class ReimuBullet1 extends Component implements IJudgeCallback {
 		return mDamage;
 	}
 
-	//To simulate get the nearest enemy's position
+	// To simulate get the nearest enemy's position
 	float ex = 10;
 	float ey = 600;
+
 	public Vector2 getNearestEnemy() {
-		//return Vector2.Zero;
-		return ex<300?new Vector2(ex+=10, ey):Vector2.Zero;
+		// return Vector2.Zero;
+		return ex < 300 ? new Vector2(ex += 10, ey) : Vector2.Zero;
 	}
 }

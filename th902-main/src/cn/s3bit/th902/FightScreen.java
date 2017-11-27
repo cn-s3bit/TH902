@@ -26,6 +26,12 @@ public class FightScreen extends ScreenAdapter {
 	public static final float LEFT = -30;
 	public static final float RIGHT = 610;
 	public static final float BOTTOM = -30;
+	public static final int PlayerTypeReimu = 1;
+	public static final int PlayerTypeMarisa = 2;
+	public static final int PlayerTypeA = 1;
+	public static final int PlayerTypeB = 2;
+	public static int PlayerType = 2;
+	public static int PlayerChara = 1;
 	public SceneSystem sceneSystem;
 
 	@Override
@@ -79,8 +85,19 @@ public class FightScreen extends ScreenAdapter {
 			mHearts[i].image.setColor(1, 1, 1, 0);
 		}
 		fightScreen.AddComponent(new ImageRenderer(ResourceManager.textures.get("FightScreen"), 0));
-		player.AddComponent(new PlayerReimu());
+		if (PlayerChara == PlayerTypeReimu) {
+			if (PlayerType == PlayerTypeA) {
+				player.AddComponent(new PlayerReimu(PlayerTypeA));
+			} else {
+				player.AddComponent(new PlayerReimu(PlayerTypeB));
+			}
+		} else if (PlayerChara == PlayerTypeMarisa) {
+			if (PlayerType == PlayerTypeA) {
 
+			} else {
+
+			}
+		}
 		sceneSystem = SceneSystem.Create(0, 0);
 	}
 
