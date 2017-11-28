@@ -30,7 +30,7 @@ public class FightScreen extends ScreenAdapter {
 	public static final int PlayerTypeMarisa = 2;
 	public static final int PlayerTypeA = 1;
 	public static final int PlayerTypeB = 2;
-	public static int PlayerType = 2;
+	public static int PlayerType = 1;
 	public static int PlayerChara = 1;
 	public SceneSystem sceneSystem;
 
@@ -86,17 +86,9 @@ public class FightScreen extends ScreenAdapter {
 		}
 		fightScreen.AddComponent(new ImageRenderer(ResourceManager.textures.get("FightScreen"), 0));
 		if (PlayerChara == PlayerTypeReimu) {
-			if (PlayerType == PlayerTypeA) {
-				player.AddComponent(new PlayerReimu(PlayerTypeA));
-			} else {
-				player.AddComponent(new PlayerReimu(PlayerTypeB));
-			}
+			player.AddComponent(new PlayerReimu(PlayerType));
 		} else if (PlayerChara == PlayerTypeMarisa) {
-			if (PlayerType == PlayerTypeA) {
-
-			} else {
-
-			}
+	
 		}
 		sceneSystem = SceneSystem.Create(0, 0);
 	}
