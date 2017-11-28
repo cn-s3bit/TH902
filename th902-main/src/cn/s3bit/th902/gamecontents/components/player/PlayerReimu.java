@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 
@@ -26,7 +25,6 @@ public class PlayerReimu extends Player {
 	private ReimuWing mReimuWing1;
 	private ReimuWing mReimuWing2;
 	private boolean mWingIfShoot = false;
-	private float mBulletRnd = 0;
 	private int mType;
 
 	public PlayerReimu(int type) {
@@ -81,10 +79,9 @@ public class PlayerReimu extends Player {
 				if (slow) {
 					mWingIfShoot = false;
 					ReimuBullet1.Create(transform.position.cpy().add(0, 24), ReimuBullet1.BulletTypeWingSlowInduce);
+					ReimuBullet1.Create(transform.position.cpy().add(0,10), ReimuBullet1.BulletTypeSelfSlow);
 				} else {
-					mBulletRnd = MathUtils.random(-6, 6);
-					ReimuBullet1.Create(transform.position.cpy().add(-12, mBulletRnd), ReimuBullet1.BulletTypeSelfFast);
-					ReimuBullet1.Create(transform.position.cpy().add(12, mBulletRnd), ReimuBullet1.BulletTypeSelfFast);
+					ReimuBullet1.Create(transform.position.cpy().add(0,6), ReimuBullet1.BulletTypeSelfFast);
 				}
 			}
 		} else {
@@ -98,9 +95,7 @@ public class PlayerReimu extends Player {
 					mWingIfShoot = false;
 					ReimuBullet1.Create(transform.position.cpy().add(0, 24), ReimuBullet1.BulletTypeWingSlowStraight);
 				} else {
-					mBulletRnd = MathUtils.random(-6, 6);
-					ReimuBullet1.Create(transform.position.cpy().add(-12, mBulletRnd), ReimuBullet1.BulletTypeSelfFast);
-					ReimuBullet1.Create(transform.position.cpy().add(12, mBulletRnd), ReimuBullet1.BulletTypeSelfFast);
+					ReimuBullet1.Create(transform.position.cpy().add(0,6), ReimuBullet1.BulletTypeSelfFast);
 				}
 			}
 		}
@@ -108,27 +103,28 @@ public class PlayerReimu extends Player {
 
 	@Override
 	public void typeAFastBomb() {
-		Bombs.Create(transform.position.cpy().sub(30, 0), Bombs.TypeReimuAFast);
-		Bombs.Create(transform.position.cpy(), Bombs.TypeReimuAFast);
-		Bombs.Create(transform.position.cpy().add(30, 0), Bombs.TypeReimuAFast);
+			Bombs.Create(transform.position.cpy().sub(30, 0), Bombs.TypeReimuAFast,0,0);
+			Bombs.Create(transform.position.cpy(), Bombs.TypeReimuAFast,0,0);
+			Bombs.Create(transform.position.cpy().add(30, 0), Bombs.TypeReimuAFast,0,0);
 	}
 
 	@Override
 	public void typeASlowBomb() {
-		Bombs.Create(transform.position.cpy(), Bombs.TypeReimuASlow);
+		Bombs.Create(transform.position.cpy(), Bombs.TypeReimuASlow,0,0);
 	}
 
 	@Override
 	public void typeBFastBomb() {
-		Bombs.Create(transform.position.cpy().sub(30, 0), Bombs.TypeReimuBFast);
-		Bombs.Create(transform.position.cpy(), Bombs.TypeReimuBFast);
-		Bombs.Create(transform.position.cpy().add(30, 0), Bombs.TypeReimuBFast);
+		Bombs.Create(transform.position.cpy().sub(30, 0), Bombs.TypeReimuBFast,0,0);
+		Bombs.Create(transform.position.cpy(), Bombs.TypeReimuBFast,0,0);
+		Bombs.Create(transform.position.cpy().add(30, 0), Bombs.TypeReimuBFast,0,0);
 	}
 
 	@Override
 	public void typeBSlowBomb() {
-		Bombs.Create(transform.position.cpy().add(MathUtils.random(-90, 90), -transform.position.y),
-				Bombs.TypeReimuBSlow);
+		needNewBombEntity=false;
+		Bombs.Create(transform.position,Bombs.TypeReimuBSlow,10,0.07f);
+		Bombs.Create(transform.position,Bombs.TypeReimuBSlow,-10,-0.07f);
 	}
 
 }
