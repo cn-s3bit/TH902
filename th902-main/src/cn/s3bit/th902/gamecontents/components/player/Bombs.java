@@ -24,12 +24,17 @@ public class Bombs extends Component implements IJudgeCallback {
 	protected Transform transform;
 	protected Entity entity;
 	private Vector2 mTempTargetVelocity;
+	private float mRotation=0;
+	private float mRotation2=0;
+	private int bombTimeCount=0;
 
-	public static Entity Create(Vector2 position, int bulletType) {
+	public static void Create(Vector2 position, int bulletType,float rotation,float rotation2) {
 		Entity entity = Entity.Create();
 		entity.AddComponent(new Transform(position));
 		Bombs bullet1 = new Bombs();
 		bullet1.mType = bulletType;
+		bullet1.mRotation=rotation;
+		bullet1.mRotation2=rotation2;
 		switch (bulletType) {
 		case TypeReimuAFast:
 			entity.AddComponent(new ImageRenderer(ResourceManager.barrages.get(0), 0));
@@ -43,11 +48,10 @@ public class Bombs extends Component implements IJudgeCallback {
 			entity.AddComponent(new ImageRenderer(ResourceManager.barrages.get(239), 0));
 			break;
 		case TypeReimuBSlow:
-			entity.AddComponent(new ImageRenderer(ResourceManager.barrages.get(2), 0));
+			entity.AddComponent(new ImageRenderer(ResourceManager.barrages.get(245), 0));
 			break;
 		}
 		entity.AddComponent(bullet1);
-		return entity;
 	}
 
 	@Override
@@ -60,6 +64,7 @@ public class Bombs extends Component implements IJudgeCallback {
 
 	@Override
 	public void Update() {
+		bombTimeCount++;
 		switch (mType) {
 		case TypeReimuASlow:
 			nearestEnemyPosition = getNearestEnemy();
@@ -90,7 +95,11 @@ public class Bombs extends Component implements IJudgeCallback {
 			}
 			break;
 		case TypeReimuBSlow:
-			transform.position.add(0, 27);
+			transform.rotation+=mRotation;
+			mRotation-=mRotation2;
+			if (bombTimeCount>120) {
+				entity.Destroy();
+			}
 			break;
 		case TypeReimuBFast:
 			transform.position.add(0, 27);
