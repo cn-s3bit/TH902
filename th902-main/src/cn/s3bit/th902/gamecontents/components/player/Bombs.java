@@ -15,8 +15,8 @@ public class Bombs extends Component implements IJudgeCallback {
 
 	public static final int TypeReimuAFast = 0;
 	public static final int TypeReimuASlow = 1;
-	public static final int TypeReimuBFast = 2;
-	public static final int TypeReimuBSlow = 3;
+	public static final int TypeReimuBFast = 246;
+	public static final int TypeReimuBSlow = 245;
 
 	private int mType;
 	private int mDamage = 2;
@@ -24,31 +24,38 @@ public class Bombs extends Component implements IJudgeCallback {
 	protected Transform transform;
 	protected Entity entity;
 	private Vector2 mTempTargetVelocity;
-	private float mRotation=0;
-	private float mRotation2=0;
-	private int bombTimeCount=0;
+	private Vector2 mTempTargetVelocity2;
+	private float mRotation = 0;
+	private float mRotation2 = 0;
+	private int mBombBulletTimeCount = 0;
+	private float mScale = 1;
 
-	public static void Create(Vector2 position, int bulletType,float rotation,float rotation2) {
+	public static void Create(Vector2 position, int type, Vector2 v, Vector2 vChange, float rotation, float rChange,
+			float scale) {
 		Entity entity = Entity.Create();
 		entity.AddComponent(new Transform(position));
 		Bombs bullet1 = new Bombs();
-		bullet1.mType = bulletType;
-		bullet1.mRotation=rotation;
-		bullet1.mRotation2=rotation2;
-		switch (bulletType) {
+		bullet1.mType = type;
+		bullet1.mRotation = rotation;
+		bullet1.mRotation2 = rChange;
+		bullet1.mScale = scale;
+		bullet1.mTempTargetVelocity = v == null ? new Vector2(0, 27) : v;
+		bullet1.mTempTargetVelocity2 = vChange == null ? Vector2.Zero : vChange;
+		switch (type) {
 		case TypeReimuAFast:
-			entity.AddComponent(new ImageRenderer(ResourceManager.barrages.get(0), 0));
 			bullet1.mDamage = 1;
+			entity.AddComponent(new ImageRenderer(ResourceManager.barrages.get(type), 0));
 			break;
 		case TypeReimuASlow:
-			entity.AddComponent(new ImageRenderer(ResourceManager.barrages.get(1), 0));
 			bullet1.mDamage = 1;
+			entity.AddComponent(new ImageRenderer(ResourceManager.barrages.get(type), 0));
 			break;
 		case TypeReimuBFast:
-			entity.AddComponent(new ImageRenderer(ResourceManager.barrages.get(239), 0));
+			entity.AddComponent(
+					new ImageRenderer(ResourceManager.barrages.get(type), 0, 256, (int) FightScreen.TOP * 2));
 			break;
 		case TypeReimuBSlow:
-			entity.AddComponent(new ImageRenderer(ResourceManager.barrages.get(245), 0));
+			entity.AddComponent(new ImageRenderer(ResourceManager.barrages.get(type), 0, 300, 300));
 			break;
 		}
 		entity.AddComponent(bullet1);
@@ -59,12 +66,11 @@ public class Bombs extends Component implements IJudgeCallback {
 		transform = entity.GetComponent(Transform.class);
 		JudgingSystem.registerFriendlyJudge(transform.immutablePosition, this);
 		this.entity = entity;
-		mTempTargetVelocity = new Vector2();
 	}
 
 	@Override
 	public void Update() {
-		bombTimeCount++;
+		mBombBulletTimeCount++;
 		switch (mType) {
 		case TypeReimuASlow:
 			nearestEnemyPosition = getNearestEnemy();
@@ -95,14 +101,27 @@ public class Bombs extends Component implements IJudgeCallback {
 			}
 			break;
 		case TypeReimuBSlow:
-			transform.rotation+=mRotation;
-			mRotation-=mRotation2;
-			if (bombTimeCount>120) {
+			if (mBombBulletTimeCount > 120) {
 				entity.Destroy();
+			}
+			if (!(mRotation == 0f)) {
+				transform.rotation += mRotation;
+				mRotation -= mRotation2;
+			}
+			if (!(mScale == 1.00f)) {
+				transform.scale.x *= mScale;
+				transform.scale.y *= mScale;
 			}
 			break;
 		case TypeReimuBFast:
-			transform.position.add(0, 27);
+			if (mBombBulletTimeCount > 70) {
+				entity.Destroy();
+			}
+			transform.rotation = mRotation;
+			transform.position.add(mTempTargetVelocity);
+			if (!mTempTargetVelocity2.equals(Vector2.Zero)) {
+				mTempTargetVelocity.add(mTempTargetVelocity2);
+			}
 			break;
 
 		}

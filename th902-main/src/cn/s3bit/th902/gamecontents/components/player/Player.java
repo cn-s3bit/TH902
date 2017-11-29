@@ -23,12 +23,13 @@ public abstract class Player extends Component {
 	protected Transform transform;
 	protected PlayerAnimation playerAnimation;
 	public static boolean Bomb = false;
-	public int BombTime = 0;
+	public int bombFrames = 0;
 	public int ChaosTime = 0;
 	public boolean Chaos = false;
 	public static boolean onLine = false;
-	private boolean mIfSlowBomb = false;
-	public boolean needNewBombEntity=true;
+	protected boolean ifSlowBomb = false;
+	public boolean needNewBombEntity = true;
+	public int bombTimeCount=0;
 
 	@Override
 	public void Initialize(Entity entity) {
@@ -38,8 +39,6 @@ public abstract class Player extends Component {
 		slow = false;
 	}
 
-	
-
 	public abstract void typeAFastBomb();
 
 	public abstract void typeASlowBomb();
@@ -48,13 +47,11 @@ public abstract class Player extends Component {
 
 	public abstract void typeBSlowBomb();
 
+	public abstract void setBombTime();
+
 	@Override
 	public void Update() {
-		if (transform.position.y > 500) {
-			onLine = true;
-		} else {
-			onLine = false;
-		}
+		onLine = transform.position.y >= 500;
 		JudgingSystem.playerJudge.set(transform.position);
 		IJudgeCallback collision = JudgingSystem.playerCollision();
 		if (Chaos) {
@@ -64,7 +61,7 @@ public abstract class Player extends Component {
 			}
 		} else {
 			if (collision != null) {
-				System.out.println("Collided!");
+		//		System.out.println("Collided!");
 				collision.onCollide();
 				FightScreen.playerCount--;
 				FightScreen.bombCount = 3;
@@ -95,26 +92,22 @@ public abstract class Player extends Component {
 		transform.position.y = MathUtils.clamp(transform.position.y, 35, 700);
 		playerAnimation.Update(!slow);
 	}
-	public void useBomb() {
 
-		if (Gdx.input.isKeyPressed(KeySettings.negativeKey)) {
-			if (!Bomb && FightScreen.bombCount > 0) {
-				mIfSlowBomb = Gdx.input.isKeyPressed(KeySettings.shift);
+	public void useBomb() {
+		if (Gdx.input.isKeyPressed(KeySettings.negativeKey)&&!Bomb && FightScreen.bombCount > 0) {
+				ifSlowBomb = Gdx.input.isKeyPressed(KeySettings.shift);
 				Bomb = true;
-				if (mIfSlowBomb) {
-					BombTime=FightScreen.PlayerType == FightScreen.PlayerTypeA?300:180;
-				} else {
-					BombTime=FightScreen.PlayerType == FightScreen.PlayerTypeA?180:120;
-				}
-				ChaosTime = BombTime + 120;
+				bombTimeCount=0;
+				setBombTime();
+				ChaosTime = bombFrames + 120;
 				Chaos = true;
 				FightScreen.bombCount--;
 			}
-		}
 		if (Bomb) {
+			bombTimeCount++;
 			velocity.scl(0.5f);
 			if (needNewBombEntity) {
-				if (mIfSlowBomb) {
+				if (ifSlowBomb) {
 					if (FightScreen.PlayerType == FightScreen.PlayerTypeA) {
 						typeASlowBomb();
 					} else {
@@ -128,13 +121,14 @@ public abstract class Player extends Component {
 					}
 				}
 			}
-			BombTime--;
-			if (BombTime == 0) {
+			bombFrames--;
+			if (bombFrames == 0) {
 				Bomb = false;
-				needNewBombEntity=true;
+				needNewBombEntity = true;
 			}
 		}
 	}
+
 	@Override
 	public void Kill() {
 		JudgingSystem.playerJudge.set(-1000, -1000);

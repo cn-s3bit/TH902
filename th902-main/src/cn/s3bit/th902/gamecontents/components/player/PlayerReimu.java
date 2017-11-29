@@ -24,7 +24,8 @@ public class PlayerReimu extends Player {
 	public int existTime;
 	private ReimuWing mReimuWing1;
 	private ReimuWing mReimuWing2;
-	private boolean mWingIfShoot = false;
+	private boolean mWingShoot = false;
+	private boolean mShoot = false;
 	private int mType;
 
 	public PlayerReimu(int type) {
@@ -45,8 +46,8 @@ public class PlayerReimu extends Player {
 		animationDrawable.setAnimation(animationStay);
 		existTime = 0;
 		entity.AddComponent(new ImageGroupRenderer(new Drawable[] { animationDrawable, playerAnimation }, 0, null));
-		mReimuWing1 = new ReimuWing(new Vector2(transform.position.x, transform.position.y + 30), 4f, mType);
-		mReimuWing2 = new ReimuWing(new Vector2(transform.position.x + 30, transform.position.y), -4f, mType);
+		mReimuWing1 = new ReimuWing(new Vector2(transform.position.x, transform.position.y + 20), 4f, mType);
+		mReimuWing2 = new ReimuWing(new Vector2(transform.position.x, transform.position.y), -4f, mType);
 	}
 
 	@Override
@@ -54,11 +55,11 @@ public class PlayerReimu extends Player {
 		super.Update();
 
 		if (slow) {
-			mReimuWing1.set(new Vector2(transform.position.x + 25, transform.position.y + 40), slow, mWingIfShoot);
-			mReimuWing2.set(new Vector2(transform.position.x - 25, transform.position.y + 40), slow, mWingIfShoot);
+			mReimuWing1.set(new Vector2(transform.position.x + 25, transform.position.y + 25), slow, mWingShoot);
+			mReimuWing2.set(new Vector2(transform.position.x - 25, transform.position.y + 25), slow, mWingShoot);
 		} else {
-			mReimuWing1.set(new Vector2(transform.position.x + 60, transform.position.y), slow, mWingIfShoot);
-			mReimuWing2.set(new Vector2(transform.position.x - 60, transform.position.y), slow, mWingIfShoot);
+			mReimuWing1.set(new Vector2(transform.position.x + 50, transform.position.y), slow, mWingShoot);
+			mReimuWing2.set(new Vector2(transform.position.x - 50, transform.position.y), slow, mWingShoot);
 		}
 		animationDrawable.advance(1);
 		if (velocity.x > 0 && animationDrawable.getAnimation() != animationRight) {
@@ -69,33 +70,34 @@ public class PlayerReimu extends Player {
 			animationDrawable.setAnimation(animationStay);
 		}
 		existTime++;
+		mWingShoot = Gdx.input.isKeyPressed(KeySettings.positiveKey) && existTime % (103 - FightScreen.powerCount) == 1;
+		mShoot = Gdx.input.isKeyPressed(KeySettings.positiveKey) && existTime % 3 == 1;
 		if (mType == FightScreen.PlayerTypeA) {
-			if (Gdx.input.isKeyPressed(KeySettings.positiveKey) && existTime % (103 - FightScreen.powerCount) == 1) {
-				mWingIfShoot = true;
-			} else {
-				mWingIfShoot = false;
-			}
-			if (Gdx.input.isKeyPressed(KeySettings.positiveKey) && existTime % 3 == 1) {
-				if (slow) {
-					mWingIfShoot = false;
+			if (slow) {
+				if (mWingShoot) {
 					ReimuBullet1.Create(transform.position.cpy().add(0, 24), ReimuBullet1.BulletTypeWingSlowInduce);
-					ReimuBullet1.Create(transform.position.cpy().add(0,10), ReimuBullet1.BulletTypeSelfSlow);
-				} else {
-					ReimuBullet1.Create(transform.position.cpy().add(0,6), ReimuBullet1.BulletTypeSelfFast);
+					mWingShoot = false;
+				}
+				if (mShoot) {
+					ReimuBullet1.Create(transform.position.cpy().add(0, 10), ReimuBullet1.BulletTypeSelfSlow);
+				}
+			} else {
+				if (mShoot) {
+					ReimuBullet1.Create(transform.position.cpy().add(0, 6), ReimuBullet1.BulletTypeSelfFast);
 				}
 			}
 		} else {
-			if (Gdx.input.isKeyPressed(KeySettings.positiveKey) && existTime % (103 - FightScreen.powerCount) == 1) {
-				mWingIfShoot = true;
-			} else {
-				mWingIfShoot = false;
-			}
-			if (Gdx.input.isKeyPressed(KeySettings.positiveKey) && existTime % 3 == 1) {
-				if (slow) {
-					mWingIfShoot = false;
+			if (slow) {
+				if (mWingShoot) {
 					ReimuBullet1.Create(transform.position.cpy().add(0, 24), ReimuBullet1.BulletTypeWingSlowStraight);
-				} else {
-					ReimuBullet1.Create(transform.position.cpy().add(0,6), ReimuBullet1.BulletTypeSelfFast);
+					mWingShoot = false;
+				}
+				if (mShoot) {
+					ReimuBullet1.Create(transform.position.cpy().add(0, 24), ReimuBullet1.BulletTypeSelfSlow);
+				}
+			} else {
+				if (mShoot) {
+					ReimuBullet1.Create(transform.position.cpy().add(0, 6), ReimuBullet1.BulletTypeSelfFast);
 				}
 			}
 		}
@@ -103,28 +105,56 @@ public class PlayerReimu extends Player {
 
 	@Override
 	public void typeAFastBomb() {
-			Bombs.Create(transform.position.cpy().sub(30, 0), Bombs.TypeReimuAFast,0,0);
-			Bombs.Create(transform.position.cpy(), Bombs.TypeReimuAFast,0,0);
-			Bombs.Create(transform.position.cpy().add(30, 0), Bombs.TypeReimuAFast,0,0);
+		Bombs.Create(transform.position.cpy().sub(30, 0), Bombs.TypeReimuAFast, null, null, 0, 0, 0);
+		Bombs.Create(transform.position.cpy(), Bombs.TypeReimuAFast, null, null, 0, 0, 0);
+		Bombs.Create(transform.position.cpy().add(30, 0), Bombs.TypeReimuAFast, null, null, 0, 0, 0);
 	}
 
 	@Override
 	public void typeASlowBomb() {
-		Bombs.Create(transform.position.cpy(), Bombs.TypeReimuASlow,0,0);
+		Bombs.Create(transform.position.cpy(), Bombs.TypeReimuASlow, null, null, 0, 0, 0);
 	}
 
 	@Override
 	public void typeBFastBomb() {
-		Bombs.Create(transform.position.cpy().sub(30, 0), Bombs.TypeReimuBFast,0,0);
-		Bombs.Create(transform.position.cpy(), Bombs.TypeReimuBFast,0,0);
-		Bombs.Create(transform.position.cpy().add(30, 0), Bombs.TypeReimuBFast,0,0);
+		needNewBombEntity = false;
+		Bombs.Create(transform.position.cpy(), Bombs.TypeReimuBFast, new Vector2(0, 14), new Vector2(0, -0.2f), -90, 0,
+				0);
+		Bombs.Create(transform.position.cpy(), Bombs.TypeReimuBFast, new Vector2(-14, 0), new Vector2(0.2f, 0), 0, 0,
+				0);
+		Bombs.Create(transform.position.cpy(), Bombs.TypeReimuBFast, new Vector2(14, 0), new Vector2(-0.2f, 0), 180, 0,
+				0);
+		Bombs.Create(transform.position.cpy(), Bombs.TypeReimuBFast, new Vector2(0, -14), new Vector2(0, 0.2f), 90, 0,
+				0);
+		/*
+		 * if (bombTimeCount==10) { Bombs.Create(transform.position.cpy(),
+		 * Bombs.TypeReimuBFast,new Vector2(0,5),0,0,0); }else if
+		 * (bombTimeCount==20) { Bombs.Create(transform.position.cpy().sub(30,
+		 * 0), Bombs.TypeReimuBFast,new Vector2(-5,5),0,0,0);
+		 * Bombs.Create(transform.position.cpy().add(30, 0),
+		 * Bombs.TypeReimuBFast,new Vector2(5,5),0,0,0); }else if
+		 * (bombTimeCount==30) { Bombs.Create(transform.position.cpy().sub(60,
+		 * 0), Bombs.TypeReimuBFast,new Vector2(-5,0),0,0,0);
+		 * Bombs.Create(transform.position.cpy().add(60, 0),
+		 * Bombs.TypeReimuBFast,new Vector2(5,0),0,0,0); bombTimeCount=0; }
+		 */
 	}
 
 	@Override
 	public void typeBSlowBomb() {
-		needNewBombEntity=false;
-		Bombs.Create(transform.position,Bombs.TypeReimuBSlow,10,0.07f);
-		Bombs.Create(transform.position,Bombs.TypeReimuBSlow,-10,-0.07f);
+		needNewBombEntity = false;
+		Bombs.Create(transform.position, Bombs.TypeReimuBSlow, null, null, 0, 0, 0.995f);
+		Bombs.Create(transform.position, Bombs.TypeReimuBSlow, null, null, 10, 0.07f, 1);
+		Bombs.Create(transform.position, Bombs.TypeReimuBSlow, null, null, -10, -0.07f, 1);
+	}
+
+	@Override
+	public void setBombTime() {
+		if (ifSlowBomb) {
+			bombFrames = FightScreen.PlayerType == FightScreen.PlayerTypeA ? 300 : 180;
+		} else {
+			bombFrames = FightScreen.PlayerType == FightScreen.PlayerTypeA ? 180 : 600;
+		}
 	}
 
 }
