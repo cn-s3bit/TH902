@@ -23,6 +23,11 @@ public class ImageRenderer extends Component {
 		image.setBounds(0, 0, texture.getWidth(), texture.getHeight());
 		mDepth = depth;
 	}
+	public ImageRenderer(Texture texture, int depth,int width,int height) {
+		image = new Image(texture);
+		image.setBounds(0, 0, width, height);
+		mDepth = depth;
+	}
 	/**
 	 * @param texture The Drawable Texture.
 	 * @param depth -1 for the front, 0 for the back.
@@ -34,7 +39,11 @@ public class ImageRenderer extends Component {
 		image.setBounds(0, 0, texture.getMinWidth(), texture.getMinHeight());
 		mDepth = depth;
 	}
-	
+	public ImageRenderer(Drawable texture, int depth,int width,int height) {
+		image = new Image(texture);
+		image.setBounds(0, 0, width, height);
+		mDepth = depth;
+	}
 	@Override
 	public void Initialize(Entity entity) {
 		transform = entity.GetComponent(Transform.class);
