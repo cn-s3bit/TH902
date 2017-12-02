@@ -5,7 +5,6 @@ import com.badlogic.gdx.math.Vector2;
 import cn.s3bit.th902.FightScreen;
 import cn.s3bit.th902.gamecontents.DanmakuScene;
 import cn.s3bit.th902.gamecontents.Entity;
-import cn.s3bit.th902.gamecontents.components.EnemyJudgeCircle;
 import cn.s3bit.th902.gamecontents.components.ExtraDrop;
 import cn.s3bit.th902.gamecontents.components.LambdaComponent;
 import cn.s3bit.th902.gamecontents.components.Transform;
@@ -18,6 +17,7 @@ import cn.s3bit.th902.gamecontents.components.enemy.BaseProjectile;
 import cn.s3bit.th902.gamecontents.components.enemy.BaseSprite;
 import cn.s3bit.th902.gamecontents.components.enemy.BulletType;
 import cn.s3bit.th902.gamecontents.components.enemy.DropItem;
+import cn.s3bit.th902.gamecontents.components.enemy.EnemyJudgeCircle;
 
 public final class ExampleDanmakuScene extends DanmakuScene {
 	@Override
