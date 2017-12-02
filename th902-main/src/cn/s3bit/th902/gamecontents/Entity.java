@@ -72,7 +72,9 @@ public class Entity {
 	public void Destroy() {
 		Component[] components = (Component[]) mComponents.values().toArray(new Component[mComponents.values().size()]);
 		for (Component component : components)
-			component.Kill();
+			if (!component.isDead()) {
+				component.Kill();
+			}
 		mComponents.clear();
 		instances.remove(this);
 	}

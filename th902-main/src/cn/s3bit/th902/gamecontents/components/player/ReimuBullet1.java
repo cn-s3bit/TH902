@@ -1,5 +1,7 @@
 package cn.s3bit.th902.gamecontents.components.player;
 
+import java.util.Map.Entry;
+
 import com.badlogic.gdx.math.Vector2;
 
 import cn.s3bit.th902.FightScreen;
@@ -11,6 +13,7 @@ import cn.s3bit.th902.gamecontents.components.Component;
 import cn.s3bit.th902.gamecontents.components.ImageRenderer;
 import cn.s3bit.th902.gamecontents.components.TrailRenderer;
 import cn.s3bit.th902.gamecontents.components.Transform;
+import cn.s3bit.th902.utils.ImmutableWrapper;
 
 public class ReimuBullet1 extends Component implements IJudgeCallback {
 	/**
@@ -41,33 +44,16 @@ public class ReimuBullet1 extends Component implements IJudgeCallback {
 		
 	}
 	public static void Create(Vector2 position, int bulletType) {
-
 		switch (bulletType) {
 		case BulletTypeSelfFast:
-			Entity entity11 = Entity.Create();
-			entity11.AddComponent(new Transform(position.cpy()));
-			ReimuBullet1 bullet11 = new ReimuBullet1(new Vector2(-3,27));			
-			entity11.AddComponent(new ImageRenderer(ResourceManager.barrages.get(239), 0));
-			entity11.AddComponent(new TrailRenderer(ResourceManager.barrages.get(240), 6, 0));
-			entity11.AddComponent(bullet11);
-			Entity entity12 = Entity.Create();
-			entity12.AddComponent(new Transform(position.cpy()));
-			ReimuBullet1 bullet12 = new ReimuBullet1(new Vector2(-1,27));			
-			entity12.AddComponent(new ImageRenderer(ResourceManager.barrages.get(239), 0));
-			entity12.AddComponent(new TrailRenderer(ResourceManager.barrages.get(240), 6, 0));
-			entity12.AddComponent(bullet12);
-			Entity entity13 = Entity.Create();
-			entity13.AddComponent(new Transform(position.cpy()));
-			ReimuBullet1 bullet13 = new ReimuBullet1(new Vector2(1,27));			
-			entity13.AddComponent(new ImageRenderer(ResourceManager.barrages.get(239), 0));
-			entity13.AddComponent(new TrailRenderer(ResourceManager.barrages.get(240), 6, 0));
-			entity13.AddComponent(bullet13);
-			Entity entity14 = Entity.Create();
-			entity14.AddComponent(new Transform(position.cpy()));
-			ReimuBullet1 bullet14 = new ReimuBullet1(new Vector2(3,27));			
-			entity14.AddComponent(new ImageRenderer(ResourceManager.barrages.get(239), 0));
-			entity14.AddComponent(new TrailRenderer(ResourceManager.barrages.get(240), 6, 0));
-			entity14.AddComponent(bullet14);
+			for (float i=-30f; i<=30f; i+=20) {
+				Entity entity14 = Entity.Create();
+				entity14.AddComponent(new Transform(position.cpy().add(i, 0)));
+				ReimuBullet1 bullet14 = new ReimuBullet1(new Vector2(0, 27));			
+				entity14.AddComponent(new ImageRenderer(ResourceManager.barrages.get(239), 0));
+				entity14.AddComponent(new TrailRenderer(ResourceManager.barrages.get(240), 6, 0));
+				entity14.AddComponent(bullet14);
+			}
 			break;
 		case BulletTypeSelfSlow:
 			Entity entity21 = Entity.Create();
@@ -179,8 +165,13 @@ public class ReimuBullet1 extends Component implements IJudgeCallback {
 	float ex = 10;
 	float ey = 600;
 
+	static final Vector2 vct2_tmp1 = new Vector2();
 	public Vector2 getNearestEnemy() {
-		// return Vector2.Zero;
-		return ex < 300 ? new Vector2(ex += 10, ey) : Vector2.Zero;
+		Entry<ImmutableWrapper<Vector2>, IJudgeCallback> judge = JudgingSystem.calculateNearestChaseable(transform.position);
+		if (judge == null)
+			vct2_tmp1.set(0, 100000);
+		else
+			vct2_tmp1.set(judge.getKey().getData());
+		return vct2_tmp1;
 	}
 }
