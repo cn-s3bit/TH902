@@ -1,7 +1,6 @@
 package cn.s3bit.th902.gamecontents;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.stream.Stream;
@@ -15,13 +14,13 @@ public class JudgingSystem {
 	public static Vector2 playerJudge = new Vector2(-1000, -1000);
 	protected static HashMap<ImmutableWrapper<Shape2D>, IJudgeCallback> enemyJudges = new HashMap<>();
 	protected static HashMap<ImmutableWrapper<Vector2>, IJudgeCallback> friendlyJudges = new HashMap<>();
-	public static HashSet<ImmutableWrapper<Vector2>> chaseableEnemyPositions = new HashSet<>();
+	public static HashMap<ImmutableWrapper<Vector2>, IJudgeCallback> chaseableEnemyPositions = new HashMap<>();
 	private static Entry<ImmutableWrapper<Shape2D>, IJudgeCallback> mJudgeEntry;
 	public static IJudgeCallback playerCollision() {
 		Stream<Entry<ImmutableWrapper<Shape2D>, IJudgeCallback>> stream = enemyJudges.entrySet().parallelStream();
 		mJudgeEntry = null;
 		stream.forEach((entry) -> {
-			if (entry.getKey().getData().contains(playerJudge)) {
+			if (entry.getValue().getDamage() > 0 && entry.getKey().getData().contains(playerJudge)) {
 				mJudgeEntry = entry;
 			}
 		});
@@ -36,6 +35,19 @@ public class JudgingSystem {
 				return pos.getValue();
 		}
 		return null;
+	}
+	
+	public static void judgeEnemyHurt() {
+		for (Iterator<Entry<ImmutableWrapper<Shape2D>, IJudgeCallback>> iterator = enemyJudges.entrySet().iterator(); iterator.hasNext();) {
+			Entry<ImmutableWrapper<Shape2D>, IJudgeCallback> wrapper = iterator.next();
+			if (wrapper.getValue().canHurt()) {
+				IJudgeCallback callback = collideFriendlyBullets(wrapper.getKey().getData());
+				if (callback != null) {
+					callback.onCollide();
+					wrapper.getValue().onHurt(callback.getDamage());
+				}
+			}
+		}
 	}
 	
 	public static void registerEnemyJudge(ImmutableWrapper<Shape2D> judge, IJudgeCallback callback) {
@@ -54,8 +66,8 @@ public class JudgingSystem {
 		friendlyJudges.remove(judge);
 	}
 	
-	public static void registerChaseablePosition(ImmutableWrapper<Vector2> position) {
-		chaseableEnemyPositions.add(position);
+	public static void registerChaseablePosition(ImmutableWrapper<Vector2> position, IJudgeCallback callback) {
+		chaseableEnemyPositions.put(position, callback);
 	}
 	
 	public static void unregisterChaseablePosition(ImmutableWrapper<Vector2> position) {
@@ -66,14 +78,14 @@ public class JudgingSystem {
 	 * Calculates the Nearest Chaseable Position.
 	 * If there are no enemies, will return null.
 	 */
-	public static ImmutableWrapper<Vector2> calculateNearestChaseable(Vector2 position) {
+	public static Entry<ImmutableWrapper<Vector2>, IJudgeCallback> calculateNearestChaseable(Vector2 position) {
 		float dst2 = Float.MAX_VALUE;
-		ImmutableWrapper<Vector2> nearest = null;
-		for (ImmutableWrapper<Vector2> wrapper : chaseableEnemyPositions) {
-			float dst2x = wrapper.getData().dst2(position);
+		Entry<ImmutableWrapper<Vector2>, IJudgeCallback> nearest = null;
+		for (Entry<ImmutableWrapper<Vector2>, IJudgeCallback> entry : chaseableEnemyPositions.entrySet()) {
+			float dst2x = entry.getKey().getData().dst2(position);
 			if (dst2 > dst2x) {
 				dst2 = dst2x;
-				nearest = wrapper;
+				nearest = entry;
 			}
 		}
 		return nearest;
