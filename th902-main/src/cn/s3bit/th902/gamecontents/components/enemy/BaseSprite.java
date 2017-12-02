@@ -39,7 +39,6 @@ public class BaseSprite extends Component {
 	 *            0 - blue; 1 - red; 2 - green; 3 - yellow
 	 */
 	public static Entity Create(Vector2 position, int color, Component... Ves) {
-
 		if (color < 0 || color > 3) {
 			throw new IllegalArgumentException("Color of the enemy (sprite) should be between 0 and 3!");
 		}
@@ -68,6 +67,7 @@ public class BaseSprite extends Component {
 		judgeCircle = new Circle(transform.position, 50 * transform.scale.x);
 		judgeWrapper = ImmutableWrapper.wrap((Shape2D) judgeCircle);
 		JudgingSystem.registerEnemyJudge(judgeWrapper, IJudgeCallback.NONE);
+		JudgingSystem.registerChaseablePosition(transform.immutablePosition);
 		this.entity = entity;
 		Hp = 10;
 		bulletV = new Vector2(3, 0);
@@ -109,6 +109,7 @@ public class BaseSprite extends Component {
 	@Override
 	public void Kill() {
 		JudgingSystem.unregisterEnemyJudge(judgeWrapper);
+		JudgingSystem.unregisterChaseablePosition(transform.immutablePosition);
 		super.Kill();
 	}
 }
