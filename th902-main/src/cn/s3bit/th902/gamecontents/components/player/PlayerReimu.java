@@ -153,7 +153,7 @@ public class PlayerReimu extends Player {
 		if (ifSlowBomb) {
 			bombFrames = FightScreen.PlayerType == FightScreen.PlayerTypeA ? 300 : 180;
 		} else {
-			bombFrames = FightScreen.PlayerType == FightScreen.PlayerTypeA ? 180 : 600;
+			bombFrames = FightScreen.PlayerType == FightScreen.PlayerTypeA ? 360 : 600;
 		}
 	}
 

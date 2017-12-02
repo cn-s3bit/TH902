@@ -30,7 +30,7 @@ public class FightScreen extends ScreenAdapter {
 	public static final int PlayerTypeMarisa = 2;
 	public static final int PlayerTypeA = 1;
 	public static final int PlayerTypeB = 2;
-	public static int PlayerType = 2;
+	public static int PlayerType = 1;
 	public static int PlayerChara = 1;
 	public SceneSystem sceneSystem;
 
