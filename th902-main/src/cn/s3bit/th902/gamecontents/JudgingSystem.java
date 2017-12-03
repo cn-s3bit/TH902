@@ -13,8 +13,8 @@ import cn.s3bit.th902.utils.LineSegment;
 
 public class JudgingSystem {
 	public static Vector2 playerJudge = new Vector2(-1000, -1000);
-	protected static HashMap<ImmutableWrapper<Circle>, IJudgeCallback> enemyJudges = new HashMap<>();
-	protected static HashMap<ImmutableWrapper<LineSegment>, IJudgeCallback> friendlyJudges = new HashMap<>();
+	public static HashMap<ImmutableWrapper<Circle>, IJudgeCallback> enemyJudges = new HashMap<>();
+	public static HashMap<ImmutableWrapper<LineSegment>, IJudgeCallback> friendlyJudges = new HashMap<>();
 	public static HashMap<ImmutableWrapper<Vector2>, IJudgeCallback> chaseableEnemyPositions = new HashMap<>();
 	private static Entry<ImmutableWrapper<Circle>, IJudgeCallback> mJudgeEntry;
 	public static IJudgeCallback playerCollision() {
