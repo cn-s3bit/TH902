@@ -105,7 +105,6 @@ public abstract class Player extends Component {
 			}
 		if (Bomb) {
 			bombTimeCount++;
-			velocity.scl(0.5f);
 			if (needNewBombEntity) {
 				if (ifSlowBomb) {
 					if (FightScreen.PlayerType == FightScreen.PlayerTypeA) {
