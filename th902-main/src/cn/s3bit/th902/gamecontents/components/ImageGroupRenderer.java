@@ -15,6 +15,8 @@ import cn.s3bit.th902.gamecontents.Entity;
 public class ImageGroupRenderer extends Component {
 	Transform transform = null;
 	public Group group = null;
+	public Vector2[] biases = null;
+	public Image[] images = null;
 	private int mDepth;
 	/**
 	 * @param texture The Texture.
@@ -38,9 +40,11 @@ public class ImageGroupRenderer extends Component {
 		if (bias != null && bias.length != textures.length)
 			throw new IllegalArgumentException();
 		group = new Group();
+		images = new Image[textures.length];
 		for (int i=0; i<textures.length; i++) {
 			Drawable texture = textures[i];
 			Image image = new Image(texture);
+			images[i] = image;
 			image.setBounds(0, 0, texture.getMinWidth(), texture.getMinHeight());
 			if (bias != null)
 				image.setPosition(bias[i].x, bias[i].y, Align.center);
@@ -49,6 +53,7 @@ public class ImageGroupRenderer extends Component {
 			group.addActor(image);
 		}
 		mDepth = depth;
+		biases = bias;
 	}
 	
 	@Override
@@ -65,6 +70,11 @@ public class ImageGroupRenderer extends Component {
 		group.setOrigin(Align.center);
 		group.setRotation(transform.rotation);
 		group.setScale(transform.scale.x, transform.scale.y);
+		if (biases != null) {
+			for (int i = 0; i < biases.length; i++) {
+				images[i].setPosition(biases[i].x, biases[i].y, Align.center);
+			}
+		}
 	}
 
 	@Override
