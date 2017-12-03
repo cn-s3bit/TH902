@@ -3,6 +3,7 @@ package cn.s3bit.th902.gamecontents.components.enemy;
 import cn.s3bit.th902.gamecontents.Entity;
 import cn.s3bit.th902.gamecontents.IJudgeCallback;
 import cn.s3bit.th902.gamecontents.components.Component;
+import cn.s3bit.th902.gamecontents.components.ExtraDrop;
 
 public class EnemyHP extends Component implements IJudgeCallback {
 	public boolean immune = false;
@@ -42,6 +43,10 @@ public class EnemyHP extends Component implements IJudgeCallback {
 	@Override
 	public void Update() {
 		if (hp <= 0) {
+			ExtraDrop drop = mEntity.GetComponent(ExtraDrop.class);
+			if (drop != null) {
+				drop.LootLogic();
+			}
 			mEntity.Destroy();
 		}
 	}
