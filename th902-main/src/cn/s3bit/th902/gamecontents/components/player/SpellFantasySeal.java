@@ -9,8 +9,10 @@ import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 
 import cn.s3bit.th902.GameHelper;
+import cn.s3bit.th902.GameMain;
 import cn.s3bit.th902.gamecontents.Entity;
 import cn.s3bit.th902.gamecontents.IJudgeCallback;
 import cn.s3bit.th902.gamecontents.JudgingSystem;
@@ -134,20 +136,40 @@ public class SpellFantasySeal extends Component {
 	public SpellFantasySeal(PlayerReimu reimu) {
 		this.reimu = reimu;
 	}
+	
+	Entity entity;
 
 	@Override
 	public void Initialize(Entity entity) {
 		Transform transform = reimu.transform;
+		this.entity = entity;
 		for (int i=0; i<360; i+=45) {
 			Entity cir = Entity.Create();
 			cir.AddComponent(new Transform(transform.position.cpy()));
 			cir.AddComponent(new FantasySealCircle(i));
 		}
 	}
+	
+	Vector3 totalTranslation = new Vector3();
+	Vector3 currentTranslation = new Vector3();
 
 	@Override
 	public void Update() {
-		
+		if (reimu.bombFrames > 0) {
+			/*if (reimu.bombFrames % 3 == 0) {
+				currentTranslation.set(MathUtils.random(-30, 30), MathUtils.random(-30, 30), 0);
+				GameMain.instance.activeStage.getCamera().translate(currentTranslation);
+				totalTranslation.add(currentTranslation);
+				currentTranslation.set(totalTranslation);
+				totalTranslation.x = MathUtils.clamp(totalTranslation.x, -30, 30);
+				totalTranslation.y = MathUtils.clamp(totalTranslation.y, -30, 30);
+				GameMain.instance.activeStage.getCamera().translate(currentTranslation.sub(totalTranslation).scl(-1));
+			}*/
+		}
+		else {
+			//GameMain.instance.activeStage.getCamera().translate(totalTranslation.scl(-1));
+			entity.Destroy();
+		}
 	}
 
 }
