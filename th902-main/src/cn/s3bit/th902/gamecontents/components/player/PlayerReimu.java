@@ -112,7 +112,8 @@ public class PlayerReimu extends Player {
 
 	@Override
 	public void typeASlowBomb() {
-		Bombs.Create(transform.position.cpy(), Bombs.TypeReimuASlow, null, null, 0, 0, 0);
+		needNewBombEntity = false;
+		Entity.Create().AddComponent(new SpellFantasySeal(this));
 	}
 
 	@Override
