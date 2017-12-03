@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import cn.s3bit.th902.gamecontents.Entity;
 import cn.s3bit.th902.gamecontents.JudgingSystem;
+import cn.s3bit.th902.gamecontents.ParticleSystem;
 import cn.s3bit.th902.gamecontents.SceneSystem;
 import cn.s3bit.th902.gamecontents.components.ImageRenderer;
 import cn.s3bit.th902.gamecontents.components.Transform;
@@ -100,6 +101,7 @@ public class FightScreen extends ScreenAdapter {
 		Entity.UpdateAll();
 		JudgingSystem.judgeEnemyHurt();
 		sceneSystem.PostUpdate();
+		ParticleSystem.draw();
 		super.render(delta);
 		gameTime++;
 		GameMain.instance.activeStage.getBatch().begin();
