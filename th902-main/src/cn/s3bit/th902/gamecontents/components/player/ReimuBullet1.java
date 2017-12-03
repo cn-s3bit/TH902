@@ -14,6 +14,7 @@ import cn.s3bit.th902.gamecontents.components.ImageRenderer;
 import cn.s3bit.th902.gamecontents.components.TrailRenderer;
 import cn.s3bit.th902.gamecontents.components.Transform;
 import cn.s3bit.th902.utils.ImmutableWrapper;
+import cn.s3bit.th902.utils.LineSegment;
 
 public class ReimuBullet1 extends Component implements IJudgeCallback {
 	/**
@@ -33,6 +34,9 @@ public class ReimuBullet1 extends Component implements IJudgeCallback {
 	private int mDamage = 2;
 	private Vector2 nearestEnemyPosition = Vector2.Zero;
 	private Vector2 mTarget=Vector2.Zero;
+	
+	public Vector2 oldPosition = new Vector2();
+	public ImmutableWrapper<LineSegment> judge;
 
 	protected Transform transform;
 	protected Entity entity;
@@ -49,7 +53,7 @@ public class ReimuBullet1 extends Component implements IJudgeCallback {
 			for (float i=-30f; i<=30f; i+=20) {
 				Entity entity14 = Entity.Create();
 				entity14.AddComponent(new Transform(position.cpy().add(i, 0)));
-				ReimuBullet1 bullet14 = new ReimuBullet1(new Vector2(0, 27));			
+				ReimuBullet1 bullet14 = new ReimuBullet1(new Vector2(0, 17));			
 				entity14.AddComponent(new ImageRenderer(ResourceManager.barrages.get(239), 0));
 				entity14.AddComponent(new TrailRenderer(ResourceManager.barrages.get(240), 6, 0));
 				entity14.AddComponent(bullet14);
@@ -58,19 +62,19 @@ public class ReimuBullet1 extends Component implements IJudgeCallback {
 		case BulletTypeSelfSlow:
 			Entity entity21 = Entity.Create();
 			entity21.AddComponent(new Transform(position.cpy()));
-			ReimuBullet1 bullet21 = new ReimuBullet1(new Vector2(-2,27));			
+			ReimuBullet1 bullet21 = new ReimuBullet1(new Vector2(-2,17));			
 			entity21.AddComponent(new ImageRenderer(ResourceManager.barrages.get(239), 0));
 			entity21.AddComponent(new TrailRenderer(ResourceManager.barrages.get(240), 6, 0));
 			entity21.AddComponent(bullet21);
 			Entity entity22 = Entity.Create();
 			entity22.AddComponent(new Transform(position.cpy()));
-			ReimuBullet1 bullet22 = new ReimuBullet1(new Vector2(0,27));			
+			ReimuBullet1 bullet22 = new ReimuBullet1(new Vector2(0,17));			
 			entity22.AddComponent(new ImageRenderer(ResourceManager.barrages.get(239), 0));
 			entity22.AddComponent(new TrailRenderer(ResourceManager.barrages.get(240), 6, 0));
 			entity22.AddComponent(bullet22);
 			Entity entity23 = Entity.Create();
 			entity23.AddComponent(new Transform(position.cpy()));
-			ReimuBullet1 bullet23 = new ReimuBullet1(new Vector2(2,27));			
+			ReimuBullet1 bullet23 = new ReimuBullet1(new Vector2(2,17));			
 			entity23.AddComponent(new ImageRenderer(ResourceManager.barrages.get(239), 0));
 			entity23.AddComponent(new TrailRenderer(ResourceManager.barrages.get(240), 6, 0));
 			entity23.AddComponent(bullet23);
@@ -78,7 +82,7 @@ public class ReimuBullet1 extends Component implements IJudgeCallback {
 		case BulletTypeWingFastStraight:
 			Entity entity211 = Entity.Create();
 			entity211.AddComponent(new Transform(position.cpy()));
-			ReimuBullet1 bullet211 = new ReimuBullet1(new Vector2(0,27));	
+			ReimuBullet1 bullet211 = new ReimuBullet1(new Vector2(0,17));	
 			entity211.AddComponent(new ImageRenderer(ResourceManager.barrages.get(237), 0));
 			entity211.AddComponent(bullet211);
 			break;
@@ -115,12 +119,18 @@ public class ReimuBullet1 extends Component implements IJudgeCallback {
 	@Override
 	public void Initialize(Entity entity) {
 		transform = entity.GetComponent(Transform.class);
-		JudgingSystem.registerFriendlyJudge(transform.immutablePosition, this);
+		oldPosition.set(transform.position);
+		LineSegment lineSegment = new LineSegment();
+		lineSegment.pStart = oldPosition;
+		lineSegment.pEnd = transform.position;
+		judge = ImmutableWrapper.wrap(lineSegment);
+		JudgingSystem.registerFriendlyJudge(judge, this);
 		this.entity = entity;
 	}
 
 	@Override
 	public void Update() {
+		oldPosition.set(transform.position);
 		if (isInduce) {
 			nearestEnemyPosition = getNearestEnemy();
 			if (nearestEnemyPosition.equals(Vector2.Zero)) {
@@ -136,7 +146,7 @@ public class ReimuBullet1 extends Component implements IJudgeCallback {
 			}
 		} else {
 			if (mTarget.equals(Vector2.Zero)) {
-				mTarget.set(0, 27);
+				mTarget.set(0, 17);
 			} 
 		}
 		transform.position.add(mTarget);
@@ -147,7 +157,7 @@ public class ReimuBullet1 extends Component implements IJudgeCallback {
 
 	@Override
 	public void Kill() {
-		JudgingSystem.unregisterFriendlyJudge(transform.immutablePosition);
+		JudgingSystem.unregisterFriendlyJudge(judge);
 		super.Kill();
 	}
 

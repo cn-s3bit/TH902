@@ -9,7 +9,6 @@ import cn.s3bit.th902.gamecontents.Entity;
 import cn.s3bit.th902.gamecontents.JudgingSystem;
 import cn.s3bit.th902.gamecontents.SceneSystem;
 import cn.s3bit.th902.gamecontents.components.ImageRenderer;
-import cn.s3bit.th902.gamecontents.components.LambdaComponent;
 import cn.s3bit.th902.gamecontents.components.Transform;
 import cn.s3bit.th902.gamecontents.components.player.PlayerReimu;
 
@@ -93,15 +92,13 @@ public class FightScreen extends ScreenAdapter {
 	
 		}
 		sceneSystem = SceneSystem.Create(0, 0);
-		
-		Entity judgeManager = Entity.Create();
-		judgeManager.AddComponent(new LambdaComponent(() -> { JudgingSystem.judgeEnemyHurt(); }, 1));
 	}
 
 	@Override
 	public void render(float delta) {
 		sceneSystem.PreUpdate();
 		Entity.UpdateAll();
+		JudgingSystem.judgeEnemyHurt();
 		sceneSystem.PostUpdate();
 		super.render(delta);
 		gameTime++;

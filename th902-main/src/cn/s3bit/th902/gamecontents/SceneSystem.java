@@ -13,8 +13,8 @@ public class SceneSystem {
 		// test
 		SceneSystem system = new SceneSystem();
 		system.mScenes.add(new ExampleDanmakuScene());
-		system.mScenes.add(new ExampleDanmakuScene());
-		system.mScenes.add(new ExampleDanmakuScene());
+		//system.mScenes.add(new ExampleDanmakuScene());
+		//system.mScenes.add(new ExampleDanmakuScene());
 		system.afterFinish = afterFinish;
 		return system;
 	}

@@ -1,7 +1,6 @@
 package cn.s3bit.th902.gamecontents.components.enemy;
 
 import com.badlogic.gdx.math.Circle;
-import com.badlogic.gdx.math.Shape2D;
 
 import cn.s3bit.th902.gamecontents.Entity;
 import cn.s3bit.th902.gamecontents.IJudgeCallback;
@@ -11,7 +10,7 @@ import cn.s3bit.th902.gamecontents.components.Transform;
 import cn.s3bit.th902.utils.ImmutableWrapper;
 
 public class EnemyJudgeCircle extends Component {
-	public ImmutableWrapper<Shape2D> wrapper;
+	public ImmutableWrapper<Circle> wrapper;
 	public Circle circle;
 	public float biasX, biasY;
 	public Transform transform;
@@ -19,7 +18,7 @@ public class EnemyJudgeCircle extends Component {
 	
 	public EnemyJudgeCircle(float radius, float biasX, float biasY, IJudgeCallback callback) {
 		circle = new Circle(0, 0, radius);
-		wrapper = ImmutableWrapper.wrap((Shape2D) circle);
+		wrapper = ImmutableWrapper.wrap(circle);
 		this.biasX = biasX;
 		this.biasY = biasY;
 		this.callback = callback;

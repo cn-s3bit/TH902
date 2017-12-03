@@ -6,7 +6,6 @@ import cn.s3bit.th902.FightScreen;
 import cn.s3bit.th902.ResourceManager;
 import cn.s3bit.th902.gamecontents.Entity;
 import cn.s3bit.th902.gamecontents.IJudgeCallback;
-import cn.s3bit.th902.gamecontents.JudgingSystem;
 import cn.s3bit.th902.gamecontents.components.Component;
 import cn.s3bit.th902.gamecontents.components.ImageRenderer;
 import cn.s3bit.th902.gamecontents.components.Transform;
@@ -64,7 +63,7 @@ public class Bombs extends Component implements IJudgeCallback {
 	@Override
 	public void Initialize(Entity entity) {
 		transform = entity.GetComponent(Transform.class);
-		JudgingSystem.registerFriendlyJudge(transform.immutablePosition, this);
+		//JudgingSystem.registerFriendlyJudge(transform.immutablePosition, this);
 		this.entity = entity;
 	}
 
@@ -132,13 +131,8 @@ public class Bombs extends Component implements IJudgeCallback {
 
 	@Override
 	public void Kill() {
-		JudgingSystem.unregisterFriendlyJudge(transform.immutablePosition);
+		//JudgingSystem.unregisterFriendlyJudge(transform.immutablePosition);
 		super.Kill();
-	}
-
-	@Override
-	public void onCollide() {
-
 	}
 
 	@Override

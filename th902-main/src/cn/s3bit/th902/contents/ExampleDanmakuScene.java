@@ -35,7 +35,7 @@ public final class ExampleDanmakuScene extends DanmakuScene {
 			sprite.AddComponent(new MoveFunction(
 					MoveFunctionTarget.POSITION,
 					MoveFunctionType.ASSIGNMENT,
-					(time) -> { return IMoveFunction.vct2_tmp1.set(60, 60).rotate(time * 2).add(300, 400); }));
+					(time) -> { return IMoveFunction.vct2_tmp1.set(0, 0).rotate(time * 2).add(300, 400); }));
 			sprite.AddComponent(new LambdaComponent(() -> {
 				BaseProjectile.Create(transform.position.cpy(), BulletType.FormCircleS, BulletType.ColorBlue, new MoveSnipe(3f), new EnemyJudgeCircle(6));
 			}, 30));

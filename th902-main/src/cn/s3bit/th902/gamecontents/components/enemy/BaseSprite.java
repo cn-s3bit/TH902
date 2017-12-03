@@ -47,7 +47,7 @@ public class BaseSprite extends Component implements IJudgeCallback {
 		component.animation.setAnimation(new Animation<TextureRegion>(1, regions[color]));
 		EnemyHP hp = new EnemyHP(1000);
 		entity.AddComponent(hp);
-		entity.AddComponent(new EnemyJudgeCircle(50 * transform.scale.x, hp));
+		entity.AddComponent(new EnemyJudgeCircle(53 * transform.scale.x, hp));
 		entity.AddComponent(new EnemyChaseable(hp));
 		entity.AddComponent(component);
 		for (Component tmpc : Ves) {
