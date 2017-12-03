@@ -60,24 +60,14 @@ public class ReimuBullet1 extends Component implements IJudgeCallback {
 			}
 			break;
 		case BulletTypeSelfSlow:
-			Entity entity21 = Entity.Create();
-			entity21.AddComponent(new Transform(position.cpy()));
-			ReimuBullet1 bullet21 = new ReimuBullet1(new Vector2(-2,17));			
-			entity21.AddComponent(new ImageRenderer(ResourceManager.barrages.get(239), 0));
-			entity21.AddComponent(new TrailRenderer(ResourceManager.barrages.get(240), 6, 0));
-			entity21.AddComponent(bullet21);
-			Entity entity22 = Entity.Create();
-			entity22.AddComponent(new Transform(position.cpy()));
-			ReimuBullet1 bullet22 = new ReimuBullet1(new Vector2(0,17));			
-			entity22.AddComponent(new ImageRenderer(ResourceManager.barrages.get(239), 0));
-			entity22.AddComponent(new TrailRenderer(ResourceManager.barrages.get(240), 6, 0));
-			entity22.AddComponent(bullet22);
-			Entity entity23 = Entity.Create();
-			entity23.AddComponent(new Transform(position.cpy()));
-			ReimuBullet1 bullet23 = new ReimuBullet1(new Vector2(2,17));			
-			entity23.AddComponent(new ImageRenderer(ResourceManager.barrages.get(239), 0));
-			entity23.AddComponent(new TrailRenderer(ResourceManager.barrages.get(240), 6, 0));
-			entity23.AddComponent(bullet23);
+			for (int i=-2; i<=2; i+=2) {
+				Entity entity21 = Entity.Create();
+				entity21.AddComponent(new Transform(position.cpy()));
+				ReimuBullet1 bullet21 = new ReimuBullet1(new Vector2(i,17));			
+				entity21.AddComponent(new ImageRenderer(ResourceManager.barrages.get(239), 0));
+				entity21.AddComponent(new TrailRenderer(ResourceManager.barrages.get(240), 6, 0));
+				entity21.AddComponent(bullet21);
+			}
 			break;
 		case BulletTypeWingFastStraight:
 			Entity entity211 = Entity.Create();
