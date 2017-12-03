@@ -32,17 +32,17 @@ public class SpellFantasySeal extends Component {
 		private Transform mTransform;
 		public ParticleEffect particleEffect = new ParticleEffect();
 		
-		private float mRotateSpeed = 48;
+		private float mRotateSpeed = 6;
 		public boolean isChasing = false;
 		
 		public FantasySealCircle(float angle) {
 			particleEffect.load(Gdx.files.internal("resources/Particles/FantasySealCircle.dat"), Gdx.files.internal("resources/Particles/"));
-			ParticleSystem.register(particleEffect);
 			dir.set(1, 0).rotate(angle).scl(12);
 		}
 		
 		@Override
 		public void Initialize(Entity entity) {
+			ParticleSystem.register(particleEffect);
 			mEntity = entity;
 			mTransform = entity.GetComponent(Transform.class);
 			yield.append(() -> {
@@ -50,11 +50,7 @@ public class SpellFantasySeal extends Component {
 			}, 7);
 			yield.append(() -> {
 				relativePos.rotate(mRotateSpeed);
-			}, 100);
-			yield.append(() -> {
-				relativePos.rotate(mRotateSpeed);
-				mRotateSpeed -= 1f;
-			}, 30);
+			}, 120);
 			
 			particleEffect.start();
 			updateBiases();
@@ -65,19 +61,23 @@ public class SpellFantasySeal extends Component {
 		public void Update() {
 			updateBiases();
 			if (yield.isFinished()) {
-				relativePos.rotate(mRotateSpeed);
+				relativePos.rotate(mRotateSpeed * 0.8f);
 				if (isChasing && !hasExploded) {
 					Entry<ImmutableWrapper<Vector2>, IJudgeCallback> nearest = JudgingSystem.calculateNearestChaseable(mTransform.position);
 					if (nearest != null) {
-						GameHelper.chase(mTransform.position, nearest.getKey().getData(), 10);
+						GameHelper.chase(mTransform.position, nearest.getKey().getData(), 3);
 						if (nearest.getKey().getData().dst2(mTransform.position) <= 600) {
 							explode();
 							hasExploded = true;
 						}
 					}
+					mTransform.position.add(dir.set(relativePos).rotate90(1).nor().scl(3));
 				}
 				else
 					isChasing = MathUtils.randomBoolean(0.02f) || reimu.bombFrames < 60;
+				if (particleEffect.isComplete()) {
+					yield.append(() -> { mEntity.Destroy(); }, 1);
+				}
 			}
 			else 
 				yield.yield();
@@ -96,18 +96,27 @@ public class SpellFantasySeal extends Component {
 			if (!isChasing) {
 				mTransform.position.set(reimu.transform.position).add(relativePos);
 			}
-			particleEffect.setPosition(mTransform.position.x, mTransform.position.y);
+			if (!hasExploded) {
+				particleEffect.setPosition(mTransform.position.x, mTransform.position.y);
+			}
 			judge.set(mTransform.position, 30);
 		}
 		
 		@Override
 		public void Kill() {
 			ParticleSystem.unregister(particleEffect);
+			particleEffect.dispose();
 			super.Kill();
-			mEntity.Destroy();
 		}
 		
 		public void explode() {
+			ParticleSystem.unregister(particleEffect);
+			particleEffect.dispose();
+			particleEffect = new ParticleEffect();
+			particleEffect.load(Gdx.files.internal("resources/Particles/FantasySealCircleExplosion.dat"), Gdx.files.internal("resources/Particles/"));
+			particleEffect.setPosition(mTransform.position.x, mTransform.position.y);
+			particleEffect.start();
+			ParticleSystem.register(particleEffect);
 			Set<Entry<ImmutableWrapper<Circle>, IJudgeCallback>> set = JudgingSystem.enemyJudges.entrySet();
 			for (Entry<ImmutableWrapper<Circle>, IJudgeCallback> entry : set) {
 				if (entry.getValue().canHurt() && Intersector.overlaps(entry.getKey().getData(), judge)) {
