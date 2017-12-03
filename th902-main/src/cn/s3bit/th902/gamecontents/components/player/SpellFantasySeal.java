@@ -89,6 +89,11 @@ public class SpellFantasySeal extends Component {
 						entry.getValue().onHurt(1);
 					}
 				}
+				for (final Entry<ImmutableWrapper<Vector2>, Entity> entry : JudgingSystem.clearByBombs.entrySet()) {
+					if (judge.contains(entry.getKey().getData())) {
+						Entity.postUpdate.add(() -> { entry.getValue().Destroy(); });
+					}
+				}
 			}
 		}
 		

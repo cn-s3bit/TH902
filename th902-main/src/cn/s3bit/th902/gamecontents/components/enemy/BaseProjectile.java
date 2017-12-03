@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import cn.s3bit.th902.FightScreen;
 import cn.s3bit.th902.ResourceManager;
 import cn.s3bit.th902.gamecontents.Entity;
+import cn.s3bit.th902.gamecontents.JudgingSystem;
 import cn.s3bit.th902.gamecontents.components.Component;
 import cn.s3bit.th902.gamecontents.components.ImageRenderer;
 import cn.s3bit.th902.gamecontents.components.Transform;
@@ -46,7 +47,7 @@ public class BaseProjectile extends Component {
 		entity.AddComponent(new BaseProjectile(formcircles.getType()));
 		for (Component tmpc : Ves) {  
            entity.AddComponent(tmpc);
-        }  
+        }
 		return entity;
 	}
 	
@@ -74,6 +75,7 @@ public class BaseProjectile extends Component {
 	public void Initialize(Entity entity) {
 		transform = entity.GetComponent(Transform.class);
 		this.entity = entity;
+		JudgingSystem.clearByBombs.put(transform.immutablePosition, entity);
 		oldPos = new Vector2();
 	}
 	
@@ -92,6 +94,7 @@ public class BaseProjectile extends Component {
 
 	@Override
 	public void Kill() {
+		JudgingSystem.clearByBombs.remove(transform.immutablePosition);
 		super.Kill();
 	}
 }

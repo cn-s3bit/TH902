@@ -17,6 +17,8 @@ public class JudgingSystem {
 	public static HashMap<ImmutableWrapper<LineSegment>, IJudgeCallback> friendlyJudges = new HashMap<>();
 	public static HashMap<ImmutableWrapper<Vector2>, IJudgeCallback> chaseableEnemyPositions = new HashMap<>();
 	private static Entry<ImmutableWrapper<Circle>, IJudgeCallback> mJudgeEntry;
+	public static HashMap<ImmutableWrapper<Vector2>, Entity> clearByBombs = new HashMap<>();
+	
 	public static IJudgeCallback playerCollision() {
 		Stream<Entry<ImmutableWrapper<Circle>, IJudgeCallback>> stream = enemyJudges.entrySet().parallelStream();
 		mJudgeEntry = null;
