@@ -20,7 +20,7 @@ import cn.s3bit.th902.gamecontents.components.enemy.BulletType;
 import cn.s3bit.th902.gamecontents.components.enemy.DropItem;
 import cn.s3bit.th902.gamecontents.components.enemy.EnemyJudgeCircle;
 
-public final class DanmakuE2 extends DanmakuScene {
+public final class DanmakuS1E2 extends DanmakuScene {
 	@Override
 	public void Initialize(Entity entity) {
 		for (int i = 0; i < 5; i++) {
