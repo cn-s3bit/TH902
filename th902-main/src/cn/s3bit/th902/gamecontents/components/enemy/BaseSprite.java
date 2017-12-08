@@ -26,11 +26,14 @@ public class BaseSprite extends Component implements IJudgeCallback {
 	public Vector2 specialBulletV;
 	public int selfColor;
 
+	public static Entity Create(Vector2 position, int color, Component... Ves) {
+		return Create(position, color, 10, Ves);
+	}
 	/**
 	 * @param color
 	 *            0 - blue; 1 - red; 2 - green; 3 - yellow
 	 */
-	public static Entity Create(Vector2 position, int color, Component... Ves) {
+	public static Entity Create(Vector2 position, int color, int maxhp, Component... Ves) {
 		if (color < 0 || color > 3) {
 			throw new IllegalArgumentException("Color of the enemy (sprite) should be between 0 and 3!");
 		}
@@ -45,7 +48,7 @@ public class BaseSprite extends Component implements IJudgeCallback {
 			regions = TextureRegion.split(texture, texture.getWidth() / 12, texture.getHeight() / 4);
 		}
 		component.animation.setAnimation(new Animation<TextureRegion>(1, regions[color]));
-		EnemyHP hp = new EnemyHP(1000);
+		EnemyHP hp = new EnemyHP(maxhp);
 		entity.AddComponent(hp);
 		entity.AddComponent(new EnemyJudgeCircle(53 * transform.scale.x, hp));
 		entity.AddComponent(new EnemyChaseable(hp));
