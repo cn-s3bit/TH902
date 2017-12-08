@@ -20,14 +20,14 @@ public class DanmakuS1L1 extends DanmakuScene {
 
 	@Override
 	public void Initialize(Entity entity) {
-		for (int i=0; i<10; i++)
+		for (int i=0; i<12; i++)
 		{
 			//center 285, 368
-			yield.append(() -> { }, 20);
+			yield.append(() -> { }, 15);
 			yield.append(() -> {
-				Entity sprite = BaseSprite.Create(new Vector2(285 - 0.5f * 270, 730), 3, 20);
+				Entity sprite = BaseSprite.Create(new Vector2(20, 730), 3, 20);
 				final Transform transform1 = sprite.GetComponent(Transform.class);
-				sprite.AddComponent(new MoveBasic(0.1f, -2f, MathUtils.random(0f, 0.03f), MathUtils.random(-0.04f, 0)));
+				sprite.AddComponent(new MoveBasic(0.1f, -2f, MathUtils.random(0f, 0.05f), MathUtils.random(-0.02f, 0)));
 				
 				sprite.AddComponent(new ExtraDrop() {
 					@Override
@@ -39,9 +39,9 @@ public class DanmakuS1L1 extends DanmakuScene {
 					}
 				});
 				
-				sprite = BaseSprite.Create(new Vector2(285 + 0.5f * 270, 730), 3, 20);
+				sprite = BaseSprite.Create(new Vector2(560, 730), 3, 20);
 				final Transform transform2 = sprite.GetComponent(Transform.class);
-				sprite.AddComponent(new MoveBasic(-0.1f, -2f, MathUtils.random(-0.03f, 0f), MathUtils.random(-0.04f, 0)));
+				sprite.AddComponent(new MoveBasic(-0.1f, -2f, MathUtils.random(-0.05f, 0f), MathUtils.random(-0.02f, 0)));
 				sprite.AddComponent(new ExtraDrop() {
 					@Override
 					public void LootLogic() {
