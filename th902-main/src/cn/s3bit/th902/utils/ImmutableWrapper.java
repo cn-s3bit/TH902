@@ -15,7 +15,7 @@ public class ImmutableWrapper<T> {
 	private final T mData;
 	
 	public ImmutableWrapper(T data) {
-		mSeed = MathUtils.randomSign();
+		mSeed = MathUtils.random(16777215);
 		mData = data;
 	}
 	
