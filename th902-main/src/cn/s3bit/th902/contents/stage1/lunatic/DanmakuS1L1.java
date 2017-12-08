@@ -27,7 +27,7 @@ public class DanmakuS1L1 extends DanmakuScene {
 			yield.append(() -> {
 				Entity sprite = BaseSprite.Create(new Vector2(285 - 0.5f * 270, 730), 3, 20);
 				final Transform transform1 = sprite.GetComponent(Transform.class);
-				sprite.AddComponent(new MoveBasic(0.5f, -3, 0, -0.0001f));
+				sprite.AddComponent(new MoveBasic(0.1f, -2f, MathUtils.random(0f, 0.03f), MathUtils.random(-0.04f, 0)));
 				
 				sprite.AddComponent(new ExtraDrop() {
 					@Override
@@ -41,15 +41,18 @@ public class DanmakuS1L1 extends DanmakuScene {
 				
 				sprite = BaseSprite.Create(new Vector2(285 + 0.5f * 270, 730), 3, 20);
 				final Transform transform2 = sprite.GetComponent(Transform.class);
-				sprite.AddComponent(new MoveBasic(-0.5f, -3, 0, -0.0001f));
+				sprite.AddComponent(new MoveBasic(-0.1f, -2f, MathUtils.random(-0.03f, 0f), MathUtils.random(-0.04f, 0)));
 				sprite.AddComponent(new ExtraDrop() {
 					@Override
 					public void LootLogic() {
-						for (int j=0; j<6; j++)
+						DropItem.CreateDropItem(transform2.position.cpy(), 241 + MathUtils.random(1));
+						for (int j=0; j<3; j++)
 						{
-							DropItem.CreateDropItem(transform2.position.cpy(), 241 + MathUtils.random(1));
 							Entity proj = BaseProjectile.Create(transform2.position.cpy(), BulletType.FormCircleS, BulletType.ColorRed);
-							proj.AddComponent(new MoveBasic(MathUtils.random(-3f, 3f), MathUtils.random(-3f, 3f)));
+							proj.AddComponent(new MoveBasic(MathUtils.random(-3f, -1f), MathUtils.random(-3f, 3f)));
+							proj.AddComponent(new EnemyJudgeCircle(6));
+							proj = BaseProjectile.Create(transform2.position.cpy(), BulletType.FormCircleS, BulletType.ColorRed);
+							proj.AddComponent(new MoveBasic(MathUtils.random(1f, 3f), MathUtils.random(-3f, 3f)));
 							proj.AddComponent(new EnemyJudgeCircle(6));
 						}
 					}

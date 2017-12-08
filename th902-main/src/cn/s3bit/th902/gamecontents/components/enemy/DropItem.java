@@ -59,7 +59,7 @@ public class DropItem extends BaseProjectile {
 					switch (type) {
 					case 241:
 						if (FightScreen.powerCount < 100) {
-						FightScreen.powerCount += 5;
+						FightScreen.powerCount += 1;
 					}
 						break;
 					case 242:
