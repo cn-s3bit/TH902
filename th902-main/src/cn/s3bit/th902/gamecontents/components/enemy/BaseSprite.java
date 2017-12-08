@@ -73,7 +73,7 @@ public class BaseSprite extends Component implements IJudgeCallback {
 	@Override
 	public void Update() {
 		if (FightScreen.isOutOfScreen(transform.position)) {
-			Kill();
+			entity.Destroy();
 		}
 		if (animateFlag) {
 			if (animation.currentTime >= 2.84) {

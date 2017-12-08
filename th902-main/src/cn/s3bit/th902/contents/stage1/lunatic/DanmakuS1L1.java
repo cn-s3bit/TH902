@@ -5,7 +5,6 @@ import com.badlogic.gdx.math.Vector2;
 
 import cn.s3bit.th902.gamecontents.DanmakuScene;
 import cn.s3bit.th902.gamecontents.Entity;
-import cn.s3bit.th902.gamecontents.JudgingSystem;
 import cn.s3bit.th902.gamecontents.components.ExtraDrop;
 import cn.s3bit.th902.gamecontents.components.Transform;
 import cn.s3bit.th902.gamecontents.components.ai.MoveBasic;
@@ -59,6 +58,7 @@ public class DanmakuS1L1 extends DanmakuScene {
 				});
 			});
 		}
+		yield.append(() -> { }, 120);
 	}
 
 }
