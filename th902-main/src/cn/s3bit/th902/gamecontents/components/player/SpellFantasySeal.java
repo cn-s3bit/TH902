@@ -37,7 +37,8 @@ public class SpellFantasySeal extends Component {
 		public boolean isChasing = false;
 		
 		public FantasySealCircle(float angle) {
-			particleEffect.load(Gdx.files.internal("resources/Particles/FantasySealCircle.dat"), Gdx.files.internal("resources/Particles/"));
+			String[] colors = {"Pink", "Purple", "Orange", "Green", "Blue"};
+			particleEffect.load(Gdx.files.internal("resources/Particles/FantasySeal/FantasySealCircle" + colors[MathUtils.random(4)] + ".dat"), Gdx.files.internal("resources/Particles/"));
 			particleEffect.scaleEffect(2);
 			dir.set(1, 0).rotate(angle).scl(3);
 		}
@@ -122,7 +123,7 @@ public class SpellFantasySeal extends Component {
 			ParticleSystem.unregister(particleEffect);
 			particleEffect.dispose();
 			particleEffect = new ParticleEffect();
-			particleEffect.load(Gdx.files.internal("resources/Particles/FantasySealCircleExplosion.dat"), Gdx.files.internal("resources/Particles/"));
+			particleEffect.load(Gdx.files.internal("resources/Particles/FantasySeal/FantasySealCircleExplosion.dat"), Gdx.files.internal("resources/Particles/"));
 			particleEffect.setPosition(mTransform.position.x, mTransform.position.y);
 			particleEffect.scaleEffect(2);
 			particleEffect.start();
