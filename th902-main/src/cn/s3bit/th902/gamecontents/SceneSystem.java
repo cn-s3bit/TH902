@@ -2,7 +2,6 @@ package cn.s3bit.th902.gamecontents;
 
 import java.util.ArrayList;
 
-import cn.s3bit.th902.contents.ExampleDanmakuScene;
 import cn.s3bit.th902.contents.stage1.lunatic.DanmakuS1L1;
 import cn.s3bit.th902.contents.stage1.lunatic.DanmakuS1L2;
 
