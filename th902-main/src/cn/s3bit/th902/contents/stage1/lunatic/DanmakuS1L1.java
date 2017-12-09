@@ -16,13 +16,14 @@ import cn.s3bit.th902.gamecontents.components.enemy.DropItem;
 import cn.s3bit.th902.gamecontents.components.enemy.EnemyJudgeCircle;
 
 public class DanmakuS1L1 extends DanmakuScene {
-
+	static int count = 0;
 	@Override
 	public void Initialize(Entity entity) {
-		for (int i=0; i<12; i++)
+		count = 0;
+		for (int i=0; i<36; i++)
 		{
 			//center 285, 368
-			yield.append(() -> { }, 15);
+			yield.append(() -> { }, 22);
 			yield.append(() -> {
 				Entity sprite = BaseSprite.Create(new Vector2(20, 730), 3, 20);
 				final Transform transform1 = sprite.GetComponent(Transform.class);
@@ -31,9 +32,13 @@ public class DanmakuS1L1 extends DanmakuScene {
 				sprite.AddComponent(new ExtraDrop() {
 					@Override
 					public void LootLogic() {
-						DropItem.CreateDropItem(transform1.position.cpy(), 241 + MathUtils.random(1));
+						count++;
+						if (count % 4 == 0)
+							DropItem.CreateDropItem(transform1.position.cpy(), 241);
+						else if (count % 3 == 0)
+							DropItem.CreateDropItem(transform1.position.cpy(), 242);
 						Entity proj = BaseProjectile.Create(transform1.position.cpy(), BulletType.FormCircleS, BulletType.ColorRed);
-						proj.AddComponent(new MoveSnipe(4));
+						proj.AddComponent(new MoveSnipe(4.5f));
 						proj.AddComponent(new EnemyJudgeCircle(6));
 					}
 				});
@@ -44,8 +49,12 @@ public class DanmakuS1L1 extends DanmakuScene {
 				sprite.AddComponent(new ExtraDrop() {
 					@Override
 					public void LootLogic() {
-						DropItem.CreateDropItem(transform2.position.cpy(), 241 + MathUtils.random(1));
-						for (int j=0; j<3; j++)
+						count++;
+						if (count % 4 == 0)
+							DropItem.CreateDropItem(transform2.position.cpy(), 241);
+						else if (count % 3 == 0)
+							DropItem.CreateDropItem(transform2.position.cpy(), 242);
+						for (int j=0; j<4; j++)
 						{
 							Entity proj = BaseProjectile.Create(transform2.position.cpy(), BulletType.FormCircleS, BulletType.ColorRed);
 							proj.AddComponent(new MoveBasic(MathUtils.random(-3f, -1f), MathUtils.random(-3f, 3f)));
@@ -58,7 +67,7 @@ public class DanmakuS1L1 extends DanmakuScene {
 				});
 			});
 		}
-		yield.append(() -> { }, 120);
+		yield.append(() -> { }, 180);
 	}
 
 }
