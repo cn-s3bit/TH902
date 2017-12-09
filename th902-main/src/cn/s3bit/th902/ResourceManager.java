@@ -16,8 +16,10 @@ public final class ResourceManager {
 		textures.clear();
 		ArrayList<String> toLoad = new ArrayList<>();
 		for (int i = 1; i <= 5; i++) {
-			toLoad.add("Background" + i);
+			AddTexture("Background" + i, "resources/" + "Background" + i + ".jpg", FileType.Internal);
 		}
+		AddTexture("CharacterSelect", "resources/CharacterSelect.jpg", FileType.Internal);
+		AddTexture("DifficultySelect", "resources/DifficultySelect.jpg", FileType.Internal);
 		for (int i = 0; i <= 246; i++) {
 
 			barrages.add(new Texture(Gdx.files.internal("resources/Barrages/proj" + i + ".png")));
@@ -27,8 +29,6 @@ public final class ResourceManager {
 		}
 		Collections.addAll(toLoad, new String[] {
 			"Bomb",
-			"CharacterSelect",
-			"DifficultySelect",
 			"Easy",
 			"Exit",	
 			"FightScreen",
