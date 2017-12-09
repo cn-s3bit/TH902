@@ -105,9 +105,8 @@ public class PlayerReimu extends Player {
 
 	@Override
 	public void typeAFastBomb() {
-		Bombs.Create(transform.position.cpy().sub(30, 0), Bombs.TypeReimuAFast, null, null, 0, 0, 0);
-		Bombs.Create(transform.position.cpy(), Bombs.TypeReimuAFast, null, null, 0, 0, 0);
-		Bombs.Create(transform.position.cpy().add(30, 0), Bombs.TypeReimuAFast, null, null, 0, 0, 0);
+		needNewBombEntity = false;
+		Entity.Create().AddComponent(new SpellFantasyLine(this));
 	}
 
 	@Override
@@ -154,7 +153,7 @@ public class PlayerReimu extends Player {
 		if (ifSlowBomb) {
 			bombFrames = FightScreen.PlayerType == FightScreen.PlayerTypeA ? 300 : 180;
 		} else {
-			bombFrames = FightScreen.PlayerType == FightScreen.PlayerTypeA ? 360 : 600;
+			bombFrames = FightScreen.PlayerType == FightScreen.PlayerTypeA ? 150 : 600;
 		}
 	}
 
