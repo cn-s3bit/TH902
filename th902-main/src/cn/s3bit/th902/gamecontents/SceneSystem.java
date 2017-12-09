@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import cn.s3bit.th902.contents.ExampleDanmakuScene;
 import cn.s3bit.th902.contents.stage1.lunatic.DanmakuS1L1;
+import cn.s3bit.th902.contents.stage1.lunatic.DanmakuS1L2;
 
 public class SceneSystem {
 	public static SceneSystem Create(int difficulty, int stageid) {
@@ -14,6 +15,7 @@ public class SceneSystem {
 		// test
 		SceneSystem system = new SceneSystem();
 		system.mScenes.add(new DanmakuS1L1());
+		system.mScenes.add(new DanmakuS1L2());
 		//system.mScenes.add(new ExampleDanmakuScene());
 		//system.mScenes.add(new ExampleDanmakuScene());
 		system.afterFinish = afterFinish;
