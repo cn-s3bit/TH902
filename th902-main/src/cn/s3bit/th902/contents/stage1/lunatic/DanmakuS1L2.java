@@ -1,6 +1,5 @@
 package cn.s3bit.th902.contents.stage1.lunatic;
 
-import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
@@ -28,7 +27,7 @@ public class DanmakuS1L2 extends DanmakuScene {
 	public void Initialize(Entity entity) {
 		count = 0;
 		yield.append(() -> {
-			Entity sprite = BaseSprite.Create(new Vector2(285, 730), 1, 400);
+			Entity sprite = BaseSprite.Create(new Vector2(285, 730), 1, 360);
 			final Transform transform = sprite.GetComponent(Transform.class);
 			sprite.AddComponent(new MoveFunction(MoveFunctionTarget.VELOCITY, MoveFunctionType.ASSIGNMENT, (time) -> {
 				return IMoveFunction.vct2_tmp1.set(0, -20f / ((time + 1) / 2f));
@@ -53,14 +52,14 @@ public class DanmakuS1L2 extends DanmakuScene {
 				}
 			}, 0, 7));
 		});
-		for (int i=0; i<30; i++)
+		for (int i=0; i<16; i++)
 		{
 			//center 285, 368
 			yield.append(() -> { }, 38);
 			yield.append(() -> {
-				Entity sprite = BaseSprite.Create(new Vector2(20, 730), 3, 20);
+				Entity sprite = BaseSprite.Create(new Vector2(100, 730), 3, 20);
 				final Transform transform = sprite.GetComponent(Transform.class);
-				sprite.AddComponent(new MoveBasic(0.1f, -2f, MathUtils.random(0f, 0.05f), MathUtils.random(-0.02f, 0)));
+				sprite.AddComponent(new MoveBasic(0.1f, -2f, MathUtils.random(0f, 0.04f), MathUtils.random(-0.02f, 0)));
 				sprite.AddComponent(new ExtraDrop() {
 					@Override
 					public void LootLogic() {
@@ -76,9 +75,9 @@ public class DanmakuS1L2 extends DanmakuScene {
 				}, 45));
 			});
 			yield.append(() -> {
-				Entity sprite = BaseSprite.Create(new Vector2(560, 730), 3, 20);
+				Entity sprite = BaseSprite.Create(new Vector2(480, 730), 3, 20);
 				final Transform transform = sprite.GetComponent(Transform.class);
-				sprite.AddComponent(new MoveBasic(0.1f, -2f, MathUtils.random(-0.05f, 0), MathUtils.random(-0.02f, 0)));
+				sprite.AddComponent(new MoveBasic(0.1f, -2f, MathUtils.random(-0.04f, 0), MathUtils.random(-0.02f, 0)));
 				sprite.AddComponent(new ExtraDrop() {
 					@Override
 					public void LootLogic() {
