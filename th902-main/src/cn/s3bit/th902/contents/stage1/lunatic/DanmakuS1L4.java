@@ -34,7 +34,7 @@ public class DanmakuS1L4 extends DanmakuScene {
 			boss.AddComponent(new ImageRenderer(ResourceManager.barrages.get(230), 0));
 			BossHP hp = new BossHP(
 					new int[]{1600},
-					new int[]{4800},
+					new int[]{3600},
 					new String[]{"TEST SPELL - [TEST]"},
 					new Runnable[]{null},
 					new Runnable[]{ () -> { DropItem.CreateDropItem(transform.position.cpy(), 241); } });
@@ -46,7 +46,8 @@ public class DanmakuS1L4 extends DanmakuScene {
 			}));
 			boss.AddComponent(new LambdaComponent(() -> {
 				BaseProjectile.Create(transform.position.cpy(), BulletType.FormBulletM, BulletType.ColorPink,
-						new MoveBasic(MathUtils.random(-4f, 4f), MathUtils.random(-3f, -1f) * (JudgingSystem.playerJudge.y > transform.position.y ? -1 : 1)));
+						new MoveBasic(MathUtils.random(-4f, 4f), MathUtils.random(-3f, -1f) * (JudgingSystem.playerJudge.y > transform.position.y ? -1 : 1)),
+						new EnemyJudgeCircle(4));
 			}, 1));
 		});
 	}
