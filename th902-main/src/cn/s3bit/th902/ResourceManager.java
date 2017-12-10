@@ -7,12 +7,16 @@ import java.util.HashMap;
 import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
 public final class ResourceManager {
 	public static HashMap<String, Texture> textures = new HashMap<>();
 	public static ArrayList<Texture> barrages = new ArrayList<>();
 	public static ArrayList<Texture> enemies = new ArrayList<>();
+	
+	public static BitmapFont msyh;
 	public static void Load() {
+		msyh = new BitmapFont(Gdx.files.internal("resources/font/msyh.fnt"));
 		textures.clear();
 		ArrayList<String> toLoad = new ArrayList<>();
 		for (int i = 1; i <= 5; i++) {
