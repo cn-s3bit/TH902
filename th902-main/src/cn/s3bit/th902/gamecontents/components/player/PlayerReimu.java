@@ -151,7 +151,7 @@ public class PlayerReimu extends Player {
 	@Override
 	public void setBombTime() {
 		if (ifSlowBomb) {
-			bombFrames = FightScreen.PlayerType == FightScreen.PlayerTypeA ? 300 : 180;
+			bombFrames = FightScreen.PlayerType == FightScreen.PlayerTypeA ? 360 : 180;
 		} else {
 			bombFrames = FightScreen.PlayerType == FightScreen.PlayerTypeA ? 150 : 600;
 		}

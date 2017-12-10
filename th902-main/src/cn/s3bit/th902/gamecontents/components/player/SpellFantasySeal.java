@@ -80,7 +80,7 @@ public class SpellFantasySeal extends Component {
 				}
 				else if (!isChasing)
 					isChasing = MathUtils.randomBoolean(0.4f);
-				if (particleEffect.isComplete()) {
+				if (particleEffect.isComplete() || reimu.bombFrames <= 1) {
 					yield.append(() -> { mEntity.Destroy(); }, 1);
 				}
 			}

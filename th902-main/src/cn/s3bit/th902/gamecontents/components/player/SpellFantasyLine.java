@@ -68,6 +68,14 @@ public class SpellFantasyLine extends Component {
 				moveBasic.acc.set(targetP).sub(mTransform.position).nor().scl(0.3f);
 			}
 			
+			if (reimu.bombFrames <= 1) {
+				particleEffect.setDuration(0);
+				if (particleEffect.isComplete()) {
+					mEntity.Destroy();
+				}
+				return;
+			}
+			
 			Set<Entry<ImmutableWrapper<Circle>, IJudgeCallback>> set = JudgingSystem.enemyJudges.entrySet();
 			for (Entry<ImmutableWrapper<Circle>, IJudgeCallback> entry : set) {
 				if (entry.getValue().canHurt() && Intersector.overlaps(entry.getKey().getData(), judge)) {
