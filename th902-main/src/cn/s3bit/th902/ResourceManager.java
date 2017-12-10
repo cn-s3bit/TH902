@@ -50,7 +50,9 @@ public final class ResourceManager {
 			"HighScore",
 			"Score",
 			"Point",
-			"Power"
+			"Power",
+			"bloodGaugeOuter",
+			"bloodGaugeInner"
 		});
 		for (String string : toLoad) {
 			AddTexture(string, "resources/" + string + ".png", FileType.Internal);
