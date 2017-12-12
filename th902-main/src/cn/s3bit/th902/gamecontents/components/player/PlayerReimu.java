@@ -27,6 +27,7 @@ public class PlayerReimu extends Player {
 	private boolean mWingShoot = false;
 	private boolean mShoot = false;
 	private int mType;
+	private ImageGroupRenderer mRenderer = null;
 
 	public PlayerReimu(int type) {
 		mType = type;
@@ -45,7 +46,7 @@ public class PlayerReimu extends Player {
 		super.Initialize(entity);
 		animationDrawable.setAnimation(animationStay);
 		existTime = 0;
-		entity.AddComponent(new ImageGroupRenderer(new Drawable[] { animationDrawable, playerAnimation }, 0, null));
+		entity.AddComponent(mRenderer = new ImageGroupRenderer(new Drawable[] { animationDrawable, playerAnimation }, 0, null));
 		mReimuWing1 = new ReimuWing(new Vector2(transform.position.x, transform.position.y + 20), 4f, mType);
 		mReimuWing2 = new ReimuWing(new Vector2(transform.position.x, transform.position.y), -4f, mType);
 	}
@@ -53,7 +54,7 @@ public class PlayerReimu extends Player {
 	@Override
 	public void Update() {
 		super.Update();
-
+		mRenderer.setDepth(0);
 		if (slow) {
 			mReimuWing1.set(new Vector2(transform.position.x + 25, transform.position.y + 25), slow, mWingShoot);
 			mReimuWing2.set(new Vector2(transform.position.x - 25, transform.position.y + 25), slow, mWingShoot);
@@ -75,11 +76,11 @@ public class PlayerReimu extends Player {
 		if (mType == FightScreen.PlayerTypeA) {
 			if (slow) {
 				if (mShoot) {
-					ReimuBullet1.Create(transform.position.cpy().add(0, 10), ReimuBullet1.BulletTypeSelfSlow);
+					ReimuBullet1.Create(transform.position.cpy().add(0, 40), ReimuBullet1.BulletTypeSelfSlow);
 				}
 			} else {
 				if (mShoot) {
-					ReimuBullet1.Create(transform.position.cpy().add(0, 6), ReimuBullet1.BulletTypeSelfFast);
+					ReimuBullet1.Create(transform.position.cpy().add(0, 40), ReimuBullet1.BulletTypeSelfFast);
 				}
 			}
 		} else {
