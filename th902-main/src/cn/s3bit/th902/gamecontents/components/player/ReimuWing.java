@@ -45,11 +45,9 @@ public class ReimuWing extends Component {
 		existTime++;
 		transform.rotation = isShooting ? transform.rotation + mRotationFlag * 3 : mRotationFlag;
 		if (mType == FightScreen.PlayerTypeA) {
-			if (!isSlow) {
-				transform.rotation += mRotationFlag;
-				if (isShooting) {
-					ReimuBullet1.Create(transform.position.cpy().add(0, 6), ReimuBullet1.BulletTypeWingFastInduce);
-				}
+			transform.rotation += mRotationFlag;
+			if (isShooting) {
+				ReimuBullet1.Create(transform.position.cpy().add(0, 6), ReimuBullet1.BulletTypeWingFastInduce);
 			}
 		} else {
 			if (!isSlow) {

@@ -70,14 +70,10 @@ public class PlayerReimu extends Player {
 			animationDrawable.setAnimation(animationStay);
 		}
 		existTime++;
-		mWingShoot = Gdx.input.isKeyPressed(KeySettings.positiveKey) && existTime % (103 - FightScreen.powerCount) == 1;
+		mWingShoot = Gdx.input.isKeyPressed(KeySettings.positiveKey) && existTime % 5 == 1;
 		mShoot = Gdx.input.isKeyPressed(KeySettings.positiveKey) && existTime % 3 == 1;
 		if (mType == FightScreen.PlayerTypeA) {
 			if (slow) {
-				if (mWingShoot) {
-					ReimuBullet1.Create(transform.position.cpy().add(0, 24), ReimuBullet1.BulletTypeWingSlowInduce);
-					mWingShoot = false;
-				}
 				if (mShoot) {
 					ReimuBullet1.Create(transform.position.cpy().add(0, 10), ReimuBullet1.BulletTypeSelfSlow);
 				}
@@ -153,7 +149,7 @@ public class PlayerReimu extends Player {
 		if (ifSlowBomb) {
 			bombFrames = FightScreen.PlayerType == FightScreen.PlayerTypeA ? 360 : 180;
 		} else {
-			bombFrames = FightScreen.PlayerType == FightScreen.PlayerTypeA ? 150 : 600;
+			bombFrames = FightScreen.PlayerType == FightScreen.PlayerTypeA ? 180 : 600;
 		}
 	}
 

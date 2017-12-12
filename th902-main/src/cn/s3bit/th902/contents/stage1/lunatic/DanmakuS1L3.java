@@ -21,8 +21,8 @@ public class DanmakuS1L3 extends DanmakuScene {
 	@Override
 	public void Initialize(Entity entity) {
 		yield.append(() -> {}, 60);
-		for (int i = 1; i <= 120; i++) {
-			yield.append(() -> {}, 17 - i / 9);
+		for (int i = 1; i <= 145; i++) {
+			yield.append(() -> {}, 17 - i / 10);
 			yield.append(() -> {
 				int dir = MathUtils.randomSign();
 				Vector2 pos = new Vector2(dir * 300 + 285, MathUtils.random(500, 570));
@@ -38,7 +38,7 @@ public class DanmakuS1L3 extends DanmakuScene {
 						proj.AddComponent(new MoveBasic(MathUtils.random(-3f, 3f), MathUtils.random(-3f, -1f) * (JudgingSystem.playerJudge.y > transform.position.y ? -1 : 1)));
 						proj.AddComponent(new EnemyJudgeCircle(6));
 					}
-				}, MathUtils.random(8, 30), -1));
+				}, MathUtils.random(1, 30), -1));
 				sprite.AddComponent(new ExtraDrop() {
 					@Override
 					public void LootLogic() {

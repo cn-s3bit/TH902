@@ -27,7 +27,7 @@ public class DanmakuS1L2 extends DanmakuScene {
 	public void Initialize(Entity entity) {
 		count = 0;
 		yield.append(() -> {
-			Entity sprite = BaseSprite.Create(new Vector2(285, 730), 1, 360);
+			Entity sprite = BaseSprite.Create(new Vector2(285, 730), 1, 480);
 			final Transform transform = sprite.GetComponent(Transform.class);
 			sprite.AddComponent(new MoveFunction(MoveFunctionTarget.VELOCITY, MoveFunctionType.ASSIGNMENT, (time) -> {
 				return IMoveFunction.vct2_tmp1.set(0, -20f / ((time + 1) / 2f));
@@ -59,7 +59,7 @@ public class DanmakuS1L2 extends DanmakuScene {
 			yield.append(() -> {
 				Entity sprite = BaseSprite.Create(new Vector2(100, 730), 3, 20);
 				final Transform transform = sprite.GetComponent(Transform.class);
-				sprite.AddComponent(new MoveBasic(0.1f, -2f, MathUtils.random(0f, 0.04f), MathUtils.random(-0.02f, 0)));
+				sprite.AddComponent(new MoveBasic(0.1f, -2f, MathUtils.random(0f, 0.04f), MathUtils.random(-0.001f, 0)));
 				sprite.AddComponent(new ExtraDrop() {
 					@Override
 					public void LootLogic() {
@@ -71,13 +71,13 @@ public class DanmakuS1L2 extends DanmakuScene {
 					}
 				});
 				sprite.AddComponent(new LambdaComponent(() -> {
-					BaseProjectile.Create(transform.position.cpy(), BulletType.FormCircleS2, BulletType.ColorRed, new MoveSnipe(4.5f), new EnemyJudgeCircle(6));
+					BaseProjectile.Create(transform.position.cpy(), BulletType.FormCircleS2, BulletType.ColorRed, new MoveSnipe(8f), new EnemyJudgeCircle(6));
 				}, 45));
 			});
 			yield.append(() -> {
 				Entity sprite = BaseSprite.Create(new Vector2(480, 730), 3, 20);
 				final Transform transform = sprite.GetComponent(Transform.class);
-				sprite.AddComponent(new MoveBasic(0.1f, -2f, MathUtils.random(-0.04f, 0), MathUtils.random(-0.02f, 0)));
+				sprite.AddComponent(new MoveBasic(0.1f, -2f, MathUtils.random(-0.04f, 0), MathUtils.random(-0.001f, 0)));
 				sprite.AddComponent(new ExtraDrop() {
 					@Override
 					public void LootLogic() {
@@ -89,7 +89,7 @@ public class DanmakuS1L2 extends DanmakuScene {
 					}
 				});
 				sprite.AddComponent(new LambdaComponent(() -> {
-					BaseProjectile.Create(transform.position.cpy(), BulletType.FormCircleS2, BulletType.ColorRed, new MoveSnipe(4.5f), new EnemyJudgeCircle(6));
+					BaseProjectile.Create(transform.position.cpy(), BulletType.FormCircleS2, BulletType.ColorRed, new MoveSnipe(8f), new EnemyJudgeCircle(6));
 				}, 45));
 			});
 		}

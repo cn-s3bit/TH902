@@ -33,7 +33,7 @@ public class DanmakuS1L4 extends DanmakuScene {
 			boss.AddComponent(transform);
 			boss.AddComponent(new ImageRenderer(ResourceManager.barrages.get(230), 0));
 			BossHP hp = new BossHP(
-					new int[]{1600},
+					new int[]{3600},
 					new int[]{3600},
 					new String[]{"TEST SPELL - [TEST]"},
 					new Runnable[]{null},

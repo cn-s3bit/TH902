@@ -70,13 +70,13 @@ public class SpellFantasySeal extends Component {
 				if (isChasing && !hasExploded && particleEffect.getEmitters().first().durationTimer < 4500) {
 					Entry<ImmutableWrapper<Vector2>, IJudgeCallback> nearest = JudgingSystem.calculateNearestChaseable(mTransform.position);
 					if (nearest != null) {
-						GameHelper.chase(mTransform.position, nearest.getKey().getData(), 4);
+						GameHelper.chase(mTransform.position, nearest.getKey().getData(), 6);
 						if (nearest.getKey().getData().dst2(mTransform.position) <= 3600) {
 							explode();
 							hasExploded = true;
 						}
 					}
-					mTransform.position.add(dir.set(relativePos).rotate90(1).nor().scl(3));
+					mTransform.position.add(dir.set(relativePos).rotate90(1).nor().scl(4));
 				}
 				else if (!isChasing)
 					isChasing = MathUtils.randomBoolean(0.4f);
@@ -131,7 +131,7 @@ public class SpellFantasySeal extends Component {
 			Set<Entry<ImmutableWrapper<Circle>, IJudgeCallback>> set = JudgingSystem.enemyJudges.entrySet();
 			for (Entry<ImmutableWrapper<Circle>, IJudgeCallback> entry : set) {
 				if (entry.getValue().canHurt() && Intersector.overlaps(entry.getKey().getData(), judge)) {
-					entry.getValue().onHurt(150);
+					entry.getValue().onHurt(250);
 				}
 			}
 		}
