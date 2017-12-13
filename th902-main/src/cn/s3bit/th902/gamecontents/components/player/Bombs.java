@@ -136,7 +136,7 @@ public class Bombs extends Component implements IJudgeCallback {
 	}
 
 	@Override
-	public int getDamage() {
+	public float getDamage() {
 		return mDamage;
 	}
 

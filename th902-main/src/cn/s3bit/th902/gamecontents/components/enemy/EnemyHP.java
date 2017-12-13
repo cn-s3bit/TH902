@@ -8,7 +8,7 @@ import cn.s3bit.th902.gamecontents.components.ExtraDrop;
 public class EnemyHP extends Component implements IJudgeCallback {
 	public boolean immune = false;
 	public boolean noMelee = false;
-	public int hp = 0;
+	public float hp = 0;
 	public int maxhp = 0;
 	
 	private Entity mEntity;
@@ -24,14 +24,14 @@ public class EnemyHP extends Component implements IJudgeCallback {
 	}
 	
 	@Override
-	public void onHurt(int damage) {
+	public void onHurt(float damage) {
 		if (!immune) {
 			hp -= damage;
 		}
 	}
 	
 	@Override
-	public int getDamage() {
+	public float getDamage() {
 		return noMelee ? 0 : 1;
 	}
 

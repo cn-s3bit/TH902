@@ -148,7 +148,7 @@ public class ReimuBullet1 extends Component implements IJudgeCallback {
 	}
 
 	@Override
-	public int getDamage() {
+	public float getDamage() {
 		return mDamage;
 	}
 

@@ -79,7 +79,7 @@ public class SpellFantasyLine extends Component {
 			Set<Entry<ImmutableWrapper<Circle>, IJudgeCallback>> set = JudgingSystem.enemyJudges.entrySet();
 			for (Entry<ImmutableWrapper<Circle>, IJudgeCallback> entry : set) {
 				if (entry.getValue().canHurt() && Intersector.overlaps(entry.getKey().getData(), judge)) {
-					entry.getValue().onHurt(9);
+					entry.getValue().onHurt(5);
 				}
 			}
 			for (final Entry<ImmutableWrapper<Vector2>, Entity> entry : JudgingSystem.clearByBombs.entrySet()) {
