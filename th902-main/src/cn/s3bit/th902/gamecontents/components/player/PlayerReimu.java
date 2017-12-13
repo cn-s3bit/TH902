@@ -71,8 +71,8 @@ public class PlayerReimu extends Player {
 			animationDrawable.setAnimation(animationStay);
 		}
 		existTime++;
-		mWingShoot = Gdx.input.isKeyPressed(KeySettings.positiveKey) && existTime % 5 == 1;
-		mShoot = Gdx.input.isKeyPressed(KeySettings.positiveKey) && existTime % 3 == 1;
+		mWingShoot = Gdx.input.isKeyPressed(KeySettings.positiveKey) && existTime % 5 == 1 && bombFrames <= 60;
+		mShoot = Gdx.input.isKeyPressed(KeySettings.positiveKey) && existTime % 3 == 1 && bombFrames <= 60;
 		if (mType == FightScreen.PlayerTypeA) {
 			if (slow) {
 				if (mShoot) {

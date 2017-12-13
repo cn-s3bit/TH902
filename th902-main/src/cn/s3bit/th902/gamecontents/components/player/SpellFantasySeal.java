@@ -134,6 +134,10 @@ public class SpellFantasySeal extends Component {
 					entry.getValue().onHurt(200 * entry.getValue().getBombResist());
 				}
 			}
+			count--;
+			if (count <= 0) {
+				reimu.bombFrames = 60;
+			}
 		}
 	}
 	
@@ -142,11 +146,13 @@ public class SpellFantasySeal extends Component {
 	}
 	
 	Entity entity;
+	public static int count = 8;
 
 	@Override
 	public void Initialize(Entity entity) {
 		Transform transform = reimu.transform;
 		this.entity = entity;
+		count = 8;
 		for (int i=0; i<360; i+=45) {
 			Entity cir = Entity.Create();
 			cir.AddComponent(new Transform(transform.position.cpy()));

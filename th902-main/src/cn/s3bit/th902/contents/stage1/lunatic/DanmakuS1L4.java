@@ -27,11 +27,12 @@ public class DanmakuS1L4 extends DanmakuScene {
 			boss.AddComponent(transform);
 			boss.AddComponent(new ImageRenderer(ResourceManager.barrages.get(230), 0));
 			BossHP hp = new BossHP(
-					new int[]{1800, 1800},
-					new int[]{1200, 1200},
-					new String[]{"TEST SPELL - [TEST]", null},
-					new Runnable[]{null, null},
-					new Runnable[]{null, () -> { DropItem.CreateDropItem(transform.position.cpy(), 241); } });
+					new int[]{1800, 1800, 3600},
+					new int[]{1200, 1200, 2400},
+					new float[] {1f, 1f, 1.6f},
+					new String[]{null, null, "TEST SPELL - [TEST]"},
+					new Runnable[]{null, null, null},
+					new Runnable[]{null, null, () -> { DropItem.CreateDropItem(transform.position.cpy(), 241); } });
 			boss.AddComponent(hp);
 			boss.AddComponent(new EnemyJudgeCircle(54, hp));
 			boss.AddComponent(new EnemyChaseable(hp));

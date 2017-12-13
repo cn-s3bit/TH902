@@ -12,6 +12,7 @@ public class BossHP extends Component implements IJudgeCallback {
 	public int maxhp = 0;
 	
 	public int[] life, time;
+	public float[] bombResist;
 	public String[] spellNames;
 	public Runnable[] dropLogics, extraDropLogics;
 	
@@ -20,12 +21,13 @@ public class BossHP extends Component implements IJudgeCallback {
 	
 	private Entity mEntity;
 	
-	public BossHP(int[] life, int[] time, String[] spellNames, Runnable[] dropLogics, Runnable[] extraDropLogics) {
+	public BossHP(int[] life, int[] time, float[] bombResist, String[] spellNames, Runnable[] dropLogics, Runnable[] extraDropLogics) {
 		this.life = life;
 		this.time = time;
 		this.spellNames = spellNames;
 		this.dropLogics = dropLogics;
 		this.extraDropLogics = extraDropLogics;
+		this.bombResist = bombResist;
 		hp = maxhp = life[current];
 	}
 	
@@ -37,7 +39,7 @@ public class BossHP extends Component implements IJudgeCallback {
 	@Override
 	public void onHurt(float damage) {
 		if (!immune) {
-			hp -= damage * (timer < 360 ? timer / 360f : 1);
+			hp -= damage * (timer < 180 ? timer / 180f : 1);
 		}
 	}
 	
@@ -48,7 +50,7 @@ public class BossHP extends Component implements IJudgeCallback {
 	
 	@Override
 	public float getBombResist() {
-		return 0.3f;
+		return bombResist == null ? 0.8f : bombResist[current];
 	}
 
 	@Override
