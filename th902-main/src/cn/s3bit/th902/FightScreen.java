@@ -34,7 +34,7 @@ public class FightScreen extends ScreenAdapter {
 	public static final int PlayerTypeB = 2;
 	public static int PlayerType = 1;
 	public static int PlayerChara = 1;
-	public SceneSystem sceneSystem;
+	public static SceneSystem sceneSystem;
 
 	@Override
 	public void show() {
