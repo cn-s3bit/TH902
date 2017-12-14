@@ -30,7 +30,7 @@ public class DanmakuS1L4 extends DanmakuScene {
 					new int[]{1800, 1800, 3600},
 					new int[]{1200, 1200, 2400},
 					new float[] {1f, 1f, 1.6f},
-					new String[]{null, null, "TEST SPELL - [TEST]"},
+					new String[]{null, null, "ANIMATION - [BOUNCE]"},
 					new Runnable[]{null, null, null},
 					new Runnable[]{null, null, () -> { DropItem.CreateDropItem(transform.position.cpy(), 241); } });
 			boss.AddComponent(hp);

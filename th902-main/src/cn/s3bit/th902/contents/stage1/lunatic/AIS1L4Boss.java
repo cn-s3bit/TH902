@@ -6,9 +6,14 @@ import com.badlogic.gdx.math.Vector2;
 import cn.s3bit.th902.gamecontents.Entity;
 import cn.s3bit.th902.gamecontents.components.Component;
 import cn.s3bit.th902.gamecontents.components.Transform;
+import cn.s3bit.th902.gamecontents.components.ai.IMoveFunction;
 import cn.s3bit.th902.gamecontents.components.ai.MoveBasic;
+import cn.s3bit.th902.gamecontents.components.ai.MoveFunction;
+import cn.s3bit.th902.gamecontents.components.ai.MoveFunctionTarget;
+import cn.s3bit.th902.gamecontents.components.ai.MoveFunctionType;
 import cn.s3bit.th902.gamecontents.components.enemy.BaseProjectile;
 import cn.s3bit.th902.gamecontents.components.enemy.BossHP;
+import cn.s3bit.th902.gamecontents.components.enemy.BulletType;
 import cn.s3bit.th902.gamecontents.components.enemy.EnemyJudgeCircle;
 
 public class AIS1L4Boss extends Component {
@@ -32,6 +37,9 @@ public class AIS1L4Boss extends Component {
 			break;
 		case 1:
 			part2();
+			break;
+		case 2:
+			part3();
 			break;
 		default:
 			break;
@@ -71,5 +79,25 @@ public class AIS1L4Boss extends Component {
 				proj.AddComponent(new EnemyJudgeCircle(15 * size));
 			}
 		}
+	}
+	
+	public void part3() {
+		Entity proj = BaseProjectile.Create(new Vector2(MathUtils.random(0, 560), 720), BulletType.FormCircleLightM, MathUtils.randomBoolean() ? BulletType.ColorOrange : BulletType.ColorBlue);
+		final Transform ptransform = proj.GetComponent(Transform.class);
+		proj.AddComponent(new MoveFunction(MoveFunctionTarget.ACCEL, MoveFunctionType.ASSIGNMENT, new IMoveFunction() {
+			int flag = 2;
+			int bounce = MathUtils.random(250, 500);
+			@Override
+			public Vector2 getTargetVal(int time) {
+				if (flag > 0 && Math.abs(ptransform.position.y - bounce) < 30) {
+					final int m = flag * 8;
+					flag--;
+					bounce -= 90;
+					return vct2_tmp1.set(0.001f, m);
+				}
+				return vct2_tmp1.set(0.001f, -0.1f);
+			}
+		}));
+		proj.AddComponent(new EnemyJudgeCircle(15));
 	}
 }
