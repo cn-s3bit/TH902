@@ -76,7 +76,7 @@ public class PlayerReimu extends Player {
 		if (mType == FightScreen.PlayerTypeA) {
 			if (slow) {
 				if (mShoot) {
-					ReimuBullet1.Create(transform.position.cpy().add(0, 40), ReimuBullet1.BulletTypeSelfSlow);
+					ReimuBullet1.Create(transform.position.cpy().add(0, 60), ReimuBullet1.BulletTypeSelfSlow);
 				}
 			} else {
 				if (mShoot) {

@@ -18,12 +18,13 @@ public class ReimuWing extends Component {
 	private float mRotationFlag;
 	protected boolean isShooting = false;
 	private int mType;
+	private ImageRenderer mRenderer;
 
 	public ReimuWing(Vector2 position, float rotation, int type) {
 		mType = type;
 		Entity entity = Entity.Create();
 		entity.AddComponent(new Transform(position));
-		entity.AddComponent(new ImageRenderer(ResourceManager.barrages.get(236), 0));
+		entity.AddComponent(mRenderer = new ImageRenderer(ResourceManager.barrages.get(236), 0));
 		entity.AddComponent(this);
 		mRotationFlag = rotation;
 	}
@@ -41,13 +42,14 @@ public class ReimuWing extends Component {
 
 	@Override
 	public void Update() {
+		mRenderer.setDepth(0);
 		transform.position.add(mVector2.sub(transform.position).scl(0.2f));
 		existTime++;
 		transform.rotation = isShooting ? transform.rotation + mRotationFlag * 3 : mRotationFlag;
 		if (mType == FightScreen.PlayerTypeA) {
 			transform.rotation += mRotationFlag;
 			if (isShooting) {
-				ReimuBullet1.Create(transform.position.cpy().add(0, 6), ReimuBullet1.BulletTypeWingFastInduce);
+				ReimuBullet1.Create(transform.position.cpy().add(0, 24), ReimuBullet1.BulletTypeWingFastInduce);
 			}
 		} else {
 			if (!isSlow) {
