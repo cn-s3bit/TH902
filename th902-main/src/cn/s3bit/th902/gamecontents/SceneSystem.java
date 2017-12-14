@@ -6,6 +6,7 @@ import cn.s3bit.th902.contents.stage1.lunatic.DanmakuS1L1;
 import cn.s3bit.th902.contents.stage1.lunatic.DanmakuS1L2;
 import cn.s3bit.th902.contents.stage1.lunatic.DanmakuS1L3;
 import cn.s3bit.th902.contents.stage1.lunatic.DanmakuS1L4;
+import cn.s3bit.th902.contents.stage1.lunatic.DanmakuS1L5;
 
 public class SceneSystem {
 	public static SceneSystem Create(int difficulty, int stageid) {
@@ -19,6 +20,7 @@ public class SceneSystem {
 		system.mScenes.add(new DanmakuS1L2());
 		system.mScenes.add(new DanmakuS1L3());
 		system.mScenes.add(new DanmakuS1L4());
+		system.mScenes.add(new DanmakuS1L5());
 		//system.mScenes.add(new ExampleDanmakuScene());
 		//system.mScenes.add(new ExampleDanmakuScene());
 		system.afterFinish = afterFinish;
@@ -53,12 +55,16 @@ public class SceneSystem {
 	}
 
 	public void PostUpdate() {
-		if (mCurrentIndex >= mScenes.size())
+		if (mCurrentIndex >= mScenes.size() || sceneManager == null)
 			return;
 		DanmakuScene scene = mScenes.get(mCurrentIndex);
 		if (scene.yield.isFinished()) {
-			mCurrentIndex++;
-			sceneManager = null;
+			nextScene();
 		}
+	}
+	
+	public void nextScene() {
+		mCurrentIndex++;
+		sceneManager = null;
 	}
 }

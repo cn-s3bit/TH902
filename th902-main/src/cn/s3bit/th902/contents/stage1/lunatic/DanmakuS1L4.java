@@ -2,8 +2,10 @@ package cn.s3bit.th902.contents.stage1.lunatic;
 
 import com.badlogic.gdx.math.Vector2;
 
+import cn.s3bit.th902.FightScreen;
 import cn.s3bit.th902.ResourceManager;
 import cn.s3bit.th902.gamecontents.DanmakuScene;
+import cn.s3bit.th902.gamecontents.EnemySpellInfoSystem;
 import cn.s3bit.th902.gamecontents.Entity;
 import cn.s3bit.th902.gamecontents.components.ImageRenderer;
 import cn.s3bit.th902.gamecontents.components.Transform;
@@ -43,4 +45,22 @@ public class DanmakuS1L4 extends DanmakuScene {
 		});
 	}
 
+	int countdown = 240;
+	@Override
+	public void Update() {
+		yield.yield();
+		if (yield.isFinished()) {
+			yield.append(() -> { return null; }, 1048576);
+			countdown--;
+		}
+		if (countdown < 240 && !EnemySpellInfoSystem.isActive()) {
+			if (countdown > 0) {
+				countdown--;
+			}
+			else {
+				Kill();
+				FightScreen.sceneSystem.nextScene();
+			}
+		}
+	}
 }
