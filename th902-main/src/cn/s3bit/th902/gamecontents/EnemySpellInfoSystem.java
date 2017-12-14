@@ -22,6 +22,12 @@ public class EnemySpellInfoSystem {
 	public static Entity timeleft;
 	public static Entity indicator;
 	
+	private static boolean mIsActive = false;
+	
+	public static boolean isActive() {
+		return mIsActive;
+	}
+	
 	public static void activate(Entity boss) {
 		central = boss;
 		final Transform cTransform = central.GetComponent(Transform.class);
@@ -56,9 +62,11 @@ public class EnemySpellInfoSystem {
 		timeleft.AddComponent(new LambdaComponent(() -> {
 			timeRenderer.setText(String.format("%.2f", (bossHP.time[bossHP.current] - bossHP.timer) / 60f));
 		}, 1));
+		mIsActive = true;
 	}
 	
 	public static void deactivate() {
+		mIsActive = false;
 		timeleft.Destroy();
 		lifeGauge.Destroy();
 		spellName.Destroy();
