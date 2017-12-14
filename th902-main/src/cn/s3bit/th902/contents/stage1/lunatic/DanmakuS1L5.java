@@ -42,7 +42,7 @@ public class DanmakuS1L5 extends DanmakuScene {
 					}
 					return snipe;
 				}));
-				proj.AddComponent(new EnemyJudgeCircle(4));
+				proj.AddComponent(new EnemyJudgeCircle(5));
 			});
 		}
 	}
