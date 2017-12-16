@@ -7,6 +7,7 @@ import cn.s3bit.th902.contents.stage1.lunatic.DanmakuS1L2;
 import cn.s3bit.th902.contents.stage1.lunatic.DanmakuS1L3;
 import cn.s3bit.th902.contents.stage1.lunatic.DanmakuS1L4;
 import cn.s3bit.th902.contents.stage1.lunatic.DanmakuS1L5;
+import cn.s3bit.th902.contents.stage1.lunatic.DanmakuS1L6;
 
 public class SceneSystem {
 	public static SceneSystem Create(int difficulty, int stageid) {
@@ -21,6 +22,7 @@ public class SceneSystem {
 		system.mScenes.add(new DanmakuS1L3());
 		system.mScenes.add(new DanmakuS1L4());
 		system.mScenes.add(new DanmakuS1L5());
+		system.mScenes.add(new DanmakuS1L6());
 		//system.mScenes.add(new ExampleDanmakuScene());
 		//system.mScenes.add(new ExampleDanmakuScene());
 		system.afterFinish = afterFinish;
