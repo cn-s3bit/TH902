@@ -20,7 +20,7 @@ import cn.s3bit.th902.gamecontents.components.enemy.BulletType;
 import cn.s3bit.th902.gamecontents.components.enemy.EnemyJudgeCircle;
 
 public class DanmakuS1L6 extends DanmakuScene {
-
+	static Entity[] sprites = {null, null};
 	@Override
 	public void Initialize(Entity entity) {
 		Callable<Object> pause = () -> { return null; };
@@ -28,6 +28,7 @@ public class DanmakuS1L6 extends DanmakuScene {
 		yield.append(() -> {
 			for (int i=0; i<=1; i++) {
 				Entity sprite = BaseSprite.Create(new Vector2(135 + i * 300, 730), i, 600);
+				sprites[i] = sprite;
 				final Transform tr = sprite.GetComponent(Transform.class);
 				tr.scale.set(0.5f, 0.5f);
 				sprite.AddComponent(new LambdaComponent(() -> {
