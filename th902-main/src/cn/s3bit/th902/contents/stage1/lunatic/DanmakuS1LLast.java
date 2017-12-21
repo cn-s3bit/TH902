@@ -7,7 +7,6 @@ import cn.s3bit.th902.ResourceManager;
 import cn.s3bit.th902.gamecontents.DanmakuScene;
 import cn.s3bit.th902.gamecontents.EnemySpellInfoSystem;
 import cn.s3bit.th902.gamecontents.Entity;
-import cn.s3bit.th902.gamecontents.JudgingSystem;
 import cn.s3bit.th902.gamecontents.components.ImageRenderer;
 import cn.s3bit.th902.gamecontents.components.Transform;
 import cn.s3bit.th902.gamecontents.components.ai.IMoveFunction;
