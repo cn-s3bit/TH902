@@ -14,7 +14,7 @@ import cn.s3bit.th902.gamecontents.components.Transform;
 import cn.s3bit.th902.gamecontents.components.player.PlayerReimu;
 
 public class FightScreen extends ScreenAdapter {
-	private BitmapFont bf;
+	public static BitmapFont bf = new BitmapFont(Gdx.files.internal("resources/font/mainfont.fnt"));
 	private int _difficulty = DifficultySelectScreen.difficulty;
 	private String mDifficulty[] = { "Easy", "Normal", "Hard", "Lunatic" };
 	private ImageRenderer mBombs[] = new ImageRenderer[8];
@@ -39,7 +39,6 @@ public class FightScreen extends ScreenAdapter {
 	@Override
 	public void show() {
 		super.show();
-		bf = new BitmapFont(Gdx.files.internal("resources/font/mainfont.fnt"));
 		Entity player = Entity.Create();
 		Entity fightScreen = Entity.Create();
 		Entity difficulty = Entity.Create();
@@ -108,7 +107,6 @@ public class FightScreen extends ScreenAdapter {
 		bf.draw(GameMain.instance.activeStage.getBatch(), "difficulty:" + DifficultySelectScreen.difficulty
 				+ "\nplayer:" + playerCount + "\nbomb:" + bombCount + "\npower:" + powerCount + "\npoint:" + pointCount,
 				20, 705);
-		bf.draw(GameMain.instance.activeStage.getBatch(), "FPS: " + Gdx.graphics.getFramesPerSecond(), 850, 30);
 		GameMain.instance.activeStage.getBatch().end();
 
 		for (int i = 0; i < 8; i++)

@@ -47,5 +47,8 @@ public class GameMain extends Game {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		super.render();
 		activeStage.draw();
+		activeStage.getBatch().begin();
+		FightScreen.bf.draw(activeStage.getBatch(), "FPS: " + Gdx.graphics.getFramesPerSecond(), 850, 30);
+		activeStage.getBatch().end();
 	}
 }
