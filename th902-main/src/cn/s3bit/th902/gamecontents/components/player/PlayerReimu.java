@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 
@@ -28,6 +29,7 @@ public class PlayerReimu extends Player {
 	private boolean mShoot = false;
 	private int mType;
 	private ImageGroupRenderer mRenderer = null;
+	public float alpha = 1;
 
 	public PlayerReimu(int type) {
 		mType = type;
@@ -55,6 +57,8 @@ public class PlayerReimu extends Player {
 	public void Update() {
 		super.Update();
 		mRenderer.setDepth(0);
+		alpha = Chaos ? 0.2f + Math.abs(Interpolation.linear.apply(-0.8f, 0.8f, (existTime % 30) / 30f)): 1;
+		mRenderer.group.setColor(1, 1, 1, alpha);
 		if (slow) {
 			mReimuWing1.set(new Vector2(transform.position.x + 25, transform.position.y + 25), slow, mWingShoot);
 			mReimuWing2.set(new Vector2(transform.position.x - 25, transform.position.y + 25), slow, mWingShoot);
