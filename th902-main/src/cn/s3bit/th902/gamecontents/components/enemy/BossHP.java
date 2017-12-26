@@ -39,7 +39,7 @@ public class BossHP extends Component implements IJudgeCallback {
 	@Override
 	public void onHurt(float damage) {
 		if (!immune) {
-			hp -= damage * (timer < 180 ? timer / 180f : 1);
+			hp -= damage * (timer < 180 ? (float)(Math.pow(1.02, timer) / Math.pow(1.02, 180)): 1);
 		}
 	}
 	
