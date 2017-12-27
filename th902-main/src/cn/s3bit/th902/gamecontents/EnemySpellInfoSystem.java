@@ -50,6 +50,8 @@ public class EnemySpellInfoSystem {
 		lifeGauge.AddComponent(outerCircle);
 		lifeGauge.AddComponent(circularProgressRenderer);
 		lifeGauge.AddComponent(new LambdaComponent(() -> {
+			circularProgressRenderer.progress.toBack();
+			outerCircle.image.toBack();
 			circularProgressRenderer.progress.setPercent(bossHP.hp / (float) bossHP.maxhp);
 		}, 1));
 		
