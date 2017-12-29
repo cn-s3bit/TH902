@@ -1,6 +1,5 @@
 package cn.s3bit.th902.contents.stage1.lunatic;
 
-import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
@@ -74,6 +73,7 @@ public class AIS1LLastBoss extends Component {
 			p2interval--;
 			moveFunction.Kill();
 			existTime = 0;
+			Entity.postUpdate.add(() -> { GameHelper.clearEnemyBullets(); });
 		}
 		if (existTime < 60) {
 			moveBasic.velocity.set(-4, 0.3f);
@@ -110,20 +110,20 @@ public class AIS1LLastBoss extends Component {
 			{
 				final int ii = i;
 				final Entity proj = BaseProjectile.Create(transform.position.cpy().add(i * 5, i * 80 - 40), BulletType.FormCircleLightM, BulletType.ColorGray,
-						new EnemyJudgeCircle(13));
+						new EnemyJudgeCircle(15));
 				final Transform pTr = proj.GetComponent(Transform.class);
-				pTr.scale.scl(1.1f);
+				pTr.scale.scl(1.2f);
 				proj.AddComponent(new LambdaComponent(() -> {
 					Entity.postUpdate.add(() -> { proj.Destroy(); });
 					fdCounter[ii]++;
-					if (fdCounter[ii] > 2 + ii) {
+					if (fdCounter[ii] > 1 + ii) {
 						fdCounter[ii] = 0;
 						BaseProjectile.Create(pTr.position.cpy(), BulletType.FormArrowM, BulletType.ColorBlueLight,
 								new EnemyJudgeCircle(5, 0, 3),
-								new MoveBasic(0, 1.2f, 0, 0.03f + ii * 0.015f));
+								new MoveBasic(-0.3f, 1.2f, -(0.03f + ii * 0.015f) / 4, 0.03f + ii * 0.015f));
 						BaseProjectile.Create(pTr.position.cpy(), BulletType.FormArrowM, BulletType.ColorRed,
 								new EnemyJudgeCircle(5, 0, 3),
-								new MoveBasic(0, -1.2f, 0, -0.03f - ii * 0.015f));
+								new MoveBasic(0.3f, -1.2f, (0.03f + ii * 0.015f) / 4, -0.03f - ii * 0.015f));
 					}
 				}, 120, -1));
 			}
@@ -131,13 +131,36 @@ public class AIS1LLastBoss extends Component {
 	}
 	
 	boolean flag3 = true;
+	Vector2 p3pos = new Vector2(285, 590);
+	int[] p3ang = new int[24];
 	public void part3() {
 		if (flag3) {
 			flag3 = false;
 			existTime = 0;
+			moveBasic.acc.set(0, 0);
+			Entity.postUpdate.add(() -> { GameHelper.clearEnemyBullets(); });
+			for (int i=0; i<24; i++) p3ang[i] = i * 15;
 		}
-		GameHelper.chase(moveBasic.velocity, new Vector2(285, 590), 3);
+		GameHelper.snipeVct(transform.position, p3pos, 0, moveBasic.velocity);
+		moveBasic.velocity.scl(1 / 40f);
+		if (existTime > 120) {
+			if (existTime % 14 == 0)
+				for (int i=0; i<24; i+=2)
+				{
+					Entity proj = BaseProjectile.CreateSpecialBullet(transform.position.cpy(), 225);
+					proj.AddComponent(new MoveBasic(vct2_tmp.set(5, 0).rotate(p3ang[i])));
+					proj.AddComponent(new EnemyJudgeCircle(15));
+					p3ang[i] -= 23;
+				}
+			else if (existTime % 14 == 7)
+				for (int i=1; i<24; i+=2)
+				{
+					Entity proj = BaseProjectile.CreateSpecialBullet(transform.position.cpy(), 226);
+					proj.AddComponent(new MoveBasic(vct2_tmp.set(9, 0).rotate(p3ang[i])));
+					proj.AddComponent(new EnemyJudgeCircle(15));
+					p3ang[i] += 17;
+				}
+		}
 		//moveBasic.velocity.scl(Interpolation.elasticOut.apply(0, 5, existTime / 40f));
-		moveBasic.acc.set(0, 0);
 	}
 }
