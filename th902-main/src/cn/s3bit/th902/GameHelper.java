@@ -2,6 +2,7 @@ package cn.s3bit.th902;
 
 import com.badlogic.gdx.math.Vector2;
 
+import cn.s3bit.th902.gamecontents.Entity;
 import cn.s3bit.th902.gamecontents.JudgingSystem;
 
 public final class GameHelper {
@@ -15,5 +16,12 @@ public final class GameHelper {
 		target = target == null ? JudgingSystem.playerJudge : target;
 		vct2_tmp1.set(target).sub(current).rotate(biasAng);
 		out.set(vct2_tmp1);
+	}
+	
+	public static void clearEnemyBullets() {
+		Entity[] entities = (Entity[]) JudgingSystem.clearByBombs.values().toArray(new Entity[JudgingSystem.clearByBombs.values().size()]);
+		for (Entity entity : entities) {
+			entity.Destroy();
+		}
 	}
 }
