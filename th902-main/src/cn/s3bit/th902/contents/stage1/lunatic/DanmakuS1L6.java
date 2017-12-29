@@ -27,7 +27,7 @@ public class DanmakuS1L6 extends DanmakuScene {
 		yield.append(pause, 120);
 		yield.append(() -> {
 			for (int i=0; i<=1; i++) {
-				Entity sprite = BaseSprite.Create(new Vector2(135 + i * 300, 730), i, 600);
+				Entity sprite = BaseSprite.Create(new Vector2(135 + i * 300, 730), i, 300 + i * 300);
 				sprites[i] = sprite;
 				final Transform tr = sprite.GetComponent(Transform.class);
 				tr.scale.set(0.5f, 0.5f);
