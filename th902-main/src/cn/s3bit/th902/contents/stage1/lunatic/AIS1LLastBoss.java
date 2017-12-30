@@ -201,7 +201,42 @@ public class AIS1LLastBoss extends Component {
 		}
 	}
 	
+	boolean flag5 = true;
+	Vector2 deltap5 = new Vector2();
+	Vector2 targetp5 = new Vector2();
 	public void part5() {
-		
+		if (flag5) {
+			flag5 = false;
+			existTime = 0;
+			moveBasic.velocity.set(0, 0);
+			moveBasic.acc.set(0, 0);
+			Entity.postUpdate.add(() -> { GameHelper.clearEnemyBullets(); });
+			targetp5.set(transform.position.x, 400);
+		}
+		if (existTime <= 90) {
+			GameHelper.snipeVct(transform.position, targetp5, 0, moveBasic.velocity);
+			moveBasic.velocity.scl(1 / 45f);
+		}
+		else {
+			if (existTime % 270 > 90) {
+				for (int i=0; i<360; i+=90) {
+					if (MathUtils.randomBoolean(0.3f)) continue;
+					if (i == 0 || i == 180)
+						deltap5.set(0, MathUtils.random(-15 * ((existTime % 270 - 90) / 9), 15 * ((existTime % 270 - 90) / 9)));
+					else
+						deltap5.set(MathUtils.random(-50 * ((existTime % 270 - 90) / 9), 50 * ((existTime % 270 - 90) / 9)), 0);
+					final Entity proj = BaseProjectile.Create(transform.position.cpy().add(deltap5), BulletType.FormCircleM, BulletType.ColorBlueLight);
+					proj.AddComponent(new EnemyJudgeCircle(12));
+					proj.AddComponent(new MoveBasic(deltap5.set(6, 0).rotate(i)));
+				}
+			}
+			else if (existTime % 270 == 0) {
+				targetp5.set(MathUtils.random(20, 560), 400);
+			}
+			else {
+				GameHelper.snipeVct(transform.position, targetp5, 0, moveBasic.velocity);
+				moveBasic.velocity.scl(1 / 36f);
+			}
+		}
 	}
 }
