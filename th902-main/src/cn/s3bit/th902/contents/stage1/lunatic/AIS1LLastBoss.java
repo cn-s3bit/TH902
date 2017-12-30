@@ -197,7 +197,7 @@ public class AIS1LLastBoss extends Component {
 		}
 		if (existTime % 20 == 0) {
 			for (int i=0; i<4; i++)
-				alpha4s[i] = MathUtils.randomBoolean(0.6f) ? 0.88f : 0.12f;
+				alpha4s[i] = MathUtils.randomBoolean() || alpha4s[i] < 0.4f ? 0.88f : 0.12f;
 		}
 	}
 	
