@@ -44,6 +44,12 @@ public class AIS1LLastBoss extends Component {
 		case 2:
 			part3();
 			break;
+		case 3:
+			part4();
+			break;
+		case 4:
+			part5();
+			break;
 		default:
 			break;
 		}
@@ -162,5 +168,13 @@ public class AIS1LLastBoss extends Component {
 				}
 		}
 		//moveBasic.velocity.scl(Interpolation.elasticOut.apply(0, 5, existTime / 40f));
+	}
+	
+	public void part4() {
+		
+	}
+	
+	public void part5() {
+		
 	}
 }
