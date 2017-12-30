@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import cn.s3bit.th902.GameHelper;
 import cn.s3bit.th902.gamecontents.Entity;
 import cn.s3bit.th902.gamecontents.components.Component;
+import cn.s3bit.th902.gamecontents.components.ImageRenderer;
 import cn.s3bit.th902.gamecontents.components.LambdaComponent;
 import cn.s3bit.th902.gamecontents.components.Transform;
 import cn.s3bit.th902.gamecontents.components.ai.MoveBasic;
@@ -170,8 +171,34 @@ public class AIS1LLastBoss extends Component {
 		//moveBasic.velocity.scl(Interpolation.elasticOut.apply(0, 5, existTime / 40f));
 	}
 	
+	boolean flag4 = true;
+	float[] alpha4s = {1, 1, 1, 1};
+	static final BulletType[] color4s = {BulletType.ColorRed, BulletType.ColorOrange, BulletType.ColorBlue, BulletType.ColorGreen};
 	public void part4() {
-		
+		if (flag4) {
+			flag4 = false;
+			existTime = 0;
+			moveBasic.velocity.set(0, 0);
+			moveBasic.acc.set(0, 0);
+			Entity.postUpdate.add(() -> { GameHelper.clearEnemyBullets(); });
+		}
+		if (existTime > 60) {
+			for (int i=0; i<2; i++)
+			{
+				final int c = MathUtils.random(3);
+				final Entity proj = BaseProjectile.Create(transform.position.cpy(), BulletType.FormCircleS, color4s[c]);
+				final ImageRenderer renderer = proj.GetComponent(ImageRenderer.class);
+				proj.AddComponent(new EnemyJudgeCircle(5));
+				proj.AddComponent(new LambdaComponent(() -> {
+					renderer.image.setColor(1, 1, 1, alpha4s[c]);
+				}, 5));
+				proj.AddComponent(new MoveBasic(new Vector2(1, 0).rotate(MathUtils.random(360f)).scl(MathUtils.random(2f, 7f))));
+			}
+		}
+		if (existTime % 20 == 0) {
+			for (int i=0; i<4; i++)
+				alpha4s[i] = MathUtils.randomBoolean(0.6f) ? 0.88f : 0.12f;
+		}
 	}
 	
 	public void part5() {
