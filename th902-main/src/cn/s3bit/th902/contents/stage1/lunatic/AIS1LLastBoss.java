@@ -137,7 +137,7 @@ public class AIS1LLastBoss extends Component {
 	}
 	
 	boolean flag3 = true;
-	Vector2 p3pos = new Vector2(285, 590);
+	Vector2 p3pos = new Vector2(285, 578);
 	int[] p3ang = new int[24];
 	public void part3() {
 		if (flag3) {
