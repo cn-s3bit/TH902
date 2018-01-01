@@ -88,8 +88,8 @@ public abstract class Player extends Component {
 		}
 		useBomb();
 		transform.position.add(velocity);
-		transform.position.x = MathUtils.clamp(transform.position.x, 20, 550);
-		transform.position.y = MathUtils.clamp(transform.position.y, 35, 700);
+		transform.position.x = MathUtils.clamp(transform.position.x, 30, 540);
+		transform.position.y = MathUtils.clamp(transform.position.y, 48, 680);
 		playerAnimation.Update(!slow);
 	}
 
