@@ -8,6 +8,7 @@ import cn.s3bit.th902.gamecontents.Entity;
 import cn.s3bit.th902.gamecontents.components.ExtraDrop;
 import cn.s3bit.th902.gamecontents.components.LambdaComponent;
 import cn.s3bit.th902.gamecontents.components.Transform;
+import cn.s3bit.th902.gamecontents.components.ai.IMoveFunction;
 import cn.s3bit.th902.gamecontents.components.ai.MoveBasic;
 import cn.s3bit.th902.gamecontents.components.ai.MoveFunction;
 import cn.s3bit.th902.gamecontents.components.ai.MoveFunctionTarget;
@@ -71,6 +72,8 @@ public final class DanmakuS2L1 extends DanmakuScene {
 		waitEnemy(15);
 		enemyA(n2, x2);
 		waitEnemy(15);
+		
+		waitEnemy(60);
 
 		enemyB(n2, x1);
 		waitEnemy(30);
@@ -85,11 +88,11 @@ public final class DanmakuS2L1 extends DanmakuScene {
 		yield.append(() -> {
 			Entity sprite = BaseSprite.Create(new Vector2(x, FightScreen.TOP), 1, 20);
 			final Transform transform = sprite.GetComponent(Transform.class);
-			sprite.AddComponent(new MoveBasic(0 * n, -2f, 0, 0));
+			sprite.AddComponent(new MoveBasic(0 * n, -4f, 0, 0));
 			sprite.AddComponent(new LambdaComponent(() -> {
 				BaseProjectile.Create(transform.position.cpy(), BulletType.FormCircleS, BulletType.ColorRed,
 						new MoveSnipe(3f), new EnemyJudgeCircle(6));
-			}, 60));
+			}, 20));
 			sprite.AddComponent(new ExtraDrop() {
 				@Override
 				public void LootLogic() {
@@ -107,17 +110,17 @@ public final class DanmakuS2L1 extends DanmakuScene {
 		yield.append(() -> {
 			Entity sprite = BaseSprite.Create(new Vector2(x, FightScreen.TOP), 0, 20);
 			final Transform transform = sprite.GetComponent(Transform.class);
-			sprite.AddComponent(new MoveFunction(MoveFunctionTarget.POSITION, MoveFunctionType.ASSIGNMENT, (time) -> {
+			sprite.AddComponent(new MoveFunction(MoveFunctionTarget.VELOCITY, MoveFunctionType.ASSIGNMENT, (time) -> {
 				if (time < 180) {
-					return transform.position.cpy().add(0, -2);
+					return IMoveFunction.vct2_tmp1.set(0, -4);
 				} else {
-					return transform.position.cpy().add(-2 * n, 0);
+					return IMoveFunction.vct2_tmp1.set(-4 * n, 0);
 				}
 			}));
 			sprite.AddComponent(new LambdaComponent(() -> {
 				BaseProjectile.Create(transform.position.cpy(), BulletType.FormCircleS, BulletType.ColorBlue,
 						new MoveSnipe(3f), new EnemyJudgeCircle(6));
-			}, 60));
+			}, 20));
 			sprite.AddComponent(new ExtraDrop() {
 				@Override
 				public void LootLogic() {
@@ -133,6 +136,6 @@ public final class DanmakuS2L1 extends DanmakuScene {
 
 	private void waitEnemy(int frames) {
 		yield.append(() -> {
-		}, frames);
+		}, frames * 2 / 3);
 	}
 }
