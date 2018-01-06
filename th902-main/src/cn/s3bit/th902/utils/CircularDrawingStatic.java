@@ -17,9 +17,6 @@ import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
-import cn.s3bit.th902.GameMain;
-import cn.s3bit.th902.ResourceManager;
-
 public class CircularDrawingStatic extends Actor {
 	Mesh mesh = null;
 	ShaderProgram shaderProgram = null;
