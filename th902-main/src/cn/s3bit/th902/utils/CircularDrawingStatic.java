@@ -96,6 +96,8 @@ public class CircularDrawingStatic extends Actor {
 		shaderProgram = batch.getShader();
 		texture.bind();
 		System.arraycopy(initialVertices, 0, operatedVertices, 0, initialVertices.length);
+		for (int i=6; i<initialVertices.length; i+=9)
+			operatedVertices[i] = parentAlpha * getColor().a;
 		mesh.setVertices(operatedVertices);
 		mat4_trans.setToRotation(0, 0, 1, getRotation());
 		mesh.transform(mat4_trans);
