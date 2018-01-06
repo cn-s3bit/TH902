@@ -46,6 +46,7 @@ public final class ResourceManager {
 			"SpellCard",
 			"StoryMode",	
 			"Reimu",
+			"ReimuOneFrame",
 			"Graze",
 			"HighScore",
 			"Score",

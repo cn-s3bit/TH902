@@ -57,7 +57,21 @@ public class PlayerReimu extends Player {
 	public void Update() {
 		super.Update();
 		mRenderer.setDepth(0);
-		alpha = Chaos ? 0.2f + Math.abs(Interpolation.linear.apply(-0.8f, 0.8f, (existTime % 30) / 30f)): 1;
+		if (deathEffect == null) {
+			alpha = Chaos ? 0.2f + Math.abs(Interpolation.linear.apply(-0.8f, 0.8f, (existTime % 30) / 30f)): 1;
+		}
+		else {
+			if (deathEffect.isDead()) {
+				deathEffect = null;
+				Chaos = true;
+				ChaosTime = 120;
+				existTime = 15;
+				transform.position.set(280, 100);
+			} else {
+				mRenderer.group.setColor(1, 1, 1, 0);
+			}
+			return;
+		}
 		mRenderer.group.setColor(1, 1, 1, alpha);
 		if (slow) {
 			mReimuWing1.set(new Vector2(transform.position.x + 25, transform.position.y + 25), slow, mWingShoot);
@@ -158,4 +172,10 @@ public class PlayerReimu extends Player {
 		}
 	}
 
+	PlayerDeathEffect deathEffect = null;
+	@Override
+	public void invokeDeathEffect(int deg) {
+		Entity deathEffectManager = Entity.Create();
+		deathEffectManager.AddComponent(deathEffect = new PlayerDeathEffect(ResourceManager.textures.get("ReimuOneFrame"), deg));
+	}
 }
