@@ -13,8 +13,8 @@ import com.badlogic.gdx.math.Vector3;
 
 import cn.s3bit.th902.FightScreen;
 import cn.s3bit.th902.gamecontents.Entity;
-import cn.s3bit.th902.gamecontents.IJudgeCallback;
 import cn.s3bit.th902.gamecontents.JudgingSystem;
+import cn.s3bit.th902.gamecontents.JudgingSystem.PlayerCollisionData;
 import cn.s3bit.th902.gamecontents.ParticleSystem;
 import cn.s3bit.th902.gamecontents.components.Component;
 import cn.s3bit.th902.gamecontents.components.Transform;
@@ -76,10 +76,10 @@ public class SpellFantasyLine extends Component {
 				return;
 			}
 			
-			Set<Entry<ImmutableWrapper<Circle>, IJudgeCallback>> set = JudgingSystem.enemyJudges.entrySet();
-			for (Entry<ImmutableWrapper<Circle>, IJudgeCallback> entry : set) {
-				if (entry.getValue().canHurt() && Intersector.overlaps(entry.getKey().getData(), judge)) {
-					entry.getValue().onHurt(5);
+			Set<Entry<ImmutableWrapper<Circle>, PlayerCollisionData>> set = JudgingSystem.enemyJudges.entrySet();
+			for (Entry<ImmutableWrapper<Circle>, PlayerCollisionData> entry : set) {
+				if (entry.getValue().judgeCallback.canHurt() && Intersector.overlaps(entry.getKey().getData(), judge)) {
+					entry.getValue().judgeCallback.onHurt(5);
 				}
 			}
 			for (final Entry<ImmutableWrapper<Vector2>, Entity> entry : JudgingSystem.clearByBombs.entrySet()) {

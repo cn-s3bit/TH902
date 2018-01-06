@@ -12,8 +12,8 @@ import com.badlogic.gdx.utils.Disposable;
 import cn.s3bit.th902.FightScreen;
 import cn.s3bit.th902.KeySettings;
 import cn.s3bit.th902.gamecontents.Entity;
-import cn.s3bit.th902.gamecontents.IJudgeCallback;
 import cn.s3bit.th902.gamecontents.JudgingSystem;
+import cn.s3bit.th902.gamecontents.JudgingSystem.PlayerCollisionData;
 import cn.s3bit.th902.gamecontents.components.Component;
 import cn.s3bit.th902.gamecontents.components.Transform;
 
@@ -48,12 +48,14 @@ public abstract class Player extends Component {
 	public abstract void typeBSlowBomb();
 
 	public abstract void setBombTime();
+	
+	public abstract void invokeDeathEffect(int deg);
 
 	@Override
 	public void Update() {
 		onLine = transform.position.y >= 500;
 		JudgingSystem.playerJudge.set(transform.position);
-		IJudgeCallback collision = JudgingSystem.playerCollision();
+		PlayerCollisionData collision = JudgingSystem.playerCollision();
 		if (Chaos) {
 			ChaosTime--;
 			if (ChaosTime < 0) {
@@ -62,7 +64,8 @@ public abstract class Player extends Component {
 		} else {
 			if (collision != null) {
 		//		System.out.println("Collided!");
-				collision.onCollide();
+				collision.judgeCallback.onCollide();
+				invokeDeathEffect((int) collision.movement.getCurrentVelocity().angle());
 				FightScreen.playerCount--;
 				FightScreen.bombCount = 3;
 				Chaos = true;

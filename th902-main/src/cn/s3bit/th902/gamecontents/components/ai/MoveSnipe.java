@@ -7,7 +7,7 @@ import cn.s3bit.th902.gamecontents.JudgingSystem;
 import cn.s3bit.th902.gamecontents.components.Component;
 import cn.s3bit.th902.gamecontents.components.Transform;
 
-public class MoveSnipe extends Component {
+public class MoveSnipe extends Component implements IMovement {
 	protected Transform transform;
 	protected Vector2 velocity;
 	protected final float speed;
@@ -25,5 +25,10 @@ public class MoveSnipe extends Component {
 	@Override
 	public void Update() {
 		transform.position.add(velocity);
+	}
+
+	@Override
+	public Vector2 getCurrentVelocity() {
+		return velocity;
 	}
 }

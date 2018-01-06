@@ -6,7 +6,7 @@ import cn.s3bit.th902.gamecontents.Entity;
 import cn.s3bit.th902.gamecontents.components.Component;
 import cn.s3bit.th902.gamecontents.components.Transform;
 
-public class MoveBasic extends Component{
+public class MoveBasic extends Component implements IMovement {
 	protected Transform transform;
 	public Vector2 velocity;
 	public Vector2 acc;
@@ -33,5 +33,9 @@ public class MoveBasic extends Component{
 	public void Update() {
 		velocity.add(acc);
 		transform.position.add(velocity);
+	}
+	@Override
+	public Vector2 getCurrentVelocity() {
+		return velocity;
 	}
 }

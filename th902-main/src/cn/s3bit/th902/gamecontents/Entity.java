@@ -46,7 +46,7 @@ public class Entity {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public <T extends Component> T GetComponent(Class<T> type) {
+	public <T> T GetComponent(Class<T> type) {
 		T c = (T) mComponents.get(type);
 		if (c != null)
 			return c;

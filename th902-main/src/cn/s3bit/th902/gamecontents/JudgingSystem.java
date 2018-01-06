@@ -8,22 +8,34 @@ import java.util.stream.Stream;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 
+import cn.s3bit.th902.gamecontents.components.ai.IMovement;
 import cn.s3bit.th902.utils.ImmutableWrapper;
 import cn.s3bit.th902.utils.LineSegment;
 
 public class JudgingSystem {
 	public static Vector2 playerJudge = new Vector2(-1000, -1000);
-	public static HashMap<ImmutableWrapper<Circle>, IJudgeCallback> enemyJudges = new HashMap<>();
+	public static HashMap<ImmutableWrapper<Circle>, PlayerCollisionData> enemyJudges = new HashMap<>();
 	public static HashMap<ImmutableWrapper<LineSegment>, IJudgeCallback> friendlyJudges = new HashMap<>();
 	public static HashMap<ImmutableWrapper<Vector2>, IJudgeCallback> chaseableEnemyPositions = new HashMap<>();
-	private static Entry<ImmutableWrapper<Circle>, IJudgeCallback> mJudgeEntry;
+	private static Entry<ImmutableWrapper<Circle>, PlayerCollisionData> mJudgeEntry;
 	public static HashMap<ImmutableWrapper<Vector2>, Entity> clearByBombs = new HashMap<>();
 	
-	public static IJudgeCallback playerCollision() {
-		Stream<Entry<ImmutableWrapper<Circle>, IJudgeCallback>> stream = enemyJudges.entrySet().parallelStream();
+	public static class PlayerCollisionData {
+		public Circle judge;
+		public IJudgeCallback judgeCallback;
+		public IMovement movement;
+		public PlayerCollisionData(Circle judge, IJudgeCallback judgeCallback, IMovement movement) {
+			this.judge = judge;
+			this.judgeCallback = judgeCallback;
+			this.movement = movement;
+		}
+	}
+	
+	public static PlayerCollisionData playerCollision() {
+		Stream<Entry<ImmutableWrapper<Circle>, PlayerCollisionData>> stream = enemyJudges.entrySet().parallelStream();
 		mJudgeEntry = null;
 		stream.forEach((entry) -> {
-			if (entry.getValue().getDamage() > 0 && entry.getKey().getData().contains(playerJudge)) {
+			if (entry.getValue().judgeCallback.getDamage() > 0 && entry.getKey().getData().contains(playerJudge)) {
 				mJudgeEntry = entry;
 			}
 		});
@@ -41,23 +53,23 @@ public class JudgingSystem {
 	}
 	
 	public static void judgeEnemyHurt() {
-		for (Iterator<Entry<ImmutableWrapper<Circle>, IJudgeCallback>> iterator = enemyJudges.entrySet().iterator(); iterator.hasNext();) {
-			Entry<ImmutableWrapper<Circle>, IJudgeCallback> wrapper = iterator.next();
-			if (wrapper.getValue().canHurt()) {
+		for (Iterator<Entry<ImmutableWrapper<Circle>, PlayerCollisionData>> iterator = enemyJudges.entrySet().iterator(); iterator.hasNext();) {
+			Entry<ImmutableWrapper<Circle>, PlayerCollisionData> wrapper = iterator.next();
+			if (wrapper.getValue().judgeCallback.canHurt()) {
 				IJudgeCallback callback = null;
 				do {
 					callback = collideFriendlyBullets(wrapper.getKey().getData());
 					if (callback != null) {
 						callback.onCollide();
-						wrapper.getValue().onHurt(callback.getDamage());
+						wrapper.getValue().judgeCallback.onHurt(callback.getDamage());
 					}
 				} while (callback != null);
 			}
 		}
 	}
 	
-	public static void registerEnemyJudge(ImmutableWrapper<Circle> judge, IJudgeCallback callback) {
-		enemyJudges.put(judge, callback);
+	public static void registerEnemyJudge(ImmutableWrapper<Circle> judge, IJudgeCallback callback, IMovement movement) {
+		enemyJudges.put(judge, new PlayerCollisionData(judge.getData(), callback, movement));
 	}
 	
 	public static void registerFriendlyJudge(ImmutableWrapper<LineSegment> judge, IJudgeCallback callback) {

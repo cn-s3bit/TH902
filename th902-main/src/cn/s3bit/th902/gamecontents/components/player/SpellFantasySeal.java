@@ -15,6 +15,7 @@ import cn.s3bit.th902.GameHelper;
 import cn.s3bit.th902.gamecontents.Entity;
 import cn.s3bit.th902.gamecontents.IJudgeCallback;
 import cn.s3bit.th902.gamecontents.JudgingSystem;
+import cn.s3bit.th902.gamecontents.JudgingSystem.PlayerCollisionData;
 import cn.s3bit.th902.gamecontents.ParticleSystem;
 import cn.s3bit.th902.gamecontents.components.Component;
 import cn.s3bit.th902.gamecontents.components.Transform;
@@ -88,10 +89,10 @@ public class SpellFantasySeal extends Component {
 				yield.yield();
 			
 			if (!hasExploded) {
-				Set<Entry<ImmutableWrapper<Circle>, IJudgeCallback>> set = JudgingSystem.enemyJudges.entrySet();
-				for (Entry<ImmutableWrapper<Circle>, IJudgeCallback> entry : set) {
-					if (entry.getValue().canHurt() && Intersector.overlaps(entry.getKey().getData(), judge)) {
-						entry.getValue().onHurt(entry.getValue().getBombResist());
+				Set<Entry<ImmutableWrapper<Circle>, PlayerCollisionData>> set = JudgingSystem.enemyJudges.entrySet();
+				for (Entry<ImmutableWrapper<Circle>, PlayerCollisionData> entry : set) {
+					if (entry.getValue().judgeCallback.canHurt() && Intersector.overlaps(entry.getKey().getData(), judge)) {
+						entry.getValue().judgeCallback.onHurt(entry.getValue().judgeCallback.getBombResist());
 					}
 				}
 				for (final Entry<ImmutableWrapper<Vector2>, Entity> entry : JudgingSystem.clearByBombs.entrySet()) {
@@ -128,10 +129,10 @@ public class SpellFantasySeal extends Component {
 			particleEffect.scaleEffect(2);
 			particleEffect.start();
 			ParticleSystem.register(particleEffect);
-			Set<Entry<ImmutableWrapper<Circle>, IJudgeCallback>> set = JudgingSystem.enemyJudges.entrySet();
-			for (Entry<ImmutableWrapper<Circle>, IJudgeCallback> entry : set) {
-				if (entry.getValue().canHurt() && Intersector.overlaps(entry.getKey().getData(), judge)) {
-					entry.getValue().onHurt(200 * entry.getValue().getBombResist());
+			Set<Entry<ImmutableWrapper<Circle>, PlayerCollisionData>> set = JudgingSystem.enemyJudges.entrySet();
+			for (Entry<ImmutableWrapper<Circle>, PlayerCollisionData> entry : set) {
+				if (entry.getValue().judgeCallback.canHurt() && Intersector.overlaps(entry.getKey().getData(), judge)) {
+					entry.getValue().judgeCallback.onHurt(200 * entry.getValue().judgeCallback.getBombResist());
 				}
 			}
 			count--;

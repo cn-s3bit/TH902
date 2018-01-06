@@ -10,7 +10,7 @@ import cn.s3bit.th902.gamecontents.components.Transform;
  * It will automatically add a {@link MoveBasic} to the entity.
  *
  */
-public class MoveFunction extends Component {
+public class MoveFunction extends Component implements IMovement {
 	private int mTimer;
 	private final MoveFunctionTarget mTarget;
 	private final MoveFunctionType mType;
@@ -35,10 +35,10 @@ public class MoveFunction extends Component {
 		}
 	}
 
+	Vector2 target;
 	@Override
 	public void Update() {
 		mTimer++;
-		Vector2 target = null;
 		switch (mTarget) {
 		case POSITION:
 			target = transform.position;
@@ -59,10 +59,20 @@ public class MoveFunction extends Component {
 			target.add(lastVal);
 			break;
 		case ASSIGNMENT:
-			lastVal.set(mFunction.getTargetVal(mTimer));
-			target.set(lastVal);
+			lastVal.set(target);
+			target.set(mFunction.getTargetVal(mTimer));
 		default:
 			break;
+		}
+	}
+
+	@Override
+	public Vector2 getCurrentVelocity() {
+		switch (mTarget) {
+		case POSITION:
+			return target.cpy().sub(lastVal);
+		default:
+			return moveBasic.velocity;
 		}
 	}
 

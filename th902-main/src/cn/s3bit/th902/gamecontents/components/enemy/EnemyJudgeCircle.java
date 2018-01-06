@@ -8,6 +8,7 @@ import cn.s3bit.th902.gamecontents.IJudgeCallback;
 import cn.s3bit.th902.gamecontents.JudgingSystem;
 import cn.s3bit.th902.gamecontents.components.Component;
 import cn.s3bit.th902.gamecontents.components.Transform;
+import cn.s3bit.th902.gamecontents.components.ai.IMovement;
 import cn.s3bit.th902.utils.ImmutableWrapper;
 
 public class EnemyJudgeCircle extends Component {
@@ -39,16 +40,22 @@ public class EnemyJudgeCircle extends Component {
 		this(radius, biasX, biasY, IJudgeCallback.NONE);
 	}
 	
+	boolean registered = false;
+	Entity entity;
+	
 	@Override
 	public void Initialize(Entity entity) {
 		transform = entity.GetComponent(Transform.class);
+		this.entity = entity;
 		updateCircle();
-		JudgingSystem.registerEnemyJudge(wrapper, callback);
 	}
 
 	@Override
 	public void Update() {
 		updateCircle();
+		if ((!registered) && entity.GetComponent(IMovement.class) != null) {
+			JudgingSystem.registerEnemyJudge(wrapper, callback, entity.GetComponent(IMovement.class));
+		}
 	}
 
 	protected void updateCircle() {
