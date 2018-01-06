@@ -64,9 +64,8 @@ public class PlayerReimu extends Player {
 			if (deathEffect.isDead()) {
 				deathEffect = null;
 				Chaos = true;
-				ChaosTime = 120;
+				ChaosTime = ChaosTime > 120 ? ChaosTime : 120;
 				existTime = 15;
-				transform.position.set(280, 100);
 			} else {
 				mRenderer.group.setColor(1, 1, 1, 0);
 			}

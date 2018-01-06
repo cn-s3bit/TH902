@@ -10,6 +10,7 @@ import cn.s3bit.th902.gamecontents.JudgingSystem;
 import cn.s3bit.th902.gamecontents.components.ImageRenderer;
 import cn.s3bit.th902.gamecontents.components.Transform;
 import cn.s3bit.th902.gamecontents.components.player.Player;
+import cn.s3bit.th902.gamecontents.components.player.PlayerDeathEffect;
 
 public class DropItem extends BaseProjectile {
 	protected Vector2 dirVec;
@@ -52,7 +53,7 @@ public class DropItem extends BaseProjectile {
 			dirVec.set(JudgingSystem.playerJudge).sub(transform.position).nor().scl(9f);
 		}
 		transform.position.add(dirVec.add(0, -0.1f));
-		if (transform.position.dst2(JudgingSystem.playerJudge) < 6400||Player.onLine||Player.Bomb) {
+		if (PlayerDeathEffect.getTimeLeft() <= 0 && transform.position.dst2(JudgingSystem.playerJudge) < 6400||Player.onLine||Player.Bomb) {
 			mIsDragged = true;
 			if (transform.position.dst2(JudgingSystem.playerJudge) < 400) {
 				if (itemGetLogic.onGet()) {

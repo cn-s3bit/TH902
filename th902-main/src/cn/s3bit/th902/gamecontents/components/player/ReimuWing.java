@@ -43,7 +43,13 @@ public class ReimuWing extends Component {
 	@Override
 	public void Update() {
 		mRenderer.setDepth(0);
+		if (mVector2.epsilonEquals(-200f, -200f, 1e-3f)) {
+			mRenderer.image.setColor(1, 1, 1, 0);
+			return;
+		}
+		mRenderer.image.setColor(1, 1, 1, 1);
 		transform.position.add(mVector2.sub(transform.position).scl(0.2f));
+		mVector2.set(-200f, -200f);
 		existTime++;
 		transform.rotation = isShooting ? transform.rotation + mRotationFlag * 3 : mRotationFlag;
 		if (mType == FightScreen.PlayerTypeA) {

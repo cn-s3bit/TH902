@@ -66,8 +66,6 @@ public abstract class Player extends Component {
 		//		System.out.println("Collided!");
 				collision.judgeCallback.onCollide();
 				invokeDeathEffect((int) collision.movement.getCurrentVelocity().angle());
-				FightScreen.playerCount--;
-				FightScreen.bombCount = 3;
 				Chaos = true;
 				ChaosTime = 120;
 			}
@@ -97,15 +95,22 @@ public abstract class Player extends Component {
 	}
 
 	public void useBomb() {
+		if (PlayerDeathEffect.getTimeLeft() == 49) {
+			FightScreen.playerCount--;
+			FightScreen.bombCount = 3;
+			transform.position.set(280f, 100f);
+		}
 		if (Gdx.input.isKeyPressed(KeySettings.negativeKey)&&!Bomb && FightScreen.bombCount > 0) {
-				ifSlowBomb = Gdx.input.isKeyPressed(KeySettings.shift);
-				Bomb = true;
-				bombTimeCount=0;
-				setBombTime();
-				ChaosTime = bombFrames + 120;
-				Chaos = true;
-				FightScreen.bombCount--;
-			}
+			if (PlayerDeathEffect.getTimeLeft() > 0 && PlayerDeathEffect.getTimeLeft() < 50) return;
+			PlayerDeathEffect.timeleft = Math.min(PlayerDeathEffect.timeleft, 1);
+			ifSlowBomb = Gdx.input.isKeyPressed(KeySettings.shift);
+			Bomb = true;
+			bombTimeCount=0;
+			setBombTime();
+			ChaosTime = bombFrames + 120;
+			Chaos = true;
+			FightScreen.bombCount--;
+		}
 		if (Bomb) {
 			bombTimeCount++;
 			if (needNewBombEntity) {

@@ -12,7 +12,7 @@ import cn.s3bit.th902.gamecontents.components.ai.MoveBasic;
 
 public class PlayerDeathEffect extends Component {
 	Texture texture;
-	private int mTimeleft;
+	static int timeleft = 0;
 	int cutDeg;
 	public PlayerDeathEffect(Texture texture, int cutDeg) {
 		this.texture = texture;
@@ -24,7 +24,7 @@ public class PlayerDeathEffect extends Component {
 	MoveBasic leftM, rightM;
 	@Override
 	public void Initialize(Entity entity) {
-		mTimeleft = 60;
+		timeleft = 60;
 		leftP = Entity.Create();
 		leftP.AddComponent(new Transform(JudgingSystem.playerJudge.cpy(), new Vector2(0.4f, 0.4f)));
 		leftP.AddComponent(leftR = new CircularDrawingStaticRenderer(texture, -cutDeg, -cutDeg + 180, 0));
@@ -37,13 +37,17 @@ public class PlayerDeathEffect extends Component {
 
 	@Override
 	public void Update() {
-		mTimeleft--;
-		leftR.circularDrawingStatic.setColor(1, 1, 1, mTimeleft / 60f);
-		rightR.circularDrawingStatic.setColor(1, 1, 1, mTimeleft / 60f);
+		timeleft--;
+		leftR.circularDrawingStatic.setColor(1, 1, 1, timeleft / 60f);
+		rightR.circularDrawingStatic.setColor(1, 1, 1, timeleft / 60f);
 		//leftP.GetComponent(Transform.class).rotation = leftM.velocity.angle();
 		//rightP.GetComponent(Transform.class).rotation = rightM.velocity.angle();
-		if (mTimeleft <= 0)
+		if (timeleft <= 0)
 			Kill();
+	}
+	
+	public static int getTimeLeft() {
+		return timeleft;
 	}
 
 }
