@@ -34,7 +34,7 @@ public class CircularDrawingStatic extends Actor {
 		int n_vtx = 0;
 		lvert.addAll(Arrays.asList(0f, 0f, 0f, 1f, 1f, 1f, 1f, 0.5f, 0.5f));
 		n_vtx++;
-		Vector2 vert = Pooling.VECTOR2.obtain();
+		Vector2 vert = new Vector2();
 		calcAnglePoint(beginDegrees, vert);
 		addVertToList(lvert, vert);
 		n_vtx++;

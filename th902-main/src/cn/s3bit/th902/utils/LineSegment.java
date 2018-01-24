@@ -7,8 +7,8 @@ import com.badlogic.gdx.math.Vector2;
 public class LineSegment {
 	public Vector2 pStart, pEnd;
 	public LineSegment() {
-		pStart = Pooling.VECTOR2.obtain();
-		pEnd = Pooling.VECTOR2.obtain();
+		pStart = new Vector2();
+		pEnd = new Vector2();
 	}
 	
 	public LineSegment(Vector2 start, Vector2 end) {
