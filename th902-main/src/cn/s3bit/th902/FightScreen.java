@@ -1,5 +1,9 @@
 package cn.s3bit.th902;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -12,6 +16,7 @@ import cn.s3bit.th902.gamecontents.SceneSystem;
 import cn.s3bit.th902.gamecontents.components.ImageRenderer;
 import cn.s3bit.th902.gamecontents.components.Transform;
 import cn.s3bit.th902.gamecontents.components.player.PlayerReimu;
+import cn.s3bit.th902.utils.LaserLikeDrawing;
 
 public class FightScreen extends ScreenAdapter {
 	public static BitmapFont bf = new BitmapFont(Gdx.files.internal("resources/font/mainfont.fnt"));
@@ -92,6 +97,20 @@ public class FightScreen extends ScreenAdapter {
 	
 		}
 		sceneSystem = SceneSystem.Create(0, 0);
+		
+		/*LaserLikeDrawing lld = new LaserLikeDrawing(ResourceManager.barrages.get(4), 122);
+		List<Vector2> laserPts = new ArrayList<>();
+		List<Float> laserTexs = new ArrayList<>();
+		for (int i=0; i<=20; i++) {
+			Vector2 pVector2 = new Vector2(-100, 0).rotate(-90f * i / 20f).add(100, 0);
+			laserPts.add(pVector2);
+			laserTexs.add(i / 20f);
+		}
+		lld.setPosition(100, 100);
+		lld.setLaserPoints(
+			laserPts, laserTexs
+		);
+		GameMain.instance.activeStage.addActor(lld);*/
 	}
 
 	@Override
