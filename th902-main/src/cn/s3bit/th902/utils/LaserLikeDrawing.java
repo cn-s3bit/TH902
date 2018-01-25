@@ -69,6 +69,8 @@ public class LaserLikeDrawing extends Actor {
 	}
 	private List<Vector2> mPoints;
 	private List<Float> mTexturePos;
+	private int mPointCount = 0;
+	private int mPointOffset = 0;
 	
 	public void setLaserPoints(List<Vector2> points, List<Float> texturePos) {
 		if (points.size() != texturePos.size()) {
@@ -88,7 +90,7 @@ public class LaserLikeDrawing extends Actor {
 		if (initialVertices == null || initialVertices.length != vertices.size()) {
 			initialVertices = new float[vertices.size()];
 			operatedVertices = new float[vertices.size()];
-			short[] indices = new short[initialVertices.length / 9];
+			indices = new short[initialVertices.length / 9];
 			for (short i = 0; i < indices.length; i++) indices[i] = i;
 			mesh.setIndices(indices);
 		}
@@ -98,14 +100,28 @@ public class LaserLikeDrawing extends Actor {
 		}
 	}
 	
+	short[] indices;
+	
 	private void _applyTransform(final float parentAlpha) {
-		System.arraycopy(initialVertices, 0, operatedVertices, 0, initialVertices.length);
-		for (int i=6; i<initialVertices.length; i+=9)
+		System.arraycopy(initialVertices, 0, operatedVertices, 0, operatedVertices.length);
+		for (int i=6; i<operatedVertices.length; i+=9)
 			operatedVertices[i] = parentAlpha * getColor().a;
 		mesh.setVertices(operatedVertices);
-		mat4_trans.setToRotation(0, 0, 1, getRotation());
-		mesh.transform(mat4_trans);
-		mat4_trans.setToTranslationAndScaling(getX(), getY(), 0, 1, 1, 1);
+		short indice = (short) getPointOffset();
+		int indexId = 0;
+		for (indexId = 0; indexId < getPointCount(); indexId++) {
+			if (indice >= initialVertices.length / 9) break;
+			indices[indexId] = indice;
+			indice++;
+		}
+		for (; indexId < indices.length; indexId++)
+			indices[indexId] = indice;
+		mesh.setIndices(indices);
+		if (getRotation() != 0) {
+			mat4_trans.setToRotation(0, 0, 1, getRotation());
+			mesh.transform(mat4_trans);
+		}
+		mat4_trans.setToTranslation(getX(), getY(), 0);
 		mesh.transform(mat4_trans);
 		
 		if (getScaleY() != mOldScaleY)
@@ -137,6 +153,22 @@ public class LaserLikeDrawing extends Actor {
 		_addVertToList(vertices, vct2_tmp1, textureStart, 1f);
 		
 		mOldScaleY = getScaleY();
+	}
+
+	public int getPointCount() {
+		return mPointCount;
+	}
+
+	public void setPointCount(int mPointCount) {
+		this.mPointCount = mPointCount;
+	}
+
+	public int getPointOffset() {
+		return mPointOffset;
+	}
+
+	public void setPointOffset(int mPointOffset) {
+		this.mPointOffset = mPointOffset;
 	}
 
 }

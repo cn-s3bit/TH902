@@ -1,7 +1,6 @@
 package cn.s3bit.th902;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
@@ -98,7 +97,7 @@ public class FightScreen extends ScreenAdapter {
 		}
 		sceneSystem = SceneSystem.Create(0, 0);
 		
-		/*LaserLikeDrawing lld = new LaserLikeDrawing(ResourceManager.barrages.get(4), 122);
+		lld = new LaserLikeDrawing(ResourceManager.barrages.get(4), 122);
 		List<Vector2> laserPts = new ArrayList<>();
 		List<Float> laserTexs = new ArrayList<>();
 		for (int i=0; i<=20; i++) {
@@ -110,8 +109,11 @@ public class FightScreen extends ScreenAdapter {
 		lld.setLaserPoints(
 			laserPts, laserTexs
 		);
-		GameMain.instance.activeStage.addActor(lld);*/
+		lld.setPointCount(3);
+		GameMain.instance.activeStage.addActor(lld);
 	}
+	
+	LaserLikeDrawing lld;
 
 	@Override
 	public void render(float delta) {
@@ -122,6 +124,11 @@ public class FightScreen extends ScreenAdapter {
 		ParticleSystem.draw();
 		super.render(delta);
 		gameTime++;
+		if (lld.getPointCount() < 120) {
+			lld.setPointCount(lld.getPointCount() + 3);
+		} else if (lld.getPointOffset() < 120) {
+			lld.setPointOffset(lld.getPointOffset() + 3);
+		}
 		GameMain.instance.activeStage.getBatch().begin();
 		bf.draw(GameMain.instance.activeStage.getBatch(), "difficulty:" + DifficultySelectScreen.difficulty
 				+ "\nplayer:" + playerCount + "\nbomb:" + bombCount + "\npower:" + powerCount + "\npoint:" + pointCount,
