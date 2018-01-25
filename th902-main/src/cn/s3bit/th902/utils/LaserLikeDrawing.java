@@ -15,7 +15,6 @@ import com.badlogic.gdx.graphics.VertexAttribute;
 import com.badlogic.gdx.graphics.Mesh.VertexDataType;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
-import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
@@ -56,11 +55,10 @@ public class LaserLikeDrawing extends Actor {
 		return mesh.calculateBoundingBox().getHeight();
 	}
 	
-	Matrix4 mat4_trans = new Matrix4();
-	
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		shaderProgram = batch.getShader();
+		if (initialVertices == null || initialVertices.length < 27) return;
 		texture.bind();
 		_applyTransform(parentAlpha);
 		Gdx.gl.glEnable(GL20.GL_BLEND);
@@ -68,11 +66,21 @@ public class LaserLikeDrawing extends Actor {
 		mesh.render(shaderProgram, GL20.GL_TRIANGLES);
 	}
 	private List<Vector2> mPoints;
-	private List<Float> mTexturePos;
+	private List<Float> mTexturePos = null;
 	private int mPointCount = 0;
 	private int mPointOffset = 0;
 	
 	public void setLaserPoints(List<Vector2> points, List<Float> texturePos) {
+		if (texturePos == null) {
+			if (mTexturePos == null || mTexturePos.size() != points.size()) {
+				texturePos = new ArrayList<>();
+				for (float i=0; i<points.size(); i++) {
+					texturePos.add(i / points.size());
+				}
+			}
+			else
+				texturePos = mTexturePos;
+		}
 		if (points.size() != texturePos.size()) {
 			throw new IllegalArgumentException("Size of points and texturePos must be the same!");
 		}
@@ -93,6 +101,7 @@ public class LaserLikeDrawing extends Actor {
 			indices = new short[initialVertices.length / 9];
 			for (short i = 0; i < indices.length; i++) indices[i] = i;
 			mesh.setIndices(indices);
+			setPointCount(indices.length);
 		}
 		
 		for (int i = 0; i < initialVertices.length; i++) {
@@ -117,12 +126,6 @@ public class LaserLikeDrawing extends Actor {
 		for (; indexId < indices.length; indexId++)
 			indices[indexId] = indice;
 		mesh.setIndices(indices);
-		if (getRotation() != 0) {
-			mat4_trans.setToRotation(0, 0, 1, getRotation());
-			mesh.transform(mat4_trans);
-		}
-		mat4_trans.setToTranslation(getX(), getY(), 0);
-		mesh.transform(mat4_trans);
 		
 		if (getScaleY() != mOldScaleY)
 			resetVerts();

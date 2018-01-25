@@ -1,8 +1,5 @@
 package cn.s3bit.th902;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -15,7 +12,6 @@ import cn.s3bit.th902.gamecontents.SceneSystem;
 import cn.s3bit.th902.gamecontents.components.ImageRenderer;
 import cn.s3bit.th902.gamecontents.components.Transform;
 import cn.s3bit.th902.gamecontents.components.player.PlayerReimu;
-import cn.s3bit.th902.utils.LaserLikeDrawing;
 
 public class FightScreen extends ScreenAdapter {
 	public static BitmapFont bf = new BitmapFont(Gdx.files.internal("resources/font/mainfont.fnt"));
@@ -96,24 +92,7 @@ public class FightScreen extends ScreenAdapter {
 	
 		}
 		sceneSystem = SceneSystem.Create(0, 0);
-		
-		lld = new LaserLikeDrawing(ResourceManager.barrages.get(4), 122);
-		List<Vector2> laserPts = new ArrayList<>();
-		List<Float> laserTexs = new ArrayList<>();
-		for (int i=0; i<=20; i++) {
-			Vector2 pVector2 = new Vector2(-100, 0).rotate(-90f * i / 20f).add(100, 0);
-			laserPts.add(pVector2);
-			laserTexs.add(i / 20f);
-		}
-		lld.setPosition(100, 100);
-		lld.setLaserPoints(
-			laserPts, laserTexs
-		);
-		lld.setPointCount(3);
-		GameMain.instance.activeStage.addActor(lld);
 	}
-	
-	LaserLikeDrawing lld;
 
 	@Override
 	public void render(float delta) {
@@ -124,11 +103,6 @@ public class FightScreen extends ScreenAdapter {
 		ParticleSystem.draw();
 		super.render(delta);
 		gameTime++;
-		if (lld.getPointCount() < 120) {
-			lld.setPointCount(lld.getPointCount() + 3);
-		} else if (lld.getPointOffset() < 120) {
-			lld.setPointOffset(lld.getPointOffset() + 3);
-		}
 		GameMain.instance.activeStage.getBatch().begin();
 		bf.draw(GameMain.instance.activeStage.getBatch(), "difficulty:" + DifficultySelectScreen.difficulty
 				+ "\nplayer:" + playerCount + "\nbomb:" + bombCount + "\npower:" + powerCount + "\npoint:" + pointCount,
