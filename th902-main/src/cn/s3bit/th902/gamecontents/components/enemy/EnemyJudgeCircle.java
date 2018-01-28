@@ -47,13 +47,12 @@ public class EnemyJudgeCircle extends Component {
 	public void Initialize(Entity entity) {
 		transform = entity.GetComponent(Transform.class);
 		this.entity = entity;
-		updateCircle();
 	}
 
 	@Override
 	public void Update() {
 		updateCircle();
-		if ((!registered) && entity.GetComponent(IMovement.class) != null) {
+		if (!registered) {
 			registered = true;
 			JudgingSystem.registerEnemyJudge(wrapper, callback, entity.GetComponent(IMovement.class));
 		}

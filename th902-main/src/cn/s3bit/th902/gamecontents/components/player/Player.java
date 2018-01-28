@@ -65,7 +65,7 @@ public abstract class Player extends Component {
 			if (collision != null) {
 		//		System.out.println("Collided!");
 				collision.judgeCallback.onCollide();
-				invokeDeathEffect((int) collision.movement.getCurrentVelocity().angle());
+				invokeDeathEffect(collision.movement == null ? 0 : (int) collision.movement.getCurrentVelocity().angle());
 				Chaos = true;
 				ChaosTime = 120;
 			}
