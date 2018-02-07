@@ -24,6 +24,7 @@ public class IFontRenderer extends Component {
 	@Override
 	public void Update() {
 		fontDrawing.setPosition(mTransform.position.x, mTransform.position.y);
+		fontDrawing.setScale(mTransform.scale.x);
 	}
 
 	/**
