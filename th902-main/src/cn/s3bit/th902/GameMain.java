@@ -17,8 +17,15 @@ import cn.s3bit.th902.gamecontents.Entity;
 public class GameMain extends Game {
 	public static final String GAME_TITLE = "TH902";
 	public static GameMain instance = null;
+	public static PlatformRelatedInterfaces PRI;
 	
 	public Stage activeStage = null;
+	
+	public GameMain(final PlatformRelatedInterfaces PRI) {
+		super();
+		GameMain.PRI = PRI;
+	}
+	
 	@Override
 	public void create() {
 		instance = this;

@@ -6,6 +6,8 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
 import cn.s3bit.th902.GameMain;
+import cn.s3bit.th902.PlatformRelatedInterfaces;
+import cn.s3bit.th902.utils.IFont;
 /**
  * @author Obsidianss
  * <p>
@@ -21,7 +23,14 @@ public class Launcher {
 	 * Entry point.
 	 */
 	public static void main(String[] args) {
-		Game game = new GameMain();
+		Game game = new GameMain(new PlatformRelatedInterfaces() {
+			@Override
+			public IFont getFont(String fontName, boolean isBold, boolean isItalic, int size) {
+				FreetypeFont font = new FreetypeFont();
+				font.initialize(fontName, isBold, isItalic, size);
+				return font;
+			}
+		});
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.fullscreen = false;
 		config.width = 960;
