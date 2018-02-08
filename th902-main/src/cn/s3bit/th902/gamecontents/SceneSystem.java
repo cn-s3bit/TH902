@@ -2,14 +2,14 @@ package cn.s3bit.th902.gamecontents;
 
 import java.util.ArrayList;
 
-import cn.s3bit.th902.contents.stage1.lunatic.DanmakuS1L1;
-import cn.s3bit.th902.contents.stage1.lunatic.DanmakuS1L2;
-import cn.s3bit.th902.contents.stage1.lunatic.DanmakuS1L3;
-import cn.s3bit.th902.contents.stage1.lunatic.DanmakuS1L4;
-import cn.s3bit.th902.contents.stage1.lunatic.DanmakuS1L5;
-import cn.s3bit.th902.contents.stage1.lunatic.DanmakuS1L6;
-import cn.s3bit.th902.contents.stage1.lunatic.DanmakuS1LLast;
-import cn.s3bit.th902.contents.stage2.lunatic.DanmakuS2L1;
+import cn.s3bit.th902.contents.stage1.DanmakuS1L1;
+import cn.s3bit.th902.contents.stage1.DanmakuS1L2;
+import cn.s3bit.th902.contents.stage1.DanmakuS1L3;
+import cn.s3bit.th902.contents.stage1.DanmakuS1L4;
+import cn.s3bit.th902.contents.stage1.DanmakuS1L5;
+import cn.s3bit.th902.contents.stage1.DanmakuS1L6;
+import cn.s3bit.th902.contents.stage1.DanmakuS1LLast;
+import cn.s3bit.th902.contents.stage2.DanmakuS2L1;
 
 public class SceneSystem {
 	public static SceneSystem Create(int difficulty, int stageid) {

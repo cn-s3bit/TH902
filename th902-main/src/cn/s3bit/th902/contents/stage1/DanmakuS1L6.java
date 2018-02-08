@@ -1,4 +1,4 @@
-package cn.s3bit.th902.contents.stage1.lunatic;
+package cn.s3bit.th902.contents.stage1;
 
 import java.util.concurrent.Callable;
 

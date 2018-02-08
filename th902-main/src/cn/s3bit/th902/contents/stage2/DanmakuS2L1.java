@@ -1,4 +1,4 @@
-package cn.s3bit.th902.contents.stage2.lunatic;
+package cn.s3bit.th902.contents.stage2;
 
 import com.badlogic.gdx.math.Vector2;
 
