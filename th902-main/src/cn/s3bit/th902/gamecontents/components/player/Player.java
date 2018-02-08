@@ -27,7 +27,6 @@ public abstract class Player extends Component {
 	public int ChaosTime = 0;
 	public boolean Chaos = false;
 	public static boolean onLine = false;
-	protected boolean ifSlowBomb = false;
 	public boolean needNewBombEntity = true;
 	public int bombTimeCount=0;
 
@@ -39,13 +38,9 @@ public abstract class Player extends Component {
 		slow = false;
 	}
 
-	public abstract void typeAFastBomb();
+	public abstract void typeABomb();
 
-	public abstract void typeASlowBomb();
-
-	public abstract void typeBFastBomb();
-
-	public abstract void typeBSlowBomb();
+	public abstract void typeBBomb();
 
 	public abstract void setBombTime();
 	
@@ -100,10 +95,9 @@ public abstract class Player extends Component {
 			FightScreen.bombCount = 3;
 			transform.position.set(280f, 100f);
 		}
-		if (Gdx.input.isKeyPressed(KeySettings.negativeKey)&&!Bomb && FightScreen.bombCount > 0) {
+		if (Gdx.input.isKeyPressed(KeySettings.negativeKey) && !Bomb && FightScreen.bombCount > 0) {
 			if (PlayerDeathEffect.getTimeLeft() > 0 && PlayerDeathEffect.getTimeLeft() < 50) return;
 			PlayerDeathEffect.timeleft = Math.min(PlayerDeathEffect.timeleft, 1);
-			ifSlowBomb = Gdx.input.isKeyPressed(KeySettings.shift);
 			Bomb = true;
 			bombTimeCount=0;
 			setBombTime();
@@ -114,18 +108,10 @@ public abstract class Player extends Component {
 		if (Bomb) {
 			bombTimeCount++;
 			if (needNewBombEntity) {
-				if (ifSlowBomb) {
-					if (FightScreen.PlayerType == FightScreen.PlayerTypeA) {
-						typeASlowBomb();
-					} else {
-						typeBSlowBomb();
-					}
+				if (FightScreen.PlayerType == FightScreen.PlayerTypeA) {
+					typeABomb();
 				} else {
-					if (FightScreen.PlayerType == FightScreen.PlayerTypeA) {
-						typeAFastBomb();
-					} else {
-						typeBFastBomb();
-					}
+					typeBBomb();
 				}
 			}
 			bombFrames--;

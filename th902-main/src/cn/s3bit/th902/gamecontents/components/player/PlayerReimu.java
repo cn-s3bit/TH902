@@ -118,19 +118,13 @@ public class PlayerReimu extends Player {
 	}
 
 	@Override
-	public void typeAFastBomb() {
-		needNewBombEntity = false;
-		Entity.Create().AddComponent(new SpellFantasyLine(this));
-	}
-
-	@Override
-	public void typeASlowBomb() {
+	public void typeABomb() {
 		needNewBombEntity = false;
 		Entity.Create().AddComponent(new SpellFantasySeal(this));
 	}
 
 	@Override
-	public void typeBFastBomb() {
+	public void typeBBomb() {
 		needNewBombEntity = false;
 		Bombs.Create(transform.position.cpy(), Bombs.TypeReimuBFast, new Vector2(0, 14), new Vector2(0, -0.2f), -90, 0,
 				0);
@@ -155,20 +149,8 @@ public class PlayerReimu extends Player {
 	}
 
 	@Override
-	public void typeBSlowBomb() {
-		needNewBombEntity = false;
-		Bombs.Create(transform.position, Bombs.TypeReimuBSlow, null, null, 0, 0, 0.995f);
-		Bombs.Create(transform.position, Bombs.TypeReimuBSlow, null, null, 10, 0.07f, 1);
-		Bombs.Create(transform.position, Bombs.TypeReimuBSlow, null, null, -10, -0.07f, 1);
-	}
-
-	@Override
 	public void setBombTime() {
-		if (ifSlowBomb) {
-			bombFrames = FightScreen.PlayerType == FightScreen.PlayerTypeA ? 360 : 180;
-		} else {
-			bombFrames = FightScreen.PlayerType == FightScreen.PlayerTypeA ? 180 : 600;
-		}
+		bombFrames = FightScreen.PlayerType == FightScreen.PlayerTypeA ? 360 : 180;
 	}
 
 	PlayerDeathEffect deathEffect = null;
