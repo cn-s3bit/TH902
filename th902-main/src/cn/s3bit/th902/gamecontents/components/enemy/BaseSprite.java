@@ -15,16 +15,12 @@ import cn.s3bit.th902.gamecontents.components.Transform;
 import cn.s3bit.th902.utils.AnimationDrawable;
 
 public class BaseSprite extends Component implements IJudgeCallback {
-	public Vector2 velocity;
 	public Transform transform;
 	public AnimationDrawable animation;
 	public Entity entity;
 	public static Texture texture;
 	public static TextureRegion[][] regions;
 	//public int shootTime = 0;
-	public Vector2 bulletV;
-	public Vector2 specialBulletV;
-	public int selfColor;
 
 	public static Entity Create(Vector2 position, int color, Component... Ves) {
 		return Create(position, color, 10, Ves);
@@ -41,7 +37,6 @@ public class BaseSprite extends Component implements IJudgeCallback {
 		Transform transform = new Transform(position, new Vector2(0.5f, 0.5f));
 		entity.AddComponent(transform);
 		BaseSprite component = new BaseSprite();
-		component.selfColor = color;
 		component.animation = new AnimationDrawable();
 		if (texture != ResourceManager.enemies.get(0)) {
 			texture = ResourceManager.enemies.get(0);
@@ -61,11 +56,9 @@ public class BaseSprite extends Component implements IJudgeCallback {
 
 	@Override
 	public void Initialize(Entity entity) {
-		velocity = new Vector2();
 		transform = entity.GetComponent(Transform.class);
 		entity.AddComponent(new ImageRenderer(animation, 1));
 		this.entity = entity;
-		bulletV = new Vector2(3, 0);
 	}
 
 	protected boolean animateFlag = true;
