@@ -126,26 +126,6 @@ public class PlayerReimu extends Player {
 	@Override
 	public void typeBBomb() {
 		needNewBombEntity = false;
-		Bombs.Create(transform.position.cpy(), Bombs.TypeReimuBFast, new Vector2(0, 14), new Vector2(0, -0.2f), -90, 0,
-				0);
-		Bombs.Create(transform.position.cpy(), Bombs.TypeReimuBFast, new Vector2(-14, 0), new Vector2(0.2f, 0), 0, 0,
-				0);
-		Bombs.Create(transform.position.cpy(), Bombs.TypeReimuBFast, new Vector2(14, 0), new Vector2(-0.2f, 0), 180, 0,
-				0);
-		Bombs.Create(transform.position.cpy(), Bombs.TypeReimuBFast, new Vector2(0, -14), new Vector2(0, 0.2f), 90, 0,
-				0);
-		/*
-		 * if (bombTimeCount==10) { Bombs.Create(transform.position.cpy(),
-		 * Bombs.TypeReimuBFast,new Vector2(0,5),0,0,0); }else if
-		 * (bombTimeCount==20) { Bombs.Create(transform.position.cpy().sub(30,
-		 * 0), Bombs.TypeReimuBFast,new Vector2(-5,5),0,0,0);
-		 * Bombs.Create(transform.position.cpy().add(30, 0),
-		 * Bombs.TypeReimuBFast,new Vector2(5,5),0,0,0); }else if
-		 * (bombTimeCount==30) { Bombs.Create(transform.position.cpy().sub(60,
-		 * 0), Bombs.TypeReimuBFast,new Vector2(-5,0),0,0,0);
-		 * Bombs.Create(transform.position.cpy().add(60, 0),
-		 * Bombs.TypeReimuBFast,new Vector2(5,0),0,0,0); bombTimeCount=0; }
-		 */
 	}
 
 	@Override
