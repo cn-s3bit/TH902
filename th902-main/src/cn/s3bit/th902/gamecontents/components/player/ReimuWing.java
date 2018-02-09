@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import cn.s3bit.th902.FightScreen;
 import cn.s3bit.th902.ResourceManager;
 import cn.s3bit.th902.gamecontents.Entity;
+import cn.s3bit.th902.gamecontents.JudgingSystem;
 import cn.s3bit.th902.gamecontents.components.Component;
 import cn.s3bit.th902.gamecontents.components.ImageRenderer;
 import cn.s3bit.th902.gamecontents.components.Transform;
@@ -13,31 +14,23 @@ public class ReimuWing extends Component {
 
 	protected Vector2 mVector2 = new Vector2();
 	protected int existTime;
-	protected boolean isSlow = false;
 	protected Transform transform;
 	private float mRotationFlag;
-	protected boolean isShooting = false;
-	private int mType;
 	private ImageRenderer mRenderer;
+	private int mId;
 
-	public ReimuWing(Vector2 position, float rotation, int type) {
-		mType = type;
+	public ReimuWing(Vector2 position, int id) {
+		mId = id;
 		Entity entity = Entity.Create();
 		entity.AddComponent(new Transform(position));
 		entity.AddComponent(mRenderer = new ImageRenderer(ResourceManager.barrages.get(236), 0));
 		entity.AddComponent(this);
-		mRotationFlag = rotation;
 	}
 
 	@Override
 	public void Initialize(Entity entity) {
 		transform = entity.GetComponent(Transform.class);
-	}
-
-	public void set(Vector2 v, boolean ifSlow, boolean ifShoot) {
-		mVector2 = v;
-		this.isSlow = ifSlow;
-		this.isShooting = ifShoot;
+		mRotationFlag = mId == 0 ? 4f : -4f;
 	}
 
 	@Override
@@ -51,16 +44,29 @@ public class ReimuWing extends Component {
 		transform.position.add(mVector2.sub(transform.position).scl(0.2f));
 		mVector2.set(-200f, -200f);
 		existTime++;
-		transform.rotation = isShooting ? transform.rotation + mRotationFlag * 3 : mRotationFlag;
-		if (mType == FightScreen.PlayerTypeA) {
-			transform.rotation += mRotationFlag;
-			if (isShooting) {
-				ReimuBullet1.Create(transform.position.cpy().add(0, 24), ReimuBullet1.BulletTypeWingFastInduce);
+		transform.rotation += PlayerReimu.ReimuWingShoot ?  mRotationFlag * 3 : mRotationFlag;
+		if (mId == 0) {
+			if (Player.slow) {
+				mVector2.set(JudgingSystem.playerJudge.x - 25, JudgingSystem.playerJudge.y + 25);
+			} else {
+				mVector2.set(JudgingSystem.playerJudge.x - 50, JudgingSystem.playerJudge.y);
 			}
 		} else {
-			if (!isSlow) {
-				transform.rotation += mRotationFlag;
-				if (isShooting) {
+			if (Player.slow) {
+				mVector2.set(JudgingSystem.playerJudge.x + 25, JudgingSystem.playerJudge.y + 25);
+			} else {
+				mVector2.set(JudgingSystem.playerJudge.x + 50, JudgingSystem.playerJudge.y);
+			}
+		}
+		if (FightScreen.PlayerType == FightScreen.PlayerTypeA) {
+			// if (!Player.slow) {
+			if (PlayerReimu.ReimuWingShoot) {
+				ReimuBullet1.Create(transform.position.cpy().add(0, 24), ReimuBullet1.BulletTypeWingFastInduce);
+				// }
+			}
+		} else {
+			if (!Player.slow) {
+				if (PlayerReimu.ReimuWingShoot) {
 					ReimuBullet1.Create(transform.position.cpy().add(-15, 6), ReimuBullet1.BulletTypeWingFastStraight);
 					ReimuBullet1.Create(transform.position.cpy().add(0, 12), ReimuBullet1.BulletTypeWingFastStraight);
 					ReimuBullet1.Create(transform.position.cpy().add(15, 6), ReimuBullet1.BulletTypeWingFastStraight);

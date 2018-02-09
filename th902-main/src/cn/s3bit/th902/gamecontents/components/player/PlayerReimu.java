@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.math.Interpolation;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 
 import cn.s3bit.th902.FightScreen;
@@ -23,9 +22,7 @@ public class PlayerReimu extends Player {
 	Animation<TextureRegion> animationRight;
 	AnimationDrawable animationDrawable = new AnimationDrawable();
 	public int existTime;
-	private ReimuWing mReimuWing1;
-	private ReimuWing mReimuWing2;
-	private boolean mWingShoot = false;
+	public static boolean ReimuWingShoot = false;
 	private boolean mShoot = false;
 	private int mType;
 	private ImageGroupRenderer mRenderer = null;
@@ -48,9 +45,10 @@ public class PlayerReimu extends Player {
 		super.Initialize(entity);
 		animationDrawable.setAnimation(animationStay);
 		existTime = 0;
-		entity.AddComponent(mRenderer = new ImageGroupRenderer(new Drawable[] { animationDrawable, playerAnimation }, 0, null));
-		mReimuWing1 = new ReimuWing(new Vector2(transform.position.x, transform.position.y + 20), 4f, mType);
-		mReimuWing2 = new ReimuWing(new Vector2(transform.position.x, transform.position.y), -4f, mType);
+		entity.AddComponent(
+				mRenderer = new ImageGroupRenderer(new Drawable[] { animationDrawable, playerAnimation }, 0, null));
+		new ReimuWing(transform.position.cpy(), 0);
+		new ReimuWing(transform.position.cpy(), 1);
 	}
 
 	@Override
@@ -58,9 +56,8 @@ public class PlayerReimu extends Player {
 		super.Update();
 		mRenderer.setDepth(0);
 		if (deathEffect == null) {
-			alpha = Chaos ? 0.2f + Math.abs(Interpolation.linear.apply(-0.8f, 0.8f, (existTime % 30) / 30f)): 1;
-		}
-		else {
+			alpha = Chaos ? 0.2f + Math.abs(Interpolation.linear.apply(-0.8f, 0.8f, (existTime % 30) / 30f)) : 1;
+		} else {
 			if (deathEffect.isDead()) {
 				deathEffect = null;
 				Chaos = true;
@@ -72,13 +69,6 @@ public class PlayerReimu extends Player {
 			return;
 		}
 		mRenderer.group.setColor(1, 1, 1, alpha);
-		if (slow) {
-			mReimuWing1.set(new Vector2(transform.position.x + 25, transform.position.y + 25), slow, mWingShoot);
-			mReimuWing2.set(new Vector2(transform.position.x - 25, transform.position.y + 25), slow, mWingShoot);
-		} else {
-			mReimuWing1.set(new Vector2(transform.position.x + 50, transform.position.y), slow, mWingShoot);
-			mReimuWing2.set(new Vector2(transform.position.x - 50, transform.position.y), slow, mWingShoot);
-		}
 		animationDrawable.advance(1);
 		if (velocity.x > 0 && animationDrawable.getAnimation() != animationRight) {
 			animationDrawable.setAnimation(animationRight);
@@ -88,33 +78,40 @@ public class PlayerReimu extends Player {
 			animationDrawable.setAnimation(animationStay);
 		}
 		existTime++;
-		mWingShoot = Gdx.input.isKeyPressed(KeySettings.positiveKey) && existTime % 5 == 1 && bombFrames <= 60;
+		ReimuWingShoot = Gdx.input.isKeyPressed(KeySettings.positiveKey) && wingShoot() && bombFrames <= 60;
 		mShoot = Gdx.input.isKeyPressed(KeySettings.positiveKey) && existTime % 3 == 1 && bombFrames <= 60;
 		if (mType == FightScreen.PlayerTypeA) {
-			if (slow) {
-				if (mShoot) {
+			if (mShoot) {
+				if (slow) {
 					ReimuBullet1.Create(transform.position.cpy().add(0, 60), ReimuBullet1.BulletTypeSelfSlow);
-				}
-			} else {
-				if (mShoot) {
+				} else {
 					ReimuBullet1.Create(transform.position.cpy().add(0, 40), ReimuBullet1.BulletTypeSelfFast);
 				}
 			}
 		} else {
-			if (slow) {
-				if (mWingShoot) {
-					ReimuBullet1.Create(transform.position.cpy().add(0, 24), ReimuBullet1.BulletTypeWingSlowStraight);
-					mWingShoot = false;
-				}
-				if (mShoot) {
+			if (ReimuWingShoot && slow) {
+				ReimuBullet1.Create(transform.position.cpy().add(0, 24), ReimuBullet1.BulletTypeWingSlowStraight);
+			}
+			if (mShoot) {
+				if (slow) {
 					ReimuBullet1.Create(transform.position.cpy().add(0, 24), ReimuBullet1.BulletTypeSelfSlow);
-				}
-			} else {
-				if (mShoot) {
+				} else {
 					ReimuBullet1.Create(transform.position.cpy().add(0, 6), ReimuBullet1.BulletTypeSelfFast);
 				}
 			}
 		}
+	}
+
+	public boolean wingShoot() {
+		return existTime % 5 == 1;
+		/*
+		 * if (FightScreen.powerCount > 99) { return existTime % 4 == 1; } else
+		 * if (FightScreen.powerCount > 79) { return existTime % 7 == 1; } else
+		 * if (FightScreen.powerCount > 59) { return existTime % 15 == 1; } else
+		 * if (FightScreen.powerCount > 39) { return existTime % 20 == 1; } else
+		 * if (FightScreen.powerCount > 19) { return existTime % 25 == 1; } else
+		 * { return existTime % 30 == 1; }
+		 */
 	}
 
 	@Override
@@ -134,9 +131,11 @@ public class PlayerReimu extends Player {
 	}
 
 	PlayerDeathEffect deathEffect = null;
+
 	@Override
 	public void invokeDeathEffect(int deg) {
 		Entity deathEffectManager = Entity.Create();
-		deathEffectManager.AddComponent(deathEffect = new PlayerDeathEffect(ResourceManager.textures.get("ReimuOneFrame"), deg));
+		deathEffectManager
+				.AddComponent(deathEffect = new PlayerDeathEffect(ResourceManager.textures.get("ReimuOneFrame"), deg));
 	}
 }
