@@ -19,7 +19,7 @@ import cn.s3bit.th902.gamecontents.components.Transform;
 
 public abstract class Player extends Component {
 	public Vector2 velocity;
-	public boolean slow;
+	public static boolean slow;
 	protected Transform transform;
 	protected PlayerAnimation playerAnimation;
 	public static boolean Bomb = false;
