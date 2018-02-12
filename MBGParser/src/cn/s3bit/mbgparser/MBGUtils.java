@@ -30,13 +30,6 @@ public final class MBGUtils {
 	public static boolean readBool(MRef<String> line, char splitter) {
 		return Boolean.parseBoolean(readString(line, splitter));
 	}
-	
-	public static long readUInt(MRef<String> line) {
-		return readUInt(line, ',');
-	}
-	public static long readUInt(MRef<String> line, char splitter) {
-		return Long.parseLong(readString(line, splitter));
-	}
 
 	public static int readInt(MRef<String> line) {
 		return readInt(line, ',');
