@@ -47,13 +47,13 @@ public class JudgeSizeCollection {
 				return 4f;
 			case FormHeart:
 				return 10f;
-			case FormArrowL：
+			case FormArrowL:
 				return 6f;
 			case FormBulletS:
 				return 4f;
 			case FormThunder:
 				return 6f;
-			case FormCircleLightMFormCircleLightM:
+			case FormCircleLightM:
 				return 10f;
 		default:
 			return 0f;
