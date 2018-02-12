@@ -8,18 +8,18 @@ public final class MBGUtils {
 		return readString(line, ',');
 	}
 	public static String readString(MRef<String> line, char splitter) {
-		if (line == null || isNullOrWhiteSpace(line.data))
+		if (line == null || isNullOrWhiteSpace(line.argValue))
 			throw new IllegalArgumentException("无法从空字符串读取信息。");
 
-		int spl = line.data.indexOf(splitter);
+		int spl = line.argValue.indexOf(splitter);
 		if (spl != -1) {
-			String ret = line.data.substring(0, spl);
-			line.data = line.data.substring(1 + spl);
+			String ret = line.argValue.substring(0, spl);
+			line.argValue = line.argValue.substring(1 + spl);
 			return ret;
 		}
 		else {
-			String ret = line.data;
-			line.data = "";
+			String ret = line.argValue;
+			line.argValue = "";
 			return ret;
 		}
 	}
