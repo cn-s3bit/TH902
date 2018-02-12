@@ -1,0 +1,2 @@
+This is a Java rewritten version of the opensource library MBGParser (at https://github.com/smallluma/MBGParser).  
+The rest of the TH902 project is under the GPLv3 License, but this part is under MIT License.
