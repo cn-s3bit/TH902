@@ -18,7 +18,7 @@ public class Sound {
 		s.FileName = readString(c, '_');
 		s.Volume = readFloat(c, '_');
 
-		if (!c.equals(""))
+		if (!c.argValue.equals(""))
 			throw new AssertionError("音效字符串解析后剩余：" + c);
 
 		return s;

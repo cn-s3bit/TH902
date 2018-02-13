@@ -10,17 +10,17 @@ public final class ReflexBoard
 {
 	public int ID, 层ID;
 
-	public Position<Float> 位置坐标;
+	public Position<Float> 位置坐标 = new Position<>();
 
-	public Life 生命;
+	public Life 生命 = new Life();
 
 	public float 长度, 角度;
 
 	public int 次数;
 
-	public Motion<ValueWithRand> 运动;
+	public Motion<ValueWithRand> 运动 = new MotionWithRand();
 
-	public ArrayList<ReflexBoardAction> 碰撞事件组;
+	public ArrayList<ReflexBoardAction> 碰撞事件组 = new ArrayList<>();
 
 	public static ReflexBoard parseFrom(String content)
 	{

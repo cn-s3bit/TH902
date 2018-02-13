@@ -7,9 +7,9 @@ public final class ForceField
 {
 	public int ID, 层ID;
 
-	public Position<Float> 位置坐标;
+	public Position<Float> 位置坐标 = new Position<>();
 
-	public Life 生命;
+	public Life 生命 = new Life();
 
 	public float 半宽, 半高;
 
@@ -19,7 +19,7 @@ public final class ForceField
 
 	public int 控制ID;
 
-	public Motion<ValueWithRand> 运动;
+	public Motion<ValueWithRand> 运动 = new MotionWithRand();
 
 	public float 力场加速度, 力场加速度方向;
 

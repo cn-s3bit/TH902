@@ -10,25 +10,25 @@ public class LazerEmitter implements BindState.IBindable
 {
 	public int ID, 层ID;
 
-	public BindState 绑定状态;
+	public BindState 绑定状态 = new BindState();
 
-	public Position<Float> 位置坐标;
+	public Position<Float> 位置坐标 = new Position<>();
 
-	public Life 生命;
+	public Life 生命 = new Life();
 
-	public ValueWithRand 半径, 半径方向;
+	public ValueWithRand 半径 = new ValueWithRand(), 半径方向 = new ValueWithRand();
 
-	public Position<Float> 半径方向_坐标指定;
+	public Position<Float> 半径方向_坐标指定 = new Position<>();
 
-	public ValueWithRand 条数, 周期;
+	public ValueWithRand 条数 = new ValueWithRand(), 周期 = new ValueWithRand();
 
-	public ValueWithRand 发射角度;
+	public ValueWithRand 发射角度 = new ValueWithRand();
 
-	public Position<Float> 发射角度_坐标指定;
+	public Position<Float> 发射角度_坐标指定 = new Position<>();
 
-	public ValueWithRand 范围;
+	public ValueWithRand 范围 = new ValueWithRand();
 
-	public MotionWithPosition<ValueWithRand, Float> 发射器运动;
+	public MotionWithPosition<ValueWithRand, Float> 发射器运动 = new MotionWithRandWithPosition<Float>();
 
 	public int 子弹生命;
 
@@ -38,13 +38,13 @@ public class LazerEmitter implements BindState.IBindable
 
 	public float 不透明度;
 
-	public MotionWithPosition<ValueWithRand, Float> 子弹运动;
+	public MotionWithPosition<ValueWithRand, Float> 子弹运动 = new MotionWithRandWithPosition<Float>();
 
 	public float 横比, 纵比;
 
 	public boolean 高光效果, 出屏即消, 无敌状态;
 
-	public ArrayList<EventGroup> 发射器事件组, 子弹事件组;
+	public ArrayList<EventGroup> 发射器事件组 = new ArrayList<>(), 子弹事件组 = new ArrayList<>();
 
 	public boolean 启用射线激光;
 

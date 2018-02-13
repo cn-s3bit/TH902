@@ -10,47 +10,47 @@ public class BulletEmitter implements BindState.IBindable
 {
 	public int ID, 层ID;
 
-	public BindState 绑定状态;
+	public BindState 绑定状态 = new BindState();
 
-	public Position<ValueWithRand> 位置坐标;
+	public Position<ValueWithRand> 位置坐标 = new PositionWithRand();
 
-	public Life 生命;
+	public Life 生命 = new Life();
 
-	public Position<Float> 发射坐标;
+	public Position<Float> 发射坐标 = new Position<>();
 
-	public ValueWithRand 半径, 半径方向;
+	public ValueWithRand 半径 = new ValueWithRand(), 半径方向 = new ValueWithRand();
 
-	public Position<Float> 半径方向_坐标指定;
+	public Position<Float> 半径方向_坐标指定 = new Position<>();
 
-	public ValueWithRand 条数, 周期;
+	public ValueWithRand 条数 = new ValueWithRand(), 周期 = new ValueWithRand();
 
-	public ValueWithRand 发射角度;
+	public ValueWithRand 发射角度 = new ValueWithRand();
 
-	public Position<Float> 发射角度_坐标指定;
+	public Position<Float> 发射角度_坐标指定 = new Position<>();
 
-	public ValueWithRand 范围;
+	public ValueWithRand 范围 = new ValueWithRand();
 
-	public MotionWithPosition<ValueWithRand, Float> 发射器运动;
+	public MotionWithPosition<ValueWithRand, Float> 发射器运动 = new MotionWithRandWithPosition<Float>();
 
 	public int 子弹生命, 子弹类型;
 
 	public float 宽比, 高比;
 
-	public Color<Float> 子弹颜色;
+	public Color<Float> 子弹颜色 = new Color<>();
 
-	public ValueWithRand 朝向;
+	public ValueWithRand 朝向 = new ValueWithRand();
 
-	public Position<Float> 朝向_坐标指定;
+	public Position<Float> 朝向_坐标指定 = new Position<>();
 
 	public boolean 朝向与速度方向相同;
 
-	public MotionWithPosition<ValueWithRand, Float> 子弹运动;
+	public MotionWithPosition<ValueWithRand, Float> 子弹运动 = new MotionWithRandWithPosition<Float>();
 
 	public float 横比, 纵比;
 
 	public boolean 雾化效果, 消除效果, 高光效果, 拖影效果, 出屏即消, 无敌状态;
 
-	public ArrayList<EventGroup> 发射器事件组, 子弹事件组;
+	public ArrayList<EventGroup> 发射器事件组 = new ArrayList<>(), 子弹事件组 = new ArrayList<>();
 
 	public boolean 遮罩, 反弹板, 力场;
 

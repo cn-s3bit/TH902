@@ -11,13 +11,13 @@ import static cn.s3bit.mbgparser.MBGUtils.*;
 public class Layer
 {
 	public String name;
-	public Life life;
+	public Life life = new Life();
 
-	public List<BulletEmitter> BulletEmitters;
-	public List<ReflexBoard> ReflexBoards;
-	public List<ForceField> ForceFields;
-	public List<Mask> Masks;
-	public List<LazerEmitter> LazerEmitters;
+	public List<BulletEmitter> BulletEmitters = new ArrayList<>();
+	public List<ReflexBoard> ReflexBoards = new ArrayList<>();
+	public List<ForceField> ForceFields = new ArrayList<>();
+	public List<Mask> Masks = new ArrayList<>();
+	public List<LazerEmitter> LazerEmitters = new ArrayList<>();
 
 	private void LoadContent(
 		BufferedReader mbg,

@@ -10,11 +10,11 @@ public class Mask implements BindState.IBindable
 {
 	public int ID, 层ID;
 
-	public BindState 绑定状态;
+	public BindState 绑定状态 = new BindState();
 
-	public Position<Float> 位置坐标;
+	public Position<Float> 位置坐标 = new Position<>();
 
-	public Life 生命;
+	public Life 生命 = new Life();
 
 	public float 半宽, 半高;
 
@@ -24,9 +24,9 @@ public class Mask implements BindState.IBindable
 
 	public int 控制ID;
 
-	public MotionWithPosition<ValueWithRand,Float> 运动;
+	public MotionWithPosition<ValueWithRand,Float> 运动 = new MotionWithRandWithPosition<Float>();
 
-	public ArrayList<EventGroup> 发射器事件组, 子弹事件组;
+	public ArrayList<EventGroup> 发射器事件组 = new ArrayList<>(), 子弹事件组 = new ArrayList<>();
 
 	public static Tuple<Mask, Action> parseFrom(String content, Layer layer)
 	{

@@ -1,15 +1,16 @@
 package cn.s3bit.mbgparser;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cn.s3bit.mbgparser.event.Event;
 import static cn.s3bit.mbgparser.MBGUtils.*;
 
 public class Center {
-	public Position<Float> Position;
-	public Motion<Float> Motion;
+	public Position<Float> Position = new Position<>();
+	public Motion<Float> Motion = new Motion<>();
 
-	public List<Event> Events;
+	public List<Event> Events = new ArrayList<>();
 
 	public static Center parseFromContent(String contentRaw)
 	{
@@ -30,7 +31,7 @@ public class Center {
 			center.Motion.accelerationDirection = Float.parseFloat(readString(content));
 
 			center.Events = null;
-			if (!contentRaw.equals(""))
+			if (!isNullOrWhiteSpace(content.argValue))
 				center.Events = Event.parseEvents(readString(content));
 
 			return center;
