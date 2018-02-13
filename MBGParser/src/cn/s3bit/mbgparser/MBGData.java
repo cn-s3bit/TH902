@@ -87,16 +87,18 @@ public class MBGData {
 			}
 		};
 
-		if (data.version != "Crazy Storm Data 1.01")
+		if (!data.version.equals("Crazy Storm Data 1.01"))
 			throw new RuntimeException("未知版本的CrazyStorm数据。");
 
 		while (mbg.ready())
 		{
 			String content = mbg.readLine();
-			if (isNullOrWhiteSpace(content)) continue;
+			if (content == null) break;
+			else if (isNullOrWhiteSpace(content)) continue;
 
 			MRef<String> ref = new MRef<String>(content);
 			String title = readString(ref, ':');
+			content = ref.argValue;
 
 			boolean processed = data._processNumberTitle(title, mbg);
 			if (!processed)

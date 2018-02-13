@@ -10,7 +10,7 @@ public final class ActionHelper
 	{
 		if (c.contains("变化到") || c.contains("增加") || c.contains("减少"))
 		{
-			return parseFrom(c);
+			return DataOperateAction.parseFrom(c);
 		}
 		else
 		{
