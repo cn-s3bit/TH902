@@ -88,7 +88,7 @@ public final class DanmakuS2L1 extends DanmakuScene {
 		yield.append(() -> {
 			Entity sprite = BaseSprite.Create(new Vector2(x, FightScreen.TOP), 1, 20);
 			final Transform transform = sprite.GetComponent(Transform.class);
-			sprite.AddComponent(new MoveBasic(0 * n, -4f, 0, 0));
+			sprite.AddComponent(new MoveBasic(0, -4f, 0, 0));
 			sprite.AddComponent(new LambdaComponent(() -> {
 				BaseProjectile.Create(transform.position.cpy(), BulletType.FormCircleS, BulletType.ColorRed,
 						new MoveSnipe(3f), new EnemyJudgeCircle(6));
@@ -111,7 +111,7 @@ public final class DanmakuS2L1 extends DanmakuScene {
 			Entity sprite = BaseSprite.Create(new Vector2(x, FightScreen.TOP), 0, 20);
 			final Transform transform = sprite.GetComponent(Transform.class);
 			sprite.AddComponent(new MoveFunction(MoveFunctionTarget.VELOCITY, MoveFunctionType.ASSIGNMENT, (time) -> {
-				if (time < 180) {
+				if (time < 90) {
 					return IMoveFunction.vct2_tmp1.set(0, -4);
 				} else {
 					return IMoveFunction.vct2_tmp1.set(-4 * n, 0);
