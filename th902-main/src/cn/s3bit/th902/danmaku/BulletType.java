@@ -1,4 +1,4 @@
-package cn.s3bit.th902.gamecontents.components.enemy;
+package cn.s3bit.th902.danmaku;
 
 public enum BulletType {
 	FormArrowM(0),
