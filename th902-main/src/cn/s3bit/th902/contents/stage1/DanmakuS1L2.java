@@ -15,11 +15,11 @@ import cn.s3bit.th902.gamecontents.components.ai.MoveFunction;
 import cn.s3bit.th902.gamecontents.components.ai.MoveFunctionTarget;
 import cn.s3bit.th902.gamecontents.components.ai.MoveFunctionType;
 import cn.s3bit.th902.gamecontents.components.ai.MoveSnipe;
-import cn.s3bit.th902.gamecontents.components.enemy.BaseProjectile;
 import cn.s3bit.th902.gamecontents.components.enemy.BaseSprite;
 import cn.s3bit.th902.gamecontents.components.enemy.BulletType;
 import cn.s3bit.th902.gamecontents.components.enemy.DropItem;
 import cn.s3bit.th902.gamecontents.components.enemy.EnemyJudgeCircle;
+import cn.s3bit.th902.gamecontents.components.enemy.ProjectileFactory;
 
 public class DanmakuS1L2 extends DanmakuScene {
 	static int count = 0, counter1 = 0;
@@ -40,12 +40,12 @@ public class DanmakuS1L2 extends DanmakuScene {
 						Vector2 speed = new Vector2();
 						GameHelper.snipeVct(transform.position, null, 15, speed);
 						speed.nor().scl(5);
-						BaseProjectile.Create(transform.position.cpy(), BulletType.FormBulletM, BulletType.ColorPink,
+						ProjectileFactory.Create(transform.position.cpy(), BulletType.FormBulletM, BulletType.ColorPink,
 								new EnemyJudgeCircle(5),
 								new MoveBasic(speed));
 						GameHelper.snipeVct(transform.position, null, -15, speed);
 						speed.nor().scl(5);
-						BaseProjectile.Create(transform.position.cpy(), BulletType.FormBulletM, BulletType.ColorPink,
+						ProjectileFactory.Create(transform.position.cpy(), BulletType.FormBulletM, BulletType.ColorPink,
 								new EnemyJudgeCircle(5),
 								new MoveBasic(speed));
 					}
@@ -71,7 +71,7 @@ public class DanmakuS1L2 extends DanmakuScene {
 					}
 				});
 				sprite.AddComponent(new LambdaComponent(() -> {
-					BaseProjectile.Create(transform.position.cpy(), BulletType.FormCircleS2, BulletType.ColorRed, new MoveSnipe(8f), new EnemyJudgeCircle(6));
+					ProjectileFactory.Create(transform.position.cpy(), BulletType.FormCircleS2, BulletType.ColorRed, new MoveSnipe(8f), new EnemyJudgeCircle(6));
 				}, 45));
 			});
 			yield.append(() -> {
@@ -89,7 +89,7 @@ public class DanmakuS1L2 extends DanmakuScene {
 					}
 				});
 				sprite.AddComponent(new LambdaComponent(() -> {
-					BaseProjectile.Create(transform.position.cpy(), BulletType.FormCircleS2, BulletType.ColorRed, new MoveSnipe(8f), new EnemyJudgeCircle(6));
+					ProjectileFactory.Create(transform.position.cpy(), BulletType.FormCircleS2, BulletType.ColorRed, new MoveSnipe(8f), new EnemyJudgeCircle(6));
 				}, 45));
 			});
 		}

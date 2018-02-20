@@ -11,10 +11,10 @@ import cn.s3bit.th902.gamecontents.components.ai.MoveBasic;
 import cn.s3bit.th902.gamecontents.components.ai.MoveFunction;
 import cn.s3bit.th902.gamecontents.components.ai.MoveFunctionTarget;
 import cn.s3bit.th902.gamecontents.components.ai.MoveFunctionType;
-import cn.s3bit.th902.gamecontents.components.enemy.BaseProjectile;
 import cn.s3bit.th902.gamecontents.components.enemy.BossHP;
 import cn.s3bit.th902.gamecontents.components.enemy.BulletType;
 import cn.s3bit.th902.gamecontents.components.enemy.EnemyJudgeCircle;
+import cn.s3bit.th902.gamecontents.components.enemy.ProjectileFactory;
 
 public class AIS1L4Boss extends Component {
 	Transform transform;
@@ -53,7 +53,7 @@ public class AIS1L4Boss extends Component {
 			for (int i = batch * 17; i < batch * 17 + 360; i += 20) {
 				co++;
 				float size = Math.abs(MathUtils.cosDeg(i * 2.5f)) * 0.75f + 0.2f;
-				Entity proj = BaseProjectile.CreateSpecialBullet(transform.position.cpy(), co % 2 == 0 ? 225 : 226);
+				Entity proj = ProjectileFactory.CreateSpecialBullet(transform.position.cpy(), co % 2 == 0 ? 225 : 226);
 				proj.AddComponent(new MoveBasic(vct2_tmp.set(8, 0).rotate(i)));
 				proj.GetComponent(Transform.class).scale.scl(size);
 				proj.AddComponent(new EnemyJudgeCircle(15 * size));
@@ -66,14 +66,14 @@ public class AIS1L4Boss extends Component {
 			batch++;
 			for (int i = batch * 17; i < batch * 17 + 360; i += 30) {
 				float size = Math.abs(MathUtils.cosDeg(i * 2.5f)) * 0.75f + 0.2f;
-				Entity proj = BaseProjectile.CreateSpecialBullet(transform.position.cpy(), 225);
+				Entity proj = ProjectileFactory.CreateSpecialBullet(transform.position.cpy(), 225);
 				proj.AddComponent(new MoveBasic(vct2_tmp.set(8, 0).rotate(i)));
 				proj.GetComponent(Transform.class).scale.scl(size);
 				proj.AddComponent(new EnemyJudgeCircle(15 * size));
 			}
 			for (int i = -batch * 17; i < -batch * 17 + 360; i += 60) {
 				float size = 0.5f;
-				Entity proj = BaseProjectile.CreateSpecialBullet(transform.position.cpy(), 226);
+				Entity proj = ProjectileFactory.CreateSpecialBullet(transform.position.cpy(), 226);
 				proj.AddComponent(new MoveBasic(vct2_tmp.set(5, 0).rotate(i)));
 				proj.GetComponent(Transform.class).scale.scl(size);
 				proj.AddComponent(new EnemyJudgeCircle(15 * size));
@@ -82,7 +82,7 @@ public class AIS1L4Boss extends Component {
 	}
 	
 	public void part3() {
-		Entity proj = BaseProjectile.Create(new Vector2(MathUtils.random(0, 560), 720), BulletType.FormCircleLightM, MathUtils.randomBoolean() ? BulletType.ColorOrange : BulletType.ColorBlue);
+		Entity proj = ProjectileFactory.Create(new Vector2(MathUtils.random(0, 560), 720), BulletType.FormCircleLightM, MathUtils.randomBoolean() ? BulletType.ColorOrange : BulletType.ColorBlue);
 		final Transform ptransform = proj.GetComponent(Transform.class);
 		proj.AddComponent(new MoveFunction(MoveFunctionTarget.ACCEL, MoveFunctionType.ASSIGNMENT, new IMoveFunction() {
 			int flag = 2;

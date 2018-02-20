@@ -9,11 +9,11 @@ import cn.s3bit.th902.gamecontents.components.ExtraDrop;
 import cn.s3bit.th902.gamecontents.components.Transform;
 import cn.s3bit.th902.gamecontents.components.ai.MoveBasic;
 import cn.s3bit.th902.gamecontents.components.ai.MoveSnipe;
-import cn.s3bit.th902.gamecontents.components.enemy.BaseProjectile;
 import cn.s3bit.th902.gamecontents.components.enemy.BaseSprite;
 import cn.s3bit.th902.gamecontents.components.enemy.BulletType;
 import cn.s3bit.th902.gamecontents.components.enemy.DropItem;
 import cn.s3bit.th902.gamecontents.components.enemy.EnemyJudgeCircle;
+import cn.s3bit.th902.gamecontents.components.enemy.ProjectileFactory;
 
 public class DanmakuS1L1 extends DanmakuScene {
 	static int count = 0;
@@ -37,7 +37,7 @@ public class DanmakuS1L1 extends DanmakuScene {
 							DropItem.CreateDropItem(transform1.position.cpy(), 241);
 						else if (count % 3 == 0)
 							DropItem.CreateDropItem(transform1.position.cpy(), 242);
-						Entity proj = BaseProjectile.Create(transform1.position.cpy(), BulletType.FormCircleS, BulletType.ColorRed);
+						Entity proj = ProjectileFactory.Create(transform1.position.cpy(), BulletType.FormCircleS, BulletType.ColorRed);
 						proj.AddComponent(new MoveSnipe(9f));
 						proj.AddComponent(new EnemyJudgeCircle(6));
 					}
@@ -56,10 +56,10 @@ public class DanmakuS1L1 extends DanmakuScene {
 							DropItem.CreateDropItem(transform2.position.cpy(), 242);
 						for (int j=0; j<4; j++)
 						{
-							Entity proj = BaseProjectile.Create(transform2.position.cpy(), BulletType.FormCircleS, BulletType.ColorRed);
+							Entity proj = ProjectileFactory.Create(transform2.position.cpy(), BulletType.FormCircleS, BulletType.ColorRed);
 							proj.AddComponent(new MoveBasic(MathUtils.random(-3f, -1f), MathUtils.random(-3f, 3f)));
 							proj.AddComponent(new EnemyJudgeCircle(6));
-							proj = BaseProjectile.Create(transform2.position.cpy(), BulletType.FormCircleS, BulletType.ColorRed);
+							proj = ProjectileFactory.Create(transform2.position.cpy(), BulletType.FormCircleS, BulletType.ColorRed);
 							proj.AddComponent(new MoveBasic(MathUtils.random(1f, 3f), MathUtils.random(-3f, 3f)));
 							proj.AddComponent(new EnemyJudgeCircle(6));
 						}

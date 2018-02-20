@@ -11,10 +11,10 @@ import cn.s3bit.th902.gamecontents.components.LambdaComponent;
 import cn.s3bit.th902.gamecontents.components.Transform;
 import cn.s3bit.th902.gamecontents.components.ai.MoveBasic;
 import cn.s3bit.th902.gamecontents.components.ai.MoveFunction;
-import cn.s3bit.th902.gamecontents.components.enemy.BaseProjectile;
 import cn.s3bit.th902.gamecontents.components.enemy.BossHP;
 import cn.s3bit.th902.gamecontents.components.enemy.BulletType;
 import cn.s3bit.th902.gamecontents.components.enemy.EnemyJudgeCircle;
+import cn.s3bit.th902.gamecontents.components.enemy.ProjectileFactory;
 
 public class AIS1LLastBoss extends Component {
 	Transform transform;
@@ -63,7 +63,7 @@ public class AIS1LLastBoss extends Component {
 			for (int i = batch * 17; i < batch * 17 + 360; i += 20) {
 				co++;
 				float size = Math.abs(MathUtils.cosDeg(i * 2.5f)) * 0.75f + 0.2f;
-				Entity proj = BaseProjectile.CreateSpecialBullet(transform.position.cpy(), co % 2 == 0 ? 225 : 226);
+				Entity proj = ProjectileFactory.CreateSpecialBullet(transform.position.cpy(), co % 2 == 0 ? 225 : 226);
 				proj.AddComponent(new MoveBasic(vct2_tmp.set(8, 0).rotate(i)));
 				proj.GetComponent(Transform.class).scale.scl(size);
 				proj.AddComponent(new EnemyJudgeCircle(15 * size));
@@ -116,7 +116,7 @@ public class AIS1LLastBoss extends Component {
 			for (int i=0; i<2; i++)
 			{
 				final int ii = i;
-				final Entity proj = BaseProjectile.Create(transform.position.cpy().add(i * 5, i * 80 - 40), BulletType.FormCircleLightM, BulletType.ColorGray,
+				final Entity proj = ProjectileFactory.Create(transform.position.cpy().add(i * 5, i * 80 - 40), BulletType.FormCircleLightM, BulletType.ColorGray,
 						new EnemyJudgeCircle(15));
 				final Transform pTr = proj.GetComponent(Transform.class);
 				pTr.scale.scl(1.2f);
@@ -125,10 +125,10 @@ public class AIS1LLastBoss extends Component {
 					fdCounter[ii]++;
 					if (fdCounter[ii] > 1 + ii) {
 						fdCounter[ii] = 0;
-						BaseProjectile.Create(pTr.position.cpy(), BulletType.FormArrowM, BulletType.ColorBlueLight,
+						ProjectileFactory.Create(pTr.position.cpy(), BulletType.FormArrowM, BulletType.ColorBlueLight,
 								new EnemyJudgeCircle(5, 0, 3),
 								new MoveBasic(-0.3f, 1.2f, -(0.03f + ii * 0.015f) / 4, 0.03f + ii * 0.015f));
-						BaseProjectile.Create(pTr.position.cpy(), BulletType.FormArrowM, BulletType.ColorRed,
+						ProjectileFactory.Create(pTr.position.cpy(), BulletType.FormArrowM, BulletType.ColorRed,
 								new EnemyJudgeCircle(5, 0, 3),
 								new MoveBasic(0.3f, -1.2f, (0.03f + ii * 0.015f) / 4, -0.03f - ii * 0.015f));
 					}
@@ -154,7 +154,7 @@ public class AIS1LLastBoss extends Component {
 			if (existTime % 14 == 0)
 				for (int i=0; i<24; i+=2)
 				{
-					Entity proj = BaseProjectile.CreateSpecialBullet(transform.position.cpy(), 225);
+					Entity proj = ProjectileFactory.CreateSpecialBullet(transform.position.cpy(), 225);
 					proj.AddComponent(new MoveBasic(vct2_tmp.set(5, 0).rotate(p3ang[i])));
 					proj.AddComponent(new EnemyJudgeCircle(15));
 					p3ang[i] -= 23;
@@ -162,7 +162,7 @@ public class AIS1LLastBoss extends Component {
 			else if (existTime % 14 == 7)
 				for (int i=1; i<24; i+=2)
 				{
-					Entity proj = BaseProjectile.CreateSpecialBullet(transform.position.cpy(), 226);
+					Entity proj = ProjectileFactory.CreateSpecialBullet(transform.position.cpy(), 226);
 					proj.AddComponent(new MoveBasic(vct2_tmp.set(9, 0).rotate(p3ang[i])));
 					proj.AddComponent(new EnemyJudgeCircle(15));
 					p3ang[i] += 17;
@@ -186,7 +186,7 @@ public class AIS1LLastBoss extends Component {
 			for (int i=0; i<2; i++)
 			{
 				final int c = MathUtils.random(3);
-				final Entity proj = BaseProjectile.Create(transform.position.cpy(), BulletType.FormCircleS, color4s[c]);
+				final Entity proj = ProjectileFactory.Create(transform.position.cpy(), BulletType.FormCircleS, color4s[c]);
 				final ImageRenderer renderer = proj.GetComponent(ImageRenderer.class);
 				proj.AddComponent(new EnemyJudgeCircle(5));
 				proj.AddComponent(new LambdaComponent(() -> {
@@ -225,7 +225,7 @@ public class AIS1LLastBoss extends Component {
 						deltap5.set(0, MathUtils.random(-15 * ((existTime % 270 - 90) / 9), 15 * ((existTime % 270 - 90) / 9)));
 					else
 						deltap5.set(MathUtils.random(-50 * ((existTime % 270 - 90) / 9), 50 * ((existTime % 270 - 90) / 9)), 0);
-					final Entity proj = BaseProjectile.Create(transform.position.cpy().add(deltap5), BulletType.FormCircleM, BulletType.ColorBlueLight);
+					final Entity proj = ProjectileFactory.Create(transform.position.cpy().add(deltap5), BulletType.FormCircleM, BulletType.ColorBlueLight);
 					proj.AddComponent(new EnemyJudgeCircle(12));
 					proj.AddComponent(new MoveBasic(deltap5.set(6, 0).rotate(i)));
 				}

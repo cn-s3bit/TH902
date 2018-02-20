@@ -13,11 +13,11 @@ import cn.s3bit.th902.gamecontents.components.ai.MoveFunction;
 import cn.s3bit.th902.gamecontents.components.ai.MoveFunctionTarget;
 import cn.s3bit.th902.gamecontents.components.ai.MoveFunctionType;
 import cn.s3bit.th902.gamecontents.components.ai.MoveSnipe;
-import cn.s3bit.th902.gamecontents.components.enemy.BaseProjectile;
 import cn.s3bit.th902.gamecontents.components.enemy.BaseSprite;
 import cn.s3bit.th902.gamecontents.components.enemy.BulletType;
 import cn.s3bit.th902.gamecontents.components.enemy.DropItem;
 import cn.s3bit.th902.gamecontents.components.enemy.EnemyJudgeCircle;
+import cn.s3bit.th902.gamecontents.components.enemy.ProjectileFactory;
 
 public final class ExampleDanmakuScene extends DanmakuScene {
 	@Override
@@ -37,7 +37,7 @@ public final class ExampleDanmakuScene extends DanmakuScene {
 					MoveFunctionType.ASSIGNMENT,
 					(time) -> { return IMoveFunction.vct2_tmp1.set(0, 0).rotate(time * 2).add(300, 400); }));
 			sprite.AddComponent(new LambdaComponent(() -> {
-				BaseProjectile.Create(transform.position.cpy(), BulletType.FormCircleS, BulletType.ColorBlue, new MoveSnipe(3f), new EnemyJudgeCircle(6));
+				ProjectileFactory.Create(transform.position.cpy(), BulletType.FormCircleS, BulletType.ColorBlue, new MoveSnipe(3f), new EnemyJudgeCircle(6));
 			}, 30));
 		});
 		yield.append(() -> { }, 20);

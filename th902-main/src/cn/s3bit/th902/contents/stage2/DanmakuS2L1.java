@@ -14,11 +14,11 @@ import cn.s3bit.th902.gamecontents.components.ai.MoveFunction;
 import cn.s3bit.th902.gamecontents.components.ai.MoveFunctionTarget;
 import cn.s3bit.th902.gamecontents.components.ai.MoveFunctionType;
 import cn.s3bit.th902.gamecontents.components.ai.MoveSnipe;
-import cn.s3bit.th902.gamecontents.components.enemy.BaseProjectile;
 import cn.s3bit.th902.gamecontents.components.enemy.BaseSprite;
 import cn.s3bit.th902.gamecontents.components.enemy.BulletType;
 import cn.s3bit.th902.gamecontents.components.enemy.DropItem;
 import cn.s3bit.th902.gamecontents.components.enemy.EnemyJudgeCircle;
+import cn.s3bit.th902.gamecontents.components.enemy.ProjectileFactory;
 
 public final class DanmakuS2L1 extends DanmakuScene {
 	private final int n1 = 1;
@@ -90,14 +90,14 @@ public final class DanmakuS2L1 extends DanmakuScene {
 			final Transform transform = sprite.GetComponent(Transform.class);
 			sprite.AddComponent(new MoveBasic(0, -4f, 0, 0));
 			sprite.AddComponent(new LambdaComponent(() -> {
-				BaseProjectile.Create(transform.position.cpy(), BulletType.FormCircleS, BulletType.ColorRed,
+				ProjectileFactory.Create(transform.position.cpy(), BulletType.FormCircleS, BulletType.ColorRed,
 						new MoveSnipe(3f), new EnemyJudgeCircle(6));
 			}, 20));
 			sprite.AddComponent(new ExtraDrop() {
 				@Override
 				public void LootLogic() {
 					DropItem.CreateDropItem(transform.position.cpy(), 241);
-					Entity proj = BaseProjectile.Create(transform.position.cpy(), BulletType.FormCircleS,
+					Entity proj = ProjectileFactory.Create(transform.position.cpy(), BulletType.FormCircleS,
 							BulletType.ColorRed);
 					proj.AddComponent(new MoveSnipe(9f));
 					proj.AddComponent(new EnemyJudgeCircle(6));
@@ -118,14 +118,14 @@ public final class DanmakuS2L1 extends DanmakuScene {
 				}
 			}));
 			sprite.AddComponent(new LambdaComponent(() -> {
-				BaseProjectile.Create(transform.position.cpy(), BulletType.FormCircleS, BulletType.ColorBlue,
+				ProjectileFactory.Create(transform.position.cpy(), BulletType.FormCircleS, BulletType.ColorBlue,
 						new MoveSnipe(3f), new EnemyJudgeCircle(6));
 			}, 20));
 			sprite.AddComponent(new ExtraDrop() {
 				@Override
 				public void LootLogic() {
 					DropItem.CreateDropItem(transform.position.cpy(), 242);
-					Entity proj = BaseProjectile.Create(transform.position.cpy(), BulletType.FormCircleS,
+					Entity proj = ProjectileFactory.Create(transform.position.cpy(), BulletType.FormCircleS,
 							BulletType.ColorRed);
 					proj.AddComponent(new MoveSnipe(9f));
 					proj.AddComponent(new EnemyJudgeCircle(6));

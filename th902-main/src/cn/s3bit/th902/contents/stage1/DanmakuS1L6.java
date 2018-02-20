@@ -14,10 +14,10 @@ import cn.s3bit.th902.gamecontents.components.ai.MoveBasic;
 import cn.s3bit.th902.gamecontents.components.ai.MoveFunction;
 import cn.s3bit.th902.gamecontents.components.ai.MoveFunctionTarget;
 import cn.s3bit.th902.gamecontents.components.ai.MoveFunctionType;
-import cn.s3bit.th902.gamecontents.components.enemy.BaseProjectile;
 import cn.s3bit.th902.gamecontents.components.enemy.BaseSprite;
 import cn.s3bit.th902.gamecontents.components.enemy.BulletType;
 import cn.s3bit.th902.gamecontents.components.enemy.EnemyJudgeCircle;
+import cn.s3bit.th902.gamecontents.components.enemy.ProjectileFactory;
 
 public class DanmakuS1L6 extends DanmakuScene {
 	static Entity[] sprites = {null, null};
@@ -33,7 +33,7 @@ public class DanmakuS1L6 extends DanmakuScene {
 				tr.scale.set(0.5f, 0.5f);
 				sprite.AddComponent(new LambdaComponent(() -> {
 					for (int angle=MathUtils.random(360), k=0; k<24; angle+=15, k++)
-						BaseProjectile.Create(tr.position.cpy(), BulletType.FormCircleLightM, BulletType.ColorYellow,
+						ProjectileFactory.Create(tr.position.cpy(), BulletType.FormCircleLightM, BulletType.ColorYellow,
 								new EnemyJudgeCircle(13),
 								new MoveBasic(new Vector2(7.2f, 0).rotate(angle)));
 				}, 40, 30));

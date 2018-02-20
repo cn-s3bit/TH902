@@ -11,9 +11,9 @@ import cn.s3bit.th902.gamecontents.components.ai.IMoveFunction;
 import cn.s3bit.th902.gamecontents.components.ai.MoveFunction;
 import cn.s3bit.th902.gamecontents.components.ai.MoveFunctionTarget;
 import cn.s3bit.th902.gamecontents.components.ai.MoveFunctionType;
-import cn.s3bit.th902.gamecontents.components.enemy.BaseProjectile;
 import cn.s3bit.th902.gamecontents.components.enemy.BulletType;
 import cn.s3bit.th902.gamecontents.components.enemy.EnemyJudgeCircle;
+import cn.s3bit.th902.gamecontents.components.enemy.ProjectileFactory;
 
 public class DanmakuS1L5 extends DanmakuScene {
 
@@ -30,7 +30,7 @@ public class DanmakuS1L5 extends DanmakuScene {
 		for (int i=0; i<200 + part * 30; i++) {
 			final int angle = i * 21;
 			yield.append(() -> {
-				Entity proj = BaseProjectile.Create(poss[part + angle % 2].cpy(), BulletType.FormCircleS, BulletType.ColorBlueLight);
+				Entity proj = ProjectileFactory.Create(poss[part + angle % 2].cpy(), BulletType.FormCircleS, BulletType.ColorBlueLight);
 				final Transform tr = proj.GetComponent(Transform.class);
 				final Vector2 snipe = new Vector2();
 				proj.AddComponent(new MoveFunction(MoveFunctionTarget.VELOCITY, MoveFunctionType.ASSIGNMENT, (time) -> {

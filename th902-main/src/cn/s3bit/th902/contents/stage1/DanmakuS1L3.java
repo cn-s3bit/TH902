@@ -10,11 +10,11 @@ import cn.s3bit.th902.gamecontents.components.ExtraDrop;
 import cn.s3bit.th902.gamecontents.components.LambdaComponent;
 import cn.s3bit.th902.gamecontents.components.Transform;
 import cn.s3bit.th902.gamecontents.components.ai.MoveBasic;
-import cn.s3bit.th902.gamecontents.components.enemy.BaseProjectile;
 import cn.s3bit.th902.gamecontents.components.enemy.BaseSprite;
 import cn.s3bit.th902.gamecontents.components.enemy.BulletType;
 import cn.s3bit.th902.gamecontents.components.enemy.DropItem;
 import cn.s3bit.th902.gamecontents.components.enemy.EnemyJudgeCircle;
+import cn.s3bit.th902.gamecontents.components.enemy.ProjectileFactory;
 
 public class DanmakuS1L3 extends DanmakuScene {
 	int count = 0;
@@ -31,10 +31,10 @@ public class DanmakuS1L3 extends DanmakuScene {
 				sprite.AddComponent(new LambdaComponent(() -> {
 					for (int j=0; j<5; j++)
 					{
-						Entity proj = BaseProjectile.Create(transform.position.cpy(), BulletType.FormCircleS, BulletType.ColorRed);
+						Entity proj = ProjectileFactory.Create(transform.position.cpy(), BulletType.FormCircleS, BulletType.ColorRed);
 						proj.AddComponent(new MoveBasic(MathUtils.random(-3f, 3f), MathUtils.random(-3f, -1f) * (JudgingSystem.playerJudge.y > transform.position.y ? -1 : 1)));
 						proj.AddComponent(new EnemyJudgeCircle(6));
-						proj = BaseProjectile.Create(transform.position.cpy(), BulletType.FormCircleS, BulletType.ColorRed);
+						proj = ProjectileFactory.Create(transform.position.cpy(), BulletType.FormCircleS, BulletType.ColorRed);
 						proj.AddComponent(new MoveBasic(MathUtils.random(-3f, 3f), MathUtils.random(-3f, -1f) * (JudgingSystem.playerJudge.y > transform.position.y ? -1 : 1)));
 						proj.AddComponent(new EnemyJudgeCircle(6));
 					}
