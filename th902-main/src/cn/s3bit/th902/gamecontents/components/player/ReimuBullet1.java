@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import cn.s3bit.th902.FightScreen;
 import cn.s3bit.th902.ResourceManager;
+import cn.s3bit.th902.contents.ShootHitEffectSystem;
 import cn.s3bit.th902.gamecontents.Entity;
 import cn.s3bit.th902.gamecontents.IJudgeCallback;
 import cn.s3bit.th902.gamecontents.JudgingSystem;
@@ -115,6 +116,7 @@ public class ReimuBullet1 extends Component implements IJudgeCallback {
 
 	@Override
 	public void onCollide() {
+		ShootHitEffectSystem.addEffect(transform.position);
 		entity.Destroy();
 	}
 
