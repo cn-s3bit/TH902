@@ -1,9 +1,12 @@
 package cn.s3bit.th902;
 
+import java.lang.reflect.Field;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Group;
 
 import cn.s3bit.th902.gamecontents.Entity;
 import cn.s3bit.th902.gamecontents.JudgingSystem;
@@ -35,10 +38,36 @@ public class FightScreen extends ScreenAdapter {
 	public static int PlayerType = 1;
 	public static int PlayerChara = 1;
 	public static SceneSystem sceneSystem;
+	public static DrawingLayers drawingLayers;
+	
+	public static class DrawingLayers {
+		public Group background, entity0, entity1, entity2, entity3, ui0, ui1, ui2;
+		{
+			for (Field field : getClass().getFields()) {
+				if (field.getType() == Group.class)
+					try {
+						Group tmp = new Group();
+						GameMain.instance.activeStage.addActor(tmp);
+						field.set(this, tmp);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+			}
+			ui2.toBack();
+			ui1.toBack();
+			ui0.toBack();
+			entity3.toBack();
+			entity2.toBack();
+			entity1.toBack();
+			entity0.toBack();
+			background.toBack();
+		}
+	}
 
 	@Override
 	public void show() {
 		super.show();
+		drawingLayers = new DrawingLayers();
 		Entity player = Entity.Create();
 		Entity fightScreen = Entity.Create();
 		Entity difficulty = Entity.Create();
