@@ -16,8 +16,8 @@ import cn.s3bit.th902.gamecontents.Entity;
 import cn.s3bit.th902.gamecontents.IJudgeCallback;
 import cn.s3bit.th902.gamecontents.JudgingSystem;
 import cn.s3bit.th902.gamecontents.JudgingSystem.PlayerCollisionData;
-import cn.s3bit.th902.gamecontents.ParticleSystem;
 import cn.s3bit.th902.gamecontents.components.Component;
+import cn.s3bit.th902.gamecontents.components.ParticleRenderer;
 import cn.s3bit.th902.gamecontents.components.Transform;
 import cn.s3bit.th902.utils.ImmutableWrapper;
 import cn.s3bit.th902.utils.Yield;
@@ -46,7 +46,7 @@ public class SpellFantasySeal extends Component {
 		
 		@Override
 		public void Initialize(Entity entity) {
-			ParticleSystem.register(particleEffect);
+			entity.AddComponent(new ParticleRenderer(particleEffect));
 			mEntity = entity;
 			mTransform = entity.GetComponent(Transform.class);
 			yield.append(() -> {
@@ -115,20 +115,18 @@ public class SpellFantasySeal extends Component {
 		
 		@Override
 		public void Kill() {
-			ParticleSystem.unregister(particleEffect);
 			particleEffect.dispose();
 			super.Kill();
 		}
 		
 		public void explode() {
-			ParticleSystem.unregister(particleEffect);
 			particleEffect.dispose();
 			particleEffect = new ParticleEffect();
+			mEntity.GetComponent(ParticleRenderer.class).actor.wrappedEffect = particleEffect;
 			particleEffect.load(Gdx.files.internal("resources/Particles/FantasySeal/FantasySealCircleExplosion.dat"), Gdx.files.internal("resources/Particles/"));
 			particleEffect.setPosition(mTransform.position.x, mTransform.position.y);
 			particleEffect.scaleEffect(2);
 			particleEffect.start();
-			ParticleSystem.register(particleEffect);
 			Set<Entry<ImmutableWrapper<Circle>, PlayerCollisionData>> set = JudgingSystem.enemyJudges.entrySet();
 			for (Entry<ImmutableWrapper<Circle>, PlayerCollisionData> entry : set) {
 				if (entry.getValue().judgeCallback.canHurt() && Intersector.overlaps(entry.getKey().getData(), judge)) {
