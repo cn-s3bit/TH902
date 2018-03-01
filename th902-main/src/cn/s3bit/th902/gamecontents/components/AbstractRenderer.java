@@ -5,7 +5,6 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Align;
 
 import cn.s3bit.th902.GameMain;
-import cn.s3bit.th902.ResourceManager;
 import cn.s3bit.th902.gamecontents.Entity;
 
 public abstract class AbstractRenderer extends Component {
@@ -22,13 +21,13 @@ public abstract class AbstractRenderer extends Component {
 	@Override
 	public void Update() {
 		byte updateFlag = shouldUpdateWithTransform();
-		if ((updateFlag & UPDATE_POSITION) == 1)
-			getActor().setPosition(transform.position.x - ResourceManager.textures.get("bloodGaugeInner").getWidth() / 2, transform.position.y - ResourceManager.textures.get("bloodGaugeInner").getHeight() / 2, mOrigin);
+		if ((updateFlag & UPDATE_POSITION) > 0)
+			getActor().setPosition(transform.position.x, transform.position.y, mOrigin);
 		getActor().setOrigin(mOrigin);
-		if ((updateFlag & UPDATE_ROTATION) == 1)
+		if ((updateFlag & UPDATE_ROTATION) > 0)
 			getActor().setRotation(transform.rotation);
-		if ((updateFlag & UPDATE_SCALE) == 1)
-			getActor().setRotation(transform.rotation);
+		if ((updateFlag & UPDATE_SCALE) > 0)
+			getActor().setScale(transform.scale.x, transform.scale.y);
 	}
 	
 	@Override
