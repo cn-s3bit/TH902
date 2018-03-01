@@ -40,7 +40,7 @@ public class FightScreen extends ScreenAdapter {
 	public static DrawingLayers drawingLayers;
 	
 	public static class DrawingLayers {
-		public Group background, entity0, entity1, entity2, entity3, ui0, ui1, ui2;
+		public Group background, entity0, entity1, entity2, entity3, entity4, entity5, entity6, entity7, ui0, ui1, ui2;
 		{
 			for (Field field : getClass().getFields()) {
 				if (field.getType() == Group.class)
@@ -55,6 +55,10 @@ public class FightScreen extends ScreenAdapter {
 			ui2.toBack();
 			ui1.toBack();
 			ui0.toBack();
+			entity7.toBack();
+			entity6.toBack();
+			entity5.toBack();
+			entity4.toBack();
 			entity3.toBack();
 			entity2.toBack();
 			entity1.toBack();
