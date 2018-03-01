@@ -30,12 +30,12 @@ public class ReimuWing extends Component {
 	@Override
 	public void Initialize(Entity entity) {
 		transform = entity.GetComponent(Transform.class);
+		mRenderer.attachToGroup(FightScreen.drawingLayers.entity2);
 		mRotationFlag = mId == 0 ? 4f : -4f;
 	}
 
 	@Override
 	public void Update() {
-		mRenderer.setDepth(0);
 		if (mVector2.epsilonEquals(-200f, -200f, 1e-3f)) {
 			mRenderer.image.setColor(1, 1, 1, 0);
 			return;
