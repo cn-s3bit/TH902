@@ -22,7 +22,7 @@ public abstract class AbstractRenderer extends Component {
 	public void Update() {
 		byte updateFlag = shouldUpdateWithTransform();
 		if ((updateFlag & UPDATE_POSITION) > 0)
-			getActor().setPosition(transform.position.x, transform.position.y, mOrigin);
+			getActor().setPosition(transform.position.x, transform.position.y, getOrigin());
 		getActor().setOrigin(mOrigin);
 		if ((updateFlag & UPDATE_ROTATION) > 0)
 			getActor().setRotation(transform.rotation);
