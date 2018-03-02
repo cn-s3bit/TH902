@@ -15,7 +15,7 @@ public final class ProjectileFactory {
 		entity.AddComponent(new Transform(position));
 		entity.AddComponent(new ImageRenderer(ResourceManager.barrages.get(bulletType), 0));
 		entity.AddComponent(new BaseProjectile(bulletType));
-		for (Component tmpc : Ves) {  
+		for (Component tmpc : Ves) {
 	       entity.AddComponent(tmpc);
 	    }
 		return entity;

@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import cn.s3bit.th902.FightScreen;
 import cn.s3bit.th902.gamecontents.Entity;
 import cn.s3bit.th902.gamecontents.JudgingSystem;
+import cn.s3bit.th902.gamecontents.components.AbstractRenderer;
 import cn.s3bit.th902.gamecontents.components.Component;
 import cn.s3bit.th902.gamecontents.components.Transform;
 
@@ -28,6 +29,7 @@ public class BaseProjectile extends Component {
 	@Override
 	public void Initialize(Entity entity) {
 		transform = entity.GetComponent(Transform.class);
+		entity.GetComponent(AbstractRenderer.class).attachToGroup(FightScreen.drawingLayers.entity4);
 		this.entity = entity;
 		JudgingSystem.clearByBombs.put(transform.immutablePosition, entity);
 		oldPos = new Vector2();
