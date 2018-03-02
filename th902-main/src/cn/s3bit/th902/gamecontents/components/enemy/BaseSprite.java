@@ -57,7 +57,9 @@ public class BaseSprite extends Component implements IJudgeCallback {
 	@Override
 	public void Initialize(Entity entity) {
 		transform = entity.GetComponent(Transform.class);
-		entity.AddComponent(new ImageRenderer(animation, 1));
+		ImageRenderer renderer = new ImageRenderer(animation, 1);
+		renderer.attachToGroup(FightScreen.drawingLayers.entity3);
+		entity.AddComponent(renderer);
 		this.entity = entity;
 	}
 
