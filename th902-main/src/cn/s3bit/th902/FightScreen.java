@@ -40,7 +40,7 @@ public class FightScreen extends ScreenAdapter {
 	public static DrawingLayers drawingLayers;
 	
 	public static class DrawingLayers {
-		public Group background, entity0, entity1, entity2, entity3, entity4, entity5, entity6, entity7, ui0, ui1, ui2;
+		public Group background, entity0, entity1, entity2, entity3, entity4, entity5, entity6, entity7, entity8, entity9, ui0, ui1, ui2;
 		{
 			for (Field field : getClass().getFields()) {
 				if (field.getType() == Group.class)
@@ -55,6 +55,8 @@ public class FightScreen extends ScreenAdapter {
 			ui2.toBack();
 			ui1.toBack();
 			ui0.toBack();
+			entity9.toBack();
+			entity8.toBack();
 			entity7.toBack();
 			entity6.toBack();
 			entity5.toBack();
@@ -96,14 +98,14 @@ public class FightScreen extends ScreenAdapter {
 		spellCard.AddComponent(new Transform(new Vector2(615, 450)));
 
 		if (_difficulty > 0 && _difficulty < 5)
-			difficulty.AddComponent(new ImageRenderer(ResourceManager.textures.get(mDifficulty[_difficulty - 1]), 1));
-		score.AddComponent(new ImageRenderer(ResourceManager.textures.get("Score"), 1));
-		highScore.AddComponent(new ImageRenderer(ResourceManager.textures.get("HighScore"), 1));
-		players.AddComponent(new ImageRenderer(ResourceManager.textures.get("Players"), 1));
-		spellCard.AddComponent(new ImageRenderer(ResourceManager.textures.get("SpellCard"), 1));
-		power.AddComponent(new ImageRenderer(ResourceManager.textures.get("Power"), 1));
-		graze.AddComponent(new ImageRenderer(ResourceManager.textures.get("Graze"), 1));
-		point.AddComponent(new ImageRenderer(ResourceManager.textures.get("Point"), 1));
+			difficulty.AddComponent(new ImageRenderer(ResourceManager.textures.get(mDifficulty[_difficulty - 1]), 1).attachToGroup(drawingLayers.ui1));
+		score.AddComponent(new ImageRenderer(ResourceManager.textures.get("Score"), 1).attachToGroup(drawingLayers.ui1));
+		highScore.AddComponent(new ImageRenderer(ResourceManager.textures.get("HighScore"), 1).attachToGroup(drawingLayers.ui1));
+		players.AddComponent(new ImageRenderer(ResourceManager.textures.get("Players"), 1).attachToGroup(drawingLayers.ui1));
+		spellCard.AddComponent(new ImageRenderer(ResourceManager.textures.get("SpellCard"), 1).attachToGroup(drawingLayers.ui1));
+		power.AddComponent(new ImageRenderer(ResourceManager.textures.get("Power"), 1).attachToGroup(drawingLayers.ui1));
+		graze.AddComponent(new ImageRenderer(ResourceManager.textures.get("Graze"), 1).attachToGroup(drawingLayers.ui1));
+		point.AddComponent(new ImageRenderer(ResourceManager.textures.get("Point"), 1).attachToGroup(drawingLayers.ui1));
 
 		for (int i = 0; i < 8; i++) {
 			bombs[i] = Entity.Create();
@@ -114,10 +116,12 @@ public class FightScreen extends ScreenAdapter {
 			hearts[i].AddComponent(new ImageRenderer(ResourceManager.textures.get("Heart"), 1));
 			mBombs[i] = bombs[i].GetComponent(ImageRenderer.class);
 			mHearts[i] = hearts[i].GetComponent(ImageRenderer.class);
+			mBombs[i].attachToGroup(drawingLayers.ui1);
 			mBombs[i].image.setColor(1, 1, 1, 0);
+			mHearts[i].attachToGroup(drawingLayers.ui1);
 			mHearts[i].image.setColor(1, 1, 1, 0);
 		}
-		fightScreen.AddComponent(new ImageRenderer(ResourceManager.textures.get("FightScreen"), 0));
+		fightScreen.AddComponent(new ImageRenderer(ResourceManager.textures.get("FightScreen"), 0).attachToGroup(drawingLayers.ui0));
 		if (PlayerChara == PlayerTypeReimu) {
 			player.AddComponent(new PlayerReimu(PlayerType));
 		} else if (PlayerChara == PlayerTypeMarisa) {
