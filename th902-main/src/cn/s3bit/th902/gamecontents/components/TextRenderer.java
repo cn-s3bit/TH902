@@ -2,20 +2,18 @@ package cn.s3bit.th902.gamecontents.components;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.utils.Align;
 
-import cn.s3bit.th902.GameMain;
 import cn.s3bit.th902.ResourceManager;
 import cn.s3bit.th902.gamecontents.Entity;
 
-public class TextRenderer extends Component {
+public class TextRenderer extends AbstractRenderer {
 	public Label label;
 	public LabelStyle labelStyle;
 	public int labelAlign = Align.center, lineAlign = Align.center;
-	
-	Transform transform;
 	
 	/**
 	 * Default: font - MSYH, color - WHITE
@@ -31,8 +29,7 @@ public class TextRenderer extends Component {
 
 	@Override
 	public void Initialize(Entity entity) {
-		transform = entity.GetComponent(Transform.class);
-		GameMain.instance.activeStage.addActor(label);
+		super.Initialize(entity);
 		label.toFront();
 	}
 
@@ -45,10 +42,14 @@ public class TextRenderer extends Component {
 	public void setText(String text) {
 		label.setText(text);
 	}
+	
+	@Override
+	public Actor getActor() {
+		return label;
+	}
 
 	@Override
-	public void Kill() {
-		label.remove();
-		super.Kill();
+	public byte shouldUpdateWithTransform() {
+		return UPDATE_NONE;
 	}
 }

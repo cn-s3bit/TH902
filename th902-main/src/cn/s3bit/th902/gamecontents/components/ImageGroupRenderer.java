@@ -3,17 +3,14 @@ package cn.s3bit.th902.gamecontents.components;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 
-import cn.s3bit.th902.GameMain;
-import cn.s3bit.th902.gamecontents.Entity;
-
-public class ImageGroupRenderer extends Component {
-	Transform transform = null;
+public class ImageGroupRenderer extends AbstractRenderer {
 	public Group group = null;
 	public Vector2[] biases = null;
 	public Image[] images = null;
@@ -57,30 +54,13 @@ public class ImageGroupRenderer extends Component {
 	}
 	
 	@Override
-	public void Initialize(Entity entity) {
-		transform = entity.GetComponent(Transform.class);
-		GameMain.instance.activeStage.addActor(group);
-		setDepth(mDepth);
-		Update();
-	}
-	
-	@Override
 	public void Update() {
-		group.setPosition(transform.position.x, transform.position.y, Align.center);
-		group.setOrigin(Align.center);
-		group.setRotation(transform.rotation);
-		group.setScale(transform.scale.x, transform.scale.y);
+		super.Update();
 		if (biases != null) {
 			for (int i = 0; i < biases.length; i++) {
 				images[i].setPosition(biases[i].x, biases[i].y, Align.center);
 			}
 		}
-	}
-
-	@Override
-	public void Kill() {
-		group.remove();
-		super.Kill();
 	}
 	
 	/**
@@ -96,5 +76,15 @@ public class ImageGroupRenderer extends Component {
 		else {
 			group.setZIndex(mDepth);
 		}
+	}
+
+	@Override
+	public Actor getActor() {
+		return group;
+	}
+
+	@Override
+	public byte shouldUpdateWithTransform() {
+		return UPDATE_ALL;
 	}
 }

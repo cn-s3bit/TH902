@@ -1,20 +1,18 @@
 package cn.s3bit.th902.gamecontents.components;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 
-import cn.s3bit.th902.GameMain;
 import cn.s3bit.th902.ResourceManager;
 import cn.s3bit.th902.gamecontents.Entity;
 import cn.s3bit.th902.utils.CircularProgress;
 
-public class CircularProgressRenderer extends Component {
+public class CircularProgressRenderer extends AbstractRenderer {
 	public CircularProgress progress;
-	Transform transform;
 	@Override
 	public void Initialize(Entity entity) {
 		progress = new CircularProgress(new TextureRegion(ResourceManager.textures.get("bloodGaugeInner")));
-		GameMain.instance.activeStage.addActor(progress);
-		transform = entity.GetComponent(Transform.class);
+		super.Initialize(entity);
 	}
 
 	@Override
@@ -23,8 +21,12 @@ public class CircularProgressRenderer extends Component {
 	}
 
 	@Override
-	public void Kill() {
-		progress.remove();
-		super.Kill();
+	public Actor getActor() {
+		return progress;
+	}
+
+	@Override
+	public byte shouldUpdateWithTransform() {
+		return UPDATE_NONE;
 	}
 }

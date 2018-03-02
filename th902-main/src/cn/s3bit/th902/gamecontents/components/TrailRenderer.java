@@ -6,6 +6,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
@@ -16,12 +17,11 @@ import com.badlogic.gdx.utils.Pool;
 import cn.s3bit.th902.GameMain;
 import cn.s3bit.th902.gamecontents.Entity;
 
-public class TrailRenderer extends Component {
+public class TrailRenderer extends AbstractRenderer {
 	private Drawable mDrawable;
 	private int mTrailLen;
 	private int mDepth;
 	public Group group;
-	protected Transform transform;
 	protected LinkedBlockingQueue<Vector2> mTrail;
 	protected Image[] drawers;
 	protected Pool<Vector2> vectorPool = new Pool<Vector2>() {
@@ -90,8 +90,10 @@ public class TrailRenderer extends Component {
 	public void setTrailLen(int trailLen) {
 		mTrailLen = trailLen;
 		drawers = new Image[trailLen];
+		Group parent = null;
 		if (group != null) {
 			group.remove();
+			parent = group.getParent();
 		}
 		group = new Group();
 		for (int i = 0; i < drawers.length; i++) {
@@ -100,16 +102,23 @@ public class TrailRenderer extends Component {
 			drawers[i].setPosition(0, 0, Align.center);
 			group.addActor(drawers[i]);
 		}
-		GameMain.instance.activeStage.addActor(group);
+		if (parent == null)
+			GameMain.instance.activeStage.addActor(group);
+		else
+			parent.addActor(group);
 	}
 	
 	public int getTrailLen() {
 		return mTrailLen;
 	}
-	
+
 	@Override
-	public void Kill() {
-		group.remove();
-		super.Kill();
+	public Actor getActor() {
+		return group;
+	}
+
+	@Override
+	public byte shouldUpdateWithTransform() {
+		return UPDATE_NONE;
 	}
 }

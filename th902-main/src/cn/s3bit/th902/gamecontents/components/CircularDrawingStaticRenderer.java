@@ -1,38 +1,19 @@
 package cn.s3bit.th902.gamecontents.components;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.utils.Align;
 
-import cn.s3bit.th902.GameMain;
-import cn.s3bit.th902.gamecontents.Entity;
 import cn.s3bit.th902.utils.CircularDrawingStatic;
 
-public class CircularDrawingStaticRenderer extends Component {
+public class CircularDrawingStaticRenderer extends AbstractRenderer {
 	public CircularDrawingStatic circularDrawingStatic;
 	Transform transform;
 	private int mDepth;
 	public CircularDrawingStaticRenderer(Texture texture, int beginDegrees, int endDegrees, int depth) {
 		circularDrawingStatic = new CircularDrawingStatic(texture, beginDegrees, endDegrees);
 		setDepth(depth);
-	}
-	
-	@Override
-	public void Initialize(Entity entity) {
-		transform = entity.GetComponent(Transform.class);
-		GameMain.instance.activeStage.addActor(circularDrawingStatic);
-		Update();
-	}
-
-	@Override
-	public void Update() {
-		circularDrawingStatic.setPosition(transform.position.x, transform.position.y);
-		circularDrawingStatic.setRotation(transform.rotation);
-		circularDrawingStatic.setScale(transform.scale.x, transform.scale.y);
-	}
-	
-	@Override
-	public void Kill() {
-		circularDrawingStatic.remove();
-		super.Kill();
+		setOrigin(Align.bottomLeft);
 	}
 
 	/**
@@ -48,5 +29,15 @@ public class CircularDrawingStaticRenderer extends Component {
 		else {
 			circularDrawingStatic.setZIndex(mDepth);
 		}
+	}
+
+	@Override
+	public Actor getActor() {
+		return circularDrawingStatic;
+	}
+
+	@Override
+	public byte shouldUpdateWithTransform() {
+		return UPDATE_ALL;
 	}
 }
