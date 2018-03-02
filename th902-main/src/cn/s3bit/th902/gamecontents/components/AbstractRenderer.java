@@ -13,7 +13,8 @@ public abstract class AbstractRenderer extends Component {
 	
 	@Override
 	public void Initialize(Entity entity) {
-		GameMain.instance.activeStage.addActor(getActor());
+		if (!getActor().hasParent())
+			GameMain.instance.activeStage.addActor(getActor());
 		transform = entity.GetComponent(Transform.class);
 		Update();
 	}
@@ -42,19 +43,21 @@ public abstract class AbstractRenderer extends Component {
 			UPDATE_ALL = 7, UPDATE_NONE = 0;
 	public abstract byte shouldUpdateWithTransform();
 
-	public void attachToGroup(Group layer) {
+	public AbstractRenderer attachToGroup(Group layer) {
 		getActor().remove();
 		if (layer != null)
 			layer.addActor(getActor());
 		else
 			GameMain.instance.activeStage.addActor(getActor());
+		return this;
 	}
 
 	public int getOrigin() {
 		return mOrigin;
 	}
 
-	public void setOrigin(int alignment) {
+	public AbstractRenderer setOrigin(int alignment) {
 		this.mOrigin = alignment;
+		return this;
 	}
 }
