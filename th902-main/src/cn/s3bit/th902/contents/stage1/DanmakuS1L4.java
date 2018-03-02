@@ -27,7 +27,7 @@ public class DanmakuS1L4 extends DanmakuScene {
 			Entity boss = Entity.Create();
 			Transform transform = new Transform(new Vector2(285, 730), new Vector2(2, 2));
 			boss.AddComponent(transform);
-			boss.AddComponent(new ImageRenderer(ResourceManager.barrages.get(230), 0));
+			boss.AddComponent(new ImageRenderer(ResourceManager.barrages.get(230), 0).attachToGroup(FightScreen.drawingLayers.entity8));
 			BossHP hp = new BossHP(
 					new int[]{1800, 1800, 3600},
 					new int[]{1200, 1200, 2400},
