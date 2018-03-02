@@ -46,7 +46,10 @@ public class ImageRenderer extends AbstractRenderer {
 	@Override
 	public void Initialize(Entity entity) {
 		super.Initialize(entity);
-		image.setZIndex(mDepth);
+		if (mDepth == -1)
+			image.toFront();
+		else
+			image.setZIndex(mDepth);
 	}
 	@Override
 	public Actor getActor() {
