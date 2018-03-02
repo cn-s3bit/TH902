@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
+import cn.s3bit.th902.FightScreen;
 import cn.s3bit.th902.GameHelper;
 import cn.s3bit.th902.gamecontents.Entity;
 import cn.s3bit.th902.gamecontents.IJudgeCallback;
@@ -46,7 +47,7 @@ public class SpellFantasySeal extends Component {
 		
 		@Override
 		public void Initialize(Entity entity) {
-			entity.AddComponent(new ParticleRenderer(particleEffect));
+			entity.AddComponent(new ParticleRenderer(particleEffect).attachToGroup(FightScreen.drawingLayers.entity9));
 			mEntity = entity;
 			mTransform = entity.GetComponent(Transform.class);
 			yield.append(() -> {

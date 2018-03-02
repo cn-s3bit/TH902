@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.math.Vector2;
 
+import cn.s3bit.th902.FightScreen;
 import cn.s3bit.th902.gamecontents.Entity;
 import cn.s3bit.th902.gamecontents.components.ParticleRenderer;
 
@@ -25,7 +26,7 @@ public class ShootHitEffectSystem {
 		if (managers[poolPt] != null)
 			managers[poolPt].Destroy();
 		managers[poolPt] = Entity.Create();
-		managers[poolPt].AddComponent(new ParticleRenderer(pool[poolPt]));
+		managers[poolPt].AddComponent(new ParticleRenderer(pool[poolPt]).attachToGroup(FightScreen.drawingLayers.entity9));
 		pool[poolPt++].start();
 		if (poolPt >= pool.length)
 			poolPt = 0;
