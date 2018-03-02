@@ -7,6 +7,7 @@ import java.util.List;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 
+import cn.s3bit.th902.FightScreen;
 import cn.s3bit.th902.ResourceManager;
 import cn.s3bit.th902.gamecontents.Entity;
 import cn.s3bit.th902.gamecontents.IJudgeCallback;
@@ -33,7 +34,7 @@ public class MovingLaser extends Component {
 	public static Entity Create(Vector2 position, int barrageID, int timeleft, int lifetime, float judgeSize) {
 		Entity n = Entity.Create();
 		n.AddComponent(new Transform(position));
-		n.AddComponent(new LaserLikeRenderer(ResourceManager.barrages.get(barrageID), timeleft * 6));
+		n.AddComponent(new LaserLikeRenderer(ResourceManager.barrages.get(barrageID), timeleft * 6).attachToGroup(FightScreen.drawingLayers.entity4));
 		n.AddComponent(new LifeCountDown(lifetime));
 		n.AddComponent(new MovingLaser(timeleft, judgeSize));
 		return n;
