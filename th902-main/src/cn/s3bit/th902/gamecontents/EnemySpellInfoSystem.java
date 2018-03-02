@@ -3,6 +3,7 @@ package cn.s3bit.th902.gamecontents;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Align;
 
+import cn.s3bit.th902.FightScreen;
 import cn.s3bit.th902.ResourceManager;
 import cn.s3bit.th902.gamecontents.components.CircularProgressRenderer;
 import cn.s3bit.th902.gamecontents.components.ImageRenderer;
@@ -38,6 +39,7 @@ public class EnemySpellInfoSystem {
 		final TextRenderer nameRenderer = new TextRenderer(bossHP.spellNames[bossHP.current]);
 		nameRenderer.labelAlign = Align.topRight;
 		nameRenderer.lineAlign = Align.right;
+		nameRenderer.attachToGroup(FightScreen.drawingLayers.ui0);
 		spellName.AddComponent(nameRenderer);
 		spellName.AddComponent(new LambdaComponent(() -> {
 			nameRenderer.setText(bossHP.spellNames[bossHP.current] == null ? "" : bossHP.spellNames[bossHP.current]);
@@ -47,17 +49,20 @@ public class EnemySpellInfoSystem {
 		lifeGauge.AddComponent(new Transform(cTransform.position));
 		final CircularProgressRenderer circularProgressRenderer = new CircularProgressRenderer();
 		final ImageRenderer outerCircle = new ImageRenderer(ResourceManager.textures.get("bloodGaugeOuter"), -1);
+		circularProgressRenderer.attachToGroup(FightScreen.drawingLayers.ui0);
+		outerCircle.attachToGroup(FightScreen.drawingLayers.ui0);
 		lifeGauge.AddComponent(outerCircle);
 		lifeGauge.AddComponent(circularProgressRenderer);
 		lifeGauge.AddComponent(new LambdaComponent(() -> {
-			circularProgressRenderer.progress.toBack();
-			outerCircle.image.toBack();
+			//circularProgressRenderer.progress.toBack();
+			//outerCircle.image.toBack();
 			circularProgressRenderer.progress.setPercent(bossHP.hp / (float) bossHP.maxhp);
 		}, 1));
 		
 		timeleft = Entity.Create();
 		timeleft.AddComponent(new Transform(new Vector2(285, 660)));
 		final TextRenderer timeRenderer = new TextRenderer(bossHP.spellNames[bossHP.current]);
+		timeRenderer.attachToGroup(FightScreen.drawingLayers.ui0);
 		timeRenderer.labelAlign = Align.center;
 		timeRenderer.lineAlign = Align.center;
 		timeleft.AddComponent(timeRenderer);

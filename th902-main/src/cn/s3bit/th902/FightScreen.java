@@ -39,6 +39,25 @@ public class FightScreen extends ScreenAdapter {
 	public static SceneSystem sceneSystem;
 	public static DrawingLayers drawingLayers;
 	
+	/**
+	 * background: background
+	 * <br>
+	 * entity0: preserved
+	 * <br>
+	 * entity1: bullet of player
+	 * <br>
+	 * entity2: player & wing
+	 * <br>
+	 * entity3: NPC (except boss)
+	 * <br>
+	 * entity4~7: bullet of enemy
+	 * <br>
+	 * entity8: boss
+	 * <br>
+	 * entity9: particles
+	 * <br>
+	 * ui0~2: user interface
+	 */
 	public static class DrawingLayers {
 		public Group background, entity0, entity1, entity2, entity3, entity4, entity5, entity6, entity7, entity8, entity9, ui0, ui1, ui2;
 		{

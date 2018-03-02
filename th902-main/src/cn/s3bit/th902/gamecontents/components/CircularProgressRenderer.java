@@ -9,9 +9,11 @@ import cn.s3bit.th902.utils.CircularProgress;
 
 public class CircularProgressRenderer extends AbstractRenderer {
 	public CircularProgress progress;
+	{
+		progress = new CircularProgress(new TextureRegion(ResourceManager.textures.get("bloodGaugeInner")));
+	}
 	@Override
 	public void Initialize(Entity entity) {
-		progress = new CircularProgress(new TextureRegion(ResourceManager.textures.get("bloodGaugeInner")));
 		super.Initialize(entity);
 	}
 
