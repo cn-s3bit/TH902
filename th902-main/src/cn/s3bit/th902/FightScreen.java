@@ -140,7 +140,7 @@ public class FightScreen extends ScreenAdapter {
 			mHearts[i].attachToGroup(drawingLayers.ui1);
 			mHearts[i].image.setColor(1, 1, 1, 0);
 		}
-		fightScreen.AddComponent(new ImageRenderer(ResourceManager.textures.get("FightScreen"), 0).attachToGroup(drawingLayers.ui0));
+		fightScreen.AddComponent(new ImageRenderer(ResourceManager.textures.get("FightScreen"), 0).attachToGroup(drawingLayers.ui1));
 		if (PlayerChara == PlayerTypeReimu) {
 			player.AddComponent(new PlayerReimu(PlayerType));
 		} else if (PlayerChara == PlayerTypeMarisa) {
