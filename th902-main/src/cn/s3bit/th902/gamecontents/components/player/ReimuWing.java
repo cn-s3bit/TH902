@@ -31,6 +31,7 @@ public class ReimuWing extends Component {
 	public void Initialize(Entity entity) {
 		transform = entity.GetComponent(Transform.class);
 		mRenderer.attachToGroup(FightScreen.drawingLayers.entity2);
+		mRenderer.getActor().toBack();
 		mRotationFlag = mId == 0 ? 4f : -4f;
 	}
 

@@ -9,6 +9,7 @@ import cn.s3bit.th902.ResourceManager;
 import cn.s3bit.th902.gamecontents.Entity;
 import cn.s3bit.th902.gamecontents.IJudgeCallback;
 import cn.s3bit.th902.gamecontents.JudgingSystem;
+import cn.s3bit.th902.gamecontents.components.AbstractRenderer;
 import cn.s3bit.th902.gamecontents.components.Component;
 import cn.s3bit.th902.gamecontents.components.ImageRenderer;
 import cn.s3bit.th902.gamecontents.components.Transform;
@@ -50,6 +51,7 @@ public class ReimuBulletInduce extends Component implements IJudgeCallback {
 
 	@Override
 	public void Initialize(Entity entity) {
+		entity.GetComponent(AbstractRenderer.class).attachToGroup(FightScreen.drawingLayers.entity1);
 		transform = entity.GetComponent(Transform.class);
 		oldPosition.set(transform.position);
 		LineSegment lineSegment = new LineSegment();

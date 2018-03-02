@@ -47,6 +47,7 @@ public class PlayerReimu extends Player {
 		existTime = 0;
 		entity.AddComponent(
 				mRenderer = new ImageGroupRenderer(new Drawable[] { animationDrawable, playerAnimation }, 0, null));
+		mRenderer.attachToGroup(FightScreen.drawingLayers.entity2);
 		new ReimuWing(transform.position.cpy(), 0);
 		new ReimuWing(transform.position.cpy(), 1);
 	}
@@ -54,7 +55,6 @@ public class PlayerReimu extends Player {
 	@Override
 	public void Update() {
 		super.Update();
-		mRenderer.setDepth(0);
 		if (deathEffect == null) {
 			alpha = Chaos ? 0.2f + Math.abs(Interpolation.linear.apply(-0.8f, 0.8f, (existTime % 30) / 30f)) : 1;
 		} else {
