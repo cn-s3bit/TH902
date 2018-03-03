@@ -23,7 +23,7 @@ public final class Condition
 
 		public String LValue;
 		public OpType Operator = OpType.values()[0];
-		public double RValue;
+		public float RValue;
 
 		public static Expression parseFrom(String c)
 		{
@@ -48,7 +48,7 @@ public final class Condition
 
 			String[] values = c.split("[><=]");
 			e.LValue = values[0];
-			e.RValue = Double.parseDouble(values[1]);
+			e.RValue = Float.parseFloat(values[1]);
 
 			return e;
 		}
