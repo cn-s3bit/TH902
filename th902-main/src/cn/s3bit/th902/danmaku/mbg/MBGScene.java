@@ -3,6 +3,7 @@ package cn.s3bit.th902.danmaku.mbg;
 import java.io.IOException;
 import java.util.HashSet;
 
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 
 import cn.s3bit.mbgparser.MBGData;
@@ -21,6 +22,10 @@ public class MBGScene extends BossSpell {
 	MBGData mbgData;
 	HashSet<MBGBulletEmitter> bulletEmitters;
 	boolean isFirst, isLast;
+	public MBGScene(int maxLife, int maxTime, float bombResist, Texture texture, boolean isFirst, boolean isLast, FileHandle file) {
+		this(maxLife, maxTime, bombResist, texture, isFirst, isLast, new String(file.readBytes()));
+	}
+		
 	public MBGScene(int maxLife, int maxTime, float bombResist, Texture texture, boolean isFirst, boolean isLast, String mbg) {
 		this.maxLife = maxLife;
 		this.maxTime = maxTime;
