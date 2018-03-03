@@ -10,6 +10,7 @@ import cn.s3bit.th902.contents.stage1.DanmakuS1L5;
 import cn.s3bit.th902.contents.stage1.DanmakuS1L6;
 import cn.s3bit.th902.contents.stage1.DanmakuS1LLast;
 import cn.s3bit.th902.contents.stage2.DanmakuS2L1;
+import cn.s3bit.th902.contents.stage2.DanmakuS2L2;
 
 public class SceneSystem {
 	public static SceneSystem Create(int difficulty, int stageid) {
@@ -27,6 +28,18 @@ public class SceneSystem {
 		system.mScenes.add(new DanmakuS1L6());
 		system.mScenes.add(new DanmakuS1LLast());
 		system.mScenes.add(new DanmakuS2L1());
+		system.mScenes.add(new DanmakuS2L2());
+		/*system.mScenes.add(new MBGScene(1000, 1000, 1, ResourceManager.barrages.get(230), true, true,
+				"Crazy Storm Data 1.01\n"+
+				"Center:315,240,0,0,0,0,\n"+
+				"Totalframe:200\n"+
+				"Layer1:新图层 ,1,200,2,0,0,0,0\n"+
+				"0,0,False,-1,False,,320,224,1,200,-99998,-99998,0,0,{X:0 Y:0},1,5,0,{X:0 Y:0},0,1,20,{X:0 Y:0},0,0,{X:0 Y:0},200,1,1,1,255,255,255,100,0,{X:0 Y:0},True,5,0,{X:0 Y:0},0,0,{X:0 Y:0},1,1,True,True,False,False,True,False,,,0,0,0,0,0,0,20,0,0,0,0,0,0,0,0,0,0,True,True,True,False\n"+
+				"1,0,False,-1,False,,256,128,1,200,-99998,-99998,0,0,{X:0 Y:0},1,5,0,{X:0 Y:0},360,0,0,{X:0 Y:0},0,0,{X:0 Y:0},200,1,1,1,255,255,255,100,0,{X:0 Y:0},True,5,0,{X:0 Y:0},0,0,{X:0 Y:0},1,1,True,True,False,False,True,False,,,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,True,True,True,False\n"+
+				"Layer2:empty\n"+
+				"Layer3:empty\n"+
+				"Layer4:empty\n"
+			));*/
 		//system.mScenes.add(new ExampleDanmakuScene());
 		//system.mScenes.add(new ExampleDanmakuScene());
 		system.afterFinish = afterFinish;
