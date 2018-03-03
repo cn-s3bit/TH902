@@ -1,0 +1,27 @@
+package cn.s3bit.th902.danmaku.mbg;
+
+import cn.s3bit.mbgparser.ValueWithRand;
+import cn.s3bit.mbgparser.event.DataOperateAction;
+import cn.s3bit.th902.GameHelper;
+import cn.s3bit.th902.danmaku.mbg.event.BulletEmitterLValues;
+
+public class MBGEventTask {
+	public MBGEventTask(int timeLeft, DataOperateAction action, MBGBulletEmitter emitter) {
+		this.action = action;
+		this.timeLeft = timeLeft;
+		timefull = timeLeft;
+		origin = BulletEmitterLValues.getCurrentVal(action, emitter);
+		ValueWithRand originClone = new ValueWithRand();
+		originClone.baseValue = origin.baseValue;
+		originClone.randValue = origin.randValue;
+		origin = originClone;
+		target = GameHelper.getValFromRandom(action.RValue);
+		lastVal = origin.baseValue;
+	}
+	public final int timefull;
+	public int timeLeft;//实现到了可以做波粒了！ 还差判定……
+	public final DataOperateAction action;
+	public ValueWithRand origin;
+	public final float target;
+	public float lastVal;
+}
