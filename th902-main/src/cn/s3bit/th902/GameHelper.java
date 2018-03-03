@@ -14,10 +14,11 @@ public final class GameHelper {
 		toModify.add(vct2_tmp1.nor().scl(speed));
 	}
 	
-	public static void snipeVct(Vector2 current, Vector2 target, float biasAng, Vector2 out) {
+	public static Vector2 snipeVct(Vector2 current, Vector2 target, float biasAng, Vector2 out) {
 		target = target == null ? JudgingSystem.playerJudge : target;
 		vct2_tmp1.set(target).sub(current).rotate(biasAng);
 		out.set(vct2_tmp1);
+		return out;
 	}
 	
 	public static void clearEnemyBullets() {
