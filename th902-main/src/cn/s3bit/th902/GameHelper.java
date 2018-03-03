@@ -1,7 +1,9 @@
 package cn.s3bit.th902;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
+import cn.s3bit.mbgparser.ValueWithRand;
 import cn.s3bit.th902.gamecontents.Entity;
 import cn.s3bit.th902.gamecontents.JudgingSystem;
 
@@ -23,5 +25,9 @@ public final class GameHelper {
 		for (Entity entity : entities) {
 			entity.Destroy();
 		}
+	}
+	
+	public static float getValFromRandom(ValueWithRand valueWithRand) {
+		return MathUtils.random(valueWithRand.baseValue - valueWithRand.randValue, valueWithRand.baseValue + valueWithRand.randValue);
 	}
 }
