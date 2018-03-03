@@ -165,7 +165,7 @@ public class MBGBulletEmitter extends Component {
 			time %= eventGroup.Interval;
 		}
 		for (Event event : eventGroup.Events) {
-			if (BulletEmitterConditions.judgeCondition(this, event.condition)) {
+			if (BulletEmitterConditions.judgeCondition(this, event.condition, time)) {
 				if (!eventTasks.containsKey(eventGroup))
 					eventTasks.put(eventGroup, new ArrayList<>());
 				if (event.action instanceof CommandAction) {
@@ -180,8 +180,9 @@ public class MBGBulletEmitter extends Component {
 								this.timeLeft = 0;
 							}
 						});
-					else
+					else {
 						eventTasks.get(eventGroup).add(new MBGEventTask(action.TweenTime, action, this));
+					}
 				} else
 					throw new AssertionError("Unknown Action: " + event.action);
 			}

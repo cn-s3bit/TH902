@@ -6,17 +6,17 @@ import cn.s3bit.th902.danmaku.mbg.MBGBulletEmitter;
 import cn.s3bit.th902.danmaku.mbg.MBGScene;
 
 public final class BulletEmitterConditions {
-	public static boolean judgeCondition(MBGBulletEmitter bulletEmitter, Condition condition) {
+	public static boolean judgeCondition(MBGBulletEmitter bulletEmitter, Condition condition, int scaledTime) {
 		if (condition.Second != null) {
 			switch (condition.Second.LogincOp) {
 			case And:
-				return judgeExpr(bulletEmitter, condition.First) && judgeExpr(bulletEmitter, condition.Second.Expr);
+				return judgeExpr(bulletEmitter, condition.First, scaledTime) && judgeExpr(bulletEmitter, condition.Second.Expr, scaledTime);
 			case Or:
-				return judgeExpr(bulletEmitter, condition.First) || judgeExpr(bulletEmitter, condition.Second.Expr);
+				return judgeExpr(bulletEmitter, condition.First, scaledTime) || judgeExpr(bulletEmitter, condition.Second.Expr, scaledTime);
 			}
 			throw new AssertionError("见鬼了，Enum中出了个叛徒：" + condition.Second.LogincOp);
 		}
-		return judgeExpr(bulletEmitter, condition.First);
+		return judgeExpr(bulletEmitter, condition.First, scaledTime);
 	}
 	
 	public static boolean conditionOp(Condition.Expression.OpType opType, float p1, float p2) {
@@ -31,7 +31,7 @@ public final class BulletEmitterConditions {
 		throw new AssertionError("见鬼了，Enum中出了个叛徒：" + opType);
 	}
 	
-	public static boolean judgeExpr(MBGBulletEmitter bulletEmitter, Expression expression) {
+	public static boolean judgeExpr(MBGBulletEmitter bulletEmitter, Expression expression, int scaledTime) {
 		switch (expression.LValue) {
 		case "X坐标":
 			float x = transformBackX(bulletEmitter.mbgScene, bulletEmitter.transform.position.x);
@@ -40,7 +40,7 @@ public final class BulletEmitterConditions {
 			float y = transformBackY(bulletEmitter.mbgScene, bulletEmitter.transform.position.y);
 			return conditionOp(expression.Operator, y, expression.RValue);
 		case "当前帧":
-			return conditionOp(expression.Operator, bulletEmitter.life, expression.RValue);
+			return conditionOp(expression.Operator, scaledTime, expression.RValue);
 		default:
 			System.err.println("Warning: Currently not implemented condition: " + expression.LValue);
 			return false;

@@ -15,12 +15,15 @@ public class MBGEventTask {
 		origin = BulletEmitterLValues.getCurrentVal(action, emitter);
 		ValueWithRand originClone = new ValueWithRand();
 		originClone.baseValue = origin.baseValue;
-		if (originClone.baseValue == -99999f) {
-			originClone.baseValue = -GameHelper.snipeVct(emitter.getPosition(), null, 0, new Vector2()).angle();
-		}
 		originClone.randValue = origin.randValue;
 		origin = originClone;
-		target = GameHelper.getValFromRandom(action.RValue);
+		if (action.RValue.baseValue == -99999f) {
+			action.RValue.baseValue = -GameHelper.snipeVct(emitter.getPosition(), null, 0, new Vector2()).angle();
+			target = GameHelper.getValFromRandom(action.RValue);
+			action.RValue.baseValue = -99999f;
+		}
+		else
+			target = GameHelper.getValFromRandom(action.RValue);
 		lastVal = origin.baseValue;
 	}
 	public final int timefull;
