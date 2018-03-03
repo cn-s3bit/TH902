@@ -4,5 +4,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry exported="true" kind="lib" path="libs/gdx-1.9.6.jar" sourcepath="H:/PRGM/libGdx/libgdx-1.9.6.zip"/>
 	<classpathentry exported="true" kind="lib" path="libs/gdx-tools-1.9.6.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/MBGParser"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
