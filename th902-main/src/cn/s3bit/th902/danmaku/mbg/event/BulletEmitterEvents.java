@@ -26,14 +26,7 @@ public final class BulletEmitterEvents {
 		case "周期":
 			break; 
 		case "角度":
-			task.lastVal = applyOp(task.action.Operator,
-					emitter.bulletEmitter.发射角度,
-					task.origin.baseValue,
-					task.lastVal,
-					task.target,
-					1f - task.timeLeft / (float) task.timefull,
-					task.action.TweenFunction
-				);
+			applyValueWithRand(emitter.bulletEmitter.发射角度, task);
 			break; 
 		case "范围":
 			break; 
@@ -91,6 +84,18 @@ public final class BulletEmitterEvents {
 		result = applyOp(op, origin, rval, progress, tweenFunctionType);
 		valueWithRand.baseValue += result - lastVal;
 		return result;
+	}
+	
+	public static float applyValueWithRand(ValueWithRand valueWithRand, MBGEventTask task) {
+		task.lastVal = applyOp(task.action.Operator,
+				valueWithRand,
+				task.origin.baseValue,
+				task.lastVal,
+				task.target,
+				1f - task.timeLeft / (float) task.timefull,
+				task.action.TweenFunction
+			);
+		return task.lastVal;
 	}
 	
 	public static float applyOp(OperatorType op, float original, float rval, float progress, TweenFunctionType tweenFunctionType) {
