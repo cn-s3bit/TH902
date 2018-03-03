@@ -67,12 +67,13 @@ public abstract class BossSpell extends DanmakuScene {
 			act();
 			existTime++;
 		}
-		if (existTime > getMaxTime() || hp.hp <= 0) {
+		if (!mIsEnded && (existTime > getMaxTime() || hp.hp <= 0)) {
 			mIsEnded = true;
 			end();
 			if (existTime < getMaxTime())
 				shootdown();
 			hp.hp = 0;
+			hp.Kill();
 		}
 		if (isDefaultEntering() && existTime == 40) {
 			boss.GetComponent(MoveFunction.class).Kill();

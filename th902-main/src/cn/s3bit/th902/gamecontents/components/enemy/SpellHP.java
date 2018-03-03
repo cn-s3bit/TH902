@@ -53,7 +53,7 @@ public class SpellHP extends Component implements IJudgeCallback, ISpellInfoProv
 
 	@Override
 	public void Update() {
-
+		timer++;
 	}
 
 	@Override
