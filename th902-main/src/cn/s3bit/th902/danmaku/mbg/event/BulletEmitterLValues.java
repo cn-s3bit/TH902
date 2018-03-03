@@ -4,12 +4,18 @@ import cn.s3bit.mbgparser.ValueWithRand;
 import cn.s3bit.mbgparser.event.DataOperateAction;
 import cn.s3bit.th902.danmaku.mbg.MBGBulletEmitter;
 
+import static cn.s3bit.th902.danmaku.mbg.condition.BulletEmitterConditions.transformBackX;
+import static cn.s3bit.th902.danmaku.mbg.condition.BulletEmitterConditions.transformBackY;
+
 public class BulletEmitterLValues {
 	public static ValueWithRand getCurrentVal(DataOperateAction action, MBGBulletEmitter emitter) {
+		ValueWithRand ret = new ValueWithRand();
 		switch (action.LValue) {
 			case "X坐标":
+				ret.baseValue = transformBackX(emitter.mbgScene, emitter.transform.position.x);
 				break;
 			case "Y坐标":
+				ret.baseValue = transformBackY(emitter.mbgScene, emitter.transform.position.y);
 				break;
 			case "半径":
 				break;
@@ -67,6 +73,6 @@ public class BulletEmitterLValues {
 				System.err.println("Warning: Unimplemented");
 				break;
 		}
-		return new ValueWithRand();
+		return ret;
 	}
 }

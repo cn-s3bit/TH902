@@ -8,14 +8,23 @@ import cn.s3bit.mbgparser.event.DataOperateAction.OperatorType;
 import cn.s3bit.mbgparser.event.DataOperateAction.TweenFunctionType;
 import cn.s3bit.th902.danmaku.mbg.MBGBulletEmitter;
 import cn.s3bit.th902.danmaku.mbg.MBGEventTask;
+import cn.s3bit.th902.danmaku.mbg.MBGScene;
+
+import static cn.s3bit.th902.danmaku.mbg.condition.BulletEmitterConditions.transformBackX;
+import static cn.s3bit.th902.danmaku.mbg.condition.BulletEmitterConditions.transformBackY;
 
 public final class BulletEmitterEvents {
 	public static void fireDataOperation(MBGBulletEmitter emitter, MBGEventTask task) {
 		switch (task.action.LValue) {
 		case "X坐标":
-			
+			emitter.transform.position.x = transformX(emitter.mbgScene,
+					task.lastVal = transformBackX(emitter.mbgScene, emitter.transform.position.x) + getFloatDelta(task)
+				);
 			break;
 		case "Y坐标":
+			emitter.transform.position.y = transformY(emitter.mbgScene,
+					task.lastVal = transformBackY(emitter.mbgScene, emitter.transform.position.y) + getFloatDelta(task)
+				);
 			break;
 		case "半径":
 			break;
@@ -98,6 +107,15 @@ public final class BulletEmitterEvents {
 		return task.lastVal;
 	}
 	
+	public static float getFloatDelta(MBGEventTask task) {
+		float result = applyOp(task.action.Operator,
+				task.origin.baseValue,
+				task.target,
+				1f - task.timeLeft / (float) task.timefull,
+				task.action.TweenFunction);
+		return result - task.lastVal;
+	}
+	
 	public static float applyOp(OperatorType op, float original, float rval, float progress, TweenFunctionType tweenFunctionType) {
 		float target;
 		switch (op) {
@@ -134,5 +152,13 @@ public final class BulletEmitterEvents {
 			System.err.println("Warning: Unimplemented"); // TODO: Impl
 			break;
 		}
+	}
+	
+	public static float transformX(MBGScene mbgScene, float x) {
+		return (x - mbgScene.mbgData.center.Position.x) * 285f / 315f + 285f;
+	}
+	
+	public static float transformY(MBGScene mbgScene, float y) {
+		return -(y - mbgScene.mbgData.center.Position.y) * 360f / 240f + 360f;
 	}
 }
