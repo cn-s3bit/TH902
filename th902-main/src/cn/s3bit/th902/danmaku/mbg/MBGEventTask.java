@@ -1,5 +1,8 @@
 package cn.s3bit.th902.danmaku.mbg;
 
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
+
 import cn.s3bit.mbgparser.ValueWithRand;
 import cn.s3bit.mbgparser.event.DataOperateAction;
 import cn.s3bit.th902.GameHelper;
@@ -13,6 +16,9 @@ public class MBGEventTask {
 		origin = BulletEmitterLValues.getCurrentVal(action, emitter);
 		ValueWithRand originClone = new ValueWithRand();
 		originClone.baseValue = origin.baseValue;
+		if (originClone.baseValue == -99999f) {
+			originClone.baseValue = -GameHelper.snipeVct(emitter.getPosition(), null, 0, new Vector2()).angle();
+		}
 		originClone.randValue = origin.randValue;
 		origin = originClone;
 		target = GameHelper.getValFromRandom(action.RValue);

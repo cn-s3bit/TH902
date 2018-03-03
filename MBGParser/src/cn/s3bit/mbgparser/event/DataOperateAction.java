@@ -62,10 +62,10 @@ public final class DataOperateAction implements IAction
 		d.RValue = new ValueWithRand();
 		String r = tempRef_RValue.argValue;
 		if (r.contains("+")) {
-			d.RValue.baseValue = Float.parseFloat(r.split("\\+")[0]);
+			d.RValue.baseValue = r.split("\\+")[0].equals("自机") ? -99999f : Float.parseFloat(r.split("\\+")[0]);
 			d.RValue.randValue = Float.parseFloat(r.split("\\+")[1]);
 		} else
-			d.RValue.baseValue = Float.parseFloat(r);
+			d.RValue.baseValue = r.equals("自机") ? -99999f: Float.parseFloat(r);
 
 		switch (sents[1])
 		{
