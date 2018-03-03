@@ -3,9 +3,10 @@ package cn.s3bit.th902.gamecontents.components.enemy;
 import cn.s3bit.th902.gamecontents.EnemySpellInfoSystem;
 import cn.s3bit.th902.gamecontents.Entity;
 import cn.s3bit.th902.gamecontents.IJudgeCallback;
+import cn.s3bit.th902.gamecontents.ISpellInfoProvider;
 import cn.s3bit.th902.gamecontents.components.Component;
 
-public class BossHP extends Component implements IJudgeCallback {
+public class BossHP extends Component implements IJudgeCallback, ISpellInfoProvider {
 	public boolean immune = false;
 	public boolean noMelee = false;
 	public float hp = 0;
@@ -79,5 +80,30 @@ public class BossHP extends Component implements IJudgeCallback {
 				mEntity.Destroy();
 			}
 		}
+	}
+
+	@Override
+	public float getLife() {
+		return hp;
+	}
+
+	@Override
+	public int getMaxLife() {
+		return maxhp;
+	}
+
+	@Override
+	public int getCurrentTime() {
+		return timer;
+	}
+
+	@Override
+	public int getMaxTime() {
+		return time[current];
+	}
+
+	@Override
+	public String getDisplayedName() {
+		return spellNames[current];
 	}
 }
