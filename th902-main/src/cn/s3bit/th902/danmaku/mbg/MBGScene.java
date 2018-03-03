@@ -19,9 +19,10 @@ public class MBGScene extends BossSpell {
 	int maxTime;
 	float bombResist;
 	Texture texture;
-	MBGData mbgData;
+	public MBGData mbgData;
 	HashSet<MBGBulletEmitter> bulletEmitters;
 	boolean isFirst, isLast;
+	public int globalTime;
 	public MBGScene(int maxLife, int maxTime, float bombResist, Texture texture, boolean isFirst, boolean isLast, FileHandle file) {
 		this(maxLife, maxTime, bombResist, texture, isFirst, isLast, new String(file.readBytes()));
 	}
@@ -38,16 +39,16 @@ public class MBGScene extends BossSpell {
 			bulletEmitters = new HashSet<>();
 			if (mbgData.layer1 != null)
 				for (BulletEmitter bulletEmitter : mbgData.layer1.BulletEmitters)
-					bulletEmitters.add(new MBGBulletEmitter(bulletEmitter, this, FightScreen.drawingLayers.entity7));
+					bulletEmitters.add(new MBGBulletEmitter(bulletEmitter, this, FightScreen.drawingLayers.entity4));
 			if (mbgData.layer2 != null)
 				for (BulletEmitter bulletEmitter : mbgData.layer2.BulletEmitters)
-					bulletEmitters.add(new MBGBulletEmitter(bulletEmitter, this, FightScreen.drawingLayers.entity6));
+					bulletEmitters.add(new MBGBulletEmitter(bulletEmitter, this, FightScreen.drawingLayers.entity5));
 			if (mbgData.layer3 != null)
 				for (BulletEmitter bulletEmitter : mbgData.layer3.BulletEmitters)
-					bulletEmitters.add(new MBGBulletEmitter(bulletEmitter, this, FightScreen.drawingLayers.entity5));
+					bulletEmitters.add(new MBGBulletEmitter(bulletEmitter, this, FightScreen.drawingLayers.entity6));
 			if (mbgData.layer4 != null)
 				for (BulletEmitter bulletEmitter : mbgData.layer4.BulletEmitters)
-					bulletEmitters.add(new MBGBulletEmitter(bulletEmitter, this, FightScreen.drawingLayers.entity4));
+					bulletEmitters.add(new MBGBulletEmitter(bulletEmitter, this, FightScreen.drawingLayers.entity7));
 		} catch (IOException e) {
 			throw new AssertionError(e);
 		}
@@ -85,6 +86,7 @@ public class MBGScene extends BossSpell {
 	
 	@Override
 	public void start() {
+		globalTime = 0;
 		bulletEmitters.forEach((emitter) -> {
 			Entity em = Entity.Create();
 			em.AddComponent(emitter);
@@ -93,6 +95,13 @@ public class MBGScene extends BossSpell {
 	
 	@Override
 	public void act() {
-		
+		globalTime++;
+	}
+	
+	@Override
+	public void end() {
+		bulletEmitters.forEach((emitter) -> {
+			emitter.Kill();
+		});
 	}
 }
