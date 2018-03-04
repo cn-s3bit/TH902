@@ -26,7 +26,6 @@ public class DanmakuS2L2 extends DanmakuScene {
 
 	@Override
 	public void Initialize(Entity entity) {
-		// TODO Auto-generated method stub
 		enemyA(x1);
 		enemyA(x2);
 		waitEnemy(180);

@@ -12,7 +12,6 @@ public class MainMenuScreen extends ScreenAdapter {
 	@Override
 	public void show() {
 		super.show();
-		// TODO Add UI Entities Here
 		Entity backgroundEntity = Entity.Create();
 		Entity button1Entity = Entity.Create();
 		Entity exit = Entity.Create();
