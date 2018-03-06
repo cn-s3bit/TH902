@@ -27,17 +27,22 @@ public final class BulletEmitterEvents {
 				);
 			break;
 		case "半径":
+			applyValueWithRand(emitter.bulletEmitter.半径, task);
 			break;
 		case "半径方向":
+			applyValueWithRand(emitter.bulletEmitter.半径方向, task);
 			break; 
 		case "条数":
+			applyValueWithRand(emitter.bulletEmitter.条数, task);
 			break; 
 		case "周期":
+			applyValueWithRand(emitter.bulletEmitter.周期, task);
 			break; 
 		case "角度":
 			applyValueWithRand(emitter.bulletEmitter.发射角度, task);
 			break; 
 		case "范围":
+			applyValueWithRand(emitter.bulletEmitter.范围, task);
 			break; 
 		case "速度":
 			break; 
