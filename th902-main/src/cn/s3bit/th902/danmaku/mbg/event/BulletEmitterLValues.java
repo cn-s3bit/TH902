@@ -18,17 +18,17 @@ public class BulletEmitterLValues {
 				ret.baseValue = transformBackY(emitter.mbgScene, emitter.transform.position.y);
 				break;
 			case "半径":
-				break;
+				return emitter.bulletEmitter.半径;
 			case "半径方向":
-				break; 
+				return emitter.bulletEmitter.半径方向;
 			case "条数":
-				break; 
+				return emitter.bulletEmitter.条数;
 			case "周期":
-				break; 
+				return emitter.bulletEmitter.周期;
 			case "角度":
 				return emitter.bulletEmitter.发射角度;
 			case "范围":
-				break; 
+				return emitter.bulletEmitter.范围;
 			case "速度":
 				break; 
 			case "速度方向":
