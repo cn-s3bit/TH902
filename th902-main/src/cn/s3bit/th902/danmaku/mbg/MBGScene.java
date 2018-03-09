@@ -1,10 +1,10 @@
 package cn.s3bit.th902.danmaku.mbg;
 
 import java.io.IOException;
-import java.util.HashSet;
 
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.utils.IntMap;
 
 import cn.s3bit.mbgparser.MBGData;
 import cn.s3bit.mbgparser.item.BulletEmitter;
@@ -20,7 +20,7 @@ public class MBGScene extends BossSpell {
 	float bombResist;
 	Texture texture;
 	public MBGData mbgData;
-	HashSet<MBGBulletEmitter> bulletEmitters;
+	IntMap<MBGBulletEmitter> bulletEmitters;
 	boolean isFirst, isLast;
 	public int globalTime;
 	public MBGScene(int maxLife, int maxTime, float bombResist, Texture texture, boolean isFirst, boolean isLast, FileHandle file) {
@@ -36,19 +36,19 @@ public class MBGScene extends BossSpell {
 		this.isLast = isLast;
 		try {
 			mbgData = MBGData.parseFrom(mbg);
-			bulletEmitters = new HashSet<>();
+			bulletEmitters = new IntMap<>();
 			if (mbgData.layer1 != null)
 				for (BulletEmitter bulletEmitter : mbgData.layer1.BulletEmitters)
-					bulletEmitters.add(new MBGBulletEmitter(bulletEmitter, this, FightScreen.drawingLayers.entity4));
+					bulletEmitters.put(bulletEmitter.ID, new MBGBulletEmitter(bulletEmitter, this, FightScreen.drawingLayers.entity4));
 			if (mbgData.layer2 != null)
 				for (BulletEmitter bulletEmitter : mbgData.layer2.BulletEmitters)
-					bulletEmitters.add(new MBGBulletEmitter(bulletEmitter, this, FightScreen.drawingLayers.entity5));
+					bulletEmitters.put(bulletEmitter.ID, new MBGBulletEmitter(bulletEmitter, this, FightScreen.drawingLayers.entity5));
 			if (mbgData.layer3 != null)
 				for (BulletEmitter bulletEmitter : mbgData.layer3.BulletEmitters)
-					bulletEmitters.add(new MBGBulletEmitter(bulletEmitter, this, FightScreen.drawingLayers.entity6));
+					bulletEmitters.put(bulletEmitter.ID, new MBGBulletEmitter(bulletEmitter, this, FightScreen.drawingLayers.entity6));
 			if (mbgData.layer4 != null)
 				for (BulletEmitter bulletEmitter : mbgData.layer4.BulletEmitters)
-					bulletEmitters.add(new MBGBulletEmitter(bulletEmitter, this, FightScreen.drawingLayers.entity7));
+					bulletEmitters.put(bulletEmitter.ID, new MBGBulletEmitter(bulletEmitter, this, FightScreen.drawingLayers.entity7));
 		} catch (IOException e) {
 			throw new AssertionError(e);
 		}
@@ -89,7 +89,7 @@ public class MBGScene extends BossSpell {
 		globalTime = 0;
 		bulletEmitters.forEach((emitter) -> {
 			Entity em = Entity.Create();
-			em.AddComponent(emitter);
+			em.AddComponent(emitter.value);
 		});
 	}
 	
@@ -101,7 +101,7 @@ public class MBGScene extends BossSpell {
 	@Override
 	public void end() {
 		bulletEmitters.forEach((emitter) -> {
-			emitter.Kill();
+			emitter.value.Kill();
 		});
 	}
 }

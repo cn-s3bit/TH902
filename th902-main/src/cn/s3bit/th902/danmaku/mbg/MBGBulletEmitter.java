@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.ObjectMap;
+import com.badlogic.gdx.utils.ObjectSet;
 
 import cn.s3bit.mbgparser.event.CommandAction;
 import cn.s3bit.mbgparser.event.DataOperateAction;
@@ -19,6 +20,7 @@ import cn.s3bit.th902.gamecontents.Entity;
 import cn.s3bit.th902.gamecontents.components.Component;
 import cn.s3bit.th902.gamecontents.components.ImageRenderer;
 import cn.s3bit.th902.gamecontents.components.Transform;
+import cn.s3bit.th902.gamecontents.components.ai.IMoveFunction;
 import cn.s3bit.th902.gamecontents.components.ai.MoveBasic;
 
 import static cn.s3bit.th902.GameHelper.getValFromRandom;
@@ -34,6 +36,7 @@ public class MBGBulletEmitter extends Component {
 	public int timerBegin;
 	public int life;
 	public Transform transform;
+	public ObjectSet<Transform> subEmitters = new ObjectSet<>();
 	public MoveBasic moveBasic;
 	
 	public float nextEmit = 0;
@@ -58,6 +61,8 @@ public class MBGBulletEmitter extends Component {
 		entity.AddComponent(transform);
 		moveBasic = new MoveBasic(0, 0);
 		entity.AddComponent(moveBasic);
+		if (bulletEmitter.绑定状态.Child == null)
+			subEmitters.add(transform);
 	}
 
 	@Override
@@ -88,16 +93,18 @@ public class MBGBulletEmitter extends Component {
 	
 	public void emit() {
 		emitTimer = 0;
-		int count = Math.round(getValFromRandom(bulletEmitter.条数));
-		float angle, range;
-		if (bulletEmitter.发射角度.baseValue == -99999f)
-			angle = -GameHelper.snipeVct(getPosition(), null, MathUtils.random(-bulletEmitter.发射角度.randValue, bulletEmitter.发射角度.randValue), new Vector2()).angle();
-		else
-			angle = getValFromRandom(bulletEmitter.发射角度);
-		range = getValFromRandom(bulletEmitter.范围);
-		for (int i = 0; i < count; i++) {
-			emitOne(angle);
-			angle += range / count;
+		for (Transform sub : subEmitters) {
+			int count = Math.round(getValFromRandom(bulletEmitter.条数));
+			float angle, range;
+			if (bulletEmitter.发射角度.baseValue == -99999f)
+				angle = -GameHelper.snipeVct(getPosition(sub), null, MathUtils.random(-bulletEmitter.发射角度.randValue, bulletEmitter.发射角度.randValue), IMoveFunction.vct2_tmp1).angle();
+			else
+				angle = getValFromRandom(bulletEmitter.发射角度);
+			range = getValFromRandom(bulletEmitter.范围);
+			for (int i = 0; i < count; i++) {
+				emitOne(angle, sub);
+				angle += range / count;
+			}
 		}
 		nextEmit = getValFromRandom(bulletEmitter.周期);
 	}
@@ -110,21 +117,21 @@ public class MBGBulletEmitter extends Component {
 		return -(y - mbgScene.mbgData.center.Position.y) * 360f / 240f + 360f;
 	}
 	
-	Vector2 getPosition() {
+	Vector2 getPosition(Transform sub) {
 		float x, y;
 		x = bulletEmitter.发射坐标.x;
 		y = bulletEmitter.发射坐标.y;
-		if (x == -99998f) x = transform.position.x;
+		if (x == -99998f) x = sub.position.x;
 		else x = transformX(x);
-		if (y == -99998f) y = transform.position.y;
+		if (y == -99998f) y = sub.position.y;
 		else y = transformY(y);
 		return new Vector2(x, y);
 	}
 
-	public Entity emitOne(float angle) {
+	public Entity emitOne(float angle, Transform sub) {
 		float radius = getValFromRandom(bulletEmitter.半径);
 		float radiusDir = getValFromRandom(bulletEmitter.半径方向);
-		Vector2 emitPosition = new Vector2(radius, 0).rotate(-radiusDir).add(getPosition());
+		Vector2 emitPosition = new Vector2(radius, 0).rotate(-radiusDir).add(getPosition(sub));
 		
 		float bulletSpeed = getValFromRandom(bulletEmitter.子弹运动.motion.speed);
 		float bulletAcc, bulletAccDir;
@@ -139,7 +146,7 @@ public class MBGBulletEmitter extends Component {
 		bullet.AddComponent(new Transform(emitPosition, bulletRotation, bulletScale));
 		bullet.AddComponent(new ImageRenderer(ResourceManager.barrages.get(MBGBulletTypeMap.TYPE_MAP.get(bulletEmitter.子弹类型)), -1).attachToGroup(layer));
 		bullet.AddComponent(new MoveBasic(emitVelocity, emitAcc));
-		bullet.AddComponent(new MBGBullet(bulletEmitter));
+		bullet.AddComponent(new MBGBullet(this));
 		return bullet; //TODO: 坐标指定
 	}
 	
