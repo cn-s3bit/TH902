@@ -1,13 +1,16 @@
 package cn.s3bit.mbgparser.item;
 
+import java.io.Serializable;
 import java.util.*;
 
 import cn.s3bit.mbgparser.*;
 import cn.s3bit.mbgparser.event.*;
 import static cn.s3bit.mbgparser.MBGUtils.*;
 
-public class Mask implements BindState.IBindable
+public class Mask implements BindState.IBindable, Serializable
 {
+	private static final long serialVersionUID = -8912215868589722952L;
+
 	public int ID, 层ID;
 
 	public BindState 绑定状态 = new BindState();

@@ -1,10 +1,13 @@
 package cn.s3bit.mbgparser.event;
 
+import java.io.Serializable;
+
 import cn.s3bit.mbgparser.MRef;
 import cn.s3bit.mbgparser.ValueWithRand;
 
-public final class DataOperateAction implements IAction
+public final class DataOperateAction implements IAction, Serializable
 {
+	private static final long serialVersionUID = 1545499890916102512L;
 	public String LValue;
 	public int TweenTime;
 	public Integer Times;

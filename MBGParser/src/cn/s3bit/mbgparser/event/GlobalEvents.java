@@ -2,14 +2,17 @@ package cn.s3bit.mbgparser.event;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.*;
 
 import cn.s3bit.mbgparser.MRef;
 
 import static cn.s3bit.mbgparser.MBGUtils.*;
 
-public final class GlobalEvents
+public final class GlobalEvents implements Serializable
 {
+	private static final long serialVersionUID = -6905477017005294959L;
+
 	public int Frame;
 
 	public boolean JumpEnabled;

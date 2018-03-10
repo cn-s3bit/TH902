@@ -1,12 +1,14 @@
 package cn.s3bit.mbgparser;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.s3bit.mbgparser.event.Event;
 import static cn.s3bit.mbgparser.MBGUtils.*;
 
-public class Center {
+public class Center implements Serializable {
+	private static final long serialVersionUID = 3054405540483486012L;
 	public Position<Float> Position = new Position<>();
 	public Motion<Float> Motion = new Motion<>();
 

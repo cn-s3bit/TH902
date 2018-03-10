@@ -5,10 +5,13 @@ import static cn.s3bit.mbgparser.MBGUtils.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.Serializable;
 import java.io.StringReader;
 import java.util.List;
 
-public class MBGData {
+public class MBGData implements Serializable {
+	private static final long serialVersionUID = -3992538276978130700L;
+
 	public String version;
 
 	public int totalFrame;
@@ -80,12 +83,8 @@ public class MBGData {
 	{
 		BufferedReader mbg = new BufferedReader(new StringReader(mbgData));
 
-		MBGData data = new MBGData()
-		{
-			{
-				version = mbg.readLine();
-			}
-		};
+		MBGData data = new MBGData();
+		data.version = mbg.readLine();
 
 		if (!data.version.equals("Crazy Storm Data 1.01"))
 			throw new RuntimeException("未知版本的CrazyStorm数据。");

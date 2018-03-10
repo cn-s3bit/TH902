@@ -1,13 +1,16 @@
 package cn.s3bit.mbgparser.item;
 
+import java.io.Serializable;
 import java.util.*;
 
 import cn.s3bit.mbgparser.*;
 import cn.s3bit.mbgparser.event.*;
 import static cn.s3bit.mbgparser.MBGUtils.*;
 
-public final class ReflexBoard
+public final class ReflexBoard implements Serializable
 {
+	private static final long serialVersionUID = 544785209142328602L;
+
 	public int ID, 层ID;
 
 	public Position<Float> 位置坐标 = new Position<>();

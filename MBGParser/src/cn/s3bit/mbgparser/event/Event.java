@@ -1,13 +1,15 @@
 package cn.s3bit.mbgparser.event;
 
+import java.io.Serializable;
 import java.util.*;
 
 import cn.s3bit.mbgparser.MRef;
 
 import static cn.s3bit.mbgparser.MBGUtils.*;
 
-public final class Event
+public final class Event implements Serializable
 {
+	private static final long serialVersionUID = -8595697852224548065L;
 	public Condition condition = new Condition();
 	public IAction action;
 

@@ -1,9 +1,15 @@
 package cn.s3bit.mbgparser.event;
 
-public final class Condition
+import java.io.Serializable;
+
+public final class Condition implements Serializable
 {
-	public final static class Expression
+	private static final long serialVersionUID = -4135361251567337078L;
+
+	public final static class Expression implements Serializable
 	{
+		private static final long serialVersionUID = 1046130787732674786L;
+
 		public enum OpType
 		{
 			Greater,
@@ -65,8 +71,10 @@ public final class Condition
 		}
 	}
 
-	public final static class SecondCondition
+	public final static class SecondCondition implements Serializable
 	{
+		private static final long serialVersionUID = 5205827058150495298L;
+
 		public enum LogicOpType
 		{
 			And,

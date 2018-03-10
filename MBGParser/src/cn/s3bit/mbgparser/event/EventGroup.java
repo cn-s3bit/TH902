@@ -1,13 +1,15 @@
 package cn.s3bit.mbgparser.event;
 
+import java.io.Serializable;
 import java.util.*;
 
 import cn.s3bit.mbgparser.MRef;
 
 import static cn.s3bit.mbgparser.MBGUtils.*;
 
-public final class EventGroup
+public final class EventGroup implements Serializable
 {
+	private static final long serialVersionUID = 5168722440416945163L;
 	public String Name;
 	public int Interval, IntervalIncrement;
 

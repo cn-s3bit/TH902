@@ -2,14 +2,16 @@ package cn.s3bit.mbgparser;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.s3bit.mbgparser.item.*;
 import static cn.s3bit.mbgparser.MBGUtils.*;
 
-public class Layer
+public class Layer implements Serializable
 {
+	private static final long serialVersionUID = 3131693177240044800L;
 	public String name;
 	public Life life = new Life();
 

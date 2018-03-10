@@ -2,12 +2,14 @@ package cn.s3bit.mbgparser;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import static cn.s3bit.mbgparser.MBGUtils.*;
 
-public class Sound {
+public class Sound implements Serializable {
+	private static final long serialVersionUID = -6187293338097279439L;
 	public int BulletType;
 	public String FileName;
 	public float Volume;

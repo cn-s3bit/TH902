@@ -1,13 +1,16 @@
 package cn.s3bit.mbgparser.item;
 
+import java.io.Serializable;
 import java.util.*;
 
 import cn.s3bit.mbgparser.*;
 import cn.s3bit.mbgparser.event.*;
 import static cn.s3bit.mbgparser.MBGUtils.*;
 
-public class LazerEmitter implements BindState.IBindable
+public class LazerEmitter implements BindState.IBindable, Serializable
 {
+	private static final long serialVersionUID = 8232161927352987333L;
+
 	public int ID, 层ID;
 
 	public BindState 绑定状态 = new BindState();

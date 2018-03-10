@@ -1,13 +1,16 @@
 package cn.s3bit.mbgparser.item;
 
+import java.io.Serializable;
 import java.util.*;
 
 import cn.s3bit.mbgparser.*;
 import cn.s3bit.mbgparser.event.*;
 import static cn.s3bit.mbgparser.MBGUtils.*;
 
-public class BulletEmitter implements BindState.IBindable
+public class BulletEmitter implements BindState.IBindable, Serializable
 {
+	private static final long serialVersionUID = -7994028193621656916L;
+
 	public int ID, 层ID;
 
 	public BindState 绑定状态 = new BindState();
@@ -53,10 +56,15 @@ public class BulletEmitter implements BindState.IBindable
 	public ArrayList<EventGroup> 发射器事件组 = new ArrayList<>(), 子弹事件组 = new ArrayList<>();
 
 	public boolean 遮罩, 反弹板, 力场;
+	
+	public String stringData;
+	public Layer layer;
 
 	public static Tuple<BulletEmitter, Action> parseFrom(String content, Layer layer)
 	{
 		BulletEmitter e = new BulletEmitter();
+		e.stringData = content;
+		e.layer = layer;
 		MRef<String> tempRef_content = new MRef<String>(content);
 		e.ID = readInt(tempRef_content);
 		e.层ID = readInt(tempRef_content);

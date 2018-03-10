@@ -1,9 +1,11 @@
 package cn.s3bit.mbgparser.event;
 
+import java.io.Serializable;
 import java.util.*;
 
-public final class CommandAction implements IAction
+public final class CommandAction implements IAction, Serializable
 {
+	private static final long serialVersionUID = -1880878601938661893L;
 	public String Command;
 	public ArrayList<String> Arguments;
 

@@ -1,7 +1,10 @@
 package cn.s3bit.mbgparser.item;
 
-public class BindState
+import java.io.Serializable;
+
+public class BindState implements Serializable
 {
+	private static final long serialVersionUID = 1979943698149811061L;
 	public interface IBindable
 	{
 	}

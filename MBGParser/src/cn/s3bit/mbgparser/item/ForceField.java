@@ -3,8 +3,12 @@ package cn.s3bit.mbgparser.item;
 import cn.s3bit.mbgparser.*;
 import static cn.s3bit.mbgparser.MBGUtils.*;
 
-public final class ForceField
+import java.io.Serializable;
+
+public final class ForceField implements Serializable
 {
+	private static final long serialVersionUID = -9085004502585367167L;
+
 	public int ID, 层ID;
 
 	public Position<Float> 位置坐标 = new Position<>();
