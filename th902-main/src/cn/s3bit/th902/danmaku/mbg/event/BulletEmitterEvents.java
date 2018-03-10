@@ -56,6 +56,8 @@ public final class BulletEmitterEvents implements IEventFirer<AbstractMBGCompone
 		case "加速度方向":
 			break; 
 		case "生命":
+			task.lastVal = emitter.mbgItem.子弹生命 + getFloatDelta(task);
+			emitter.mbgItem.子弹生命 = (int) task.lastVal;
 			break; 
 		case "类型":
 			break; 
@@ -74,8 +76,10 @@ public final class BulletEmitterEvents implements IEventFirer<AbstractMBGCompone
 		case "朝向":
 			break; 
 		case "子弹速度":
+			applyValueWithRand(emitter.mbgItem.子弹运动.motion.speed, task);
 			break; 
 		case "子弹速度方向":
+			applyValueWithRand(emitter.mbgItem.子弹运动.motion.speedDirection, task);
 			break; 
 		case "子弹加速度":
 			break; 

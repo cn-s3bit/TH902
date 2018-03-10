@@ -85,7 +85,7 @@ public class MBGBulletEmitter extends AbstractMBGComponent<BulletEmitter> {
 				angle = getValFromRandom(mbgItem.发射角度);
 			range = getValFromRandom(mbgItem.范围);
 			for (int i = 0; i < count; i++) {
-				emitOne(angle, sub);
+				emitOne(angle - range / count * ((count - 1) / 2f), sub);
 				angle += range / count;
 			}
 		}
