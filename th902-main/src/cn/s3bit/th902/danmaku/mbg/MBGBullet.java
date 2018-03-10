@@ -15,7 +15,9 @@ import cn.s3bit.th902.danmaku.mbg.event.BulletEvents;
 import cn.s3bit.th902.danmaku.mbg.event.BulletLValues;
 import cn.s3bit.th902.danmaku.mbg.event.IEventFirer;
 import cn.s3bit.th902.danmaku.mbg.event.ILValueProvider;
+import cn.s3bit.th902.gamecontents.Entity;
 import cn.s3bit.th902.gamecontents.JudgingSystem;
+import cn.s3bit.th902.gamecontents.components.ImageRenderer;
 import cn.s3bit.th902.gamecontents.components.enemy.EnemyJudgeCircle;
 
 public class MBGBullet extends AbstractMBGComponent<BulletEmitter> {
@@ -25,6 +27,8 @@ public class MBGBullet extends AbstractMBGComponent<BulletEmitter> {
 	
 	public EnemyJudgeCircle judgeCircle;
 	
+	public ImageRenderer renderer;
+	
 	public int timeCont = 0;
 	
 	public MBGBullet(MBGBulletEmitter bulletEmitter) {
@@ -32,6 +36,10 @@ public class MBGBullet extends AbstractMBGComponent<BulletEmitter> {
 		emitter = bulletEmitter;
 		timeCont = bulletEmitter.mbgItem.子弹生命;
 		judgeCircle = new EnemyJudgeCircle(MBGBulletTypeMap.JUDGE_SIZE_MAP.get(bulletEmitter.mbgItem.子弹类型, 2f) * Math.min(mbgItem.宽比, mbgItem.高比));
+		color.r = mbgItem.子弹颜色.R / 255f;
+		color.g = mbgItem.子弹颜色.G / 255f;
+		color.b = mbgItem.子弹颜色.B / 255f;
+		color.a = mbgItem.子弹颜色.A / 100f;
 	}
 	
 	@Override
@@ -63,6 +71,13 @@ public class MBGBullet extends AbstractMBGComponent<BulletEmitter> {
 	public Vector2 getInitialPosition() {
 		return transform.position.cpy();
 	}
+	
+	@Override
+	public void Initialize(Entity entity) {
+		super.Initialize(entity);
+		renderer = entity.GetComponent(ImageRenderer.class);
+		renderer.image.setColor(color);
+	}
 
 	@Override
 	public void begin() {
@@ -87,6 +102,7 @@ public class MBGBullet extends AbstractMBGComponent<BulletEmitter> {
 
 	@Override
 	public void during() {
+		renderer.image.setColor(color);
 		if (mbgItem.出屏即消 && FightScreen.isOutOfScreen(transform.position)) {
 			entity.Destroy();
 		}
