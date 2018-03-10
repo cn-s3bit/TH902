@@ -79,6 +79,7 @@ public class MBGBulletEmitter extends Component {
 		} else if (timerBegin == bulletEmitter.生命.begin) {
 			timerBegin++;
 			life = 0;
+			nextEmit = getValFromRandom(bulletEmitter.周期);
 			if (!bulletEmitter.绑定状态.Depth) {
 				moveBasic.velocity
 					.set(getValFromRandom(bulletEmitter.发射器运动.motion.speed), 0)

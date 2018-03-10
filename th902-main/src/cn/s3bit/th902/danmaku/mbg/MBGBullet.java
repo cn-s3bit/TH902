@@ -38,6 +38,7 @@ public class MBGBullet extends Component {
 					if (depthBinded == null)
 						depthBinded = new ObjectSet<MBGBulletEmitter>();
 					Tuple<BulletEmitter, Action> bulletEmitter = BulletEmitter.parseFrom(((BulletEmitter) sub.value.bulletEmitter.绑定状态.Child).stringData, emitter.bulletEmitter.layer);
+					bulletEmitter.Item1.绑定状态.Depth = true;
 					MBGBulletEmitter depth = new MBGBulletEmitter(bulletEmitter.Item1, emitter.mbgScene, emitter.layer);
 					depth.Initialize(entity);
 					depthBinded.add(depth);
