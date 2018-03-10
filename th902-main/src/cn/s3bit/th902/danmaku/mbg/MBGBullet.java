@@ -2,7 +2,11 @@ package cn.s3bit.th902.danmaku.mbg;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.utils.IntMap.Entry;
+import com.badlogic.gdx.utils.ObjectSet;
 
+import cn.s3bit.mbgparser.Action;
+import cn.s3bit.mbgparser.Tuple;
+import cn.s3bit.mbgparser.item.BulletEmitter;
 import cn.s3bit.th902.FightScreen;
 import cn.s3bit.th902.gamecontents.Entity;
 import cn.s3bit.th902.gamecontents.components.Component;
@@ -16,8 +20,7 @@ public class MBGBullet extends Component {
 	public MoveBasic moveBasic;
 	public Transform transform;
 	public Entity entity;
-	
-	public MBGBulletEmitter binded = null;
+	public ObjectSet<MBGBulletEmitter> depthBinded = null;
 	
 	public MBGBullet(MBGBulletEmitter bulletEmitter) {
 		emitter = bulletEmitter;
@@ -31,8 +34,16 @@ public class MBGBullet extends Component {
 		life = 0;
 		for (Entry<MBGBulletEmitter> sub : emitter.mbgScene.bulletEmitters) {
 			if (sub.value.bulletEmitter.绑定状态.Parent == emitter.bulletEmitter) {
-				binded = sub.value;
-				binded.subEmitters.add(transform);
+				if (sub.value.bulletEmitter.绑定状态.Depth) {
+					if (depthBinded == null)
+						depthBinded = new ObjectSet<MBGBulletEmitter>();
+					Tuple<BulletEmitter, Action> bulletEmitter = BulletEmitter.parseFrom(((BulletEmitter) sub.value.bulletEmitter.绑定状态.Child).stringData, emitter.bulletEmitter.layer);
+					MBGBulletEmitter depth = new MBGBulletEmitter(bulletEmitter.Item1, emitter.mbgScene, emitter.layer);
+					depth.Initialize(entity);
+					depthBinded.add(depth);
+				}
+				else
+					sub.value.subEmitters.add(transform);
 			}
 		}
 	}
@@ -43,10 +54,24 @@ public class MBGBullet extends Component {
 			entity.Destroy();
 		}
 		life++;
-		if (life >= emitter.bulletEmitter.子弹生命) {
+		transform.rotation = 270 + moveBasic.velocity.angle();
+		if (depthBinded != null) {
+			for (MBGBulletEmitter mbgBulletEmitter : depthBinded) {
+				mbgBulletEmitter.Update();
+			}
+		}
+		if (life > emitter.bulletEmitter.子弹生命) {
 			entity.Destroy();
 		}
-		transform.rotation = -90 - moveBasic.velocity.angle();
 	}
 
+	@Override
+	public void Kill() {
+		if (depthBinded != null) {
+			for (MBGBulletEmitter mbgBulletEmitter : depthBinded) {
+				mbgBulletEmitter.Kill();
+			}
+		}
+		super.Kill();
+	}
 }

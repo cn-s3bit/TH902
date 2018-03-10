@@ -17,7 +17,7 @@ public class MBGEventTask {
 		originClone.baseValue = origin.baseValue;
 		originClone.randValue = origin.randValue;
 		if (originClone.baseValue == -99999f) {
-			originClone.baseValue = -GameHelper.snipeVct(emitter.getPosition(), null, 0, new Vector2()).angle();
+			originClone.baseValue = -GameHelper.snipeVct(emitter.getPosition(emitter.transform), null, 0, new Vector2()).angle();
 		}
 		origin = originClone;
 		if (action.RValue.baseValue == -99999f) {

@@ -26,6 +26,7 @@ import cn.s3bit.th902.gamecontents.components.ai.MoveBasic;
 import static cn.s3bit.th902.GameHelper.getValFromRandom;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -54,13 +55,18 @@ public class MBGBulletEmitter extends Component {
 	public void Initialize(Entity entity) {
 		this.entity = entity;
 		timerBegin = 0;
-		transform = new Transform(
-				new Vector2(transformX(getValFromRandom(bulletEmitter.位置坐标.x)),
-							transformY(getValFromRandom(bulletEmitter.位置坐标.y)))
-			);
-		entity.AddComponent(transform);
-		moveBasic = new MoveBasic(0, 0);
-		entity.AddComponent(moveBasic);
+		if ((transform = entity.GetComponent(Transform.class)) == null) {
+			transform = new Transform(
+					new Vector2(transformX(getValFromRandom(bulletEmitter.位置坐标.x)),
+								transformY(getValFromRandom(bulletEmitter.位置坐标.y)))
+				);
+			entity.AddComponent(transform);
+		}
+		if ((moveBasic = entity.GetComponent(MoveBasic.class)) == null) {
+			moveBasic = new MoveBasic(0, 0);
+			entity.AddComponent(moveBasic);
+		}
+		
 		if (bulletEmitter.绑定状态.Child == null)
 			subEmitters.add(transform);
 	}
@@ -73,13 +79,15 @@ public class MBGBulletEmitter extends Component {
 		} else if (timerBegin == bulletEmitter.生命.begin) {
 			timerBegin++;
 			life = 0;
-			moveBasic.velocity
-				.set(getValFromRandom(bulletEmitter.发射器运动.motion.speed), 0)
-				.rotate(-getValFromRandom(bulletEmitter.发射器运动.motion.speedDirection));
-			moveBasic.acc
-				.set(getValFromRandom(bulletEmitter.发射器运动.motion.acceleration), 0)
-				.rotate(-getValFromRandom(bulletEmitter.发射器运动.motion.accelerationDirection));
-		} else if (life >= bulletEmitter.生命.lifeTime) {
+			if (!bulletEmitter.绑定状态.Depth) {
+				moveBasic.velocity
+					.set(getValFromRandom(bulletEmitter.发射器运动.motion.speed), 0)
+					.rotate(-getValFromRandom(bulletEmitter.发射器运动.motion.speedDirection));
+				moveBasic.acc
+					.set(getValFromRandom(bulletEmitter.发射器运动.motion.acceleration), 0)
+					.rotate(-getValFromRandom(bulletEmitter.发射器运动.motion.accelerationDirection));
+			}
+		} else if (life > bulletEmitter.生命.lifeTime) {
 			//TODO: After Death
 		} else {
 			emitTimer++;
@@ -93,7 +101,11 @@ public class MBGBulletEmitter extends Component {
 	
 	public void emit() {
 		emitTimer = 0;
-		for (Transform sub : subEmitters) {
+		for (Iterator<Transform> iterator = subEmitters.iterator(); iterator.hasNext();) {
+			Transform sub = (Transform) iterator.next();
+			if (sub.isDead()) {
+				iterator.remove();
+			}
 			int count = Math.round(getValFromRandom(bulletEmitter.条数));
 			float angle, range;
 			if (bulletEmitter.发射角度.baseValue == -99999f)
@@ -139,6 +151,9 @@ public class MBGBulletEmitter extends Component {
 		bulletAcc = getValFromRandom(bulletEmitter.子弹运动.motion.acceleration);
 		bulletAccDir = getValFromRandom(bulletEmitter.子弹运动.motion.accelerationDirection);
 		Vector2 emitVelocity = new Vector2(bulletSpeed, 0).rotate(-angle);
+		if (bulletEmitter.绑定状态.Relative) {
+			emitVelocity.rotate(sub.rotation - 270);
+		}
 		Vector2 emitAcc = new Vector2(bulletAcc, 0).rotate(-bulletAccDir);
 		float bulletRotation = 270 + (bulletEmitter.朝向与速度方向相同 ? emitVelocity.angle() : getValFromRandom(bulletEmitter.朝向));
 		
@@ -153,7 +168,6 @@ public class MBGBulletEmitter extends Component {
 	@Override
 	public void Kill() {
 		super.Kill();
-		entity.Destroy();
 	}
 	
 	public ObjectMap<EventGroup, ArrayList<MBGEventTask>> eventTasks = new ObjectMap<>();
