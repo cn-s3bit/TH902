@@ -23,7 +23,7 @@ public class BulletLValues implements ILValueProvider<AbstractMBGComponent<Bulle
 			ret.baseValue = -bullet.moveBasic.acc.angle();
 			break;
 		default:
-			System.err.println("Warning: Unimplemented");
+			System.err.println("Warning: Unimplemented - " + action.LValue);
 			break;
 		}
 		return ret;

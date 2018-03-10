@@ -88,7 +88,7 @@ public final class BulletEmitterEvents implements IEventFirer<AbstractMBGCompone
 		case "出屏即消":
 			break;
 		default:
-			System.err.println("Warning: Unimplemented");
+			System.err.println("Warning: Unimplemented - " + task.action.LValue);
 			break;
 		}
 	}
