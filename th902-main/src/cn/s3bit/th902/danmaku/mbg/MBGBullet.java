@@ -21,9 +21,12 @@ public class MBGBullet extends AbstractMBGComponent<BulletEmitter> {
 	public Color color = new Color(1f, 1f, 1f, 1f);
 	public ObjectSet<MBGBulletEmitter> depthBinded = null;
 	
+	public int timeCont = 0;
+	
 	public MBGBullet(MBGBulletEmitter bulletEmitter) {
 		super(bulletEmitter.mbgItem, bulletEmitter.mbgScene, bulletEmitter.layer);
 		emitter = bulletEmitter;
+		timeCont = bulletEmitter.mbgItem.子弹生命;
 	}
 	
 	@Override
@@ -48,7 +51,7 @@ public class MBGBullet extends AbstractMBGComponent<BulletEmitter> {
 
 	@Override
 	public int getLife() {
-		return mbgItem.子弹生命;
+		return timeCont;
 	}
 
 	@Override
@@ -77,18 +80,17 @@ public class MBGBullet extends AbstractMBGComponent<BulletEmitter> {
 
 	@Override
 	public void during() {
-		if (depthBinded != null) {
-			for (MBGBulletEmitter mbgBulletEmitter : depthBinded) {
-				mbgBulletEmitter.Update();
-			}
-		}
 		if (mbgItem.出屏即消 && FightScreen.isOutOfScreen(transform.position)) {
 			entity.Destroy();
 		}
-		transform.rotation = 270 + moveBasic.velocity.angle();
-		runEventGroups(mbgItem.子弹事件组, life);
-		if (life > mbgItem.子弹生命) {
-			entity.Destroy();
+		else {
+			transform.rotation = 270 + moveBasic.velocity.angle();
+			runEventGroups(mbgItem.子弹事件组, life);
+			if (depthBinded != null) {
+				for (MBGBulletEmitter mbgBulletEmitter : depthBinded) {
+					mbgBulletEmitter.Update();
+				}
+			}
 		}
 	}
 

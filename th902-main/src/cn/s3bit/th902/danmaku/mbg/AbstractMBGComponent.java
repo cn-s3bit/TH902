@@ -64,8 +64,8 @@ public abstract class AbstractMBGComponent<T> extends Component {
 		} else if (life > getLife()) {
 			after();
 		} else {
-			life++;
 			during();
+			life++;
 		}
 	}
 	
