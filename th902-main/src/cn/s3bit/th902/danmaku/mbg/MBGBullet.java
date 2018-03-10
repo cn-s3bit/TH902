@@ -1,6 +1,7 @@
 package cn.s3bit.th902.danmaku.mbg;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.IntMap.Entry;
 import com.badlogic.gdx.utils.ObjectSet;
 
@@ -8,36 +9,61 @@ import cn.s3bit.mbgparser.Action;
 import cn.s3bit.mbgparser.Tuple;
 import cn.s3bit.mbgparser.item.BulletEmitter;
 import cn.s3bit.th902.FightScreen;
-import cn.s3bit.th902.gamecontents.Entity;
-import cn.s3bit.th902.gamecontents.components.Component;
-import cn.s3bit.th902.gamecontents.components.Transform;
-import cn.s3bit.th902.gamecontents.components.ai.MoveBasic;
+import cn.s3bit.th902.danmaku.mbg.condition.BulletConditions;
+import cn.s3bit.th902.danmaku.mbg.condition.IConditionJudger;
+import cn.s3bit.th902.danmaku.mbg.event.BulletEvents;
+import cn.s3bit.th902.danmaku.mbg.event.BulletLValues;
+import cn.s3bit.th902.danmaku.mbg.event.IEventFirer;
+import cn.s3bit.th902.danmaku.mbg.event.ILValueProvider;
 
-public class MBGBullet extends Component {
+public class MBGBullet extends AbstractMBGComponent<BulletEmitter> {
 	public MBGBulletEmitter emitter;
-	public int life;
 	public Color color = new Color(1f, 1f, 1f, 1f);
-	public MoveBasic moveBasic;
-	public Transform transform;
-	public Entity entity;
 	public ObjectSet<MBGBulletEmitter> depthBinded = null;
 	
 	public MBGBullet(MBGBulletEmitter bulletEmitter) {
+		super(bulletEmitter.mbgItem, bulletEmitter.mbgScene, bulletEmitter.layer);
 		emitter = bulletEmitter;
 	}
 	
 	@Override
-	public void Initialize(Entity entity) {
-		this.entity = entity;
-		moveBasic = entity.GetComponent(MoveBasic.class);
-		transform = entity.GetComponent(Transform.class);
-		life = 0;
+	public IEventFirer<AbstractMBGComponent<BulletEmitter>> getEventFirer() {
+		return BulletEvents.instance;
+	}
+
+	@Override
+	public IConditionJudger<AbstractMBGComponent<BulletEmitter>> getConditionJudger() {
+		return BulletConditions.instance;
+	}
+
+	@Override
+	public ILValueProvider<AbstractMBGComponent<BulletEmitter>> getLValueProvider() {
+		return BulletLValues.instance;
+	}
+
+	@Override
+	public int getBeginTime() {
+		return 0;
+	}
+
+	@Override
+	public int getLife() {
+		return mbgItem.子弹生命;
+	}
+
+	@Override
+	public Vector2 getInitialPosition() {
+		return transform.position.cpy();
+	}
+
+	@Override
+	public void begin() {
 		for (Entry<MBGBulletEmitter> sub : emitter.mbgScene.bulletEmitters) {
-			if (sub.value.bulletEmitter.绑定状态.Parent == emitter.bulletEmitter) {
-				if (sub.value.bulletEmitter.绑定状态.Depth) {
+			if (sub.value.mbgItem.绑定状态.Parent == emitter.mbgItem) {
+				if (sub.value.mbgItem.绑定状态.Depth) {
 					if (depthBinded == null)
 						depthBinded = new ObjectSet<MBGBulletEmitter>();
-					Tuple<BulletEmitter, Action> bulletEmitter = BulletEmitter.parseFrom(((BulletEmitter) sub.value.bulletEmitter.绑定状态.Child).stringData, emitter.bulletEmitter.layer);
+					Tuple<BulletEmitter, Action> bulletEmitter = BulletEmitter.parseFrom(((BulletEmitter) sub.value.mbgItem.绑定状态.Child).stringData, emitter.mbgItem.layer);
 					bulletEmitter.Item1.绑定状态.Depth = true;
 					MBGBulletEmitter depth = new MBGBulletEmitter(bulletEmitter.Item1, emitter.mbgScene, emitter.layer);
 					depth.Initialize(entity);
@@ -50,29 +76,29 @@ public class MBGBullet extends Component {
 	}
 
 	@Override
-	public void Update() {
-		if (emitter.bulletEmitter.出屏即消 && FightScreen.isOutOfScreen(transform.position)) {
-			entity.Destroy();
-		}
-		life++;
-		transform.rotation = 270 + moveBasic.velocity.angle();
+	public void during() {
 		if (depthBinded != null) {
 			for (MBGBulletEmitter mbgBulletEmitter : depthBinded) {
 				mbgBulletEmitter.Update();
 			}
 		}
-		if (life > emitter.bulletEmitter.子弹生命) {
+		if (mbgItem.出屏即消 && FightScreen.isOutOfScreen(transform.position)) {
+			entity.Destroy();
+		}
+		transform.rotation = 270 + moveBasic.velocity.angle();
+		runEventGroups(mbgItem.子弹事件组, life);
+		if (life > mbgItem.子弹生命) {
 			entity.Destroy();
 		}
 	}
 
 	@Override
-	public void Kill() {
+	public void after() {
 		if (depthBinded != null) {
 			for (MBGBulletEmitter mbgBulletEmitter : depthBinded) {
 				mbgBulletEmitter.Kill();
 			}
 		}
-		super.Kill();
+		entity.Destroy();
 	}
 }

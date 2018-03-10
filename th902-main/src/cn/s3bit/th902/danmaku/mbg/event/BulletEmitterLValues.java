@@ -2,13 +2,15 @@ package cn.s3bit.th902.danmaku.mbg.event;
 
 import cn.s3bit.mbgparser.ValueWithRand;
 import cn.s3bit.mbgparser.event.DataOperateAction;
-import cn.s3bit.th902.danmaku.mbg.MBGBulletEmitter;
+import cn.s3bit.mbgparser.item.BulletEmitter;
+import cn.s3bit.th902.danmaku.mbg.AbstractMBGComponent;
 
 import static cn.s3bit.th902.danmaku.mbg.condition.BulletEmitterConditions.transformBackX;
 import static cn.s3bit.th902.danmaku.mbg.condition.BulletEmitterConditions.transformBackY;
 
-public class BulletEmitterLValues {
-	public static ValueWithRand getCurrentVal(DataOperateAction action, MBGBulletEmitter emitter) {
+public class BulletEmitterLValues implements ILValueProvider<AbstractMBGComponent<BulletEmitter>> {
+	public static final BulletEmitterLValues instance = new BulletEmitterLValues();
+	public ValueWithRand getCurrentVal(DataOperateAction action, AbstractMBGComponent<BulletEmitter> emitter) {
 		ValueWithRand ret = new ValueWithRand();
 		switch (action.LValue) {
 			case "X坐标":
@@ -18,17 +20,17 @@ public class BulletEmitterLValues {
 				ret.baseValue = transformBackY(emitter.mbgScene, emitter.transform.position.y);
 				break;
 			case "半径":
-				return emitter.bulletEmitter.半径;
+				return emitter.mbgItem.半径;
 			case "半径方向":
-				return emitter.bulletEmitter.半径方向;
+				return emitter.mbgItem.半径方向;
 			case "条数":
-				return emitter.bulletEmitter.条数;
+				return emitter.mbgItem.条数;
 			case "周期":
-				return emitter.bulletEmitter.周期;
+				return emitter.mbgItem.周期;
 			case "角度":
-				return emitter.bulletEmitter.发射角度;
+				return emitter.mbgItem.发射角度;
 			case "范围":
-				return emitter.bulletEmitter.范围;
+				return emitter.mbgItem.范围;
 			case "速度":
 				break; 
 			case "速度方向":

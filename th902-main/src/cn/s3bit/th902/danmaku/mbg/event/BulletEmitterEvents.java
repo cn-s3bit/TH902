@@ -6,6 +6,8 @@ import cn.s3bit.mbgparser.ValueWithRand;
 import cn.s3bit.mbgparser.event.CommandAction;
 import cn.s3bit.mbgparser.event.DataOperateAction.OperatorType;
 import cn.s3bit.mbgparser.event.DataOperateAction.TweenFunctionType;
+import cn.s3bit.mbgparser.item.BulletEmitter;
+import cn.s3bit.th902.danmaku.mbg.AbstractMBGComponent;
 import cn.s3bit.th902.danmaku.mbg.MBGBulletEmitter;
 import cn.s3bit.th902.danmaku.mbg.MBGEventTask;
 import cn.s3bit.th902.danmaku.mbg.MBGScene;
@@ -13,8 +15,9 @@ import cn.s3bit.th902.danmaku.mbg.MBGScene;
 import static cn.s3bit.th902.danmaku.mbg.condition.BulletEmitterConditions.transformBackX;
 import static cn.s3bit.th902.danmaku.mbg.condition.BulletEmitterConditions.transformBackY;
 
-public final class BulletEmitterEvents {
-	public static void fireDataOperation(MBGBulletEmitter emitter, MBGEventTask task) {
+public final class BulletEmitterEvents implements IEventFirer<AbstractMBGComponent<BulletEmitter>> {
+	public static final BulletEmitterEvents instance = new BulletEmitterEvents();
+	public void fireDataOperation(AbstractMBGComponent<BulletEmitter> emitter, MBGEventTask task) {
 		switch (task.action.LValue) {
 		case "X坐标":
 			emitter.transform.position.x = transformX(emitter.mbgScene,
@@ -27,22 +30,22 @@ public final class BulletEmitterEvents {
 				);
 			break;
 		case "半径":
-			applyValueWithRand(emitter.bulletEmitter.半径, task);
+			applyValueWithRand(emitter.mbgItem.半径, task);
 			break;
 		case "半径方向":
-			applyValueWithRand(emitter.bulletEmitter.半径方向, task);
+			applyValueWithRand(emitter.mbgItem.半径方向, task);
 			break; 
 		case "条数":
-			applyValueWithRand(emitter.bulletEmitter.条数, task);
+			applyValueWithRand(emitter.mbgItem.条数, task);
 			break; 
 		case "周期":
-			applyValueWithRand(emitter.bulletEmitter.周期, task);
+			applyValueWithRand(emitter.mbgItem.周期, task);
 			break; 
 		case "角度":
-			applyValueWithRand(emitter.bulletEmitter.发射角度, task);
+			applyValueWithRand(emitter.mbgItem.发射角度, task);
 			break; 
 		case "范围":
-			applyValueWithRand(emitter.bulletEmitter.范围, task);
+			applyValueWithRand(emitter.mbgItem.范围, task);
 			break; 
 		case "速度":
 			break; 
@@ -148,10 +151,12 @@ public final class BulletEmitterEvents {
 		}
 	}
 	
-	public static void fireCommand(MBGBulletEmitter emitter, CommandAction action) {
+	@Override
+	public void fireCommand(AbstractMBGComponent<BulletEmitter> emitter, CommandAction action) {
 		switch (action.Command) {
 		case "额外发射":
-			emitter.emit();
+			if (emitter instanceof MBGBulletEmitter)
+				((MBGBulletEmitter) emitter).emit();
 			break;
 		case "恢复到初始状态":
 			System.err.println("Warning: Unimplemented"); // TODO: Impl
