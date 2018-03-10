@@ -102,6 +102,7 @@ public abstract class AbstractMBGComponent<T> extends Component {
 	}
 	
 	public void runEvents(EventGroup eventGroup, int time) {
+		if (eventGroup.Events == null) return;
 		if (eventGroup.Interval == eventGroup.IntervalIncrement) {
 			if (time % eventGroup.Interval == 0)
 				if (eventTasks.containsKey(eventGroup))
