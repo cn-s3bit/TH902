@@ -15,11 +15,15 @@ import cn.s3bit.th902.danmaku.mbg.event.BulletEvents;
 import cn.s3bit.th902.danmaku.mbg.event.BulletLValues;
 import cn.s3bit.th902.danmaku.mbg.event.IEventFirer;
 import cn.s3bit.th902.danmaku.mbg.event.ILValueProvider;
+import cn.s3bit.th902.gamecontents.JudgingSystem;
+import cn.s3bit.th902.gamecontents.components.enemy.EnemyJudgeCircle;
 
 public class MBGBullet extends AbstractMBGComponent<BulletEmitter> {
 	public MBGBulletEmitter emitter;
 	public Color color = new Color(1f, 1f, 1f, 1f);
 	public ObjectSet<MBGBulletEmitter> depthBinded = null;
+	
+	public EnemyJudgeCircle judgeCircle;
 	
 	public int timeCont = 0;
 	
@@ -27,6 +31,7 @@ public class MBGBullet extends AbstractMBGComponent<BulletEmitter> {
 		super(bulletEmitter.mbgItem, bulletEmitter.mbgScene, bulletEmitter.layer);
 		emitter = bulletEmitter;
 		timeCont = bulletEmitter.mbgItem.子弹生命;
+		judgeCircle = new EnemyJudgeCircle(MBGBulletTypeMap.JUDGE_SIZE_MAP.get(bulletEmitter.mbgItem.子弹类型, 2f) * Math.min(mbgItem.宽比, mbgItem.高比));
 	}
 	
 	@Override
@@ -61,6 +66,8 @@ public class MBGBullet extends AbstractMBGComponent<BulletEmitter> {
 
 	@Override
 	public void begin() {
+		entity.AddComponent(judgeCircle);
+		JudgingSystem.clearByBombs.put(transform.immutablePosition, entity);
 		for (Entry<MBGBulletEmitter> sub : emitter.mbgScene.bulletEmitters) {
 			if (sub.value.mbgItem.绑定状态.Parent == emitter.mbgItem) {
 				if (sub.value.mbgItem.绑定状态.Depth) {
@@ -96,6 +103,7 @@ public class MBGBullet extends AbstractMBGComponent<BulletEmitter> {
 
 	@Override
 	public void after() {
+		JudgingSystem.clearByBombs.remove(transform.immutablePosition);
 		if (depthBinded != null) {
 			for (MBGBulletEmitter mbgBulletEmitter : depthBinded) {
 				mbgBulletEmitter.Kill();
