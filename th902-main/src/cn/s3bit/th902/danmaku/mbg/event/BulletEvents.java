@@ -17,7 +17,7 @@ public final class BulletEvents implements IEventFirer<AbstractMBGComponent<Bull
 			break; 
 		case "子弹速度方向":
 			task.lastVal += getFloatDelta(task);
-			obj.moveBasic.velocity.rotate(-getFloatDelta(task));
+			obj.moveBasic.velocity.setAngle(-task.lastVal);
 			break; 
 		case "子弹加速度":
 			task.lastVal = obj.moveBasic.acc.len() + getFloatDelta(task);
@@ -25,10 +25,9 @@ public final class BulletEvents implements IEventFirer<AbstractMBGComponent<Bull
 			break; 
 		case "子弹加速度方向":
 			task.lastVal += getFloatDelta(task);
-			obj.moveBasic.acc.rotate(-getFloatDelta(task));
+			obj.moveBasic.acc.setAngle(-task.lastVal);
 			break;
 		default:
-			System.err.println("Warning: Unimplemented");
 			break;
 		}
 	}
