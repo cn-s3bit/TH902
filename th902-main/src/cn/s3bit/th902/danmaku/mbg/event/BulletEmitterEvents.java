@@ -160,7 +160,7 @@ public final class BulletEmitterEvents implements IEventFirer<AbstractMBGCompone
 		switch (action.Command) {
 		case "额外发射":
 			if (emitter instanceof MBGBulletEmitter)
-				((MBGBulletEmitter) emitter).emit();
+				((MBGBulletEmitter) emitter).emit(true);
 			break;
 		case "恢复到初始状态":
 			System.err.println("Warning: Unimplemented"); // TODO: Impl

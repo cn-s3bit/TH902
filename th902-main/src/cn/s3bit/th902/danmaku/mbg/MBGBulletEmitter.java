@@ -66,11 +66,11 @@ public class MBGBulletEmitter extends AbstractMBGComponent<BulletEmitter> {
 		emitTimer++;
 		runEventGroups(mbgItem.发射器事件组, life);
 		if (emitTimer >= nextEmit) {
-			emit();
+			emit(false);
 		}
 	}
 	
-	public void emit() {
+	public void emit(boolean extra) {
 		emitTimer = 0;
 		for (Iterator<Transform> iterator = subEmitters.iterator(); iterator.hasNext();) {
 			Transform sub = (Transform) iterator.next();
@@ -89,7 +89,8 @@ public class MBGBulletEmitter extends AbstractMBGComponent<BulletEmitter> {
 				angle += range / count;
 			}
 		}
-		nextEmit = getValFromRandom(mbgItem.周期);
+		if (!extra)
+			nextEmit = getValFromRandom(mbgItem.周期);
 	}
 
 	public Entity emitOne(float angle, Transform sub) {
