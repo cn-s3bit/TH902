@@ -5,8 +5,15 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import com.badlogic.gdx.utils.IntFloatMap;
+
+import cn.s3bit.th902.danmaku.JudgeSizeCollection;
+import cn.s3bit.th902.gamecontents.components.enemy.BulletType;
+import cn.s3bit.th902.gamecontents.components.enemy.ProjectileFactory;
+
 public final class MBGBulletTypeMap {
 	public static final List<Integer> TYPE_MAP;
+	public static final IntFloatMap JUDGE_SIZE_MAP;
 	static {
 		List<Integer> list = new ArrayList<>();
 		list.add(0);
@@ -39,5 +46,16 @@ public final class MBGBulletTypeMap {
 		list.addAll(Arrays.asList(221, 230, 231, 232));
 		list.addAll(Arrays.asList(225, 229, 226, 222, 227, 223, 229, 224));
 		TYPE_MAP = Collections.unmodifiableList(list);
+		
+		JUDGE_SIZE_MAP = new IntFloatMap();
+		for (int i=0; i<ProjectileFactory.bulletTypeArray.length; i++)
+			for (int j=0; j<ProjectileFactory.bulletTypeArray[i].length; j++)
+			{
+				int id;
+				id = TYPE_MAP.indexOf(ProjectileFactory.bulletTypeArray[i][j]);
+				if (id > 0) {
+					JUDGE_SIZE_MAP.put(id, JudgeSizeCollection.getJudgeRadius(BulletType.values()[i]));
+				}
+			}
 	}
 }
