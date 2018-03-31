@@ -48,48 +48,58 @@ public final class BulletEmitterEvents implements IEventFirer<AbstractMBGCompone
 			applyValueWithRand(emitter.mbgItem.范围, task);
 			break; 
 		case "速度":
-			break; 
+			task.lastVal = emitter.moveBasic.velocity.len() + getFloatDelta(task);
+			emitter.moveBasic.velocity.nor().scl(task.lastVal);
+			break;
 		case "速度方向":
+			task.lastVal += getFloatDelta(task);
+			emitter.moveBasic.velocity.setAngle(-task.lastVal);
 			break; 
 		case "加速度":
+			task.lastVal = emitter.moveBasic.acc.len() + getFloatDelta(task);
+			emitter.moveBasic.acc.nor().scl(task.lastVal);
 			break; 
 		case "加速度方向":
+			task.lastVal += getFloatDelta(task);
+			emitter.moveBasic.acc.setAngle(-task.lastVal);
 			break; 
 		case "生命":
 			task.lastVal = emitter.mbgItem.子弹生命 + getFloatDelta(task);
 			emitter.mbgItem.子弹生命 = (int) task.lastVal;
 			break; 
 		case "类型":
-			break; 
+			break;
 		case "宽比":
-			break; 
+			break;
 		case "高比":
-			break; 
+			break;
 		case "R":
-			break; 
+			break;
 		case "G":
-			break; 
+			break;
 		case "B":
-			break; 
+			break;
 		case "不透明度":
 			break; 
 		case "朝向":
-			break; 
+			break;
 		case "子弹速度":
 			applyValueWithRand(emitter.mbgItem.子弹运动.motion.speed, task);
-			break; 
+			break;
 		case "子弹速度方向":
 			applyValueWithRand(emitter.mbgItem.子弹运动.motion.speedDirection, task);
-			break; 
+			break;
 		case "子弹加速度":
-			break; 
+			break;
 		case "子弹加速度方向":
-			break; 
+			break;
 		case "横比":
-			break; 
+			break;
 		case "纵比":
-			break; 
+			break;
 		case "出屏即消":
+			task.lastVal += getFloatDelta(task);
+			emitter.mbgItem.出屏即消 = task.lastVal >= 0.01f;
 			break;
 		default:
 			System.err.println("Warning: Unimplemented - " + task.action.LValue);

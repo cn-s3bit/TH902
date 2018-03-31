@@ -32,12 +32,16 @@ public class BulletEmitterLValues implements ILValueProvider<AbstractMBGComponen
 			case "范围":
 				return emitter.mbgItem.范围;
 			case "速度":
-				break; 
+				ret.baseValue = emitter.moveBasic.velocity.len();
+				break;
 			case "速度方向":
+				ret.baseValue = emitter.moveBasic.velocity.angle();
 				break; 
 			case "加速度":
+				ret.baseValue = emitter.moveBasic.acc.len();
 				break; 
 			case "加速度方向":
+				ret.baseValue = emitter.moveBasic.acc.angle();
 				break; 
 			case "生命":
 				ret.baseValue = emitter.mbgItem.子弹生命;
@@ -71,6 +75,7 @@ public class BulletEmitterLValues implements ILValueProvider<AbstractMBGComponen
 			case "纵比":
 				break; 
 			case "出屏即消":
+				ret.baseValue = emitter.mbgItem.出屏即消 ? 1f : 0f;
 				break;
 			default:
 				System.err.println("Warning: Unimplemented");
