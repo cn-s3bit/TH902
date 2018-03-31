@@ -2,6 +2,9 @@ package cn.s3bit.th902.gamecontents;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.Gdx;
+
+import cn.s3bit.th902.ResourceManager;
 import cn.s3bit.th902.contents.stage1.DanmakuS1L1;
 import cn.s3bit.th902.contents.stage1.DanmakuS1L2;
 import cn.s3bit.th902.contents.stage1.DanmakuS1L3;
@@ -11,6 +14,7 @@ import cn.s3bit.th902.contents.stage1.DanmakuS1L6;
 import cn.s3bit.th902.contents.stage1.DanmakuS1LLast;
 import cn.s3bit.th902.contents.stage2.DanmakuS2L1;
 import cn.s3bit.th902.contents.stage2.DanmakuS2L2;
+import cn.s3bit.th902.danmaku.mbg.MBGScene;
 
 public class SceneSystem {
 	public static SceneSystem Create(int difficulty, int stageid) {
@@ -20,6 +24,7 @@ public class SceneSystem {
 	public static SceneSystem Create(int difficulty, int stageid, Runnable afterFinish) {
 		// test
 		SceneSystem system = new SceneSystem();
+		system.mScenes.add(new MBGScene(2000, 2000, 2, ResourceManager.barrages.get(230), true, true, Gdx.files.internal("resources/Danmaku/21315.mbg")));
 		system.mScenes.add(new DanmakuS1L1());
 		system.mScenes.add(new DanmakuS1L2());
 		system.mScenes.add(new DanmakuS1L3());
