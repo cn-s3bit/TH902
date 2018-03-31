@@ -1,5 +1,6 @@
 package cn.s3bit.th902;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.math.Vector2;
 
@@ -53,6 +54,7 @@ public class MainMenuScreen extends ScreenAdapter {
 		last.linkedNode.insertAfter(exitSelectable.linkedNode);
 		exit.AddComponent(exitSelectable);
 		button1Entity.AddComponent(last);
+		AudioManager.PlayBGM(Gdx.files.internal("resources/BGM/Starting Scene.mp3"), true);
 	}
 
 	@Override

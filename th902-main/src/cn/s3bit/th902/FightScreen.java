@@ -91,6 +91,7 @@ public class FightScreen extends ScreenAdapter {
 	@Override
 	public void show() {
 		super.show();
+		AudioManager.StopBGM();
 		drawingLayers = new DrawingLayers();
 		Entity player = Entity.Create();
 		Entity fightScreen = Entity.Create();
