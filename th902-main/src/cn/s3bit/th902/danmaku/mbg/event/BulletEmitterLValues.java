@@ -47,6 +47,7 @@ public class BulletEmitterLValues implements ILValueProvider<AbstractMBGComponen
 				ret.baseValue = emitter.mbgItem.子弹生命;
 				break; 
 			case "类型":
+				ret.baseValue = emitter.mbgItem.子弹类型;
 				break; 
 			case "宽比":
 				break; 
@@ -67,9 +68,9 @@ public class BulletEmitterLValues implements ILValueProvider<AbstractMBGComponen
 			case "子弹速度方向":
 				return emitter.mbgItem.子弹运动.motion.speedDirection;
 			case "子弹加速度":
-				break; 
+				return emitter.mbgItem.子弹运动.motion.acceleration;
 			case "子弹加速度方向":
-				break; 
+				return emitter.mbgItem.子弹运动.motion.accelerationDirection;
 			case "横比":
 				break; 
 			case "纵比":
