@@ -86,6 +86,7 @@ public abstract class BossSpell extends DanmakuScene {
 			EnemySpellInfoSystem.deactivate();
 			boss.Destroy();
 		}
+		yield.yield();
 		super.Kill();
 	}
 
