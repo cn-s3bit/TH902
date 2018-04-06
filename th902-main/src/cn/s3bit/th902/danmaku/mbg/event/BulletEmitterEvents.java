@@ -72,8 +72,12 @@ public final class BulletEmitterEvents implements IEventFirer<AbstractMBGCompone
 			emitter.mbgItem.子弹类型 = (int) task.lastVal;
 			break;
 		case "宽比":
+			task.lastVal = emitter.mbgItem.宽比 + getFloatDelta(task);
+			emitter.mbgItem.宽比 = task.lastVal;
 			break;
 		case "高比":
+			task.lastVal = emitter.mbgItem.高比 + getFloatDelta(task);
+			emitter.mbgItem.高比 = task.lastVal;
 			break;
 		case "R":
 			break;
@@ -82,6 +86,8 @@ public final class BulletEmitterEvents implements IEventFirer<AbstractMBGCompone
 		case "B":
 			break;
 		case "不透明度":
+			task.lastVal = emitter.mbgItem.子弹颜色.A + getFloatDelta(task);
+			emitter.mbgItem.子弹颜色.A = task.lastVal;
 			break; 
 		case "朝向":
 			break;
