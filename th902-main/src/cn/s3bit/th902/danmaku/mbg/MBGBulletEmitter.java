@@ -103,11 +103,11 @@ public class MBGBulletEmitter extends AbstractMBGComponent<BulletEmitter> {
 		Vector2 bulletScale = new Vector2(mbgItem.宽比, mbgItem.高比);
 		bulletAcc = getValFromRandom(mbgItem.子弹运动.motion.acceleration);
 		bulletAccDir = getValFromRandom(mbgItem.子弹运动.motion.accelerationDirection);
-		Vector2 emitVelocity = new Vector2(bulletSpeed, 0).rotate(-angle);
+		Vector2 emitVelocity = new Vector2(bulletSpeed + 1e-9f, 0).rotate(-angle);
 		if (mbgItem.绑定状态.Relative) {
 			emitVelocity.rotate(sub.rotation - 270);
 		}
-		Vector2 emitAcc = new Vector2(bulletAcc, 0).rotate(-bulletAccDir);
+		Vector2 emitAcc = new Vector2(bulletAcc + 1e-9f, 0).rotate(-bulletAccDir);
 		float bulletRotation = 270 + (mbgItem.朝向与速度方向相同 ? emitVelocity.angle() : getValFromRandom(mbgItem.朝向));
 		
 		Entity bullet = Entity.Create();
