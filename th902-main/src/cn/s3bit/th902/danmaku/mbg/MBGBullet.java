@@ -114,6 +114,13 @@ public class MBGBullet extends AbstractMBGComponent<BulletEmitter> {
 					mbgBulletEmitter.Update();
 				}
 			}
+			if (mbgItem.反弹板) {
+				for (MBGReflexBoard reflexBoard : mbgScene.reflexBoards.values()) {
+					if (reflexBoard.judgeHitBullet(this)) {
+						reflexBoard.manipulateBullet(this);
+					}
+				}
+			}
 		}
 	}
 

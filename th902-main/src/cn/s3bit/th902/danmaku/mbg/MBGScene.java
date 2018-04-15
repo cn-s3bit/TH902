@@ -1,6 +1,7 @@
 package cn.s3bit.th902.danmaku.mbg;
 
 import java.io.IOException;
+import java.util.concurrent.LinkedBlockingQueue;
 
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
@@ -8,6 +9,7 @@ import com.badlogic.gdx.utils.IntMap;
 
 import cn.s3bit.mbgparser.MBGData;
 import cn.s3bit.mbgparser.item.BulletEmitter;
+import cn.s3bit.mbgparser.item.ReflexBoard;
 import cn.s3bit.th902.FightScreen;
 import cn.s3bit.th902.contents.BossSpell;
 import cn.s3bit.th902.gamecontents.Entity;
@@ -20,7 +22,10 @@ public class MBGScene extends BossSpell {
 	float bombResist;
 	Texture texture;
 	public MBGData mbgData;
+	LinkedBlockingQueue<Entity> entities;
 	IntMap<MBGBulletEmitter> bulletEmitters;
+	IntMap<MBGReflexBoard> reflexBoards;
+	
 	boolean isFirst, isLast;
 	public int globalTime;
 	public MBGScene(int maxLife, int maxTime, float bombResist, Texture texture, boolean isFirst, boolean isLast, FileHandle file) {
@@ -37,18 +42,31 @@ public class MBGScene extends BossSpell {
 		try {
 			mbgData = MBGData.parseFrom(mbg);
 			bulletEmitters = new IntMap<>();
-			if (mbgData.layer1 != null)
+			reflexBoards = new IntMap<>();
+			if (mbgData.layer1 != null) {
 				for (BulletEmitter bulletEmitter : mbgData.layer1.BulletEmitters)
 					bulletEmitters.put(bulletEmitter.ID, new MBGBulletEmitter(bulletEmitter, this, FightScreen.drawingLayers.entity4));
-			if (mbgData.layer2 != null)
+				for (ReflexBoard reflexBoard : mbgData.layer1.ReflexBoards)
+					reflexBoards.put(reflexBoard.ID, new MBGReflexBoard(reflexBoard, this, FightScreen.drawingLayers.entity4));
+			}
+			if (mbgData.layer2 != null) {
 				for (BulletEmitter bulletEmitter : mbgData.layer2.BulletEmitters)
 					bulletEmitters.put(bulletEmitter.ID, new MBGBulletEmitter(bulletEmitter, this, FightScreen.drawingLayers.entity5));
-			if (mbgData.layer3 != null)
+				for (ReflexBoard reflexBoard : mbgData.layer2.ReflexBoards)
+					reflexBoards.put(reflexBoard.ID, new MBGReflexBoard(reflexBoard, this, FightScreen.drawingLayers.entity5));
+			}
+			if (mbgData.layer3 != null) {
 				for (BulletEmitter bulletEmitter : mbgData.layer3.BulletEmitters)
 					bulletEmitters.put(bulletEmitter.ID, new MBGBulletEmitter(bulletEmitter, this, FightScreen.drawingLayers.entity6));
-			if (mbgData.layer4 != null)
+				for (ReflexBoard reflexBoard : mbgData.layer3.ReflexBoards)
+					reflexBoards.put(reflexBoard.ID, new MBGReflexBoard(reflexBoard, this, FightScreen.drawingLayers.entity6));
+			}
+			if (mbgData.layer4 != null) {
 				for (BulletEmitter bulletEmitter : mbgData.layer4.BulletEmitters)
 					bulletEmitters.put(bulletEmitter.ID, new MBGBulletEmitter(bulletEmitter, this, FightScreen.drawingLayers.entity7));
+				for (ReflexBoard reflexBoard : mbgData.layer4.ReflexBoards)
+					reflexBoards.put(reflexBoard.ID, new MBGReflexBoard(reflexBoard, this, FightScreen.drawingLayers.entity7));
+			}
 		} catch (IOException e) {
 			throw new AssertionError(e);
 		}
@@ -87,9 +105,16 @@ public class MBGScene extends BossSpell {
 	@Override
 	public void start() {
 		globalTime = 0;
+		entities = new LinkedBlockingQueue<>();
 		bulletEmitters.forEach((emitter) -> {
 			Entity em = Entity.Create();
 			em.AddComponent(emitter.value);
+			entities.add(em);
+		});
+		reflexBoards.forEach((board) -> {
+			Entity em = Entity.Create();
+			em.AddComponent(board.value);
+			entities.add(em);
 		});
 	}
 	
@@ -100,8 +125,10 @@ public class MBGScene extends BossSpell {
 	
 	@Override
 	public void end() {
-		bulletEmitters.forEach((emitter) -> {
-			emitter.value.Kill();
-		});
+		while (!entities.isEmpty()) {
+			entities.remove().Destroy();
+		}
+		bulletEmitters.clear();
+		reflexBoards.clear();
 	}
 }
