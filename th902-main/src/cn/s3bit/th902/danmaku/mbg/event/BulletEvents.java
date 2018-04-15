@@ -23,7 +23,12 @@ public final class BulletEvents implements IEventFirer<AbstractMBGComponent<Bull
 		case "子弹速度方向":
 			dt = getFloatDelta(task);
 			task.lastVal += dt;
-			obj.moveBasic.velocity.setAngle(obj.moveBasic.velocity.angle() + dt);
+			if (task.action.RValue.baseValue <= -99998f) {
+				obj.moveBasic.velocity.setAngle(-task.lastVal);
+			}
+			else {
+				obj.moveBasic.velocity.setAngle(obj.moveBasic.velocity.angle() - dt);
+			}
 			break; 
 		case "子弹加速度":
 			dt = getFloatDelta(task);
@@ -34,7 +39,12 @@ public final class BulletEvents implements IEventFirer<AbstractMBGComponent<Bull
 		case "子弹加速度方向":
 			dt = getFloatDelta(task);
 			task.lastVal += dt;
-			obj.moveBasic.acc.setAngle(obj.moveBasic.acc.angle() + dt);
+			if (task.action.RValue.baseValue <= -99998f) {
+				obj.moveBasic.acc.setAngle(-task.lastVal);
+			}
+			else {
+				obj.moveBasic.acc.setAngle(obj.moveBasic.acc.angle() - dt);
+			}
 			break;
 		case "不透明度":
 			task.lastVal += getFloatDelta(task);
