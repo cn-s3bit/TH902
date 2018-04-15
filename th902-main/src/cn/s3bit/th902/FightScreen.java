@@ -4,8 +4,11 @@ import java.lang.reflect.Field;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 
 import cn.s3bit.th902.gamecontents.Entity;
@@ -71,11 +74,28 @@ public class FightScreen extends ScreenAdapter {
 						e.printStackTrace();
 					}
 			}
+			Actor changeBlend1 = new Actor() {
+				public void draw(Batch batch, float parentAlpha) {
+					GameMain.instance.activeStage.getBatch().end();
+					GameMain.instance.activeStage.getBatch().setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_DST_ALPHA);
+					GameMain.instance.activeStage.getBatch().begin();
+				}
+			};
+			Actor changeBlend2 = new Actor() {
+				public void draw(Batch batch, float parentAlpha) {
+					GameMain.instance.activeStage.getBatch().end();
+					GameMain.instance.activeStage.getBatch().setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+					GameMain.instance.activeStage.getBatch().begin();
+				}
+			};
+			GameMain.instance.activeStage.addActor(changeBlend1);
+			GameMain.instance.activeStage.addActor(changeBlend2);
 			ui2.toBack();
 			ui1.toBack();
 			ui0.toBack();
 			entity9.toBack();
 			entity8.toBack();
+			changeBlend2.toBack();
 			entity7.toBack();
 			entity6.toBack();
 			entity5.toBack();
@@ -84,6 +104,7 @@ public class FightScreen extends ScreenAdapter {
 			entity2.toBack();
 			entity1.toBack();
 			entity0.toBack();
+			changeBlend1.toBack();
 			background.toBack();
 		}
 	}
