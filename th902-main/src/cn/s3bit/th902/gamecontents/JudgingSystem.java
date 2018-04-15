@@ -35,7 +35,7 @@ public class JudgingSystem {
 		Stream<Entry<ImmutableWrapper<Circle>, PlayerCollisionData>> stream = enemyJudges.entrySet().parallelStream();
 		mJudgeEntry = null;
 		stream.forEach((entry) -> {
-			if (entry.getValue().judgeCallback.getDamage() > 0 && entry.getKey().getData().contains(playerJudge)) {
+			if (entry.getValue().judgeCallback.getDamage() > 0 && entry.getKey().getData().radius >= 0.1f && entry.getKey().getData().contains(playerJudge)) {
 				mJudgeEntry = entry;
 			}
 		});

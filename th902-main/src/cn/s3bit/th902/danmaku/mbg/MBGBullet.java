@@ -104,6 +104,13 @@ public class MBGBullet extends AbstractMBGComponent<BulletEmitter> {
 	@Override
 	public void during() {
 		renderer.image.setColor(color);
+		judgeCircle.circle.radius = MBGBulletTypeMap.JUDGE_SIZE_MAP.get(mbgItem.子弹类型, 2f) * Math.min(transform.scale.x, transform.scale.y);
+		if (judgeCircle.circle.radius < 3f) {
+			judgeCircle.circle.radius = 3f;
+		}
+		if (color.a < 0.04f) {
+			judgeCircle.circle.radius = 0f;
+		}
 		if (mbgItem.出屏即消 && FightScreen.isOutOfScreen(transform.position)) {
 			entity.Destroy();
 		}
