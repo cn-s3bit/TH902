@@ -128,7 +128,7 @@ public final class BulletEmitterEvents implements IEventFirer<AbstractMBGCompone
 	}
 	
 	public static float applyValueWithRand(ValueWithRand valueWithRand, MBGEventTask task) {
-		task.lastVal = applyOp(task.action.Operator,
+		applyOp(task.action.Operator,
 				valueWithRand,
 				task.origin.baseValue,
 				task.lastVal,
@@ -136,6 +136,7 @@ public final class BulletEmitterEvents implements IEventFirer<AbstractMBGCompone
 				1f - task.timeLeft / (float) task.timefull,
 				task.action.TweenFunction
 			);
+		task.lastVal = valueWithRand.baseValue;
 		return task.lastVal;
 	}
 	

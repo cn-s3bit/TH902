@@ -4,6 +4,7 @@ import cn.s3bit.mbgparser.item.BulletEmitter;
 import cn.s3bit.th902.danmaku.mbg.AbstractMBGComponent;
 import cn.s3bit.th902.danmaku.mbg.MBGBullet;
 import cn.s3bit.th902.danmaku.mbg.MBGEventTask;
+import cn.s3bit.th902.gamecontents.components.ai.IMoveFunction;
 
 import static cn.s3bit.th902.danmaku.mbg.event.BulletEmitterEvents.getFloatDelta;
 
@@ -11,22 +12,29 @@ public final class BulletEvents implements IEventFirer<AbstractMBGComponent<Bull
 	public static final BulletEvents instance = new BulletEvents();
 	@Override
 	public void fireDataOperation(AbstractMBGComponent<BulletEmitter> obj, MBGEventTask task) {
+		float dt;
 		switch (task.action.LValue) {
 		case "子弹速度":
-			task.lastVal = obj.moveBasic.velocity.len() + getFloatDelta(task);
-			obj.moveBasic.velocity.nor().scl(task.lastVal);
+			dt = getFloatDelta(task);
+			task.lastVal += dt;
+			IMoveFunction.vct2_tmp1.set(obj.moveBasic.velocity);
+			obj.moveBasic.velocity.nor().scl(dt).add(IMoveFunction.vct2_tmp1);
 			break; 
 		case "子弹速度方向":
-			task.lastVal += getFloatDelta(task);
-			obj.moveBasic.velocity.setAngle(-task.lastVal);
+			dt = getFloatDelta(task);
+			task.lastVal += dt;
+			obj.moveBasic.velocity.setAngle(obj.moveBasic.velocity.angle() + dt);
 			break; 
 		case "子弹加速度":
-			task.lastVal = obj.moveBasic.acc.len() + getFloatDelta(task);
-			obj.moveBasic.acc.nor().scl(task.lastVal);
+			dt = getFloatDelta(task);
+			task.lastVal += dt;
+			IMoveFunction.vct2_tmp1.set(obj.moveBasic.acc);
+			obj.moveBasic.acc.nor().scl(dt).add(IMoveFunction.vct2_tmp1);
 			break; 
 		case "子弹加速度方向":
-			task.lastVal += getFloatDelta(task);
-			obj.moveBasic.acc.setAngle(-task.lastVal);
+			dt = getFloatDelta(task);
+			task.lastVal += dt;
+			obj.moveBasic.acc.setAngle(obj.moveBasic.acc.angle() + dt);
 			break;
 		case "不透明度":
 			task.lastVal += getFloatDelta(task);
