@@ -40,6 +40,9 @@ public final class BulletEmitterEvents implements IEventFirer<AbstractMBGCompone
 			break; 
 		case "周期":
 			applyValueWithRand(emitter.mbgItem.周期, task);
+			if (emitter instanceof MBGBulletEmitter) {
+				((MBGBulletEmitter) emitter).nextEmit = emitter.mbgItem.周期.baseValue;
+			}
 			break; 
 		case "角度":
 			applyValueWithRand(emitter.mbgItem.发射角度, task);

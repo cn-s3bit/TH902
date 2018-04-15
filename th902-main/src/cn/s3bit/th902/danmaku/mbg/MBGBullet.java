@@ -94,8 +94,9 @@ public class MBGBullet extends AbstractMBGComponent<BulletEmitter> {
 					depth.Initialize(entity);
 					depthBinded.add(depth);
 				}
-				else
+				else {
 					sub.value.subEmitters.add(transform);
+				}
 			}
 		}
 	}
