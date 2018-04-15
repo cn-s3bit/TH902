@@ -77,7 +77,7 @@ public class FightScreen extends ScreenAdapter {
 			Actor changeBlend1 = new Actor() {
 				public void draw(Batch batch, float parentAlpha) {
 					GameMain.instance.activeStage.getBatch().end();
-					GameMain.instance.activeStage.getBatch().setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_DST_ALPHA);
+					GameMain.instance.activeStage.getBatch().setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE);
 					GameMain.instance.activeStage.getBatch().begin();
 				}
 			};
@@ -100,11 +100,11 @@ public class FightScreen extends ScreenAdapter {
 			entity6.toBack();
 			entity5.toBack();
 			entity4.toBack();
+			changeBlend1.toBack();
 			entity3.toBack();
 			entity2.toBack();
 			entity1.toBack();
 			entity0.toBack();
-			changeBlend1.toBack();
 			background.toBack();
 		}
 	}
