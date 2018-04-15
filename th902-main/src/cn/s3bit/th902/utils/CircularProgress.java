@@ -146,8 +146,6 @@ public class CircularProgress
     }
 
     public void draw(Batch batch, float parentAlpha) {
-        Gdx.gl.glEnable(GL20.GL_BLEND);
-        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         Gdx.gl.glDepthMask(false);
         int n = 3 + (int) (8F * this.percent);
         if (n > 10) {

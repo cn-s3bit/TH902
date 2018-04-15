@@ -61,8 +61,6 @@ public class LaserLikeDrawing extends Actor {
 		if (initialVertices == null || initialVertices.length < 27) return;
 		texture.bind();
 		_applyTransform(parentAlpha);
-		Gdx.gl.glEnable(GL20.GL_BLEND);
-        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 		mesh.render(shaderProgram, GL20.GL_TRIANGLES);
 	}
 	private List<Vector2> mPoints;

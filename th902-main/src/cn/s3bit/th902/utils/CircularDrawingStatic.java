@@ -103,8 +103,6 @@ public class CircularDrawingStatic extends Actor {
 		mesh.transform(mat4_trans);
 		mat4_trans.setToTranslationAndScaling(getX(), getY(), 0, getWidth() / 2f, -getHeight() / 2f, 1);
 		mesh.transform(mat4_trans);
-		Gdx.gl.glEnable(GL20.GL_BLEND);
-        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 		mesh.render(shaderProgram, GL20.GL_TRIANGLE_FAN);
 	}
 
