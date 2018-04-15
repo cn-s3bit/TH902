@@ -97,7 +97,8 @@ public class MBGBulletEmitter extends AbstractMBGComponent<BulletEmitter> {
 		float radius = getValFromRandom(mbgItem.半径);
 		float radiusDir = getValFromRandom(mbgItem.半径方向);
 		Vector2 emitPosition = new Vector2(radius, 0).rotate(-radiusDir).add(getPosition(sub));
-		
+		emitPosition.x = emitPosition.x + MathUtils.random(-mbgItem.位置坐标.x.randValue, mbgItem.位置坐标.x.randValue);
+		emitPosition.y = emitPosition.y + MathUtils.random(-mbgItem.位置坐标.y.randValue, mbgItem.位置坐标.y.randValue);
 		float bulletSpeed = getValFromRandom(mbgItem.子弹运动.motion.speed);
 		float bulletAcc, bulletAccDir;
 		Vector2 bulletScale = new Vector2(mbgItem.宽比, mbgItem.高比);
@@ -146,8 +147,8 @@ public class MBGBulletEmitter extends AbstractMBGComponent<BulletEmitter> {
 	@Override
 	public Vector2 getInitialPosition() {
 		float x, y;
-		x = getValFromRandom(mbgItem.位置坐标.x);
-		y = getValFromRandom(mbgItem.位置坐标.y);
+		x = mbgItem.位置坐标.x.baseValue;
+		y = mbgItem.位置坐标.y.baseValue;
 		if (x == -99998f) x = transform.position.x;
 		else x = transformX(x);
 		if (y == -99998f) y = transform.position.y;

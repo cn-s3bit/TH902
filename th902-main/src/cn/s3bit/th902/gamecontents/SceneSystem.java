@@ -25,6 +25,7 @@ public class SceneSystem {
 		// test
 		SceneSystem system = new SceneSystem();
 		system.mScenes.add(new MBGScene(2000, 2000, 2, ResourceManager.barrages.get(230), true, true, Gdx.files.internal("resources/Danmaku/21315.mbg")));
+		system.mScenes.add(new MBGScene(15000, 5999, 2, ResourceManager.barrages.get(230), true, true, Gdx.files.internal("resources/Danmaku/弹幕结界.mbg")));
 		system.mScenes.add(new DanmakuS1L1());
 		system.mScenes.add(new DanmakuS1L2());
 		system.mScenes.add(new DanmakuS1L3());

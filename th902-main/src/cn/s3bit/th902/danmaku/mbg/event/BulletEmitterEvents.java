@@ -48,7 +48,7 @@ public final class BulletEmitterEvents implements IEventFirer<AbstractMBGCompone
 			applyValueWithRand(emitter.mbgItem.范围, task);
 			break; 
 		case "速度":
-			task.lastVal = emitter.moveBasic.velocity.len() + getFloatDelta(task);
+			task.lastVal += getFloatDelta(task);
 			emitter.moveBasic.velocity.nor().scl(task.lastVal);
 			break;
 		case "速度方向":
@@ -56,7 +56,7 @@ public final class BulletEmitterEvents implements IEventFirer<AbstractMBGCompone
 			emitter.moveBasic.velocity.setAngle(-task.lastVal);
 			break; 
 		case "加速度":
-			task.lastVal = emitter.moveBasic.acc.len() + getFloatDelta(task);
+			task.lastVal += getFloatDelta(task);
 			emitter.moveBasic.acc.nor().scl(task.lastVal);
 			break; 
 		case "加速度方向":
@@ -119,9 +119,6 @@ public final class BulletEmitterEvents implements IEventFirer<AbstractMBGCompone
 	
 	public static float applyOp(OperatorType op, ValueWithRand valueWithRand, float origin, float lastVal, float rval, float progress, TweenFunctionType tweenFunctionType) {
 		float result;
-		if (op == OperatorType.ChangeTo) {
-			valueWithRand.randValue = 0;
-		}
 		result = applyOp(op, origin, rval, progress, tweenFunctionType);
 		valueWithRand.baseValue += result - lastVal;
 		return result;
