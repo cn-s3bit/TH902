@@ -24,8 +24,9 @@ public class SceneSystem {
 	public static SceneSystem Create(int difficulty, int stageid, Runnable afterFinish) {
 		// test
 		SceneSystem system = new SceneSystem();
-		system.mScenes.add(new MBGScene(2000, 2000, 2, ResourceManager.barrages.get(230), true, true, Gdx.files.internal("resources/Danmaku/21315.mbg")));
-		system.mScenes.add(new MBGScene(15000, 5999, 2, ResourceManager.barrages.get(230), true, true, Gdx.files.internal("resources/Danmaku/弹幕结界.mbg")));
+		system.mScenes.add(new MBGScene(2000, 2000, 1f, ResourceManager.barrages.get(230), true, false, Gdx.files.internal("resources/Danmaku/21315.mbg")));
+		system.mScenes.add(new MBGScene(12000, 3000, 4f, ResourceManager.barrages.get(230), false, false, Gdx.files.internal("resources/Danmaku/弹幕结界.mbg")));
+		system.mScenes.add(new MBGScene(1073741824, 2000, 0f, ResourceManager.barrages.get(230), false, true, Gdx.files.internal("resources/Danmaku/极光与流星.mbg")));
 		system.mScenes.add(new DanmakuS1L1());
 		system.mScenes.add(new DanmakuS1L2());
 		system.mScenes.add(new DanmakuS1L3());
