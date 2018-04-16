@@ -43,32 +43,36 @@ public class MBGScene extends BossSpell {
 			mbgData = MBGData.parseFrom(mbg);
 			bulletEmitters = new IntMap<>();
 			reflexBoards = new IntMap<>();
-			if (mbgData.layer1 != null) {
-				for (BulletEmitter bulletEmitter : mbgData.layer1.BulletEmitters)
-					bulletEmitters.put(bulletEmitter.ID, new MBGBulletEmitter(bulletEmitter, this, FightScreen.drawingLayers.entity4));
-				for (ReflexBoard reflexBoard : mbgData.layer1.ReflexBoards)
-					reflexBoards.put(reflexBoard.ID, new MBGReflexBoard(reflexBoard, this, FightScreen.drawingLayers.entity4));
-			}
-			if (mbgData.layer2 != null) {
-				for (BulletEmitter bulletEmitter : mbgData.layer2.BulletEmitters)
-					bulletEmitters.put(bulletEmitter.ID, new MBGBulletEmitter(bulletEmitter, this, FightScreen.drawingLayers.entity5));
-				for (ReflexBoard reflexBoard : mbgData.layer2.ReflexBoards)
-					reflexBoards.put(reflexBoard.ID, new MBGReflexBoard(reflexBoard, this, FightScreen.drawingLayers.entity5));
-			}
-			if (mbgData.layer3 != null) {
-				for (BulletEmitter bulletEmitter : mbgData.layer3.BulletEmitters)
-					bulletEmitters.put(bulletEmitter.ID, new MBGBulletEmitter(bulletEmitter, this, FightScreen.drawingLayers.entity6));
-				for (ReflexBoard reflexBoard : mbgData.layer3.ReflexBoards)
-					reflexBoards.put(reflexBoard.ID, new MBGReflexBoard(reflexBoard, this, FightScreen.drawingLayers.entity6));
-			}
-			if (mbgData.layer4 != null) {
-				for (BulletEmitter bulletEmitter : mbgData.layer4.BulletEmitters)
-					bulletEmitters.put(bulletEmitter.ID, new MBGBulletEmitter(bulletEmitter, this, FightScreen.drawingLayers.entity7));
-				for (ReflexBoard reflexBoard : mbgData.layer4.ReflexBoards)
-					reflexBoards.put(reflexBoard.ID, new MBGReflexBoard(reflexBoard, this, FightScreen.drawingLayers.entity7));
-			}
+			mAddContent();
 		} catch (IOException e) {
 			throw new AssertionError(e);
+		}
+	}
+	
+	private void mAddContent() {
+		if (mbgData.layer1 != null) {
+			for (BulletEmitter bulletEmitter : mbgData.layer1.BulletEmitters)
+				bulletEmitters.put(bulletEmitter.ID, new MBGBulletEmitter(bulletEmitter, this, FightScreen.drawingLayers.entity4));
+			for (ReflexBoard reflexBoard : mbgData.layer1.ReflexBoards)
+				reflexBoards.put(reflexBoard.ID, new MBGReflexBoard(reflexBoard, this, FightScreen.drawingLayers.entity4));
+		}
+		if (mbgData.layer2 != null) {
+			for (BulletEmitter bulletEmitter : mbgData.layer2.BulletEmitters)
+				bulletEmitters.put(bulletEmitter.ID, new MBGBulletEmitter(bulletEmitter, this, FightScreen.drawingLayers.entity5));
+			for (ReflexBoard reflexBoard : mbgData.layer2.ReflexBoards)
+				reflexBoards.put(reflexBoard.ID, new MBGReflexBoard(reflexBoard, this, FightScreen.drawingLayers.entity5));
+		}
+		if (mbgData.layer3 != null) {
+			for (BulletEmitter bulletEmitter : mbgData.layer3.BulletEmitters)
+				bulletEmitters.put(bulletEmitter.ID, new MBGBulletEmitter(bulletEmitter, this, FightScreen.drawingLayers.entity6));
+			for (ReflexBoard reflexBoard : mbgData.layer3.ReflexBoards)
+				reflexBoards.put(reflexBoard.ID, new MBGReflexBoard(reflexBoard, this, FightScreen.drawingLayers.entity6));
+		}
+		if (mbgData.layer4 != null) {
+			for (BulletEmitter bulletEmitter : mbgData.layer4.BulletEmitters)
+				bulletEmitters.put(bulletEmitter.ID, new MBGBulletEmitter(bulletEmitter, this, FightScreen.drawingLayers.entity7));
+			for (ReflexBoard reflexBoard : mbgData.layer4.ReflexBoards)
+				reflexBoards.put(reflexBoard.ID, new MBGReflexBoard(reflexBoard, this, FightScreen.drawingLayers.entity7));
 		}
 	}
 
@@ -121,6 +125,11 @@ public class MBGScene extends BossSpell {
 	@Override
 	public void act() {
 		globalTime++;
+		if (globalTime > mbgData.totalFrame) {
+			end();
+			mAddContent();
+			start();
+		}
 	}
 	
 	@Override
