@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 
 import cn.s3bit.th902.FightScreen;
+import cn.s3bit.th902.GameHelper;
 import cn.s3bit.th902.gamecontents.DanmakuScene;
 import cn.s3bit.th902.gamecontents.EnemySpellInfoSystem;
 import cn.s3bit.th902.gamecontents.Entity;
@@ -45,7 +46,6 @@ public abstract class BossSpell extends DanmakuScene {
 			EnemySpellInfoSystem.activate(boss);
 		} else {
 			boss = EnemySpellInfoSystem.central;
-			EnemySpellInfoSystem.deactivate();
 			transform = boss.GetComponent(Transform.class);
 			transform = new Transform(transform.position, transform.rotation, transform.scale);
 			boss.Destroy();
@@ -59,7 +59,6 @@ public abstract class BossSpell extends DanmakuScene {
 			boss.AddComponent(new EnemyChaseable(hp));
 
 			EnemySpellInfoSystem.activate(boss);
-			System.out.println(boss.GetComponent(Transform.class));
 		}
 		start();
 	}
@@ -80,13 +79,15 @@ public abstract class BossSpell extends DanmakuScene {
 			act();
 			existTime++;
 		}
-		if (!mIsEnded && (existTime > getMaxTime() || hp.hp <= 0)) {
+		if (!mIsEnded && (existTime >= getMaxTime() || hp.hp <= 0)) {
 			mIsEnded = true;
 			end();
 			if (existTime < getMaxTime())
 				shootdown();
 			hp.hp = 0;
 			hp.Kill();
+			EnemySpellInfoSystem.deactivate();
+			GameHelper.clearEnemyBullets();
 		}
 		if (isDefaultEntering() && existTime == 40 && isFirst()) {
 			boss.GetComponent(MoveFunction.class).Kill();
