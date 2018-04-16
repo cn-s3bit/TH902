@@ -45,8 +45,21 @@ public abstract class BossSpell extends DanmakuScene {
 			EnemySpellInfoSystem.activate(boss);
 		} else {
 			boss = EnemySpellInfoSystem.central;
+			EnemySpellInfoSystem.deactivate();
 			transform = boss.GetComponent(Transform.class);
-			hp = boss.GetComponent(SpellHP.class);
+			transform = new Transform(transform.position, transform.rotation, transform.scale);
+			boss.Destroy();
+
+			boss = Entity.Create();
+			boss.AddComponent(transform);
+			boss.AddComponent(new ImageRenderer(getTexture(), 0).attachToGroup(FightScreen.drawingLayers.entity8));
+			hp = new SpellHP(getMaxLife(), getMaxTime(), getBombResist(), getName());
+			boss.AddComponent(hp);
+			boss.AddComponent(new EnemyJudgeCircle(Math.min(getTexture().getHeight(), getTexture().getWidth()) * 0.9f, hp));
+			boss.AddComponent(new EnemyChaseable(hp));
+
+			EnemySpellInfoSystem.activate(boss);
+			System.out.println(boss.GetComponent(Transform.class));
 		}
 		start();
 	}
@@ -75,7 +88,7 @@ public abstract class BossSpell extends DanmakuScene {
 			hp.hp = 0;
 			hp.Kill();
 		}
-		if (isDefaultEntering() && existTime == 40) {
+		if (isDefaultEntering() && existTime == 40 && isFirst()) {
 			boss.GetComponent(MoveFunction.class).Kill();
 		}
 	}
