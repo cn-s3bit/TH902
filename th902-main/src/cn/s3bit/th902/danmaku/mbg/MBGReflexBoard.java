@@ -114,17 +114,19 @@ public class MBGReflexBoard extends AbstractMBGComponent<ReflexBoard> {
 		float in = bullet.moveBasic.velocity.angle(direction);
 		bullet.moveBasic.velocity.setAngle(direction.angle() + in); // angle(out) = angle(in)
 		
-		for (ReflexBoardAction action : mbgItem.碰撞事件组) {
-			DataOperateAction dataOperateAction = new DataOperateAction();
-			dataOperateAction.LValue = action.LValue;
-			dataOperateAction.RValue = action.RValue;
-			dataOperateAction.TweenFunction = TweenFunctionType.Fixed;
-			dataOperateAction.TweenTime = 1;
-			dataOperateAction.Operator = action.Operator;
-			dataOperateAction.Times = 9999;
-			MBGEventTask mbgEventTask = new MBGEventTask(1, dataOperateAction, bullet);
-			mbgEventTask.timeLeft = 0;
-			BulletEvents.instance.fireDataOperation(bullet, mbgEventTask);
+		if (mbgItem.碰撞事件组 != null) {
+			for (ReflexBoardAction action : mbgItem.碰撞事件组) {
+				DataOperateAction dataOperateAction = new DataOperateAction();
+				dataOperateAction.LValue = action.LValue;
+				dataOperateAction.RValue = action.RValue;
+				dataOperateAction.TweenFunction = TweenFunctionType.Fixed;
+				dataOperateAction.TweenTime = 1;
+				dataOperateAction.Operator = action.Operator;
+				dataOperateAction.Times = 9999;
+				MBGEventTask mbgEventTask = new MBGEventTask(1, dataOperateAction, bullet);
+				mbgEventTask.timeLeft = 0;
+				BulletEvents.instance.fireDataOperation(bullet, mbgEventTask);
+			}
 		}
 	}
 }
