@@ -14,9 +14,10 @@ public final class ResourceManager {
 	public static ArrayList<Texture> barrages = new ArrayList<>();
 	public static ArrayList<Texture> enemies = new ArrayList<>();
 	
-	public static BitmapFont msyh;
+	public static BitmapFont msyh, fontSpellName;
 	public static void Load() {
 		msyh = new BitmapFont(Gdx.files.internal("resources/font/msyh.fnt"));
+		fontSpellName = new BitmapFont(Gdx.files.internal("resources/font/SpellNames.fnt"));
 		textures.clear();
 		ArrayList<String> toLoad = new ArrayList<>();
 		for (int i = 1; i <= 5; i++) {

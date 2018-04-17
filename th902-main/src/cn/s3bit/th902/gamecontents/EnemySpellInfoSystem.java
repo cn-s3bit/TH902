@@ -1,5 +1,6 @@
 package cn.s3bit.th902.gamecontents;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Align;
 
@@ -35,7 +36,7 @@ public class EnemySpellInfoSystem {
 		
 		spellName = Entity.Create();
 		spellName.AddComponent(new Transform(new Vector2(546, 700)));
-		final TextRenderer nameRenderer = new TextRenderer(bossHP.getDisplayedName());
+		final TextRenderer nameRenderer = new TextRenderer(bossHP.getDisplayedName(), ResourceManager.fontSpellName, Color.WHITE);
 		nameRenderer.labelAlign = Align.topRight;
 		nameRenderer.lineAlign = Align.right;
 		nameRenderer.attachToGroup(FightScreen.drawingLayers.ui0);
