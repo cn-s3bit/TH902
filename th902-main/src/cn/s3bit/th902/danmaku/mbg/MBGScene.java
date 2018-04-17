@@ -1,6 +1,7 @@
 package cn.s3bit.th902.danmaku.mbg;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import com.badlogic.gdx.files.FileHandle;
@@ -33,11 +34,11 @@ public class MBGScene extends BossSpell {
 	
 	public String name;
 	public MBGScene(int maxLife, int maxTime, float bombResist, Texture texture, String name, boolean isFirst, boolean isLast, FileHandle file) {
-		this(maxLife, maxTime, bombResist, texture, name, isFirst, isLast, new String(file.readBytes()), 0, 0);
+		this(maxLife, maxTime, bombResist, texture, name, isFirst, isLast, new String(file.readBytes(), Charset.forName("UTF-8")), 0, 0);
 	}
 	
 	public MBGScene(int maxLife, int maxTime, float bombResist, Texture texture, String name, boolean isFirst, boolean isLast, FileHandle file, int additionalBefore, int additionalAfter) {
-		this(maxLife, maxTime, bombResist, texture, name, isFirst, isLast, new String(file.readBytes()), additionalBefore, additionalAfter);
+		this(maxLife, maxTime, bombResist, texture, name, isFirst, isLast, new String(file.readBytes(), Charset.forName("UTF-8")), additionalBefore, additionalAfter);
 	}
 		
 	public MBGScene(int maxLife, int maxTime, float bombResist, Texture texture, String name, boolean isFirst, boolean isLast, String mbg, int additionalBefore, int additionalAfter) {
