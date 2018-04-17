@@ -36,7 +36,7 @@ public class DanmakuS1LLast extends DanmakuScene {
 					new int[]{1800, 3600, 2100, 3600, 6000},
 					new int[]{1200, 2400, 1200, 2400, 3000},
 					new float[] {1f, 1.4f, 1.1f, 1.4f, 2.4f},
-					new String[]{null, "COPY & PASTE", null, "ANIMATION - [TWINKLE]", "ANIMATION - [CROSS]"},
+					new String[]{null, "「Ctrl-C, Ctrl-V」", null, "动符「闪烁」", "动符「CROSS」"},
 					new Runnable[]{null, null, null, null, null},
 					new Runnable[]{null, null, null, null, () -> { DropItem.CreateDropItem(transform.position.cpy(), 241); } });
 			boss.AddComponent(hp);
