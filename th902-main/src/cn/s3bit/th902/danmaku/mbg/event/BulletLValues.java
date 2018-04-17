@@ -33,6 +33,18 @@ public class BulletLValues implements ILValueProvider<AbstractMBGComponent<Bulle
 		case "高比":
 			ret.baseValue = bullet.transform.scale.y;
 			break;
+		case "R":
+			if (bullet instanceof MBGBullet)
+				ret.baseValue = ((MBGBullet) bullet).color.r * 255f;
+			break;
+		case "G":
+			if (bullet instanceof MBGBullet)
+				ret.baseValue = ((MBGBullet) bullet).color.g * 255f;
+			break;
+		case "B":
+			if (bullet instanceof MBGBullet)
+				ret.baseValue = ((MBGBullet) bullet).color.b * 255f;
+			break;
 		default:
 			System.err.println("Warning: Unimplemented - " + action.LValue);
 			break;

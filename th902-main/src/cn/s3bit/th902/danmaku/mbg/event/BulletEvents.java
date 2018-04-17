@@ -60,6 +60,24 @@ public final class BulletEvents implements IEventFirer<AbstractMBGComponent<Bull
 			task.lastVal += getFloatDelta(task);
 			obj.transform.scale.y = task.lastVal;
 			break;
+		case "R":
+			task.lastVal += getFloatDelta(task);
+			if (obj instanceof MBGBullet) {
+				((MBGBullet) obj).color.r = task.lastVal / 255f;
+			}
+			break;
+		case "G":
+			task.lastVal += getFloatDelta(task);
+			if (obj instanceof MBGBullet) {
+				((MBGBullet) obj).color.g = task.lastVal / 255f;
+			}
+			break;
+		case "B":
+			task.lastVal += getFloatDelta(task);
+			if (obj instanceof MBGBullet) {
+				((MBGBullet) obj).color.b = task.lastVal / 255f;
+			}
+			break;
 		default:
 			break;
 		}
