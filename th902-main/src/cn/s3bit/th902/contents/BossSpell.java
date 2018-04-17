@@ -68,8 +68,9 @@ public abstract class BossSpell extends DanmakuScene {
 	private boolean mIsEnded;
 	@Override
 	public void Update() {
-		if (mCountDownBeforeSpell > 0)
+		if (mCountDownBeforeSpell > 0) {
 			mCountDownBeforeSpell--;
+		}
 		else if (mIsEnded) {
 			if (mCountDownAfterSpell > 0)
 				mCountDownAfterSpell--;
