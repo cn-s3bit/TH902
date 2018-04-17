@@ -37,6 +37,7 @@ public class DanmakuS2L2 extends DanmakuScene {
 		waitEnemy(180);
 		enemyA(x1);
 		enemyA(x2);
+		waitEnemy(600);
 	}
 
 	private void enemyA(int x) {
