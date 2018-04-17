@@ -26,19 +26,30 @@ public class MBGScene extends BossSpell {
 	IntMap<MBGBulletEmitter> bulletEmitters;
 	IntMap<MBGReflexBoard> reflexBoards;
 	
+	int additionalBefore, additionalAfter;
+	
 	boolean isFirst, isLast;
 	public int globalTime;
-	public MBGScene(int maxLife, int maxTime, float bombResist, Texture texture, boolean isFirst, boolean isLast, FileHandle file) {
-		this(maxLife, maxTime, bombResist, texture, isFirst, isLast, new String(file.readBytes()));
+	
+	public String name;
+	public MBGScene(int maxLife, int maxTime, float bombResist, Texture texture, String name, boolean isFirst, boolean isLast, FileHandle file) {
+		this(maxLife, maxTime, bombResist, texture, name, isFirst, isLast, new String(file.readBytes()), 0, 0);
+	}
+	
+	public MBGScene(int maxLife, int maxTime, float bombResist, Texture texture, String name, boolean isFirst, boolean isLast, FileHandle file, int additionalBefore, int additionalAfter) {
+		this(maxLife, maxTime, bombResist, texture, name, isFirst, isLast, new String(file.readBytes()), additionalBefore, additionalAfter);
 	}
 		
-	public MBGScene(int maxLife, int maxTime, float bombResist, Texture texture, boolean isFirst, boolean isLast, String mbg) {
+	public MBGScene(int maxLife, int maxTime, float bombResist, Texture texture, String name, boolean isFirst, boolean isLast, String mbg, int additionalBefore, int additionalAfter) {
 		this.maxLife = maxLife;
 		this.maxTime = maxTime;
 		this.bombResist = bombResist;
 		this.texture = texture;
 		this.isFirst = isFirst;
 		this.isLast = isLast;
+		this.additionalBefore = additionalBefore;
+		this.additionalAfter = additionalAfter;
+		this.name = name;
 		try {
 			mbgData = MBGData.parseFrom(mbg);
 			bulletEmitters = new IntMap<>();
@@ -139,5 +150,20 @@ public class MBGScene extends BossSpell {
 		}
 		bulletEmitters.clear();
 		reflexBoards.clear();
+	}
+	
+	@Override
+	public int sleepTimeBeforeSpell() {
+		return super.sleepTimeBeforeSpell() + additionalBefore;
+	}
+	
+	@Override
+	public int sleepTimeAfterSpell() {
+		return super.sleepTimeAfterSpell() + additionalAfter;
+	}
+	
+	@Override
+	public String getName() {
+		return name == null ? super.getName() : name;
 	}
 }
