@@ -21,6 +21,7 @@ public class TrailRenderer extends AbstractRenderer {
 	private Drawable mDrawable;
 	private int mTrailLen;
 	private int mDepth;
+	private float mAlphaCoefficient;
 	public Group group;
 	protected LinkedBlockingQueue<Vector2> mTrail;
 	protected Image[] drawers;
@@ -30,12 +31,22 @@ public class TrailRenderer extends AbstractRenderer {
 			return new Vector2();
 		}
 	};
+	
 	public TrailRenderer(Texture texture, int trailLen, int depth) {
 		this(new TextureRegionDrawable(new TextureRegion(texture)), trailLen, depth);
 	}
 	
+	public TrailRenderer(Texture texture, int trailLen, int depth, float alphaCoefficient) {
+		this(new TextureRegionDrawable(new TextureRegion(texture)), trailLen, depth, alphaCoefficient);
+	}
+	
 	public TrailRenderer(Drawable drawable, int trailLen, int depth) {
+		this(drawable, trailLen, depth, 0.85f);
+	}
+	
+	public TrailRenderer(Drawable drawable, int trailLen, int depth, float alphaCoefficient) {
 		mDrawable = drawable;
+		mAlphaCoefficient = alphaCoefficient;
 		setTrailLen(trailLen);
 		setDepth(depth);
 	}
@@ -52,7 +63,7 @@ public class TrailRenderer extends AbstractRenderer {
 			vectorPool.free(mTrail.remove());
 		}
 		int i = 0;
-		float alpha = (float) Math.pow(0.85, mTrailLen + 0.2);
+		float alpha = (float) Math.pow(mAlphaCoefficient, mTrailLen + 0.2);
 		Vector2 oldTrail = null;
 		for (Iterator<Vector2> iterator = mTrail.iterator(); iterator.hasNext();) {
 			Vector2 trail = iterator.next();
@@ -72,7 +83,7 @@ public class TrailRenderer extends AbstractRenderer {
 			drawers[i].setScale(transform.scale.x, transform.scale.y);
 			drawers[i].setColor(1, 1, 1, alpha);
 			i++;
-			alpha /= 0.85f;
+			alpha /= mAlphaCoefficient;
 			oldTrail = trail;
 		}
 	}
