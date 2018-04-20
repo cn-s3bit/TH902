@@ -18,6 +18,8 @@ import cn.s3bit.th902.danmaku.mbg.event.ILValueProvider;
 import cn.s3bit.th902.gamecontents.Entity;
 import cn.s3bit.th902.gamecontents.JudgingSystem;
 import cn.s3bit.th902.gamecontents.components.ImageRenderer;
+import cn.s3bit.th902.gamecontents.components.Transform;
+import cn.s3bit.th902.gamecontents.components.ai.LifeCountDown;
 import cn.s3bit.th902.gamecontents.components.enemy.EnemyJudgeCircle;
 
 public class MBGBullet extends AbstractMBGComponent<BulletEmitter> {
@@ -76,7 +78,7 @@ public class MBGBullet extends AbstractMBGComponent<BulletEmitter> {
 	public void Initialize(Entity entity) {
 		super.Initialize(entity);
 		renderer = entity.GetComponent(ImageRenderer.class);
-		renderer.image.setColor(color);
+		renderer.getActor().setColor(color);
 	}
 
 	@Override
@@ -103,7 +105,7 @@ public class MBGBullet extends AbstractMBGComponent<BulletEmitter> {
 
 	@Override
 	public void during() {
-		renderer.image.setColor(color);
+		renderer.getActor().setColor(color);
 		judgeCircle.circle.radius = MBGBulletTypeMap.JUDGE_SIZE_MAP.get(mbgItem.子弹类型, 2f) * Math.min(transform.scale.x, transform.scale.y);
 		if (judgeCircle.circle.radius < 3f) {
 			judgeCircle.circle.radius = 3f;
@@ -128,6 +130,14 @@ public class MBGBullet extends AbstractMBGComponent<BulletEmitter> {
 						reflexBoard.manipulateBullet(this);
 					}
 				}
+			}
+			if (mbgItem.拖影效果) {
+				Entity entity = Entity.Create();
+				entity.AddComponent(new Transform(transform.position.cpy(), transform.rotation, transform.scale));
+				ImageRenderer imageRenderer = new ImageRenderer(renderer.image.getDrawable(), 0);
+				imageRenderer.image.setColor(1f, 1f, 1f, 0.3f);
+				entity.AddComponent(imageRenderer);
+				entity.AddComponent(new LifeCountDown(15));
 			}
 		}
 	}
