@@ -29,6 +29,7 @@ public class GameMain extends Game {
 	@Override
 	public void create() {
 		instance = this;
+		Gdx.graphics.setVSync(false);
 		ResourceManager.Load();
 		setScreen(new MainMenuScreen());
 		//setScreen(new FightScreen());
