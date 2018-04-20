@@ -86,12 +86,13 @@ public class MBGBullet extends AbstractMBGComponent<BulletEmitter> {
 		entity.AddComponent(judgeCircle);
 		JudgingSystem.clearByBombs.put(transform.immutablePosition, entity);
 		for (Entry<MBGBulletEmitter> sub : emitter.mbgScene.bulletEmitters) {
-			if (sub.value.mbgItem.绑定状态.Parent == emitter.mbgItem) {
+			if (sub.value.mbgItem.绑定状态.Parent != null && sub.value.mbgItem.绑定状态.Parent.ID == emitter.mbgItem.ID) {
 				if (sub.value.mbgItem.绑定状态.Depth) {
 					if (depthBinded == null)
 						depthBinded = new ObjectSet<MBGBulletEmitter>();
 					Tuple<BulletEmitter, Action> bulletEmitter = BulletEmitter.parseFrom(((BulletEmitter) sub.value.mbgItem.绑定状态.Child).stringData, emitter.mbgItem.layer);
 					bulletEmitter.Item1.绑定状态.Depth = true;
+					bulletEmitter.Item1.绑定状态.Relative = sub.value.mbgItem.绑定状态.Relative;
 					MBGBulletEmitter depth = new MBGBulletEmitter(bulletEmitter.Item1, emitter.mbgScene, emitter.layer);
 					depth.Initialize(entity);
 					depthBinded.add(depth);
