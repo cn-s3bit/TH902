@@ -94,6 +94,9 @@ public class MBGReflexBoard extends AbstractMBGComponent<ReflexBoard> {
 	ObjectIntMap<EnemyJudgeCircle> hitCount = new ObjectIntMap<>();
 	ObjectIntMap<EnemyJudgeCircle> hitCoolDown = new ObjectIntMap<>();
 	public boolean judgeHitBullet(MBGBullet bullet) {
+		if (judgeLine == null || bullet.judgeCircle == null || bullet.judgeCircle.circle == null) {
+			return false;
+		}
 		if (hitCount.get(bullet.judgeCircle, 0) >= mbgItem.次数) {
 			return false;
 		}
