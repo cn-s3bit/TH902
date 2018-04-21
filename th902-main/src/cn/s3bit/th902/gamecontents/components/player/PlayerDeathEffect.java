@@ -49,5 +49,12 @@ public class PlayerDeathEffect extends Component {
 	public static int getTimeLeft() {
 		return timeleft;
 	}
+	
+	@Override
+	public void Kill() {
+		leftP.Destroy();
+		rightP.Destroy();
+		super.Kill();
+	}
 
 }
