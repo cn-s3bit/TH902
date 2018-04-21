@@ -27,7 +27,7 @@ public abstract class BossSpell extends DanmakuScene {
 	public void Initialize(Entity entity) {
 		yield.append(() -> { return null; });
 		existTime = 0;
-		mCountDownBeforeSpell = sleepTimeBeforeSpell();
+		//mCountDownBeforeSpell = sleepTimeBeforeSpell();
 		mCountDownAfterSpell = sleepTimeAfterSpell();
 		mIsEnded = false;
 		if (isFirst()) {
@@ -63,15 +63,16 @@ public abstract class BossSpell extends DanmakuScene {
 		start();
 	}
 	
-	private int mCountDownBeforeSpell;
+	//private int mCountDownBeforeSpell;
 	private int mCountDownAfterSpell;
 	private boolean mIsEnded;
 	@Override
 	public void Update() {
-		if (mCountDownBeforeSpell > 0) {
+		/*if (mCountDownBeforeSpell > 0) {
 			mCountDownBeforeSpell--;
 		}
-		else if (mIsEnded) {
+		else */
+		if (mIsEnded) {
 			if (mCountDownAfterSpell > 0)
 				mCountDownAfterSpell--;
 			else
@@ -81,6 +82,7 @@ public abstract class BossSpell extends DanmakuScene {
 			existTime++;
 		}
 		if (!mIsEnded && (existTime >= getMaxTime() || hp.hp <= 0)) {
+			System.out.println(1);
 			mIsEnded = true;
 			end();
 			if (existTime < getMaxTime())
