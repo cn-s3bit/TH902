@@ -37,6 +37,7 @@ public class Launcher {
 		config.height = 720;
 		config.resizable = false;
 		config.title = GameMain.GAME_TITLE;
+		config.foregroundFPS = 0;
 		config.addIcon("resources/icon32.png", FileType.Internal);
 		lwjglApplication = new LwjglApplication(game, config);
 	}

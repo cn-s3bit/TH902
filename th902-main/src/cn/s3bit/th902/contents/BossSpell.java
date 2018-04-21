@@ -82,7 +82,6 @@ public abstract class BossSpell extends DanmakuScene {
 			existTime++;
 		}
 		if (!mIsEnded && (existTime >= getMaxTime() || hp.hp <= 0)) {
-			System.out.println(1);
 			mIsEnded = true;
 			end();
 			if (existTime < getMaxTime())

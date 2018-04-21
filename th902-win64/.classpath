@@ -2,7 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="libs/gdx-backend-lwjgl-1.9.6.jar"/>
+	<classpathentry kind="lib" path="libs/gdx-backend-lwjgl-1.9.6.jar" sourcepath="H:/PRGM/libGdx/libgdx-1.9.6.zip"/>
 	<classpathentry kind="lib" path="libs/jinput.jar"/>
 	<classpathentry kind="lib" path="libs/lwjgl.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/th902-main"/>
