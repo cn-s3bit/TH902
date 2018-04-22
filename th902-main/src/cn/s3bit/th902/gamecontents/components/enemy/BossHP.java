@@ -1,5 +1,6 @@
 package cn.s3bit.th902.gamecontents.components.enemy;
 
+import cn.s3bit.th902.contents.THSoundEffects;
 import cn.s3bit.th902.gamecontents.EnemySpellInfoSystem;
 import cn.s3bit.th902.gamecontents.Entity;
 import cn.s3bit.th902.gamecontents.IJudgeCallback;
@@ -58,6 +59,7 @@ public class BossHP extends Component implements IJudgeCallback, ISpellInfoProvi
 	public void Initialize(Entity entity) {
 		mEntity = entity;
 		EnemySpellInfoSystem.activate(entity);
+		THSoundEffects.Cat.sound.play();
 	}
 
 	@Override
@@ -72,12 +74,14 @@ public class BossHP extends Component implements IJudgeCallback, ISpellInfoProvi
 			}
 			if (current < life.length - 1) {
 				current++;
+				THSoundEffects.Cat.sound.play();
 				hp = maxhp = life[current];
 				timer = 0;
 			}
 			else {
 				EnemySpellInfoSystem.deactivate();
 				mEntity.Destroy();
+				THSoundEffects.Enep1.sound.play();
 			}
 		}
 	}

@@ -60,6 +60,7 @@ public abstract class BossSpell extends DanmakuScene {
 
 			EnemySpellInfoSystem.activate(boss);
 		}
+		THSoundEffects.Cat.sound.play();
 		start();
 	}
 	
@@ -101,6 +102,7 @@ public abstract class BossSpell extends DanmakuScene {
 		if (isLast()) {
 			EnemySpellInfoSystem.deactivate();
 			boss.Destroy();
+			THSoundEffects.Enep1.sound.play();
 		}
 		yield.yield();
 		super.Kill();
