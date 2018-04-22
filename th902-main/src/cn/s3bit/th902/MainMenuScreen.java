@@ -54,7 +54,7 @@ public class MainMenuScreen extends ScreenAdapter {
 		last.linkedNode.insertAfter(exitSelectable.linkedNode);
 		exit.AddComponent(exitSelectable);
 		button1Entity.AddComponent(last);
-		AudioManager.PlayBGM(Gdx.files.internal("resources/BGM/Starting Scene.mp3"), true);
+		MusicManager.PlayBGM(Gdx.files.internal("resources/BGM/Starting Scene.mp3"), true);
 	}
 
 	@Override

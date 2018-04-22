@@ -4,14 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.files.FileHandle;
 
-public class AudioManager {
+public class MusicManager {
 	public static Music music = null;
 	public static void PlayBGM(FileHandle handle, boolean loop) {
 		if (music != null) {
 			music.stop();
 			music.dispose();
 		}
-		music = Gdx.audio.newMusic(Gdx.files.internal("resources/BGM/Starting Scene.mp3"));
+		music = Gdx.audio.newMusic(handle);
 		music.setLooping(loop);
 		music.play();
 	}
