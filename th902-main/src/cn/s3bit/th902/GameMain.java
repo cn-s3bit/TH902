@@ -37,16 +37,9 @@ public class GameMain extends Game {
 	public void create() {
 		instance = this;
 		Gdx.graphics.setVSync(false);
-		Gdx.graphics.setContinuousRendering(false);
+		//Gdx.graphics.setContinuousRendering(false);
 		ResourceManager.Load();
 		setScreen(new MainMenuScreen());
-		renderTask = new Task() {
-			@Override
-			public void run() {
-				Gdx.graphics.requestRendering();
-			}
-		};
-		Timer.schedule(renderTask, 0f, 1f / 60f);
 		//setScreen(new FightScreen());
 		//setScreen(new DifficultySelectScreen());
 		//setScreen(new CharacterSelectScreen());
@@ -79,15 +72,10 @@ public class GameMain extends Game {
 	
 	protected void debugging() {
 		if (Gdx.input.isKeyPressed(Keys.F1))
-			Gdx.graphics.setContinuousRendering(true);
+			PRI.setFPS(0);
 		else
-			Gdx.graphics.setContinuousRendering(false);
-		if (Gdx.input.isKeyJustPressed(Keys.F2)) {
-			if (renderTask.isScheduled()) {
-				renderTask.cancel();
-			} else {
-				Timer.schedule(renderTask, 0f, 1f / 60f);
-			}
-		}
+			PRI.setFPS(60);
+		if (Gdx.input.isKeyJustPressed(Keys.F2))
+			Gdx.graphics.setContinuousRendering(!Gdx.graphics.isContinuousRendering());
 	}
 }

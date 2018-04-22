@@ -19,6 +19,7 @@ public class Launcher {
 	 * The {@link LwjglApplication} instance.
 	 */
 	public static LwjglApplication lwjglApplication;
+	public static LwjglApplicationConfiguration config;
 	/**
 	 * Entry point.
 	 */
@@ -30,14 +31,18 @@ public class Launcher {
 				font.initialize(fontName, isBold, isItalic, size);
 				return font;
 			}
+			@Override
+			public void setFPS(int fps) {
+				config.foregroundFPS = fps;
+			}
 		});
-		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+		config = new LwjglApplicationConfiguration();
 		config.fullscreen = false;
 		config.width = 960;
 		config.height = 720;
 		config.resizable = false;
 		config.title = GameMain.GAME_TITLE;
-		config.foregroundFPS = 0;
+		config.foregroundFPS = 60;
 		config.addIcon("resources/icon32.png", FileType.Internal);
 		lwjglApplication = new LwjglApplication(game, config);
 	}
