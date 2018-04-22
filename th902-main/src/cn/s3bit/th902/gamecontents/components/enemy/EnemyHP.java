@@ -45,7 +45,7 @@ public class EnemyHP extends Component implements IJudgeCallback {
 		if (hp <= 0) {
 			ExtraDrop drop = mEntity.GetComponent(ExtraDrop.class);
 			if (drop != null) {
-				drop.LootLogic();
+				drop.Loot();
 			}
 			mEntity.Destroy();
 		}

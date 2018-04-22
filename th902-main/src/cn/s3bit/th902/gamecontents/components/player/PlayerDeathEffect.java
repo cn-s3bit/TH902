@@ -3,6 +3,7 @@ package cn.s3bit.th902.gamecontents.components.player;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 
+import cn.s3bit.th902.contents.THSoundEffects;
 import cn.s3bit.th902.gamecontents.Entity;
 import cn.s3bit.th902.gamecontents.JudgingSystem;
 import cn.s3bit.th902.gamecontents.components.CircularDrawingStaticRenderer;
@@ -33,6 +34,7 @@ public class PlayerDeathEffect extends Component {
 		rightP.AddComponent(new Transform(JudgingSystem.playerJudge.cpy(), new Vector2(0.4f, 0.4f)));
 		rightP.AddComponent(rightR = new CircularDrawingStaticRenderer(texture, -cutDeg + 180, -cutDeg + 360, 0));
 		rightP.AddComponent(rightM = new MoveBasic(new Vector2(0.5f, 0).rotate(cutDeg + 90), new Vector2(0.05f, 0).rotate(cutDeg + 90).add(0, -0.08f)));
+		THSoundEffects.Biu.sound.play();
 	}
 
 	@Override

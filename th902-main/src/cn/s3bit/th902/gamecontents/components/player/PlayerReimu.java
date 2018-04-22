@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import cn.s3bit.th902.FightScreen;
 import cn.s3bit.th902.KeySettings;
 import cn.s3bit.th902.ResourceManager;
+import cn.s3bit.th902.contents.THSoundEffects;
 import cn.s3bit.th902.gamecontents.Entity;
 import cn.s3bit.th902.gamecontents.components.ImageGroupRenderer;
 import cn.s3bit.th902.utils.AnimationDrawable;
@@ -80,6 +81,9 @@ public class PlayerReimu extends Player {
 		existTime++;
 		ReimuWingShoot = Gdx.input.isKeyPressed(KeySettings.positiveKey) && wingShoot() && bombFrames <= 60;
 		mShoot = Gdx.input.isKeyPressed(KeySettings.positiveKey) && existTime % 3 == 1 && bombFrames <= 60;
+		if (mShoot) {
+			THSoundEffects.PlShoot.sound.play(0.4f);
+		}
 		if (mType == FightScreen.PlayerTypeA) {
 			if (mShoot) {
 				if (slow) {

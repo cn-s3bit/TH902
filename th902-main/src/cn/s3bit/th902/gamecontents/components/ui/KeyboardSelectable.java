@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.MathUtils;
 
 import cn.s3bit.th902.KeySettings;
+import cn.s3bit.th902.contents.THSoundEffects;
 import cn.s3bit.th902.gamecontents.Entity;
 import cn.s3bit.th902.gamecontents.components.Component;
 import cn.s3bit.th902.gamecontents.components.ImageRenderer;
@@ -40,15 +41,18 @@ public class KeyboardSelectable extends Component{
 		renderer.image.setColor(colorFactor, colorFactor, colorFactor, 1);
 		mEffectTimer++;
 		if (Gdx.input.isKeyJustPressed(KeySettings.positiveKey) && onPressAction != null) {
+			THSoundEffects.OK.sound.play();
 			onPressAction.run();
 		}
 		else if (Gdx.input.isKeyJustPressed(KeySettings.up) && linkedNode.previous != null) {
 			isSelected = false;
 			linkedNode.previous.data.isSelected = true;
+			THSoundEffects.Select.sound.play();
 		}
 		else if (Gdx.input.isKeyJustPressed(KeySettings.down) && linkedNode.next != null) {
 			isSelected = false;
 			linkedNode.next.data.isSelected = true;
+			THSoundEffects.Select.sound.play();
 		}
 		oldIsSelected = isSelected;
 	}

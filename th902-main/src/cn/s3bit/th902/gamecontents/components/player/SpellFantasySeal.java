@@ -13,6 +13,7 @@ import com.badlogic.gdx.math.Vector3;
 
 import cn.s3bit.th902.FightScreen;
 import cn.s3bit.th902.GameHelper;
+import cn.s3bit.th902.contents.THSoundEffects;
 import cn.s3bit.th902.gamecontents.Entity;
 import cn.s3bit.th902.gamecontents.IJudgeCallback;
 import cn.s3bit.th902.gamecontents.JudgingSystem;
@@ -121,6 +122,7 @@ public class SpellFantasySeal extends Component {
 		}
 		
 		public void explode() {
+			THSoundEffects.Enep0.sound.play();
 			particleEffect.dispose();
 			particleEffect = new ParticleEffect();
 			mEntity.GetComponent(ParticleRenderer.class).actor.wrappedEffect = particleEffect;
@@ -158,6 +160,9 @@ public class SpellFantasySeal extends Component {
 			cir.AddComponent(new Transform(transform.position.cpy()));
 			cir.AddComponent(new FantasySealCircle(i));
 		}
+		THSoundEffects.Cat.sound.play();
+		THSoundEffects.Gun.sound.play();
+		THSoundEffects.MorisaBomb.sound.play();
 	}
 	
 	Vector3 totalTranslation = new Vector3();

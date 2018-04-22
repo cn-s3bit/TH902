@@ -36,6 +36,6 @@ public enum THSoundEffects {
 	static final String PATH_SE_PREFIX = "resources/SE/se_";
 	public final Sound sound;
 	private THSoundEffects(String filename) {
-		sound = Gdx.audio.newSound(Gdx.files.internal(PATH_SE_PREFIX + filename + ".wav"));
+		sound = Gdx.audio.newSound(Gdx.files.internal(PATH_SE_PREFIX + filename + ".mp3"));
 	}
 }
