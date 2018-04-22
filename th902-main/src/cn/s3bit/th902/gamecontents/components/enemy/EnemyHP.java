@@ -1,5 +1,6 @@
 package cn.s3bit.th902.gamecontents.components.enemy;
 
+import cn.s3bit.th902.contents.THSoundEffects;
 import cn.s3bit.th902.gamecontents.Entity;
 import cn.s3bit.th902.gamecontents.IJudgeCallback;
 import cn.s3bit.th902.gamecontents.components.Component;
@@ -45,8 +46,9 @@ public class EnemyHP extends Component implements IJudgeCallback {
 		if (hp <= 0) {
 			ExtraDrop drop = mEntity.GetComponent(ExtraDrop.class);
 			if (drop != null) {
-				drop.Loot();
+				drop.LootLogic();
 			}
+			THSoundEffects.Enep0.sound.play(0.5f);
 			mEntity.Destroy();
 		}
 	}
