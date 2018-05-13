@@ -111,7 +111,7 @@ public class MBGBullet extends AbstractMBGComponent<BulletEmitter> {
 		if (judgeCircle.circle.radius < 3f) {
 			judgeCircle.circle.radius = 3f;
 		}
-		if (color.a < 0.04f) {
+		if (color.a < 0.95f) {
 			judgeCircle.circle.radius = 0f;
 		}
 		if (mbgItem.出屏即消 && FightScreen.isOutOfScreen(transform.position)) {
