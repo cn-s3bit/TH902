@@ -14,6 +14,7 @@ import cn.s3bit.th902.contents.stage1.DanmakuS1L6;
 import cn.s3bit.th902.contents.stage1.DanmakuS1LLast;
 import cn.s3bit.th902.contents.stage2.DanmakuS2L1;
 import cn.s3bit.th902.contents.stage2.DanmakuS2L2;
+import cn.s3bit.th902.contents.stage2.DanmakuS2L3;
 import cn.s3bit.th902.danmaku.mbg.MBGScene;
 
 public class SceneSystem {
@@ -24,7 +25,7 @@ public class SceneSystem {
 	public static SceneSystem Create(int difficulty, int stageid, Runnable afterFinish) {
 		// test
 		SceneSystem system = new SceneSystem();
-		system.mScenes.add(new DanmakuS1L1());
+		/*system.mScenes.add(new DanmakuS1L1());
 		system.mScenes.add(new DanmakuS1L2());
 		system.mScenes.add(new DanmakuS1L3());
 		system.mScenes.add(new DanmakuS1L4());
@@ -32,7 +33,8 @@ public class SceneSystem {
 		system.mScenes.add(new DanmakuS1L6());
 		system.mScenes.add(new DanmakuS1LLast());
 		system.mScenes.add(new DanmakuS2L1());
-		system.mScenes.add(new DanmakuS2L2());
+		system.mScenes.add(new DanmakuS2L2());*/
+		system.mScenes.add(new DanmakuS2L3());
 		system.mScenes.add(new MBGScene(3500, 2400, 1.7f, ResourceManager.barrages.get(230), "", true, false, Gdx.files.internal("resources/Danmaku/非符1.mbg"), 180, 0));
 		system.mScenes.add(new MBGScene(5000, 3000, 2.2f, ResourceManager.barrages.get(230), "「贰壹叁壹伍」", false, false, Gdx.files.internal("resources/Danmaku/21315.mbg"), 0, 60));
 		system.mScenes.add(new MBGScene(2000, 1500, 1f, ResourceManager.barrages.get(230), "", false, false, Gdx.files.internal("resources/Danmaku/一非.mbg"), 0, 60));
