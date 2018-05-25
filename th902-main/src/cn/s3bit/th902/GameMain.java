@@ -6,8 +6,6 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.Timer;
-import com.badlogic.gdx.utils.Timer.Task;
 
 import cn.s3bit.th902.gamecontents.Entity;
 
@@ -30,8 +28,6 @@ public class GameMain extends Game {
 		super();
 		GameMain.PRI = PRI;
 	}
-	
-	Task renderTask;
 	
 	@Override
 	public void create() {
