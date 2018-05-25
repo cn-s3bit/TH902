@@ -6,6 +6,7 @@ import java.util.Map.Entry;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Ellipse;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
@@ -91,9 +92,9 @@ public class SpellFantasySeal extends Component {
 				yield.yield();
 			
 			if (!hasExploded) {
-				Set<Entry<ImmutableWrapper<Circle>, PlayerCollisionData>> set = JudgingSystem.enemyJudges.entrySet();
-				for (Entry<ImmutableWrapper<Circle>, PlayerCollisionData> entry : set) {
-					if (entry.getValue().judgeCallback.canHurt() && Intersector.overlaps(entry.getKey().getData(), judge)) {
+				Set<Entry<ImmutableWrapper<Ellipse>, PlayerCollisionData>> set = JudgingSystem.enemyJudges.entrySet();
+				for (Entry<ImmutableWrapper<Ellipse>, PlayerCollisionData> entry : set) {
+					if (entry.getValue().judgeCallback.canHurt() && Intersector.overlaps(GameHelper.roundEllipseToCircle(entry.getKey().getData(), false), judge)) {
 						entry.getValue().judgeCallback.onHurt(entry.getValue().judgeCallback.getBombResist());
 					}
 				}
@@ -130,9 +131,9 @@ public class SpellFantasySeal extends Component {
 			particleEffect.setPosition(mTransform.position.x, mTransform.position.y);
 			particleEffect.scaleEffect(2);
 			particleEffect.start();
-			Set<Entry<ImmutableWrapper<Circle>, PlayerCollisionData>> set = JudgingSystem.enemyJudges.entrySet();
-			for (Entry<ImmutableWrapper<Circle>, PlayerCollisionData> entry : set) {
-				if (entry.getValue().judgeCallback.canHurt() && Intersector.overlaps(entry.getKey().getData(), judge)) {
+			Set<Entry<ImmutableWrapper<Ellipse>, PlayerCollisionData>> set = JudgingSystem.enemyJudges.entrySet();
+			for (Entry<ImmutableWrapper<Ellipse>, PlayerCollisionData> entry : set) {
+				if (entry.getValue().judgeCallback.canHurt() && Intersector.overlaps(GameHelper.roundEllipseToCircle(entry.getKey().getData(), false), judge)) {
 					entry.getValue().judgeCallback.onHurt(200 * entry.getValue().judgeCallback.getBombResist());
 				}
 			}

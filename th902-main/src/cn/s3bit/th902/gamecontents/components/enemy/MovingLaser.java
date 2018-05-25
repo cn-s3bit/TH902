@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Ellipse;
 import com.badlogic.gdx.math.Vector2;
 
 import cn.s3bit.th902.FightScreen;
@@ -26,7 +26,7 @@ public class MovingLaser extends Component {
 	private int mTimeleft;
 	
 	LinkedList<Vector2> positions = new LinkedList<>();
-	List<ImmutableWrapper<Circle>> judges = new ArrayList<>();
+	List<ImmutableWrapper<Ellipse>> judges = new ArrayList<>();
 	
 	Entity entity;
 	IMovement movement;
@@ -43,7 +43,7 @@ public class MovingLaser extends Component {
 	public MovingLaser(int timeleft, float judgeSize) {
 		mTimeleft = timeleft;
 		for (int i=0; i<timeleft; i++)
-			judges.add(ImmutableWrapper.wrap(new Circle(1000, 1000, judgeSize)));
+			judges.add(ImmutableWrapper.wrap(new Ellipse(1000, 1000, judgeSize, judgeSize)));
 	}
 
 	@Override
@@ -60,7 +60,7 @@ public class MovingLaser extends Component {
 		if (movement == null)
 			movement = entity.GetComponent(IMovement.class);
 		if (positions.size() < mTimeleft) {
-			JudgingSystem.registerEnemyJudge(judges.get(positions.size()), IJudgeCallback.NONE, movement);
+			JudgingSystem.registerEnemyJudge(judges.get(positions.size()), mTransform, IJudgeCallback.NONE, movement);
 			positions.add(mTransform.position.cpy());
 		}
 		else {
@@ -79,7 +79,7 @@ public class MovingLaser extends Component {
 	@Override
 	public void Kill() {
 		super.Kill();
-		for (ImmutableWrapper<Circle> w : judges) {
+		for (ImmutableWrapper<Ellipse> w : judges) {
 			JudgingSystem.unregisterEnemyJudge(w);
 		}
 	}

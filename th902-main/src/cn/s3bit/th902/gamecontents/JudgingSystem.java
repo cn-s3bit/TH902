@@ -5,37 +5,45 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.stream.Stream;
 
-import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Ellipse;
 import com.badlogic.gdx.math.Vector2;
 
+import cn.s3bit.th902.gamecontents.components.Transform;
 import cn.s3bit.th902.gamecontents.components.ai.IMovement;
 import cn.s3bit.th902.utils.ImmutableWrapper;
 import cn.s3bit.th902.utils.LineSegment;
 
 public class JudgingSystem {
 	public static Vector2 playerJudge = new Vector2(-1000, -1000);
-	public static HashMap<ImmutableWrapper<Circle>, PlayerCollisionData> enemyJudges = new HashMap<>();
+	public static HashMap<ImmutableWrapper<Ellipse>, PlayerCollisionData> enemyJudges = new HashMap<>();
 	public static HashMap<ImmutableWrapper<LineSegment>, IJudgeCallback> friendlyJudges = new HashMap<>();
 	public static HashMap<ImmutableWrapper<Vector2>, IJudgeCallback> chaseableEnemyPositions = new HashMap<>();
-	private static Entry<ImmutableWrapper<Circle>, PlayerCollisionData> mJudgeEntry;
+	private static Entry<ImmutableWrapper<Ellipse>, PlayerCollisionData> mJudgeEntry;
 	public static HashMap<ImmutableWrapper<Vector2>, Entity> clearByBombs = new HashMap<>();
 	
 	public static class PlayerCollisionData {
-		public Circle judge;
+		public Ellipse judge;
+		public Transform transform;
 		public IJudgeCallback judgeCallback;
 		public IMovement movement;
-		public PlayerCollisionData(Circle judge, IJudgeCallback judgeCallback, IMovement movement) {
+		public PlayerCollisionData(Ellipse judge, Transform transform, IJudgeCallback judgeCallback, IMovement movement) {
 			this.judge = judge;
 			this.judgeCallback = judgeCallback;
 			this.movement = movement;
+			this.transform = transform;
 		}
 	}
 	
 	public static PlayerCollisionData playerCollision() {
-		Stream<Entry<ImmutableWrapper<Circle>, PlayerCollisionData>> stream = enemyJudges.entrySet().parallelStream();
+		Stream<Entry<ImmutableWrapper<Ellipse>, PlayerCollisionData>> stream = enemyJudges.entrySet().parallelStream();
 		mJudgeEntry = null;
 		stream.forEach((entry) -> {
-			if (entry.getValue().judgeCallback.getDamage() > 0 && entry.getKey().getData().radius >= 0.1f && entry.getKey().getData().contains(playerJudge)) {
+			if (entry.getValue().judgeCallback.getDamage() <= 0 || entry.getKey().getData().width < 0.1f) {
+				return;
+			}
+			Vector2 tmp = new Vector2(playerJudge);
+			tmp.sub(entry.getKey().getData().x, entry.getKey().getData().y).rotate(-entry.getValue().transform.rotation).add(entry.getKey().getData().x, entry.getKey().getData().y);
+			if (entry.getKey().getData().contains(tmp)) {
 				mJudgeEntry = entry;
 			}
 		});
@@ -43,22 +51,22 @@ public class JudgingSystem {
 		return mJudgeEntry == null ? null : mJudgeEntry.getValue();
 	}
 	
-	public static IJudgeCallback collideFriendlyBullets(Circle judge) {
+	public static IJudgeCallback collideFriendlyBullets(Ellipse judge, float rotation) {
 		for (Iterator<Entry<ImmutableWrapper<LineSegment>, IJudgeCallback>> iterator = friendlyJudges.entrySet().iterator(); iterator.hasNext();) {
 			Entry<ImmutableWrapper<LineSegment>, IJudgeCallback> pos = iterator.next();
-			if (pos.getKey().getData().intersectCircle(judge))
+			if (pos.getKey().getData().intersectEllipse(judge, rotation))
 				return pos.getValue();
 		}
 		return null;
 	}
 	
 	public static void judgeEnemyHurt() {
-		for (Iterator<Entry<ImmutableWrapper<Circle>, PlayerCollisionData>> iterator = enemyJudges.entrySet().iterator(); iterator.hasNext();) {
-			Entry<ImmutableWrapper<Circle>, PlayerCollisionData> wrapper = iterator.next();
+		for (Iterator<Entry<ImmutableWrapper<Ellipse>, PlayerCollisionData>> iterator = enemyJudges.entrySet().iterator(); iterator.hasNext();) {
+			Entry<ImmutableWrapper<Ellipse>, PlayerCollisionData> wrapper = iterator.next();
 			if (wrapper.getValue().judgeCallback.canHurt()) {
 				IJudgeCallback callback = null;
 				do {
-					callback = collideFriendlyBullets(wrapper.getKey().getData());
+					callback = collideFriendlyBullets(wrapper.getKey().getData(), wrapper.getValue().transform.rotation);
 					if (callback != null) {
 						callback.onCollide();
 						wrapper.getValue().judgeCallback.onHurt(callback.getDamage());
@@ -68,15 +76,15 @@ public class JudgingSystem {
 		}
 	}
 	
-	public static void registerEnemyJudge(ImmutableWrapper<Circle> judge, IJudgeCallback callback, IMovement movement) {
-		enemyJudges.put(judge, new PlayerCollisionData(judge.getData(), callback, movement));
+	public static void registerEnemyJudge(ImmutableWrapper<Ellipse> judge, Transform transform, IJudgeCallback callback, IMovement movement) {
+		enemyJudges.put(judge, new PlayerCollisionData(judge.getData(), transform, callback, movement));
 	}
 	
 	public static void registerFriendlyJudge(ImmutableWrapper<LineSegment> judge, IJudgeCallback callback) {
 		friendlyJudges.put(judge, callback);
 	}
 	
-	public static void unregisterEnemyJudge(ImmutableWrapper<Circle> judge) {
+	public static void unregisterEnemyJudge(ImmutableWrapper<Ellipse> judge) {
 		enemyJudges.remove(judge);
 	}
 	

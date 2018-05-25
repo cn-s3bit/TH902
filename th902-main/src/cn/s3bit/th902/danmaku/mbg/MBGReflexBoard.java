@@ -104,7 +104,7 @@ public class MBGReflexBoard extends AbstractMBGComponent<ReflexBoard> {
 			hitCoolDown.getAndIncrement(bullet.judgeCircle, 0, -1);
 			return false;
 		}
-		if (judgeLine.intersectCircle(bullet.judgeCircle.circle)) {
+		if (judgeLine.intersectCircle(bullet.judgeCircle.getCircle())) {
 			hitCount.getAndIncrement(bullet.judgeCircle, 0, 1);
 			hitCoolDown.getAndIncrement(bullet.judgeCircle, 0, 5);
 			return true;

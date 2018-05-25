@@ -1,5 +1,7 @@
 package cn.s3bit.th902;
 
+import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Ellipse;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
@@ -30,5 +32,14 @@ public final class GameHelper {
 	
 	public static float getValFromRandom(ValueWithRand valueWithRand) {
 		return MathUtils.random(valueWithRand.baseValue - valueWithRand.randValue, valueWithRand.baseValue + valueWithRand.randValue);
+	}
+	
+	static Circle circle_tmp = new Circle();
+	public static Circle roundEllipseToCircle(Ellipse ellipse, boolean alloc) {
+		if (!alloc) {
+			circle_tmp.set(ellipse.x, ellipse.y, Math.min(ellipse.width, ellipse.height));
+			return circle_tmp;
+		} else
+			return new Circle(ellipse.x, ellipse.y, Math.min(ellipse.width, ellipse.height));
 	}
 }
