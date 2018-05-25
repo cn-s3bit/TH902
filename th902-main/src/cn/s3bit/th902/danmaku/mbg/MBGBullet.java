@@ -107,8 +107,8 @@ public class MBGBullet extends AbstractMBGComponent<BulletEmitter> {
 	@Override
 	public void during() {
 		renderer.getActor().setColor(color);
-		judgeCircle.circle.width = MBGBulletTypeMap.JUDGE_SIZE_MAP.get(mbgItem.子弹类型, 2f) * transform.scale.x;
-		judgeCircle.circle.height = MBGBulletTypeMap.JUDGE_SIZE_MAP.get(mbgItem.子弹类型, 2f) * transform.scale.y;
+		judgeCircle.circle.width = 2 * MBGBulletTypeMap.JUDGE_SIZE_MAP.get(mbgItem.子弹类型, 2f) * transform.scale.x;
+		judgeCircle.circle.height = 2 * MBGBulletTypeMap.JUDGE_SIZE_MAP.get(mbgItem.子弹类型, 2f) * transform.scale.y;
 		if (color.a < 0.95f) {
 			judgeCircle.circle.width = judgeCircle.circle.height = 0f;
 		}

@@ -38,7 +38,7 @@ public class JudgingSystem {
 		Stream<Entry<ImmutableWrapper<Ellipse>, PlayerCollisionData>> stream = enemyJudges.entrySet().parallelStream();
 		mJudgeEntry = null;
 		stream.forEach((entry) -> {
-			if (entry.getValue().judgeCallback.getDamage() <= 0 || entry.getKey().getData().width < 0.1f) {
+			if (entry.getValue().judgeCallback.getDamage() <= 0 || Math.max(entry.getKey().getData().width, entry.getKey().getData().height) < 0.1f) {
 				return;
 			}
 			Vector2 tmp = new Vector2(playerJudge);
