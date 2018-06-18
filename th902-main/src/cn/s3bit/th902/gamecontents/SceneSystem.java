@@ -25,7 +25,7 @@ public class SceneSystem {
 	public static SceneSystem Create(int difficulty, int stageid, Runnable afterFinish) {
 		// test
 		SceneSystem system = new SceneSystem();
-		/*system.mScenes.add(new DanmakuS1L1());
+		system.mScenes.add(new DanmakuS1L1());
 		system.mScenes.add(new DanmakuS1L2());
 		system.mScenes.add(new DanmakuS1L3());
 		system.mScenes.add(new DanmakuS1L4());
@@ -33,14 +33,18 @@ public class SceneSystem {
 		system.mScenes.add(new DanmakuS1L6());
 		system.mScenes.add(new DanmakuS1LLast());
 		system.mScenes.add(new DanmakuS2L1());
-		system.mScenes.add(new DanmakuS2L2());*/
+		system.mScenes.add(new DanmakuS2L2());
 		system.mScenes.add(new DanmakuS2L3());
 		system.mScenes.add(new MBGScene(3500, 2400, 1.7f, ResourceManager.barrages.get(230), "", true, false, Gdx.files.internal("resources/Danmaku/非符1.mbg"), 180, 0));
 		system.mScenes.add(new MBGScene(5000, 3000, 2.2f, ResourceManager.barrages.get(230), "「贰壹叁壹伍」", false, false, Gdx.files.internal("resources/Danmaku/21315.mbg"), 0, 60));
 		system.mScenes.add(new MBGScene(2000, 1500, 1f, ResourceManager.barrages.get(230), "", false, false, Gdx.files.internal("resources/Danmaku/一非.mbg"), 0, 60));
 		system.mScenes.add(new MBGScene(1073741824, 2000, 0f, ResourceManager.barrages.get(230), "「极光与流星」", false, false, Gdx.files.internal("resources/Danmaku/极光与流星.mbg"), 0, 120));
 		system.mScenes.add(new MBGScene(12000, 3000, 4f, ResourceManager.barrages.get(230), "终符「弹幕结界」", false, true, Gdx.files.internal("resources/Danmaku/弹幕结界.mbg")));
-		
+
+		system.mScenes.add(new MBGScene(5000, 3000, 2.1f, ResourceManager.barrages.get(230), "", true, false, Gdx.files.internal("resources/Danmaku/摇摆.mbg"), 360, 0));
+		system.mScenes.add(new MBGScene(1073741824, 2200, 0f, ResourceManager.barrages.get(230), "里冬「天青色旋转木马」", false, false, Gdx.files.internal("resources/Danmaku/里冬.mbg"), 0, 120));
+		system.mScenes.add(new MBGScene(4000, 2000, 1.8f, ResourceManager.barrages.get(230), "", false, false, Gdx.files.internal("resources/Danmaku/作图.mbg"), 0, 60));
+		system.mScenes.add(new MBGScene(8800, 2400, 2.5f, ResourceManager.barrages.get(230), "里冬「绽放的烟花」", false, true, Gdx.files.internal("resources/Danmaku/1233Y7Resave.mbg"), 0, 400));
 		/*system.mScenes.add(new MBGScene(1000, 1000, 1, ResourceManager.barrages.get(230), true, true,
 				"Crazy Storm Data 1.01\n"+
 				"Center:315,240,0,0,0,0,\n"+

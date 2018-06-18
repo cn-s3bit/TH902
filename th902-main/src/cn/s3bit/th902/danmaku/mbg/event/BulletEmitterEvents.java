@@ -52,19 +52,33 @@ public final class BulletEmitterEvents implements IEventFirer<AbstractMBGCompone
 			break; 
 		case "速度":
 			task.lastVal += getFloatDelta(task);
+			if (emitter.moveBasic.velocity.isZero()) {
+				emitter.moveBasic.velocity.set(1f, 0f).setAngle(-emitter.mbgItem.发射器运动.motion.speedDirection.baseValue);
+			}
 			emitter.moveBasic.velocity.nor().scl(task.lastVal);
 			break;
 		case "速度方向":
 			task.lastVal += getFloatDelta(task);
 			emitter.moveBasic.velocity.setAngle(-task.lastVal);
-			break; 
+			if (Math.abs(task.lastVal - task.target) > 180f) {
+				emitter.moveBasic.velocity.setAngle(-task.target);
+			}
+			emitter.mbgItem.发射器运动.motion.speedDirection.baseValue = task.lastVal;
+			break;
 		case "加速度":
 			task.lastVal += getFloatDelta(task);
+			if (emitter.moveBasic.acc.isZero()) {
+				emitter.moveBasic.acc.set(1f, 0f).setAngle(-emitter.mbgItem.发射器运动.motion.accelerationDirection.baseValue);
+			}
 			emitter.moveBasic.acc.nor().scl(task.lastVal);
 			break; 
 		case "加速度方向":
 			task.lastVal += getFloatDelta(task);
 			emitter.moveBasic.acc.setAngle(-task.lastVal);
+			if (Math.abs(task.lastVal - task.target) > 180f) {
+				emitter.moveBasic.acc.setAngle(-task.target);
+			}
+			emitter.mbgItem.发射器运动.motion.accelerationDirection.baseValue = task.lastVal;
 			break; 
 		case "生命":
 			task.lastVal = emitter.mbgItem.子弹生命 + getFloatDelta(task);

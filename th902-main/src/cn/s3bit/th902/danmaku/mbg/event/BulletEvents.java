@@ -17,6 +17,9 @@ public final class BulletEvents implements IEventFirer<AbstractMBGComponent<Bull
 		case "子弹速度":
 			dt = getFloatDelta(task);
 			task.lastVal += dt;
+			if (obj.moveBasic.velocity.isZero()) {
+				obj.moveBasic.velocity.set(1f, 0f).setAngle(-obj.mbgItem.子弹运动.motion.speedDirection.baseValue);
+			}
 			IMoveFunction.vct2_tmp1.set(obj.moveBasic.velocity);
 			obj.moveBasic.velocity.nor().scl(dt).add(IMoveFunction.vct2_tmp1);
 			break; 
@@ -33,6 +36,9 @@ public final class BulletEvents implements IEventFirer<AbstractMBGComponent<Bull
 		case "子弹加速度":
 			dt = getFloatDelta(task);
 			task.lastVal += dt;
+			if (obj.moveBasic.velocity.isZero()) {
+				obj.moveBasic.velocity.set(1f, 0f).setAngle(-obj.mbgItem.子弹运动.motion.accelerationDirection.baseValue);
+			}
 			IMoveFunction.vct2_tmp1.set(obj.moveBasic.acc);
 			obj.moveBasic.acc.nor().scl(dt).add(IMoveFunction.vct2_tmp1);
 			break; 

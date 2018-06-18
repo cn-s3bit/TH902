@@ -2,9 +2,7 @@ package cn.s3bit.th902.utils;
 
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Ellipse;
-import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Intersector;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
 import cn.s3bit.th902.GameHelper;
