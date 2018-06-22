@@ -15,6 +15,7 @@ import cn.s3bit.th902.contents.stage1.DanmakuS1LLast;
 import cn.s3bit.th902.contents.stage2.DanmakuS2L1;
 import cn.s3bit.th902.contents.stage2.DanmakuS2L2;
 import cn.s3bit.th902.contents.stage2.DanmakuS2L3;
+import cn.s3bit.th902.contents.stage6.SpellWaveParticleChanged1;
 import cn.s3bit.th902.danmaku.mbg.MBGScene;
 
 public class SceneSystem {
@@ -44,7 +45,8 @@ public class SceneSystem {
 		system.mScenes.add(new MBGScene(5000, 3000, 2.1f, ResourceManager.barrages.get(230), "", true, false, Gdx.files.internal("resources/Danmaku/摇摆.mbg"), 360, 0));
 		system.mScenes.add(new MBGScene(1073741824, 2200, 0f, ResourceManager.barrages.get(230), "里冬「天青色旋转木马」", false, false, Gdx.files.internal("resources/Danmaku/里冬.mbg"), 0, 120));
 		system.mScenes.add(new MBGScene(4000, 2000, 1.8f, ResourceManager.barrages.get(230), "", false, false, Gdx.files.internal("resources/Danmaku/作图.mbg"), 0, 60));
-		system.mScenes.add(new MBGScene(8800, 2400, 2.5f, ResourceManager.barrages.get(230), "里冬「绽放的烟花」", false, true, Gdx.files.internal("resources/Danmaku/1233Y7Resave.mbg"), 0, 400));
+		system.mScenes.add(new SpellWaveParticleChanged1());
+		system.mScenes.add(new MBGScene(7700, 2400, 2f, ResourceManager.barrages.get(230), "里冬「绽放的烟花」", false, true, Gdx.files.internal("resources/Danmaku/1233Y7Resave.mbg"), 0, 400));
 		/*system.mScenes.add(new MBGScene(1000, 1000, 1, ResourceManager.barrages.get(230), true, true,
 				"Crazy Storm Data 1.01\n"+
 				"Center:315,240,0,0,0,0,\n"+
