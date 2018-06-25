@@ -3,6 +3,7 @@ package cn.s3bit.th902.contents.stage6;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 
+import cn.s3bit.th902.DifficultySelectScreen;
 import cn.s3bit.th902.ResourceManager;
 import cn.s3bit.th902.contents.BossSpell;
 import cn.s3bit.th902.gamecontents.components.Transform;
@@ -46,8 +47,29 @@ public class SpellWaveParticleChanged1 extends BossSpell {
 	protected float p1 = 0f, p2 = 0f;
 	@Override
 	public void act() {
-		if (existTime % 3 < 2) return;
-		final int r = 36;
+		final int r;
+		final int t;
+		switch (DifficultySelectScreen.difficulty) {
+		case 1:
+			r = 12;
+			t = 8;
+			break;
+		case 2:
+			r = 22;
+			t = 5;
+			break;
+		case 3:
+			r = 25;
+			t = 3;
+			break;
+		case 4:
+			r = 36;
+			t = 3;
+			break;
+		default:
+			throw new AssertionError();
+		}
+		if (existTime % t < t - 1) return;
 		for (int i=0; i<r; i++)
 			ProjectileFactory.Create(
 					transform.position.cpy(),
