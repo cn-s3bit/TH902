@@ -116,7 +116,8 @@ public class MBGBullet extends AbstractMBGComponent<BulletEmitter> {
 			entity.Destroy();
 		}
 		else {
-			transform.rotation = 270 + moveBasic.velocity.angle();
+			if (mbgItem.朝向与速度方向相同)
+				transform.rotation = 270 + moveBasic.velocity.angle();
 			runEventGroups(mbgItem.子弹事件组, life);
 			if (depthBinded != null) {
 				for (MBGBulletEmitter mbgBulletEmitter : depthBinded) {

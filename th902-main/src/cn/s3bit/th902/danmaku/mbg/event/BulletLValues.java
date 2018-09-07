@@ -33,6 +33,9 @@ public class BulletLValues implements ILValueProvider<AbstractMBGComponent<Bulle
 		case "高比":
 			ret.baseValue = bullet.transform.scale.y;
 			break;
+		case "朝向":
+			ret.baseValue = -bullet.transform.rotation;
+			break;
 		case "R":
 			if (bullet instanceof MBGBullet)
 				ret.baseValue = ((MBGBullet) bullet).color.r * 255f;

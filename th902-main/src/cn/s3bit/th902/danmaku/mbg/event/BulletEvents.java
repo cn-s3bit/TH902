@@ -66,6 +66,10 @@ public final class BulletEvents implements IEventFirer<AbstractMBGComponent<Bull
 			task.lastVal += getFloatDelta(task);
 			obj.transform.scale.y = task.lastVal;
 			break;
+		case "朝向":
+			task.lastVal += getFloatDelta(task);
+			obj.transform.rotation = -task.lastVal;
+			break;
 		case "R":
 			task.lastVal += getFloatDelta(task);
 			if (obj instanceof MBGBullet) {

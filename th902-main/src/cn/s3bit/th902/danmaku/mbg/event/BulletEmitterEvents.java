@@ -107,6 +107,7 @@ public final class BulletEmitterEvents implements IEventFirer<AbstractMBGCompone
 			emitter.mbgItem.子弹颜色.A = task.lastVal;
 			break; 
 		case "朝向":
+			applyValueWithRand(emitter.mbgItem.朝向, task);
 			break;
 		case "子弹速度":
 			applyValueWithRand(emitter.mbgItem.子弹运动.motion.speed, task);
