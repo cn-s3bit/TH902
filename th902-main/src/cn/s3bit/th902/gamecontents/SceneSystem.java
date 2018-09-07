@@ -26,6 +26,7 @@ public class SceneSystem {
 	public static SceneSystem Create(int difficulty, int stageid, Runnable afterFinish) {
 		// test
 		SceneSystem system = new SceneSystem();
+		// Stage 1
 		system.mScenes.add(new DanmakuS1L1());
 		system.mScenes.add(new DanmakuS1L2());
 		system.mScenes.add(new DanmakuS1L3());
@@ -33,6 +34,8 @@ public class SceneSystem {
 		system.mScenes.add(new DanmakuS1L5());
 		system.mScenes.add(new DanmakuS1L6());
 		system.mScenes.add(new DanmakuS1LLast());
+		
+		// Stage 2
 		system.mScenes.add(new DanmakuS2L1());
 		system.mScenes.add(new DanmakuS2L2());
 		system.mScenes.add(new DanmakuS2L3());
@@ -42,6 +45,10 @@ public class SceneSystem {
 		system.mScenes.add(new MBGScene(1073741824, 2000, 0f, ResourceManager.barrages.get(230), "「极光与流星」", false, false, Gdx.files.internal("resources/Danmaku/极光与流星.mbg"), 0, 120));
 		system.mScenes.add(new MBGScene(12000, 3000, 4f, ResourceManager.barrages.get(230), "终符「弹幕结界」", false, true, Gdx.files.internal("resources/Danmaku/弹幕结界.mbg")));
 
+		// Stage 5
+		system.mScenes.add(new MBGScene(5000, 3000, 2.25f, ResourceManager.barrages.get(230), "算符「四重递归」", true, true, Gdx.files.internal("resources/Danmaku/四重递归.mbg"), 360, 0));
+		
+		// Stage 6
 		system.mScenes.add(new MBGScene(5000, 3000, 2.1f, ResourceManager.barrages.get(230), "", true, false, Gdx.files.internal("resources/Danmaku/摇摆.mbg"), 360, 0));
 		system.mScenes.add(new MBGScene(1073741824, 2200, 0f, ResourceManager.barrages.get(230), "里冬「天青色旋转木马」", false, false, Gdx.files.internal("resources/Danmaku/里冬.mbg"), 0, 120));
 		system.mScenes.add(new MBGScene(4000, 2000, 1.8f, ResourceManager.barrages.get(230), "", false, false, Gdx.files.internal("resources/Danmaku/作图.mbg"), 0, 60));
