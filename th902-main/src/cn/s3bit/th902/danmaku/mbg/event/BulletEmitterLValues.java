@@ -35,14 +35,12 @@ public class BulletEmitterLValues implements ILValueProvider<AbstractMBGComponen
 				ret.baseValue = emitter.moveBasic.velocity.len();
 				break;
 			case "速度方向":
-				ret.baseValue = emitter.moveBasic.velocity.angle();
-				break; 
+				return emitter.mbgItem.发射器运动.motion.speedDirection;
 			case "加速度":
 				ret.baseValue = emitter.moveBasic.acc.len();
 				break; 
 			case "加速度方向":
-				ret.baseValue = emitter.moveBasic.acc.angle();
-				break; 
+				return emitter.mbgItem.发射器运动.motion.accelerationDirection;
 			case "生命":
 				ret.baseValue = emitter.mbgItem.子弹生命;
 				break; 

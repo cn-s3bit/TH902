@@ -58,12 +58,24 @@ public final class BulletEmitterEvents implements IEventFirer<AbstractMBGCompone
 			emitter.moveBasic.velocity.nor().scl(task.lastVal);
 			break;
 		case "速度方向":
-			task.lastVal += getFloatDelta(task);
+			/*System.out.print(emitter.mbgItem.ID);
+			System.out.print(' ');
+			System.out.print(task.timefull);
+			System.out.print(' ');
+			System.out.print(task.origin.baseValue);
+			System.out.print(' ');
+			System.out.print(task.target);
+			System.out.print(' ');
+			System.out.print(emitter.mbgItem.发射器运动.motion.speedDirection.baseValue);*/
+			applyValueWithRand(emitter.mbgItem.发射器运动.motion.speedDirection, task);/*
+			System.out.print(' ');
+			System.out.println(emitter.mbgItem.发射器运动.motion.speedDirection.baseValue);*/
+			/*task.lastVal += getFloatDelta(task);
 			emitter.moveBasic.velocity.setAngle(-task.lastVal);
 			if (Math.abs(task.lastVal - task.target) > 180f) {
 				emitter.moveBasic.velocity.setAngle(-task.target);
 			}
-			emitter.mbgItem.发射器运动.motion.speedDirection.baseValue = task.lastVal;
+			emitter.mbgItem.发射器运动.motion.speedDirection.baseValue = task.lastVal;*/
 			break;
 		case "加速度":
 			task.lastVal += getFloatDelta(task);
@@ -73,12 +85,13 @@ public final class BulletEmitterEvents implements IEventFirer<AbstractMBGCompone
 			emitter.moveBasic.acc.nor().scl(task.lastVal);
 			break; 
 		case "加速度方向":
-			task.lastVal += getFloatDelta(task);
-			emitter.moveBasic.acc.setAngle(-task.lastVal);
-			if (Math.abs(task.lastVal - task.target) > 180f) {
+			// task.lastVal += getFloatDelta(task);
+			// emitter.moveBasic.acc.setAngle(-task.lastVal);
+			/*if (Math.abs(task.lastVal - task.target) > 180f) {
 				emitter.moveBasic.acc.setAngle(-task.target);
-			}
-			emitter.mbgItem.发射器运动.motion.accelerationDirection.baseValue = task.lastVal;
+			}*/
+			// emitter.mbgItem.发射器运动.motion.accelerationDirection.baseValue = task.lastVal;
+			applyValueWithRand(emitter.mbgItem.发射器运动.motion.accelerationDirection, task);
 			break; 
 		case "生命":
 			task.lastVal = emitter.mbgItem.子弹生命 + getFloatDelta(task);
@@ -143,7 +156,7 @@ public final class BulletEmitterEvents implements IEventFirer<AbstractMBGCompone
 	}
 	
 	public static float applyValueWithRand(ValueWithRand valueWithRand, MBGEventTask task) {
-		applyOp(task.action.Operator,
+		task.lastVal = applyOp(task.action.Operator,
 				valueWithRand,
 				task.origin.baseValue,
 				task.lastVal,
@@ -151,7 +164,7 @@ public final class BulletEmitterEvents implements IEventFirer<AbstractMBGCompone
 				1f - task.timeLeft / (float) task.timefull,
 				task.action.TweenFunction
 			);
-		task.lastVal = valueWithRand.baseValue;
+		// task.lastVal = valueWithRand.baseValue;
 		return task.lastVal;
 	}
 	

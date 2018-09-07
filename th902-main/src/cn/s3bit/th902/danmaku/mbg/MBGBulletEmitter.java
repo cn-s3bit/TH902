@@ -63,6 +63,12 @@ public class MBGBulletEmitter extends AbstractMBGComponent<BulletEmitter> {
 	
 	@Override
 	public void during() {
+		if (!mbgItem.绑定状态.Depth) {
+			// System.out.println(getValFromRandom(mbgItem.发射器运动.motion.speedDirection));
+			// System.out.println(getValFromRandom(mbgItem.发射器运动.motion.accelerationDirection));
+			moveBasic.velocity.setAngle(-getValFromRandom(mbgItem.发射器运动.motion.speedDirection));
+			moveBasic.acc.setAngle(-getValFromRandom(mbgItem.发射器运动.motion.accelerationDirection));
+		}
 		emitTimer++;
 		runEventGroups(mbgItem.发射器事件组, life);
 		if (emitTimer >= nextEmit) {
