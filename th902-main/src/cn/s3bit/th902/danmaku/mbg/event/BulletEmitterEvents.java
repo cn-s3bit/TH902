@@ -1,12 +1,14 @@
 package cn.s3bit.th902.danmaku.mbg.event;
 
 import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.math.MathUtils;
 
 import cn.s3bit.mbgparser.ValueWithRand;
 import cn.s3bit.mbgparser.event.CommandAction;
 import cn.s3bit.mbgparser.event.DataOperateAction.OperatorType;
 import cn.s3bit.mbgparser.event.DataOperateAction.TweenFunctionType;
 import cn.s3bit.mbgparser.item.BulletEmitter;
+import cn.s3bit.th902.GameHelper;
 import cn.s3bit.th902.danmaku.mbg.AbstractMBGComponent;
 import cn.s3bit.th902.danmaku.mbg.MBGBulletEmitter;
 import cn.s3bit.th902.danmaku.mbg.MBGEventTask;
@@ -53,7 +55,7 @@ public final class BulletEmitterEvents implements IEventFirer<AbstractMBGCompone
 		case "速度":
 			task.lastVal += getFloatDelta(task);
 			if (emitter.moveBasic.velocity.isZero()) {
-				emitter.moveBasic.velocity.set(1f, 0f).setAngle(-emitter.mbgItem.发射器运动.motion.speedDirection.baseValue);
+				emitter.moveBasic.velocity.set(1f, 0f).setAngle(-GameHelper.getValFromRandom(emitter.mbgItem.发射器运动.motion.speedDirection));
 			}
 			emitter.moveBasic.velocity.nor().scl(task.lastVal);
 			break;
@@ -198,7 +200,7 @@ public final class BulletEmitterEvents implements IEventFirer<AbstractMBGCompone
 		case Fixed:
 			return target;
 		case Sin:
-			return Interpolation.sineOut.apply(original, target, progress);
+			return Interpolation.linear.apply(original, target, MathUtils.sin(progress * MathUtils.PI2));
 		default:
 			throw new AssertionError();
 		}
