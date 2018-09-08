@@ -102,7 +102,7 @@ public class MBGBulletEmitter extends AbstractMBGComponent<BulletEmitter> {
 	public Entity emitOne(float angle, Transform sub) {
 		float radius = getValFromRandom(mbgItem.半径);
 		float radiusDir = getValFromRandom(mbgItem.半径方向);
-		Vector2 emitPosition = new Vector2(radius, 0).rotate(-radiusDir).add(getPosition(sub));
+		Vector2 emitPosition = new Vector2(radius, 0).rotate(-radiusDir - angle).add(getPosition(sub));
 		emitPosition.x = emitPosition.x + MathUtils.random(-mbgItem.位置坐标.x.randValue, mbgItem.位置坐标.x.randValue);
 		emitPosition.y = emitPosition.y + MathUtils.random(-mbgItem.位置坐标.y.randValue, mbgItem.位置坐标.y.randValue);
 		float bulletSpeed = getValFromRandom(mbgItem.子弹运动.motion.speed);
