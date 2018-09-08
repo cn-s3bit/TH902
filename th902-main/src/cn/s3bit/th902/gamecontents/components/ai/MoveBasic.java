@@ -10,8 +10,6 @@ public class MoveBasic extends Component implements IMovement {
 	protected Transform transform;
 	public Vector2 velocity;
 	public Vector2 acc;
-	
-	private Vector2 mInnerAccSpd;
 	public MoveBasic(float x, float y) {
 		this(x, y, 0, 0);
 	}
@@ -21,7 +19,6 @@ public class MoveBasic extends Component implements IMovement {
 	public MoveBasic(float x, float y, float ax, float ay) {
 		acc = new Vector2(ax, ay);
 		velocity = new Vector2(x, y);
-		mInnerAccSpd = new Vector2(0f, 0f);
 	}
 	public MoveBasic(Vector2 vel, Vector2 accel) {
 		this(vel.x, vel.y, accel.x, accel.y);
@@ -32,14 +29,13 @@ public class MoveBasic extends Component implements IMovement {
 		transform = entity.GetComponent(Transform.class);
 	}
 
-	
 	@Override
 	public void Update() {
-		mInnerAccSpd.add(acc);
-		transform.position.add(velocity).add(mInnerAccSpd);
+		velocity.add(acc);
+		transform.position.add(velocity);
 	}
 	@Override
 	public Vector2 getCurrentVelocity() {
-		return IMoveFunction.vct2_tmp1.set(velocity).add(mInnerAccSpd);
+		return velocity;
 	}
 }
