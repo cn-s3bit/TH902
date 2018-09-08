@@ -22,7 +22,7 @@ public final class BulletEvents implements IEventFirer<AbstractMBGComponent<Bull
 			}
 			IMoveFunction.vct2_tmp1.set(obj.moveBasic.velocity);
 			obj.moveBasic.velocity.nor().scl(dt).add(IMoveFunction.vct2_tmp1);
-			break; 
+			break;
 		case "子弹速度方向":
 			dt = getFloatDelta(task);
 			task.lastVal += dt;
