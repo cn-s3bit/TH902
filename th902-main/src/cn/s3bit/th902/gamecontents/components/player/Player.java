@@ -1,5 +1,7 @@
 package cn.s3bit.th902.gamecontents.components.player;
 
+import java.io.IOException;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -7,15 +9,19 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Bits;
 import com.badlogic.gdx.utils.Disposable;
 
 import cn.s3bit.th902.FightScreen;
+import cn.s3bit.th902.KeyCodes;
 import cn.s3bit.th902.KeySettings;
 import cn.s3bit.th902.gamecontents.Entity;
 import cn.s3bit.th902.gamecontents.JudgingSystem;
+import cn.s3bit.th902.gamecontents.ReplaySystem;
 import cn.s3bit.th902.gamecontents.JudgingSystem.PlayerCollisionData;
 import cn.s3bit.th902.gamecontents.components.Component;
 import cn.s3bit.th902.gamecontents.components.Transform;
+import cn.s3bit.th902.utils.SerializableBitSet;
 
 public abstract class Player extends Component {
 	public Vector2 velocity;
@@ -28,7 +34,8 @@ public abstract class Player extends Component {
 	public boolean Chaos = false;
 	public static boolean onLine = false;
 	public boolean needNewBombEntity = true;
-	public int bombTimeCount=0;
+	public int bombTimeCount = 0;
+	public SerializableBitSet actionBits = new SerializableBitSet(16);
 
 	@Override
 	public void Initialize(Entity entity) {
@@ -48,6 +55,22 @@ public abstract class Player extends Component {
 
 	@Override
 	public void Update() {
+		try {
+			if (ReplaySystem.replayMode) {
+				actionBits.loadFrom(ReplaySystem.playerAction.reader());
+			} else {
+				KeyCodes.set(actionBits, KeyCodes.down, Gdx.input.isKeyPressed(KeySettings.down));
+				KeyCodes.set(actionBits, KeyCodes.up, Gdx.input.isKeyPressed(KeySettings.up));
+				KeyCodes.set(actionBits, KeyCodes.left, Gdx.input.isKeyPressed(KeySettings.left));
+				KeyCodes.set(actionBits, KeyCodes.right, Gdx.input.isKeyPressed(KeySettings.right));
+				KeyCodes.set(actionBits, KeyCodes.positiveKey, Gdx.input.isKeyPressed(KeySettings.positiveKey));
+				KeyCodes.set(actionBits, KeyCodes.negativeKey, Gdx.input.isKeyPressed(KeySettings.negativeKey));
+				KeyCodes.set(actionBits, KeyCodes.shift, Gdx.input.isKeyPressed(KeySettings.shift));
+				actionBits.writeTo(ReplaySystem.playerAction.writer());
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		onLine = transform.position.y >= 500;
 		JudgingSystem.playerJudge.set(transform.position);
 		PlayerCollisionData collision = JudgingSystem.playerCollision();
@@ -65,17 +88,17 @@ public abstract class Player extends Component {
 			}
 		}
 		velocity.setZero();
-		if (Gdx.input.isKeyPressed(KeySettings.down)) {
+		if (KeyCodes.mask(actionBits, KeyCodes.down)) {
 			velocity.add(0, -1);
-		} else if (Gdx.input.isKeyPressed(KeySettings.up)) {
+		} else if (KeyCodes.mask(actionBits, KeyCodes.up)) {
 			velocity.add(0, 1);
 		}
-		if (Gdx.input.isKeyPressed(KeySettings.left)) {
+		if (KeyCodes.mask(actionBits, KeyCodes.left)) {
 			velocity.add(-1, 0);
-		} else if (Gdx.input.isKeyPressed(KeySettings.right)) {
+		} else if (KeyCodes.mask(actionBits, KeyCodes.right)) {
 			velocity.add(1, 0);
 		}
-		slow = Gdx.input.isKeyPressed(KeySettings.shift);
+		slow = KeyCodes.mask(actionBits, KeyCodes.shift);
 		if (slow) {
 			velocity.nor().scl(3f);
 		} else {
@@ -94,7 +117,7 @@ public abstract class Player extends Component {
 			FightScreen.bombCount = 3;
 			transform.position.set(280f, 100f);
 		}
-		if (Gdx.input.isKeyPressed(KeySettings.negativeKey) && !Bomb && FightScreen.bombCount > 0) {
+		if (KeyCodes.mask(actionBits, KeyCodes.negativeKey) && !Bomb && FightScreen.bombCount > 0) {
 			if (PlayerDeathEffect.getTimeLeft() > 0 && PlayerDeathEffect.getTimeLeft() < 50) return;
 			PlayerDeathEffect.timeleft = Math.min(PlayerDeathEffect.timeleft, 1);
 			Bomb = true;
