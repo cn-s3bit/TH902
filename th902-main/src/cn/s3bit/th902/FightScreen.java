@@ -114,7 +114,7 @@ public class FightScreen extends ScreenAdapter {
 		super.show();
 		MusicManager.StopBGM();
 		drawingLayers = new DrawingLayers();
-		Entity player = Entity.Create();
+		Entity player = Entity.Create(-100);
 		Entity fightScreen = Entity.Create();
 		Entity difficulty = Entity.Create();
 		Entity score = Entity.Create();
