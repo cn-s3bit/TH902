@@ -1,11 +1,13 @@
 package cn.s3bit.th902.gamecontents;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 
+import cn.s3bit.th902.DifficultySelectScreen;
 import cn.s3bit.th902.GameMain;
 import cn.s3bit.th902.ResourceManager;
 import cn.s3bit.th902.contents.stage1.DanmakuS1L1;
@@ -29,9 +31,35 @@ public class SceneSystem {
 	public static SceneSystem Create(int difficulty, int stageid, Runnable afterFinish) {
 		// test
 		SceneSystem system = new SceneSystem();
-		if (GameMain.PRI.getCommandLineParams().length > 0) {
-			String mbg = new FileHandle(new File(GameMain.PRI.getCommandLineParams()[0])).readString("UTF-8");
-			system.mScenes.add(new MBGScene(5000, 5000, 1f, ResourceManager.barrages.get(230), "Test Spell", true, true, mbg, 0, 0));
+		if (!ReplaySystem.replayMode) {
+			if (GameMain.PRI.getCommandLineParams().length > 0) {
+				String mbg = new FileHandle(new File(GameMain.PRI.getCommandLineParams()[0])).readString("UTF-8");
+				try {
+					ReplaySystem.meta.writer().writeInt(difficulty);
+					ReplaySystem.meta.writer().writeString(mbg);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				system.mScenes.add(new MBGScene(5000, 5000, 1f, ResourceManager.barrages.get(230), "Test Spell", true, true, mbg, 0, 0));
+			} else {
+				try {
+					ReplaySystem.meta.writer().writeInt(difficulty);
+					ReplaySystem.meta.writer().writeString(null);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		} else {
+			String maybeMBG;
+			try {
+				DifficultySelectScreen.difficulty = difficulty = ReplaySystem.meta.reader().readInt();
+				maybeMBG = ReplaySystem.meta.reader().readString();
+				if (maybeMBG != null) {
+					system.mScenes.add(new MBGScene(5000, 5000, 1f, ResourceManager.barrages.get(230), "Test Spell", true, true, maybeMBG, 0, 0));
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		// Stage 1
 		system.mScenes.add(new DanmakuS1L1());
@@ -75,6 +103,9 @@ public class SceneSystem {
 		//system.mScenes.add(new ExampleDanmakuScene());
 		//system.mScenes.add(new ExampleDanmakuScene());
 		system.afterFinish = afterFinish;
+		if (system.afterFinish == null) {
+			system.afterFinish = () -> {};
+		}
 		return system;
 	}
 
@@ -94,6 +125,13 @@ public class SceneSystem {
 		if (mCurrentIndex >= mScenes.size()) {
 			if (afterFinish != null) {
 				afterFinish.run();
+				if (!ReplaySystem.replayMode) {
+					try {
+						ReplaySystem.writeToFile(new FileHandle(new File("th902_" + System.currentTimeMillis() + ".tql")));
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
 				afterFinish = null;
 			}
 			return;

@@ -2,7 +2,6 @@ package cn.s3bit.th902;
 
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Ellipse;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
 import cn.s3bit.mbgparser.ValueWithRand;

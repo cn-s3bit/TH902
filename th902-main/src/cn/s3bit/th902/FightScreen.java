@@ -1,5 +1,6 @@
 package cn.s3bit.th902;
 
+import java.io.IOException;
 import java.lang.reflect.Field;
 
 import com.badlogic.gdx.Gdx;
@@ -7,16 +8,19 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 
 import cn.s3bit.th902.gamecontents.Entity;
 import cn.s3bit.th902.gamecontents.JudgingSystem;
+import cn.s3bit.th902.gamecontents.ReplaySystem;
 import cn.s3bit.th902.gamecontents.SceneSystem;
 import cn.s3bit.th902.gamecontents.components.ImageRenderer;
 import cn.s3bit.th902.gamecontents.components.Transform;
 import cn.s3bit.th902.gamecontents.components.player.PlayerReimu;
+import cn.s3bit.th902.utils.RandomPool;
 
 public class FightScreen extends ScreenAdapter {
 	public static BitmapFont bf = new BitmapFont(Gdx.files.internal("resources/font/mainfont.fnt"));
@@ -168,7 +172,27 @@ public class FightScreen extends ScreenAdapter {
 		} else if (PlayerChara == PlayerTypeMarisa) {
 	
 		}
-		sceneSystem = SceneSystem.Create(0, 0);
+		if (ReplaySystem.replayMode) {
+			for (int i=1; i<=5; i++) {
+				try {
+					RandomPool.get(i).random.setSeed(ReplaySystem.meta.reader().readLong());
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		} else {
+			ReplaySystem.startRecording();
+			for (int i=1; i<=5; i++) {
+				try {
+					long seed = MathUtils.random(4611686018427387904L);
+					ReplaySystem.meta.writer().writeLong(seed);
+					RandomPool.get(i).random.setSeed(seed);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		sceneSystem = SceneSystem.Create(_difficulty, 0);
 	}
 
 	@Override

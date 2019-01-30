@@ -9,5 +9,5 @@ public final class KeySettings {
 	public static final int down = Keys.DOWN;
 	public static final int left = Keys.LEFT;
 	public static final int right = Keys.RIGHT;
-	public static final int shift=Keys.SHIFT_LEFT;
+	public static final int shift = Keys.SHIFT_LEFT;
 }
