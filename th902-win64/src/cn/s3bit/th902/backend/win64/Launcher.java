@@ -35,6 +35,10 @@ public class Launcher {
 			public void setFPS(int fps) {
 				config.foregroundFPS = fps;
 			}
+			@Override
+			public String[] getCommandLineParams() {
+				return args;
+			}
 		});
 		config = new LwjglApplicationConfiguration();
 		config.fullscreen = false;
