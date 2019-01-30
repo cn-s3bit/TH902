@@ -1,7 +1,5 @@
 package cn.s3bit.th902.contents.stage2;
 
-import java.util.Random;
-
 import com.badlogic.gdx.math.Vector2;
 
 import cn.s3bit.th902.DifficultySelectScreen;

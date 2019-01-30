@@ -1,6 +1,5 @@
 package cn.s3bit.th902.gamecontents.components.player;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -10,7 +9,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 
 import cn.s3bit.th902.FightScreen;
 import cn.s3bit.th902.KeyCodes;
-import cn.s3bit.th902.KeySettings;
 import cn.s3bit.th902.ResourceManager;
 import cn.s3bit.th902.contents.THSoundEffects;
 import cn.s3bit.th902.gamecontents.Entity;

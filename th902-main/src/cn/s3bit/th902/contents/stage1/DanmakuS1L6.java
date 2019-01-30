@@ -2,7 +2,6 @@ package cn.s3bit.th902.contents.stage1;
 
 import java.util.concurrent.Callable;
 
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
 import cn.s3bit.th902.gamecontents.DanmakuScene;
