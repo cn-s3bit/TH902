@@ -26,7 +26,7 @@ public class ImmutableWrapper<T> {
 	
 	@Override
 	public boolean equals(Object obj) {
-		return obj instanceof ImmutableWrapper ? ((ImmutableWrapper<?>) obj).mData.equals(mData) : obj.equals(mData);
+		return this == obj;
 	}
 
 	public T getData() {
