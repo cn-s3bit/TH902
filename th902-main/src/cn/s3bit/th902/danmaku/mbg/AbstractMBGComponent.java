@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.ObjectMap;
@@ -54,6 +56,7 @@ public abstract class AbstractMBGComponent<T> extends Component {
 	
 	@Override
 	public void Update() {
+		MathUtils.random.setSeed(Gdx.graphics.getFrameId() * Gdx.graphics.getFrameId() * 151);
 		if (timerBegin < getBeginTime()) {
 			timerBegin++;
 			return;

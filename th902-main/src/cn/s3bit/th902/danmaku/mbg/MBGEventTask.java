@@ -33,6 +33,6 @@ public class MBGEventTask {
 	public int timeLeft;
 	public final DataOperateAction action;
 	public ValueWithRand origin;
-	public final float target;
+	public float target;
 	public float lastVal;
 }

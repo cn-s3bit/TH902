@@ -2,6 +2,7 @@ package cn.s3bit.th902.danmaku.mbg.event;
 
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 
 import cn.s3bit.mbgparser.ValueWithRand;
 import cn.s3bit.mbgparser.event.CommandAction;
@@ -69,7 +70,11 @@ public final class BulletEmitterEvents implements IEventFirer<AbstractMBGCompone
 			System.out.print(task.target);
 			System.out.print(' ');
 			System.out.print(emitter.mbgItem.发射器运动.motion.speedDirection.baseValue);*/
-			applyValueWithRand(emitter.mbgItem.发射器运动.motion.speedDirection, task);/*
+			if (task.action.RValue.baseValue == -99999f) {
+				task.target = -GameHelper.snipeVct(emitter.getPosition(emitter.transform), null, 0, new Vector2()).angle();
+			}
+			applyValueWithRand(emitter.mbgItem.发射器运动.motion.speedDirection, task);
+			/*
 			System.out.print(' ');
 			System.out.println(emitter.mbgItem.发射器运动.motion.speedDirection.baseValue);*/
 			/*task.lastVal += getFloatDelta(task);
@@ -93,6 +98,9 @@ public final class BulletEmitterEvents implements IEventFirer<AbstractMBGCompone
 				emitter.moveBasic.acc.setAngle(-task.target);
 			}*/
 			// emitter.mbgItem.发射器运动.motion.accelerationDirection.baseValue = task.lastVal;
+			if (task.action.RValue.baseValue == -99999f) {
+				task.target = -GameHelper.snipeVct(emitter.getPosition(emitter.transform), null, 0, new Vector2()).angle();
+			}
 			applyValueWithRand(emitter.mbgItem.发射器运动.motion.accelerationDirection, task);
 			break; 
 		case "生命":
