@@ -1,9 +1,12 @@
 package cn.s3bit.th902.gamecontents;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 
+import cn.s3bit.th902.GameMain;
 import cn.s3bit.th902.ResourceManager;
 import cn.s3bit.th902.contents.stage1.DanmakuS1L1;
 import cn.s3bit.th902.contents.stage1.DanmakuS1L2;
@@ -26,6 +29,10 @@ public class SceneSystem {
 	public static SceneSystem Create(int difficulty, int stageid, Runnable afterFinish) {
 		// test
 		SceneSystem system = new SceneSystem();
+		if (GameMain.PRI.getCommandLineParams().length > 0) {
+			String mbg = new FileHandle(new File(GameMain.PRI.getCommandLineParams()[0])).readString("UTF-8");
+			system.mScenes.add(new MBGScene(5000, 5000, 1f, ResourceManager.barrages.get(230), "Test Spell", true, true, mbg, 0, 0));
+		}
 		// Stage 1
 		system.mScenes.add(new DanmakuS1L1());
 		system.mScenes.add(new DanmakuS1L2());
