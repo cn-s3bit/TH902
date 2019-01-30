@@ -1,27 +1,42 @@
 package cn.s3bit.th902.gamecontents;
 
+import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map.Entry;
+import java.util.TreeSet;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import cn.s3bit.th902.GameMain;
 import cn.s3bit.th902.gamecontents.components.Component;
 
 public class Entity {
-	public static HashSet<Entity> instances = new HashSet<>();
+	public static TreeSet<Entity> instances = new TreeSet<>(new Comparator<Entity>() {
+
+		@Override
+		public int compare(Entity o1, Entity o2) {
+			if (o1 == o2)
+				return 0;
+			return Integer.compare(o1.updateOrder, o2.updateOrder) | 1;
+		}
+	});
 	public static LinkedBlockingQueue<Runnable> postUpdate = new LinkedBlockingQueue<>();
 	
 	private HashMap<Class<?>, Component> mComponents;
+	public int updateOrder;
 	private LinkedBlockingQueue<Class<?>> toDel;
 	private Entity() {
 		
 	}
-	
+
 	public static Entity Create() {
+		return Create(0);
+	}
+	
+	public static Entity Create(int updateOrder) {
 		final Entity entity = new Entity();
 		entity.mComponents = new HashMap<>();
 		entity.toDel = new LinkedBlockingQueue<>();
+		entity.updateOrder = updateOrder;
 		postUpdate.add(() -> { instances.add(entity); });
 		return entity;
 	}
