@@ -15,6 +15,7 @@ import cn.s3bit.th902.gamecontents.components.enemy.BossHP;
 import cn.s3bit.th902.gamecontents.components.enemy.BulletType;
 import cn.s3bit.th902.gamecontents.components.enemy.EnemyJudgeCircle;
 import cn.s3bit.th902.gamecontents.components.enemy.ProjectileFactory;
+import cn.s3bit.th902.utils.RandomPool;
 
 public class AIS1L4Boss extends Component {
 	Transform transform;
@@ -82,11 +83,11 @@ public class AIS1L4Boss extends Component {
 	}
 	
 	public void part3() {
-		Entity proj = ProjectileFactory.Create(new Vector2(MathUtils.random(0, 560), 720), BulletType.FormCircleLightM, MathUtils.randomBoolean() ? BulletType.ColorOrange : BulletType.ColorBlue);
+		Entity proj = ProjectileFactory.Create(new Vector2(RandomPool.get(1).random(0, 560), 720), BulletType.FormCircleLightM, RandomPool.get(1).randomBoolean() ? BulletType.ColorOrange : BulletType.ColorBlue);
 		final Transform ptransform = proj.GetComponent(Transform.class);
 		proj.AddComponent(new MoveFunction(MoveFunctionTarget.ACCEL, MoveFunctionType.ASSIGNMENT, new IMoveFunction() {
 			int flag = 2;
-			int bounce = MathUtils.random(250, 500);
+			int bounce = RandomPool.get(1).random(250, 500);
 			@Override
 			public Vector2 getTargetVal(int time) {
 				if (flag > 0 && Math.abs(ptransform.position.y - bounce) < 30) {

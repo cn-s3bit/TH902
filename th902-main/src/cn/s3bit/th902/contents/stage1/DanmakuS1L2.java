@@ -20,6 +20,7 @@ import cn.s3bit.th902.gamecontents.components.enemy.BulletType;
 import cn.s3bit.th902.gamecontents.components.enemy.DropItem;
 import cn.s3bit.th902.gamecontents.components.enemy.EnemyJudgeCircle;
 import cn.s3bit.th902.gamecontents.components.enemy.ProjectileFactory;
+import cn.s3bit.th902.utils.RandomPool;
 
 public class DanmakuS1L2 extends DanmakuScene {
 	static int count = 0, counter1 = 0;
@@ -59,7 +60,7 @@ public class DanmakuS1L2 extends DanmakuScene {
 			yield.append(() -> {
 				Entity sprite = BaseSprite.Create(new Vector2(100, 730), 3, 20);
 				final Transform transform = sprite.GetComponent(Transform.class);
-				sprite.AddComponent(new MoveBasic(0.1f, -2f, MathUtils.random(0f, 0.04f), MathUtils.random(-0.001f, 0)));
+				sprite.AddComponent(new MoveBasic(0.1f, -2f, RandomPool.get(1).random(0f, 0.04f), RandomPool.get(1).random(-0.001f, 0)));
 				sprite.AddComponent(new ExtraDrop() {
 					@Override
 					public void LootLogic() {
@@ -77,7 +78,7 @@ public class DanmakuS1L2 extends DanmakuScene {
 			yield.append(() -> {
 				Entity sprite = BaseSprite.Create(new Vector2(480, 730), 3, 20);
 				final Transform transform = sprite.GetComponent(Transform.class);
-				sprite.AddComponent(new MoveBasic(0.1f, -2f, MathUtils.random(-0.04f, 0), MathUtils.random(-0.001f, 0)));
+				sprite.AddComponent(new MoveBasic(0.1f, -2f, RandomPool.get(1).random(-0.04f, 0), RandomPool.get(1).random(-0.001f, 0)));
 				sprite.AddComponent(new ExtraDrop() {
 					@Override
 					public void LootLogic() {

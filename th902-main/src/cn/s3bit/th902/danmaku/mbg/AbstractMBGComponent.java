@@ -22,6 +22,7 @@ import cn.s3bit.th902.gamecontents.Entity;
 import cn.s3bit.th902.gamecontents.components.Component;
 import cn.s3bit.th902.gamecontents.components.Transform;
 import cn.s3bit.th902.gamecontents.components.ai.MoveBasic;
+import cn.s3bit.th902.utils.RandomPool;
 
 public abstract class AbstractMBGComponent<T> extends Component {
 	public MoveBasic moveBasic;
@@ -56,7 +57,7 @@ public abstract class AbstractMBGComponent<T> extends Component {
 	
 	@Override
 	public void Update() {
-		MathUtils.random.setSeed(Gdx.graphics.getFrameId() * Gdx.graphics.getFrameId() * 151);
+		RandomPool.get(5).random.setSeed(Gdx.graphics.getFrameId() * Gdx.graphics.getFrameId() * 151);
 		if (timerBegin < getBeginTime()) {
 			timerBegin++;
 			return;

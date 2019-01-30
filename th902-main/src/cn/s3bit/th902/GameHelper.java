@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import cn.s3bit.mbgparser.ValueWithRand;
 import cn.s3bit.th902.gamecontents.Entity;
 import cn.s3bit.th902.gamecontents.JudgingSystem;
+import cn.s3bit.th902.utils.RandomPool;
 
 public final class GameHelper {
 	public static final Vector2 vct2_tmp1 = new Vector2();
@@ -31,7 +32,7 @@ public final class GameHelper {
 	}
 	
 	public static float getValFromRandom(ValueWithRand valueWithRand) {
-		return MathUtils.random(valueWithRand.baseValue - valueWithRand.randValue, valueWithRand.baseValue + valueWithRand.randValue);
+		return RandomPool.get(5).random(valueWithRand.baseValue - valueWithRand.randValue, valueWithRand.baseValue + valueWithRand.randValue);
 	}
 	
 	static Circle circle_tmp = new Circle();

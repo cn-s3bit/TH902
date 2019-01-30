@@ -19,6 +19,7 @@ import cn.s3bit.th902.gamecontents.components.ImageRenderer;
 import cn.s3bit.th902.gamecontents.components.Transform;
 import cn.s3bit.th902.gamecontents.components.ai.IMoveFunction;
 import cn.s3bit.th902.gamecontents.components.ai.MoveBasic;
+import cn.s3bit.th902.utils.RandomPool;
 
 import static cn.s3bit.th902.GameHelper.getValFromRandom;
 
@@ -86,7 +87,7 @@ public class MBGBulletEmitter extends AbstractMBGComponent<BulletEmitter> {
 			int count = Math.round(getValFromRandom(mbgItem.条数));
 			float angle, range;
 			if (mbgItem.发射角度.baseValue == -99999f)
-				angle = -GameHelper.snipeVct(getPosition(sub), null, MathUtils.random(-mbgItem.发射角度.randValue, mbgItem.发射角度.randValue), IMoveFunction.vct2_tmp1).angle();
+				angle = -GameHelper.snipeVct(getPosition(sub), null, RandomPool.get(5).random(-mbgItem.发射角度.randValue, mbgItem.发射角度.randValue), IMoveFunction.vct2_tmp1).angle();
 			else
 				angle = getValFromRandom(mbgItem.发射角度);
 			range = getValFromRandom(mbgItem.范围);
@@ -103,8 +104,8 @@ public class MBGBulletEmitter extends AbstractMBGComponent<BulletEmitter> {
 		float radius = getValFromRandom(mbgItem.半径);
 		float radiusDir = getValFromRandom(mbgItem.半径方向);
 		Vector2 emitPosition = new Vector2(radius, 0).rotate(-radiusDir - angle).add(getPosition(sub));
-		emitPosition.x = emitPosition.x + MathUtils.random(-mbgItem.位置坐标.x.randValue, mbgItem.位置坐标.x.randValue);
-		emitPosition.y = emitPosition.y + MathUtils.random(-mbgItem.位置坐标.y.randValue, mbgItem.位置坐标.y.randValue);
+		emitPosition.x = emitPosition.x + RandomPool.get(5).random(-mbgItem.位置坐标.x.randValue, mbgItem.位置坐标.x.randValue);
+		emitPosition.y = emitPosition.y + RandomPool.get(5).random(-mbgItem.位置坐标.y.randValue, mbgItem.位置坐标.y.randValue);
 		float bulletSpeed = getValFromRandom(mbgItem.子弹运动.motion.speed);
 		float bulletAcc, bulletAccDir;
 		Vector2 bulletScale = new Vector2(mbgItem.宽比, mbgItem.高比);

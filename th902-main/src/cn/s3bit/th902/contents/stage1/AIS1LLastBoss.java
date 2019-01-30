@@ -15,6 +15,7 @@ import cn.s3bit.th902.gamecontents.components.enemy.BossHP;
 import cn.s3bit.th902.gamecontents.components.enemy.BulletType;
 import cn.s3bit.th902.gamecontents.components.enemy.EnemyJudgeCircle;
 import cn.s3bit.th902.gamecontents.components.enemy.ProjectileFactory;
+import cn.s3bit.th902.utils.RandomPool;
 
 public class AIS1LLastBoss extends Component {
 	Transform transform;
@@ -92,10 +93,10 @@ public class AIS1LLastBoss extends Component {
 			moveBasic.velocity.set(8f / p2interval, 0);
 		}
 		else if (transform.position.x > 285) {
-			moveBasic.acc.set(-0.03f, MathUtils.random(-0.02f, 0f));
+			moveBasic.acc.set(-0.03f, RandomPool.get(1).random(-0.02f, 0f));
 		}
 		else {
-			moveBasic.acc.set(0.03f, MathUtils.random(0f, 0.02f));
+			moveBasic.acc.set(0.03f, RandomPool.get(1).random(0f, 0.02f));
 		}
 		if (transform.position.y <= 333 && moveBasic.velocity.y < 0) {
 			moveBasic.velocity.y *= -1;
@@ -185,19 +186,19 @@ public class AIS1LLastBoss extends Component {
 		if (existTime > 60) {
 			for (int i=0; i<2; i++)
 			{
-				final int c = MathUtils.random(3);
+				final int c = RandomPool.get(1).random(3);
 				final Entity proj = ProjectileFactory.Create(transform.position.cpy(), BulletType.FormCircleS, color4s[c]);
 				final ImageRenderer renderer = proj.GetComponent(ImageRenderer.class);
 				proj.AddComponent(new EnemyJudgeCircle(5));
 				proj.AddComponent(new LambdaComponent(() -> {
 					renderer.image.setColor(1, 1, 1, alpha4s[c]);
 				}, 5));
-				proj.AddComponent(new MoveBasic(new Vector2(1, 0).rotate(MathUtils.random(360f)).scl(MathUtils.random(2f, 7f))));
+				proj.AddComponent(new MoveBasic(new Vector2(1, 0).rotate(RandomPool.get(1).random(360f)).scl(RandomPool.get(1).random(2f, 7f))));
 			}
 		}
 		if (existTime % 20 == 0) {
 			for (int i=0; i<4; i++)
-				alpha4s[i] = MathUtils.randomBoolean() || alpha4s[i] < 0.4f ? 0.88f : 0.12f;
+				alpha4s[i] = RandomPool.get(1).randomBoolean() || alpha4s[i] < 0.4f ? 0.88f : 0.12f;
 		}
 	}
 	
@@ -220,18 +221,18 @@ public class AIS1LLastBoss extends Component {
 		else {
 			if (existTime % 270 > 90) {
 				for (int i=0; i<360; i+=90) {
-					if (MathUtils.randomBoolean(0.3f)) continue;
+					if (RandomPool.get(1).randomBoolean(0.3f)) continue;
 					if (i == 0 || i == 180)
-						deltap5.set(0, MathUtils.random(-15 * ((existTime % 270 - 90) / 9), 15 * ((existTime % 270 - 90) / 9)));
+						deltap5.set(0, RandomPool.get(1).random(-15 * ((existTime % 270 - 90) / 9), 15 * ((existTime % 270 - 90) / 9)));
 					else
-						deltap5.set(MathUtils.random(-50 * ((existTime % 270 - 90) / 9), 50 * ((existTime % 270 - 90) / 9)), 0);
+						deltap5.set(RandomPool.get(1).random(-50 * ((existTime % 270 - 90) / 9), 50 * ((existTime % 270 - 90) / 9)), 0);
 					final Entity proj = ProjectileFactory.Create(transform.position.cpy().add(deltap5), BulletType.FormCircleM, BulletType.ColorBlueLight);
 					proj.AddComponent(new EnemyJudgeCircle(12));
 					proj.AddComponent(new MoveBasic(deltap5.set(6, 0).rotate(i)));
 				}
 			}
 			else if (existTime % 270 == 0) {
-				targetp5.set(MathUtils.random(20, 560), 400);
+				targetp5.set(RandomPool.get(1).random(20, 560), 400);
 			}
 			else {
 				GameHelper.snipeVct(transform.position, targetp5, 0, moveBasic.velocity);
