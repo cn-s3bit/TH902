@@ -21,6 +21,7 @@ import cn.s3bit.th902.gamecontents.components.enemy.BulletType;
 import cn.s3bit.th902.gamecontents.components.enemy.DropItem;
 import cn.s3bit.th902.gamecontents.components.enemy.EnemyJudgeCircle;
 import cn.s3bit.th902.gamecontents.components.enemy.ProjectileFactory;
+import cn.s3bit.th902.utils.RandomPool;
 
 public class DanmakuS2L3 extends DanmakuScene {
 
@@ -80,7 +81,7 @@ public class DanmakuS2L3 extends DanmakuScene {
 				break;
 			}
 			sprite.AddComponent(new LambdaComponent(() -> {
-				if (new Random().nextInt() % 4 + 1 <= DifficultySelectScreen.difficulty) {
+				if (RandomPool.get(1).random(32767) % 4 + 1 <= DifficultySelectScreen.difficulty) {
 					Vector2 vector2 = new Vector2(2 + 1.2f * DifficultySelectScreen.difficulty, 0);
 					ProjectileFactory.Create(transform.position.cpy(), BulletType.FormCircleS, bt,
 							new MoveBasic(vector2.cpy().rotate(danmakuTime * danmakuTime / cache)),
