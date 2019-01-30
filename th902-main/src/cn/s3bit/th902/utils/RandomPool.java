@@ -9,6 +9,8 @@ public class RandomPool {
 	
 	public static class RandomXS128Wrapper {
 		public Random random = new RandomXS128();
+		public long timeStamp = 0;
+		public long timeSeed = 0;
 
 		/** Returns a random number between 0 (inclusive) and the specified value (inclusive). */
 		public int random (int range) {
