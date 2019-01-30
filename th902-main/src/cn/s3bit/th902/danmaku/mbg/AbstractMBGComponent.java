@@ -1,11 +1,11 @@
 package cn.s3bit.th902.danmaku.mbg;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.ObjectMap;
@@ -19,6 +19,7 @@ import cn.s3bit.th902.danmaku.mbg.condition.IConditionJudger;
 import cn.s3bit.th902.danmaku.mbg.event.IEventFirer;
 import cn.s3bit.th902.danmaku.mbg.event.ILValueProvider;
 import cn.s3bit.th902.gamecontents.Entity;
+import cn.s3bit.th902.gamecontents.ReplaySystem;
 import cn.s3bit.th902.gamecontents.components.Component;
 import cn.s3bit.th902.gamecontents.components.Transform;
 import cn.s3bit.th902.gamecontents.components.ai.MoveBasic;
@@ -57,7 +58,24 @@ public abstract class AbstractMBGComponent<T> extends Component {
 	
 	@Override
 	public void Update() {
-		RandomPool.get(5).random.setSeed(Gdx.graphics.getFrameId() * Gdx.graphics.getFrameId() * 151);
+		if (Gdx.graphics.getFrameId() != RandomPool.get(5).timeStamp) {
+			RandomPool.get(5).timeStamp = Gdx.graphics.getFrameId();
+			if (ReplaySystem.replayMode)
+				try {
+					RandomPool.get(5).timeSeed = ReplaySystem.mbgRandom.reader().readLong();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			else {
+				RandomPool.get(5).timeSeed = Gdx.graphics.getFrameId() * Gdx.graphics.getFrameId() * 151;
+				try {
+					ReplaySystem.mbgRandom.writer().writeLong(RandomPool.get(5).timeSeed);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		RandomPool.get(5).random.setSeed(RandomPool.get(5).timeSeed);
 		if (timerBegin < getBeginTime()) {
 			timerBegin++;
 			return;
