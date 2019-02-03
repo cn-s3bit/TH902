@@ -197,6 +197,9 @@ public class FightScreen extends ScreenAdapter {
 
 	@Override
 	public void render(float delta) {
+		if (powerCount < 0) {
+			powerCount = 0;
+		}
 		sceneSystem.PreUpdate();
 		Entity.UpdateAll();
 		JudgingSystem.judgeEnemyHurt();
