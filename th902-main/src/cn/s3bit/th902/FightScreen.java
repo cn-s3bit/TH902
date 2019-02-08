@@ -116,6 +116,26 @@ public class FightScreen extends ScreenAdapter {
 	@Override
 	public void show() {
 		super.show();
+		if (ReplaySystem.replayMode) {
+			for (int i=1; i<=5; i++) {
+				try {
+					RandomPool.get(i).random.setSeed(ReplaySystem.meta.reader().readLong());
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		} else {
+			ReplaySystem.startRecording();
+			for (int i=1; i<=5; i++) {
+				try {
+					long seed = MathUtils.random(4611686018427387904L);
+					ReplaySystem.meta.writer().writeLong(seed);
+					RandomPool.get(i).random.setSeed(seed);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 		MusicManager.StopBGM();
 		drawingLayers = new DrawingLayers();
 		Entity player = Entity.Create(-100);
@@ -171,26 +191,6 @@ public class FightScreen extends ScreenAdapter {
 			player.AddComponent(new PlayerReimu(PlayerType));
 		} else if (PlayerChara == PlayerTypeMarisa) {
 	
-		}
-		if (ReplaySystem.replayMode) {
-			for (int i=1; i<=5; i++) {
-				try {
-					RandomPool.get(i).random.setSeed(ReplaySystem.meta.reader().readLong());
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		} else {
-			ReplaySystem.startRecording();
-			for (int i=1; i<=5; i++) {
-				try {
-					long seed = MathUtils.random(4611686018427387904L);
-					ReplaySystem.meta.writer().writeLong(seed);
-					RandomPool.get(i).random.setSeed(seed);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
 		}
 		sceneSystem = SceneSystem.Create(_difficulty, 0);
 	}

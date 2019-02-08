@@ -114,7 +114,7 @@ public class Entity {
 	}
 	
 	public static void UpdateAll() {
-		GameMain.instance.activeStage.act();
+		GameMain.instance.activeStage.act(1f / 60f);
 		Entity[] entities = (Entity[]) instances.toArray(new Entity[instances.size()]);
 		for (int i = 0; i < entities.length; i++) {
 			entities[i].Update();
