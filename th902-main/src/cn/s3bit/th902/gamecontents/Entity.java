@@ -1,8 +1,8 @@
 package cn.s3bit.th902.gamecontents;
 
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.Map.Entry;
+import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -16,16 +16,22 @@ public class Entity {
 		public int compare(Entity o1, Entity o2) {
 			if (o1 == o2)
 				return 0;
-			return Integer.compare(o1.updateOrder, o2.updateOrder) | 1;
+			if (o1.updateOrder != o2.updateOrder)
+				return Integer.compare(o1.updateOrder, o2.updateOrder);
+			if (o1.mComponents.size() != o2.mComponents.size())
+				return Integer.compare(o1.mComponents.size(), o2.mComponents.size());
+			return Long.compare(o1.identity, o2.identity);
 		}
 	});
 	public static LinkedBlockingQueue<Runnable> postUpdate = new LinkedBlockingQueue<>();
 	
-	private HashMap<Class<?>, Component> mComponents;
+	private TreeMap<Class<?>, Component> mComponents;
 	public int updateOrder;
+	public final long identity;
+	public static long identitySender = 0;
 	private LinkedBlockingQueue<Class<?>> toDel;
 	private Entity() {
-		
+		identity = ++identitySender;
 	}
 
 	public static Entity Create() {
@@ -34,7 +40,13 @@ public class Entity {
 	
 	public static Entity Create(int updateOrder) {
 		final Entity entity = new Entity();
-		entity.mComponents = new HashMap<>();
+		entity.mComponents = new TreeMap<>(new Comparator<Class<?>>() {
+
+			@Override
+			public int compare(Class<?> o1, Class<?> o2) {
+				return o1.getName().compareTo(o2.getName());
+			}
+		});
 		entity.toDel = new LinkedBlockingQueue<>();
 		entity.updateOrder = updateOrder;
 		postUpdate.add(() -> { instances.add(entity); });
