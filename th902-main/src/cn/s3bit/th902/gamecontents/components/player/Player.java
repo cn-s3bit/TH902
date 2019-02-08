@@ -24,7 +24,7 @@ import cn.s3bit.th902.utils.SerializableBitSet;
 
 public abstract class Player extends Component {
 	public Vector2 velocity;
-	public static boolean slow;
+	public boolean slow;
 	protected Transform transform;
 	protected PlayerAnimation playerAnimation;
 	public static boolean Bomb = false;
@@ -34,7 +34,15 @@ public abstract class Player extends Component {
 	public static boolean onLine = false;
 	public boolean needNewBombEntity = true;
 	public int bombTimeCount = 0;
+	public boolean wingShoot = false;
 	public SerializableBitSet actionBits = new SerializableBitSet(16);
+	public int existTime = 0;
+	public int lastPower = 0;
+
+	public BaseWing wing1 = null;
+	public BaseWing wing2 = null;
+	public BaseWing wing3 = null;
+	public BaseWing wing4 = null;
 
 	@Override
 	public void Initialize(Entity entity) {
@@ -49,7 +57,7 @@ public abstract class Player extends Component {
 	public abstract void typeBBomb();
 
 	public abstract void setBombTime();
-	
+
 	public abstract void invokeDeathEffect(int deg);
 
 	@Override
@@ -70,6 +78,8 @@ public abstract class Player extends Component {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
+		existTime++;
 		onLine = transform.position.y >= 500;
 		JudgingSystem.playerJudge.set(transform.position);
 		PlayerCollisionData collision = JudgingSystem.playerCollision();
@@ -81,7 +91,8 @@ public abstract class Player extends Component {
 		} else {
 			if (collision != null) {
 				collision.judgeCallback.onCollide();
-				invokeDeathEffect(collision.movement == null ? 0 : (int) collision.movement.getCurrentVelocity().angle());
+				invokeDeathEffect(
+						collision.movement == null ? 0 : (int) collision.movement.getCurrentVelocity().angle());
 				Chaos = true;
 				ChaosTime = 120;
 			}
@@ -117,10 +128,11 @@ public abstract class Player extends Component {
 			transform.position.set(280f, 100f);
 		}
 		if (KeyCodes.mask(actionBits, KeyCodes.negativeKey) && !Bomb && FightScreen.bombCount > 0) {
-			if (PlayerDeathEffect.getTimeLeft() > 0 && PlayerDeathEffect.getTimeLeft() < 50) return;
+			if (PlayerDeathEffect.getTimeLeft() > 0 && PlayerDeathEffect.getTimeLeft() < 50)
+				return;
 			PlayerDeathEffect.timeleft = Math.min(PlayerDeathEffect.timeleft, 1);
 			Bomb = true;
-			bombTimeCount=0;
+			bombTimeCount = 0;
 			setBombTime();
 			ChaosTime = bombFrames + 120;
 			Chaos = true;
