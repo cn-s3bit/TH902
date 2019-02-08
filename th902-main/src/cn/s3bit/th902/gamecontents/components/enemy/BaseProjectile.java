@@ -1,5 +1,7 @@
 package cn.s3bit.th902.gamecontents.components.enemy;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 
 import cn.s3bit.th902.FightScreen;
@@ -34,9 +36,25 @@ public class BaseProjectile extends Component {
 		JudgingSystem.clearByBombs.put(transform.immutablePosition, entity);
 		oldPos = new Vector2();
 	}
-	
+
+	private int mInOutAnimTimer = 0;
+	Color initialColor;
+	float initialSX, initialSY;
+	public final int INTIME = 12;
 	@Override
 	public void Update() {
+		if (mInOutAnimTimer == 0) {
+			initialSX = entity.GetComponent(AbstractRenderer.class).getActor().getScaleX();
+			initialSY = entity.GetComponent(AbstractRenderer.class).getActor().getScaleY();
+			initialColor = entity.GetComponent(AbstractRenderer.class).getActor().getColor().cpy();
+		}
+		if (mInOutAnimTimer < INTIME) {
+			++mInOutAnimTimer;
+			Color color = entity.GetComponent(AbstractRenderer.class).getActor().getColor();
+			color.a = initialColor.a * mInOutAnimTimer / INTIME;
+			entity.GetComponent(AbstractRenderer.class).getActor().setColor(color);
+			entity.GetComponent(AbstractRenderer.class).getActor().setScale(initialSX * (4f - 3f * Interpolation.linear.apply(mInOutAnimTimer) / INTIME), initialSY * (4f - 3f * Interpolation.linear.apply(mInOutAnimTimer) / INTIME));
+		}
 		if (type==9||type==14||type==230||type==231||type==232
 				||type==233||type==234||type==235) {
 			transform.rotation += 7;
