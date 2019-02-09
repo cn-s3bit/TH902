@@ -23,8 +23,11 @@ public class DanmakuS1LLast extends DanmakuScene {
 	@Override
 	public void Initialize(Entity entity) {
 		yield.append(() -> {
-			DanmakuS1L6.sprites[0].Destroy();
-			DanmakuS1L6.sprites[1].Destroy();
+			try {
+				DanmakuS1L6.sprites[0].Destroy();
+				DanmakuS1L6.sprites[1].Destroy();
+			} catch (Exception exc) {
+			}
 		});
 		yield.append(() -> {}, 300);
 		yield.append(() -> {
