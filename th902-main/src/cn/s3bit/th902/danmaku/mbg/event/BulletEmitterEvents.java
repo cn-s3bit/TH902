@@ -71,7 +71,7 @@ public final class BulletEmitterEvents implements IEventFirer<AbstractMBGCompone
 			System.out.print(' ');
 			System.out.print(emitter.mbgItem.发射器运动.motion.speedDirection.baseValue);*/
 			if (task.action.RValue.baseValue == -99999f) {
-				task.target = -GameHelper.snipeVct(emitter.getPosition(emitter.transform), null, 0, new Vector2()).angle();
+				task.target = -GameHelper.snipAngle(emitter.getPosition(emitter.transform), null);
 			}
 			applyValueWithRand(emitter.mbgItem.发射器运动.motion.speedDirection, task);
 			/*
@@ -99,7 +99,7 @@ public final class BulletEmitterEvents implements IEventFirer<AbstractMBGCompone
 			}*/
 			// emitter.mbgItem.发射器运动.motion.accelerationDirection.baseValue = task.lastVal;
 			if (task.action.RValue.baseValue == -99999f) {
-				task.target = -GameHelper.snipeVct(emitter.getPosition(emitter.transform), null, 0, new Vector2()).angle();
+				task.target = -GameHelper.snipAngle(emitter.getPosition(emitter.transform), null);;
 			}
 			applyValueWithRand(emitter.mbgItem.发射器运动.motion.accelerationDirection, task);
 			break; 
@@ -128,7 +128,7 @@ public final class BulletEmitterEvents implements IEventFirer<AbstractMBGCompone
 		case "不透明度":
 			task.lastVal = emitter.mbgItem.子弹颜色.A + getFloatDelta(task);
 			emitter.mbgItem.子弹颜色.A = task.lastVal;
-			break; 
+			break;
 		case "朝向":
 			applyValueWithRand(emitter.mbgItem.朝向, task);
 			break;
