@@ -36,9 +36,9 @@ public class RandomPool {
 			return random.nextBoolean();
 		}
 
-		/** Returns true if a random value between 0 and 1 is less than the specified value. */
-		public boolean randomBoolean (float chance) {
-			return random() < chance;
+		/** Returns true if a random integer between 0 and 100 is less than the specified value. */
+		public boolean randomBoolean (int chance) {
+			return random(0, 99) < chance;
 		}
 
 		/** Returns random number between 0.0 (inclusive) and 1.0 (exclusive). */

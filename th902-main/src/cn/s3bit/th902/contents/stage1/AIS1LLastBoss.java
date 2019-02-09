@@ -221,7 +221,7 @@ public class AIS1LLastBoss extends Component {
 		else {
 			if (existTime % 270 > 90) {
 				for (int i=0; i<360; i+=90) {
-					if (RandomPool.get(1).randomBoolean(0.3f)) continue;
+					if (RandomPool.get(1).randomBoolean(30)) continue;
 					if (i == 0 || i == 180)
 						deltap5.set(0, RandomPool.get(1).random(-15 * ((existTime % 270 - 90) / 9), 15 * ((existTime % 270 - 90) / 9)));
 					else
