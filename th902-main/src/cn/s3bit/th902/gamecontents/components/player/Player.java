@@ -76,7 +76,6 @@ public abstract class Player extends Component {
 				actionBits.writeTo(ReplaySystem.playerAction.writer());
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
 		}
 
 		existTime++;
@@ -119,6 +118,15 @@ public abstract class Player extends Component {
 		transform.position.x = MathUtils.clamp(transform.position.x, 30, 540);
 		transform.position.y = MathUtils.clamp(transform.position.y, 48, 680);
 		playerAnimation.Update(!slow);
+		try {
+			if (ReplaySystem.replayMode) {
+				transform.position.set(ReplaySystem.playerAction.reader().readFloat(), ReplaySystem.playerAction.reader().readFloat());
+			} else {
+				ReplaySystem.playerAction.writer().writeFloat(transform.position.x);
+				ReplaySystem.playerAction.writer().writeFloat(transform.position.y);
+			}
+		} catch (IOException e) {
+		}
 	}
 
 	public void useBomb() {
