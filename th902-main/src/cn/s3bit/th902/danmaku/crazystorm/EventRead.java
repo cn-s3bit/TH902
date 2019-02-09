@@ -1,7 +1,5 @@
-// CrazyStorm_1._03.EventRead
-using System;
+package cn.s3bit.th902.danmaku.crazystorm;
 
-[Serializable]
 public class EventRead
 {
 	public float rand;
@@ -44,6 +42,26 @@ public class EventRead
 
 	public EventRead Copy()
 	{
-		return MemberwiseClone();
+		EventRead eventRead = new EventRead();
+		eventRead.change = change;
+		eventRead.changename = changename;
+		eventRead.changetype = changetype;
+		eventRead.changevalue = changevalue;
+		eventRead.collector = collector;
+		eventRead.condition = condition;
+		eventRead.condition2 = condition2;
+		eventRead.contype = contype;
+		eventRead.contype2 = contype2;
+		eventRead.noloop = noloop;
+		eventRead.opreator = opreator;
+		eventRead.opreator2 = opreator2;
+		eventRead.rand = rand;
+		eventRead.res = res;
+		eventRead.result = result;
+		eventRead.special = special;
+		eventRead.special2 = special2;
+		eventRead.time = time;
+		eventRead.times = times;
+		return eventRead;
 	}
 }
