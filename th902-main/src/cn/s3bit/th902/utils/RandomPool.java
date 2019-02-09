@@ -2,13 +2,12 @@ package cn.s3bit.th902.utils;
 
 import java.util.Random;
 
-import com.badlogic.gdx.math.RandomXS128;
 import com.badlogic.gdx.utils.IntMap;
 
 public class RandomPool {
 	
 	public static class RandomXS128Wrapper {
-		public Random random = new RandomXS128();
+		public Random random = new Random();
 		public long timeStamp = 0;
 		public long timeSeed = 0;
 
