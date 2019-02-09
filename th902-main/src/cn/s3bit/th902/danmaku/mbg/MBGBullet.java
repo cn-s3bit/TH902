@@ -152,4 +152,10 @@ public class MBGBullet extends AbstractMBGComponent<BulletEmitter> {
 		}
 		entity.Destroy();
 	}
+	
+	@Override
+	public void Kill() {
+		JudgingSystem.clearByBombs.remove(transform.immutablePosition);
+		super.Kill();
+	}
 }
