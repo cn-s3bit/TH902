@@ -2,6 +2,7 @@ package cn.s3bit.th902;
 
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Ellipse;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
 import cn.s3bit.mbgparser.ValueWithRand;
@@ -28,6 +29,13 @@ public final class GameHelper {
 		for (Entity entity : entities) {
 			entity.Destroy();
 		}
+	}
+	
+	public static float twoPointAngle(float x2, float y2, float x1, float y1) {
+		float num = ((x2 - x1 == 0f) ? ((float)Math.atan((double)((y2 - y1) / (x2 - x1 + 0.1f)))) : ((float)Math.atan((double)((y2 - y1) / (x2 - x1)))));
+		if (x2 - x1 < 0f)
+			num += 3.14159274f;
+		return num * MathUtils.radiansToDegrees;
 	}
 	
 	public static float getValFromRandom(ValueWithRand valueWithRand) {
