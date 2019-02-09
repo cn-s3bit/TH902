@@ -18,8 +18,6 @@ public class Entity {
 				return 0;
 			if (o1.updateOrder != o2.updateOrder)
 				return Integer.compare(o1.updateOrder, o2.updateOrder);
-			if (o1.mComponents.size() != o2.mComponents.size())
-				return Integer.compare(o1.mComponents.size(), o2.mComponents.size());
 			return Long.compare(o1.identity, o2.identity);
 		}
 	});
