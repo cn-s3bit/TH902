@@ -1686,14 +1686,16 @@ public class Batch
 		object result = binaryFormatter.Deserialize(memoryStream);
 		memoryStream.Close();
 		return result;
-	}
+	}*/
 
-	public object Copy()
+	public Batch Copy()
 	{
-		return MemberwiseClone();
+		Batch batch = new Batch(mbgScene);
+		return batch;
+		// TODO: Copy
 	}
 
-	public void Recover()
+	/*public void Recover()
 	{
 		x = Layer.LayerArray[parentid].BatchArray[id].x;
 		y = Layer.LayerArray[parentid].BatchArray[id].y;
