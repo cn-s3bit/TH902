@@ -24,6 +24,11 @@ public final class GameHelper {
 		return out;
 	}
 	
+	public static float snipAngle(Vector2 current, Vector2 target) {
+		target = target == null ? JudgingSystem.playerJudge : target;
+		return twoPointAngle(target.x, target.y, current.x, current.y);
+	}
+	
 	public static void clearEnemyBullets() {
 		Entity[] entities = (Entity[]) JudgingSystem.clearByBombs.values().toArray(new Entity[JudgingSystem.clearByBombs.values().size()]);
 		for (Entity entity : entities) {
