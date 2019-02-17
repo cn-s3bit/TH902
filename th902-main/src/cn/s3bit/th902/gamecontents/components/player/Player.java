@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.PixmapIO;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
@@ -177,6 +178,7 @@ public abstract class Player extends Component {
 
 		public PlayerAnimation() {
 			nullRegion = new TextureRegion(new Texture(new Pixmap(1, 1, Pixmap.Format.RGBA8888)));
+			Pixmap test = new Pixmap(512, 64, Pixmap.Format.RGBA8888);
 			for (int i = 0; i < regions.length; i++) {
 				Pixmap pixmap = new Pixmap(64, 64, Pixmap.Format.RGBA8888);
 				pixmap.setColor(0, 0, 1, 1);
@@ -189,9 +191,12 @@ public abstract class Player extends Component {
 				pixmap.drawCircle(32, 32, (int) (i * 3f) + 8);
 				pixmap.setColor(1, 1, 1, 0.5f);
 				pixmap.drawCircle(32, 32, (int) (i * 3f) + 9);
+				test.drawPixmap(pixmap, i * 64, 0);
 				regions[i] = new TextureRegion(new Texture(pixmap));
 				pixmap.dispose();
 			}
+			// PixmapIO.writePNG(Gdx.files.absolute("D:/1.png"), test);
+			test.dispose();
 			setRegion(regions[0]);
 		}
 
